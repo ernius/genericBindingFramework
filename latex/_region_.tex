@@ -1,0 +1,102 @@
+\message{ !name(resumen.tex)}\documentclass{beamer}
+%\documentclass{article}
+
+%\usepackage{beamer}
+\usepackage{graphicx}
+% \usepackage[references,links]{agda}
+\usepackage{agda}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{mathtools}
+\usepackage{textgreek}
+\usepackage{catchfilebetweentags}
+\usepackage{tipa}
+
+%\include{common-unicode}
+
+\usetheme{default}
+
+\begin{document}
+
+\message{ !name(resumen.tex) !offset(-3) }
+
+\begin{frame}
+
+  \AgdaTarget{Functor}
+  \ExecuteMetaData[GPBindings.tex]{functor} 
+
+\end{frame}
+
+\begin{frame}
+
+  \ExecuteMetaData[GPBindings.tex]{interpret}
+
+\end{frame}
+
+\begin{frame}{Limitations}
+  
+  No mutual recursive definitions.
+
+  \hspace{5px}
+  
+ \begin{columns}[c] 
+    \column{.4\textwidth} 
+    Types \\
+    \[\begin{array}{ll}
+      T &{:\!\!-} S  \\
+      & Nat \\
+      & \\ 
+      &  \dots \\
+      &\\
+    \end{array}\]
+    \column{.4\textwidth}
+    Session Types \\
+    \[\begin{array}{ll}
+      S  &{:\!\!-} \mathtt{end}  \\
+      & ?T.S    \\
+      & !T.S    \\
+      & \dots \\
+    \end{array}\]
+  \end{columns}
+
+\end{frame}
+
+
+\section{Fold}
+\label{sec:fold}
+
+\begin{frame}{Fold}
+  {\small \ExecuteMetaData[GPBindings.tex]{foldtermination}}  
+\end{frame}
+
+\begin{frame}{Terminating Fold }
+  {\small \ExecuteMetaData[GPBindings.tex]{foldmap}}
+  Based on~\cite{Norell2009}, we fuses \textsf{map} and \textsf{fold} into a single function foldmap
+\end{frame}
+
+\section{Primitive Induction}
+\label{sec:pimind}
+
+\begin{frame} 
+  {\scriptsize \ExecuteMetaData[GPBindings.tex]{primInd}}
+\end{frame}
+
+
+
+\begin{frame}[shrink]
+  The function $f$\ has an explicit context $\mu C$.
+
+  The returned type is a functorial one $\mu H$.
+  
+  \hspace{5px}
+  
+  {\tiny \ExecuteMetaData[GPBindings.tex]{foldmapCtx}}
+\end{frame}
+
+\bibliographystyle{alpha}
+\bibliography{resumen.bib}
+
+\end{document}
+
+\message{ !name(resumen.tex) !offset(-102) }

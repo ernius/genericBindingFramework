@@ -1,0 +1,705 @@
+\documentclass{book}
+
+%\usepackage{txfonts}
+\usepackage{parskip}
+\usepackage{graphicx}
+% \usepackage[references,links]{agda}
+\usepackage[bw]{agda}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{mathtools}
+\usepackage{textgreek}
+\usepackage{catchfilebetweentags}
+\usepackage{tipa}
+
+%\include{common-unicode}
+%\usetheme{default}
+
+\newcommand\Wider[2][3em]{%
+\makebox[\linewidth][c]{%
+  \begin{minipage}{\dimexpr\textwidth+#1\relax}
+  \raggedright#2
+  \end{minipage}%
+  }%
+}
+
+\usepackage{tipa}
+\newcommand{\lambdabar}{\mbox{\textipa{\textcrlambda}}}
+
+\usepackage{newunicodechar}
+%\DeclareUnicodeCharacter{126}{\ensuremath{\sim}}
+\DeclareUnicodeCharacter{411}{\ensuremath{\lambdabar}}
+\DeclareUnicodeCharacter{8799}{\ensuremath{{\stackrel{?}{=}}}}
+\DeclareUnicodeCharacter{8788}{\ensuremath{{\coloneqq}}}
+\DeclareUnicodeCharacter{8348}{\ensuremath{{_t}}}
+\DeclareUnicodeCharacter{8345}{\ensuremath{{_n}}}
+\DeclareUnicodeCharacter{65288}{\ensuremath{{(}}}
+\DeclareUnicodeCharacter{65289}{\ensuremath{{)}}}
+\DeclareUnicodeCharacter{8336}{\ensuremath{{_a}}}
+\DeclareUnicodeCharacter{8759}{\ensuremath{\dblcolon}}
+\DeclareUnicodeCharacter{8718}{\ensuremath{\blacksquare}}
+\DeclareUnicodeCharacter{9632}{\ensuremath{\blacksquare}}
+
+\newcommand{\alp}{\ensuremath{\alpha}}
+\newcommand{\lc}{\ensuremath{\lambda}-calculus}
+
+
+\newtheorem{thm}{Theorem} 
+\newtheorem{df}[thm]{Definition} 
+\newtheorem{lem}[thm]{Lemma} 
+\newtheorem{prop}[thm]{Proposition} 
+\newtheorem{corollary}{Corollary}
+
+
+\begin{document}
+
+\chapter{Generic Programming Binding Framework} \label{sec:generic}
+
+The definition of generic functions by induction on the description of a data type is the basic idea of generic programming. This method works by defining a datatype of codes, introduced as the \emph{universe} in~\cite{MR769301}, which allows us to formally state structure descriptions, such as ``a list is either empty or a pair of a parameter and a sublist'' or ``a tree is either a leaf with a parameter or a pair of two subtrees''. Indeed, the universe construction allow us to abstract these commons: ``either'', ``pair'', ``parameter'', and ``substructure'' repeated in previous informal descriptions. Then, it is introduced a decoding function, which interprets instances of the universe, usually called universe \emph{codes}, into actual datatypes instances. 
+
+In a dependently typed setting we can define generic functions over the universe of codes and the associated decoded datatype. In other words, the codes give us enough information, about the structure of its decoded datatype, to be able to properly transverse it.
+
+ {\small \texttt{equal : (code : Universe) $\rightarrow$  decode code $\rightarrow$\ decode code $\rightarrow$\ Bool}}
+
+Above we present an outline of the described technique, showing the generic signature of the syntactical equality boolean test over some universe instance \texttt{code}. This is a simple example of a generic function embeded in several programming languages, as in Haskell, where its definitions is automatically derived by the compiler. 
+
+More interesting examples include generic iterations and recursion principles directly derived from inductive types. Indeed, the transverse of a recursive structure is a classic operation that can be described in for any recursive structure. Therefore, generic programming avoids code duplication by allowing us to abstract common operations in datatypes. However, one can argue how many other practical behaviors can be generalised from such general structures. In this work we enrich a universe of data types with variables and scoping information, in this way we are able to introduce nominal techniques over any abstract syntax with binders, as presented in~\ref{sec:nominal} for lambda calculus example.
+
+The first use of generic programming in a dependently typed setting is presented in~\cite{PfeiferRuess:WGP98}, and it uses the programming language LEGO. The universe presented describes datatypes that are sum of products, which it corresponds to an ``either of certain tuples'' informal description. In~\cite{Dybjer91inductivesets,Bove:2009} there are presented several universes with more expressive power, for example, enabling the description of families of datatypes, introducing ``parameters'' on datatypes descriptions. Whereas, in~\cite{Morris:2004} an universe construction allowing mutual inductive datatypes is presented.
+
+As seen before, the particular universe election has a direct impact on the datatypes it can express, and also on the set of supported generic functions. We present in this chapter a \emph{Regular Trees} universe~\cite{Morris:2004}, enriched with variables and binders information. We define generic formation, elimination, and induction operations over the introduced universe. Moreover, our universe extension also allows us to introduce an \alp-equivalence relation based on the swapping operation. Then, as done in previous chapters for the \lc, we derive an \alp-recursion/induction principles trying to capturing the BVC variable convention. During the following sections we are going to develop : \lc\ and System F languages examples in our universe, showing how we derive the naive substitution operation, but also, the capture avoiding one, and several results proved at the generic level. We also prove specific lemmas using a presented \alp-induction principle for  our universe construction, showing in this way practical usages of the proposed binder framework.  This examples proves the flexibility of our approuch, as we are able prove particular lenguage results as is commonly done in pen-and-paper. Some notation from the codes of our universe permates our proofs, but this only involves notation overhead, and do not modify the proofs basic structure and its underneath general ideas.
+
+\section{Related work} \label{sec:relatedwork}
+
+The implementation of meta-programs, that is programs that manipulate syntax terms, requires common operations that are not specific to a single language, but are common to several ones. As meta-programs are common pieces of software nowadays, there exist several examples of works supporting general syntax based manipulations. These developments are based on different representations, next we present a line of work using first-order named syntax with nominal techniques.
+
+Programming languages supporting native constructions to declare and manipulate abstract syntax with binders are presented in~\cite{ShinwellPG03,SHINWELL200653}, where an ML extension \emph{FreshML}, and an O'Caml extension \emph{Fresh O'Caml} are correspondly develped. These languages allow to deconstruct datatypes with binders in a safe way, that is, in the case of an abstraction inspection, a variable swapping operation with a fresh generated binder is computed in the abstraction body. In this way, the language user has only access to a fresh binder, and the correspondly renamed body of the opened abstraction. This mechanism grants that values with binders are operationally equivalent if and only if they represent \alp-equivalent objects. This result is proved in~\cite{ShinwellPG03} by introducing a denotational semantics of the object language FreshML into FM-sets (Fraenkel and Mostowski sets). They prove that this denotational semantics matches the operational one. In this way, they are able to prove that values of the introduced abstract syntax with binders datatypes properly represent \alp-equivalence classes of the object-level syntax. Whereas, in~\cite{Cheney} a similar work is done, but insted of developing a language extension, they implement a Haskell library called \emph{FreshLib}. As they do not implement a language from zero, in order to support the required genericity, this work introduces generic programming techniques in its implementation.
+
+All previous works address common operations dealing with general structures with binders. Although some of these developments give informal proofs about the soundness of their approaches, their main concern is the implementation of meta-programs. Whereas, in~\cite{Lee2012}, Olivera et al.  use generic programming to developed mechanisations of formal meta-theory in Coq proof assistant. This work allows to choose between locally nameless or de Bruijn first-order syntaxes, for which they offer several infrastructure operations and associated lemmas. For instance, for the locally nameless setting two different substitutions operations are needed for bound and free variables correspondly. In the case of System F, where terms and types variables have binding constructions, this representation involves six different types of substitution operations. Hence, as the number of syntactic sorts supporting binding constructions increases, there is a combinatorial explosion of the number of operations and lemmas involved. This work primary concern is to address this issues, defining this operations and associated infrastructure lemmas in a generic re-usable way. Moreover, they provide a small annotation language to describe the binding structure of some object language, from which they can automatically derive an isomorphism between the object language and their generic universe syntaxes. They successfully instantiate some cases of the POPLmark challenge their framework, validating their approach, and comparing it against with other solutions. However, their particular choice of universe makes impossible to have more than one sort of binder per datatype, so it is impossible to represent in their setting a language such as Session Types~\cite{YOSHIDA200773}, where there exist three distinct sort of binders: parameters, channels and ports within a concurrent calculus, as we will see in detail in next section. We believe their work address reusing and usability in great maner for de Brujin related representations, but lacks of extensibility. The user of this framework can re-use several operations and lemmas that hide the underneath de Bruijn representations, much in the spirit of Gordon's axiomatisation does for $\lambda$-calculus in~\cite{gordon:mechanisation:1993}. But in order to introduce new operations or to prove new lemmas, the user has to prove them at the their generic abstract syntax language level, that is, it has to deal directly with the not so intuitive de Bruijn representation chosen in this work.
+
+In~\cite{licata-harper-09}, they codify in Agda a universe mixing binding and computations constructions, where computations are represented as meta-level functions injected in their universe constructions. Their representations is based on well-scoped de Bruijn representation, that is, de Bruijn terms associated with a context indexing its free variables. For this universe, they  provide generically substitution operation, weakening and strengthening context lemmas.
+
+Our work uses generic programming technique to develop abstract syntax with binders meta-theory in a generic way, as previously described works. But we chose to maintain names for binders like is commonly done in informal practice.
+
+  % The more similar work is~\cite{Lee2012} but for a de Brujin representation of binders.
+
+  % \begin{itemize}
+  % \item Give generic operations and lemmas for locally-nameless and de Brujin representations.
+  % \item No alpha-conversion, swap treatement.
+  % \item Different implementation for the Functors with binders of differents sorts, can only have one Binder per Regular Tree (support System F, but no Session Types that has channels and ports)
+  % \item No generic fold operations nor induction principles (no extensibile).
+  % \item Has two interfaces user/internal given an isomorphism (easy usage).
+  % \end{itemize}
+
+\section{Regular Trees Types with Binders}
+
+As in Olivera et al.~\cite{Lee2012}, we choose a simplification of the universe of regular tree datatypes presented in~\cite{Morris:2004}. In its original setting, it can represent recursive types using $\mu$-types (from~\cite{Pierce:2002}). However, insted of the nominal approach traditionally used with recursive type binders, this universe uses a well-scoped de Brujin representation. Therefore,  in order to properly interpret the full universe, it is required a definition indexed by a context with the multiple $\mu$-recursive positions definitions. Our next presentation in Agda, shown in figure~\ref{fig:regulartree}, simplifies this burden at the expense of not being able to represent mutually recursive datatypes. In other words, our universe construction admits only a single top-level $\mu$-recursive type binder. However, it is rich enough in structure to address common languages without mutually recursive datatypes as: $\lambda$-calculus, System F and Session Types processes.
+
+\begin{figure}[h]
+
+\AgdaTarget{Functor} 
+\ExecuteMetaData[GPBindings.tex]{functor}
+
+  \caption{Regular tree universe with binders.}
+\label{fig:regulartree}
+\end{figure}
+
+The first four base constructors in figure~\ref{fig:regulartree} represent the embeding of: the unity type, a recursive position, an arbitrary datatype, and a datatype representable in our universe. The next two constructors represent the correspondly sum and product types . Finally, the last two introduction rules are specific to our desired domain of abstract syntaxes with binders. As our universe supports different sorts of variables, the variable and binders constructions receives the sort of variables that it introduces or binds respectively. The binder constructor also receives the descriptor of the binded subterm. 
+
+For example, the type representations of naturals and lists of naturals can be defined in the presented universe as follows:
+
+\[
+\begin{array}{rcl}
+  \text{FNat} &=& |1|\ |{+}|\ \text{|R|} \\
+  \text{FListNat} &=& |1|\ |{+}|\ (\text{|Ef|}\ \text{FNat})\ |{\times}|\ \text{|R|}
+\end{array} \]
+
+Next, we extract from~\cite{Pierce:2002} the more familiar naturals numbers and lists of naturals datatypes definitions. It can be easly recognised the analogies between both definitions
+
+\[
+\begin{array}{rcl}
+ \text{Nat} &=& \mu R . (1 + R)  \\
+ \text{ListNat} &=& \mu R . (1 + \text{Nat} \times R)
+\end{array} 
+\]
+
+ Next, we introduce the missing $\mu$-operator in our definition. For this, we mutually define in figure~\ref{fig:inter} the decoding or interpretation function \AgdaFunction{⟦\_⟧}, and the fixed point $\mu$-operator for our universe. We following give a brief descritpion of the decoding functions cases. The unit case \AgdaInductiveConstructor{|1|} just returns the unit type in Agda. While, the embeding cases correspondly returns the injected set and the fixed point of the embeded universe descriptor. In the recursive case \AgdaInductiveConstructor{|R|}, we imposes the fixed point semantic by returning the \AgdaDatatype{Set} function argument. For the the sum and product cases we return the Agda's disjoint sum and product datatype constructions over the correspondly recursive calls. Finally, in the last two rules of the decoding function definition, we can observe how the variable and binder constructions injects the fixed set of variables $V$\ in the interpreted datatype. We assume $V$\ a denumerable set of variables with decidable equality. 
+
+Note in this last two definition cases that the sort argument $S$\ has no impact in the interpreted set. Indeed, we have only one kind of variables $V$. Whereas, this sort identifier will be relevant to implement generic operactions related to bindigs issues in next sections. 
+
+In fact the presented universe construction describes a function from set to set. Indeed, the proper codified set must be interpreted as the fixed point of the described decoding function for our universe. This function can be viewed as a \emph{functor} in category theory, and as we will see in next section, it consequently supports classics map and fold operations. 
+
+
+\begin{figure}[h!]
+  \ExecuteMetaData[GPBindings.tex]{interpret}
+
+  \vspace{5mm}
+
+  \AgdaTarget{μ} 
+  \ExecuteMetaData[GPBindings.tex]{mu}
+  \caption{Regular tree universe interpretation.}
+\label{fig:inter}
+\end{figure}
+
+Next, we properly define the naturals and the list of naturals numbers as the fixed-point of previously introduced functors reassembling Pierce's constructions. Note that no name is needed in the outer $\mu$-constructor as our universe admits only one top-level $\mu$-recursive type binder.
+
+\[
+\begin{array}{rcl}
+  \text{Nat} &=& \mu\ \text{FNat} \\
+  \text{ListNat} &=& \mu\ \text{FListNat}
+\end{array} \]
+
+In the following example, we illustrate the use of our universe, and in particular of the introduced variables and binders constructions, by codifing in it the $\lambda$-calculus. We show in comments the corresponding classic concrete syntax rule definition. This definition has only one sort of variables identified with the sort \AgdaDatatype{SortTermVars}.
+
+\ExecuteMetaData[Examples/LambdaCalculus.tex]{lambdacalculus}
+
+We next introduce infixed introduction rules reassembling the classic concrete syntax, and hiding our universe codes constructions.
+
+\ExecuteMetaData[Examples/LambdaCalculus.tex]{lambdaconst}
+
+Following we present the codification of the System F language. As this language needs bindings also at the type level, this codification exemplifies the use of two distinct sorts of binders: \AgdaDatatype{SortTypeVars} and \AgdaDatatype{SortTermVars}.
+
+\ExecuteMetaData[Examples/SystemF.tex]{systemF}
+
+Our universe construction departs from the presented by Olivera et al. in several aspects. First, in their work the variable construction is defined at the top-level, that is, in the $\mu$\ datatype. Hence, they fix in their universe construction that for any described datatype, its elements are either a variable or an element following the structure given by some given functor. By doing so they are able to define the substitution operation in a generic way. However, this election makes their work depart from a more category theory approach. In contrast, we maintain our framework compatible to a categorical setting, showing latter how easily we can recover the substitution operation as an instance of the more general fold operation. Second, our binders and variables constructions have a sort argument to distinguish between distinct sorts of variables. Olivera et al. chose to differentiate distinct binders by the functor descriptor of the binded structure. This choice make impossible to modelate more than one sort of binders for the same datatype, as it is the case of Session Types processes~\cite{YOSHIDA200773}. In figure~\ref{fig:sessiontypesproc} we show the syntax of precesses in this language, which has three kinds of bindable names: parameters $x$ , channels $k$ and ports $a$.
+
+\begin{figure}[h]\centering 
+      $\begin{array}{lcll}
+        P &{:\!\!-}& \text{request}\ a(k)\ \text{in}\ P  & \text{(binds channel $k$\ in $P$)} \\
+        &|&  \text{accept}\ a(k)\ \text{in}\ P  & \text{(binds channel $k$\ in $P$)} \\
+        &|& k!(x)\ \text{in}\ P & \text{(binds parameter $x$\ in $P$)} \\
+        &|& (\nu k) P & \text{(binds channel $k$\ in $P$)} \\
+        &|& (\nu a) P & \text{(binds port $a$\ in $P$)} \\
+        &|& \dots & \\
+      \end{array}$
+\caption{Session Types processes.}
+\label{fig:sessiontypesproc}
+\end{figure}
+
+So we can model this concurrent processes language in our universe. However, as in Olivera et al. work, we can not model the syntax of types of Session Types, shown in figure~\ref{fig:sessiontypes}, as it involves a mutual recursive datatype.
+
+\begin{figure}[h!]
+  \centering
+  \begin{tabular}{ccc}
+
+%    Types && Session Types \\
+
+    $\begin{array}{lcl}
+      T &{:\!\!-}& S  \\
+      &|&  Nat \\
+      &|& \dots \\ 
+      &|& \dots \\
+    \end{array}$
+    &      &
+    $\begin{array}{lcl}
+      S  &{:\!\!-}& \mathit{end}  \\
+      &|& ?T.S    \\
+      &|& !T.S    \\
+      &|& \dots \\
+    \end{array}$ \\
+
+  \end{tabular}
+  
+  \caption{Session Types.}
+\label{fig:sessiontypes}
+\end{figure}
+
+
+
+\subsection{Map and Fold Operations.}
+\label{sec:map-fold}
+
+In figures~\ref{fig:fold} and~\ref{fig:fold2} we respectively present the classics map and fold operations as they are commonly introduced in category theory. Our definition only adds two extra rules, for the correspondly introduced variables and binders constructions.
+
+\begin{figure}[h!]
+    \ExecuteMetaData[GPBindings.tex]{foldtermination}
+\caption{Classic map operation.}
+\label{fig:fold}
+\end{figure}
+
+\begin{figure}[h!]
+    \ExecuteMetaData[GPBindings.tex]{foldtermination2}
+\caption{Classic fold operation.}
+\label{fig:fold2}
+\end{figure}
+
+
+Unfortunately this classic definition of fold does not pass Agda's termination checker. The recursive call to \AgdaFunction{foldT} is passed to the higher order function \AgdaFunction{mapF}, and because of this reason the termination checker can not see how \AgdaFunction{mapF} is using it. 
+
+To make fold operation passes the termination checker we have to fuse map and fold operations into a single one function, called \AgdaFunction{foldmap} in figure~\ref{fig:foldt}, as done in~\cite{Norell2009} for a similar Regular Tree universe.  This compouse function needs to keep two functors, since the fold or recursive part works always over the same functor argument $F$. While, for the map part, the auxiliar functor argument $G$\ gives the position during the transverse on the structure of the datatype, that is, over the structure of the original functor $F$. Therefore, this function only uses the functor $F$\ in the recursive case rule --the \AgdaInductiveConstructor{|R|} case-- in which it can be recognised, at the right side of it, a definition similar to the original fold one, which begins a new transversing of the original functor $F$, and therefore, reiniting the transverse on the functor $F$\ by providing with a fresh copy of functor $F$\ in the position of the auxiliar argument $G$. Whereas, the rest of the rules are equivalent to a map operation over the functor $G$. Observe this definition terminates because of the argument of type \AgdaDatatype{⟦ G ⟧ (μ F)} decreases in each call. 
+
+Finally, the new \AgdaFunction{fold} operation is defined as a recursive instance of \AgdaFunction{foldmap}, as shown in figure~\ref{fig:foldt2}. 
+
+
+
+\begin{figure}[h]
+  \ExecuteMetaData[GPBindings.tex]{foldmap}
+  \caption{Terminating fold-map operation.}
+\label{fig:foldt}
+\end{figure}
+
+\begin{figure}[h]
+  \ExecuteMetaData[GPBindings.tex]{foldmap2}
+  \caption{Terminating fold operation.}
+\label{fig:foldt2}
+\end{figure}
+
+
+In figure~\ref{fig:vars} we retake the $\lambda$-calculus example introduced in previous section. We define a function \AgdaFunction{vars} that counts the number of variables occurrences in a term. We do so by properly instantiating it as a case of the introduced \AgdaFunction{fold} operation. This operation could also be defined equivalently by an explicit recursion on terms.
+
+%\ExecuteMetaData[Examples/LambdaCalculus.tex]{vars}
+\begin{figure}[h]
+  \ExecuteMetaData[Examples/LambdaCalculus.tex]{varsfold}
+    \caption{Fold application example.}
+\label{fig:vars}
+\end{figure}
+
+\section{Primitive Induction}\label{sec:pimind}
+
+In this section we develop a more generic elimination rule than the presented iteration in last section. This elimination rule captures proof by induction, and is based on the recursion one given in~\cite{Benke:2003}. However, our development depart from previous work in the significant next points: first, they derive one for a simpler universe construction, based on one-sorted term algebras, and defined through the more simpler signatures, and not functors as we do. For instance, their universe does not allow the injection of previously defined datatypes. This is the case in the list of naturals datatype, where naturales are injected inside lists constructions. Second, their principle does not pass the termination checker due to a similar reason to the given for the first version of fold operation.
+
+    % \begin{itemize}
+    % \item using functors not signatures
+    % \item terminating (fuses fold and map)
+    % \item induction principle, whereas~\cite{Benke:2003} presents a generic proof for some decidable property (like vars' and vars)
+    % \end{itemize}    
+
+
+First, we must introduce in figure~\ref{fig:fih} the auxiliar function \AgdaFunction{fih}. This function, given a predicate $P$\ over the fixpoint of a functor $F$, constructs a corresponding predicate \AgdaDatatype{⟦ G ⟧ (μ F) → Set}. This predicate represents the predicate $P$\ holding for every recursive  position \AgdaDatatype{μ F} in an element of datatype \AgdaDatatype{⟦ G ⟧ (μ F)}.
+
+\begin{figure}[h!]
+  \ExecuteMetaData[GPBindings.tex]{primIndih}
+  \caption{Induction principle auxiliar function.}
+\label{fig:fih}
+\end{figure}
+
+We can now present our induction principle over the chosen universe. We do so in a similar way to previously done with the interation principle. First, in figure~\ref{fig:ind} we introduce the fold-map fusion \AgdaFunction{foldmapFh}. While in figure~\ref{fig:ind2} we use previous function to directly derive the final induction principle as a recursive instance of the fold-map fusion one. 
+
+\begin{figure}[h!]
+  \ExecuteMetaData[GPBindings.tex]{primInd}
+  \caption{Fold-map fusion.}
+\label{fig:ind}
+\end{figure}
+
+\begin{figure}[h!]
+  \ExecuteMetaData[GPBindings.tex]{primInd2}
+  \caption{Induction principle.}
+\label{fig:ind2}
+\end{figure}
+
+
+
+We next give a simple use example of the presented induction principle. In this example we prove that the application of \AgdaFunction{vars} function to any lambda term is grater than zero. We introduce the predicate \AgdaFunction{Pvars} in figure~\ref{fig:prop} representing the property to be proved, and then we introduce the required auxiliar lemma \AgdaFunction{plus>0}, stating that the sum of two positive numbers is also positive. Then, the proof of \AgdaFunction{Pvars} predicate is a direct application of the induction principle as we show in figure~\ref{fig:proof}. The variable case is direct, while the application case is the application of the introduced lemma \AgdaFunction{plus>0} to the inductive hypotheses. Finally, the abstraction case is a direct application of the inductive hypothesis.
+
+\begin{figure}[h!]
+\ExecuteMetaData[Examples/LambdaCalculus.tex]{varsproof}
+\caption{Predicate to be proved and an auxiliar lemma.}
+\label{fig:prop}
+\end{figure}
+
+\begin{figure}[h!]
+\ExecuteMetaData[Examples/LambdaCalculus.tex]{proof}
+\caption{Proof using the introduced induction principle.}
+\label{fig:proof}
+\end{figure}
+
+As in the definition of \AgdaFunction{vars} before, this proof could also be done by a direct induction on terms. However, these previous introduced elimination principles will be the base from we will develop more relevant ones in the further sections.
+
+\section{Fold with Context Information and a Functorial Return Type}
+
+In this section we present a particular useful instantiation of previously introduced fold operation. This instantiation aims to reproduce nominal techniques in our work. %A key concept in nominal theory is that any element has finite support, that is, there exists a finite set of atoms occuring in any object in this theory. Hence, for any permutation that do not change the finite set of atoms occuring in some element, the application of this permutation will have no efect in the considered element.
+
+% Another remarkable property in this theory is that function application is respected by swapping operation, that is:
+
+% \begin{equation}
+% \label{eq:applicationswap}
+%  (a\ b)(f (x)) = ((a\ b) f) ( (a\ b) x ) 
+% \end{equation}
+
+% Where $(a\ b) f$\ is defined such that $((a\ b) f)(x) = (a\ b) (f ((a\ b) x))$.
+
+%Fold with Context $\mu C$ and a Functorial Return Type $\mu H$
+\begin{figure}[h]
+  \ExecuteMetaData[GPBindings.tex]{foldCtx}
+  \caption{Fold particular instance.}
+  \label{fig:foldCtx}
+\end{figure}
+
+We present its definition in figure~\ref{fig:foldCtx}. It introduces an extra argument compared to previous fold function with type \AgdaDatatype{μ C}. The folded operation $f$\ is partially applied to this context argument, and then passed to previous fold function. Hence, this arguments acts as an explicit invariant context for function $f$\ through the entire fold operation. Another difference with the original fold operation is that the result of this instance must be a datatype \AgdaDatatype{μ H} codified in our universe.
+
+From this fold instance we can directly derive the naive substitution operation. For this, we must first give the functor descriptor \AgdaDatatype{cF} for the context argument of this fold instance, which represents the pair of the substituted variable and the term for which it is substituted with. 
+
+\ExecuteMetaData[Examples/LambdaCalculus.tex]{substcontext}
+
+Then, we define the folded auxiliary function \AgdaFunction{substaux} in figure~\ref{fig:substaux}, which constructs the substitution result given a structure with the same shape of a term, but with the recursive calls results in its recursive positions. The application and abstraction cases return the identity, but using the introduced constructors hiding the universe code constructions for $\lambda$-calculus. 
+
+\begin{figure}[h]
+  \ExecuteMetaData[Examples/LambdaCalculus.tex]{substaux}
+  \caption{Naive substitution auxiliar function.}
+\label{fig:substaux}
+\end{figure}
+
+Note that, as in Barendregt's substitiution definition, in the abstraction case we do not check that the abstracted variable is different from the substituted one. In fact, this comparission would be pointless, as we do not have the original abstraction body subterm because we are using an iteration principle. While, for the interesting variable case, as commonly done we compare the variables and apply the substitution if it is the case. 
+
+Finally, we instantiate the introduced fold instance with previously given \AgdaFunction{substaux}, and its appropiate context pair. This definition is equivalent to the presented by Barendregt in~\cite{bar:84}.
+
+\begin{figure}[h!]
+  \ExecuteMetaData[Examples/LambdaCalculus.tex]{naivesubst}
+   \caption{Naive substitution.}
+ \label{fig:naivesubst}
+ \end{figure}
+
+
+\section{Nominal Techniques}
+
+In this section we develop some nominal techniques concepts over the introduced universe. We begin with the most basic swapping operation in figure~\ref{fig:swap}. 
+
+This operation completely transverses a functorial structure swapping occurrences of variables and binders of some given variables sort. For this operations is fundamental the sort type information stored in the binders and variables constructions of the universe. Its implementation is similar to fold's implementation. We use an auxiliar \AgdaFunction{swapF} function that takes an extra functorial argument $G$, and transverses its structure until recursive or embeded positions are reached, from where we reinit this auxiliar argument with the original recursive functor $F$\ or the embeded functor correspondingly. Note that in the last case of an embeded functor it departs with fold definition, where this case was a base one. 
+
+In the variable and abstractions cases we use the swapping operations over variables, introduced in chapter~\ref{ch:alphainductionsubst}.
+
+\begin{figure}[h]
+  \ExecuteMetaData[Swap.tex]{swap}
+  \caption{Swapping operation.}
+\label{fig:swap}
+\end{figure}
+
+Once defined the swapping operation we are able to generically prove the lemma in figure~\ref{fig:swapfold}. This lemma states that the fold operation is well-behaved with respect to swapping operation, given that the correspondly folded operation is also well-behaved. The proof is a direct induction on terms.
+
+\begin{figure}[h]
+  \ExecuteMetaData[Swap.tex]{swapfoldequiv}
+  \caption{Fold is well-behaved with respect to swapping operation.}
+\label{fig:swapfold}
+\end{figure}
+
+We alse introduce a similar lemma in figure~\ref{fig:swapfoldCtx} for the fold instance presented in previous section. This lemma simply adds the swapping of the context extra argument to the folded operation to previous lemma. 
+
+\begin{figure}[h]
+  \ExecuteMetaData[Swap.tex]{swapfoldCtx}
+  \caption{Fold instance is well-behaved with respect to swapping operation.}
+\label{fig:swapfoldCtx}
+\end{figure}
+
+Its proof follows by direct a equational (fig.~\ref{fig:swapfoldCtxproof}) derivation using previous lemma, and the proof that $f$\ is well-behaved with respect to swapping operation. Hence, we have developed generic functions in our universe with binders, and proved generic lemmas about its interaction with previous introduced iteration principles. 
+
+\begin{figure}[h]
+  \ExecuteMetaData[Swap.tex]{swapfoldCtxproof}
+  \caption{Proof of fold instance is well-behaved.}
+\label{fig:swapfoldCtxproof}
+\end{figure}
+
+
+We now exemplify the use of this lemma to the previously introduced $\lambda$-calculus example, directly deriving the lemma in figure~\ref{fig:swapsubst}. This lemma enounces that the swapping operation conmutes with substitution operation, and was particular useful in previous chapters. In its proof we can see the usage of \AgdaFunction{lemma-substauxSwap} which states that the auxiliar function \AgdaFunction{substaux} (fig.~\ref{fig:naivesubst}) used to define the substitution operation is well-behaved with respect to swapping operation. 
+
+\begin{figure}[h!]
+  \ExecuteMetaData[Examples/LambdaCalculus.tex]{swapsubst}
+  \caption{Substitution operation is well-behaved with respect to swapping operation.}
+\label{fig:swapsubst}
+\end{figure}
+
+% Sort Free Variables
+
+%   {\scriptsize \ExecuteMetaData[FreeVariables.tex]{freevariables}}
+  
+
+
+% Free Variables
+
+%   {\scriptsize \ExecuteMetaData[FreeVariables.tex]{freevariablesneq}}
+  
+
+% \section{Generic Properties and Relations}
+
+% Fresh
+
+%We  now
+
+  
+%\ExecuteMetaData[Fresh.tex]{fresh}
+
+% Alpha
+
+Previous example shows how feasible is to instantiate generic proofs, and derive useful lemmas in particular instances of our generic universe. 
+
+\section{Alpha Equivalence Relation.} \label{sec:alpha}
+
+We introduce in figure~\ref{fig:alpha} the generic definition of the fundamental \alp-equivalence relation over our universe, named \AgdaDatatype{∼α}. Its definition follows a similar process to the one used before to implement generic functions over our universe. First, we define an auxiliar relation \AgdaDatatype{∼αF}, which is inductively defined introducing an auxiliar functor $G$, which is used to transverse the functor $F$\ structure. For the interesting binder case, we follow a similar idea to the used in chapter~\ref{ch:alphainductionsubst}, that is, we define that two abstractions are \alp-equivalent if there exists some list of variables $xs$\ such that: for any given variable $z$\ not in $xs$, the result of swapping in the abstraction bodies the corresponding binders with $z$\ is \alp-equivalent. Note the swapping operation is done only over the sort of variables binded by this binder position, leaving any other sort of variables unchanged.
+
+\begin{figure}[h]
+  \ExecuteMetaData[Alpha.tex]{alpha}
+  \caption{Alpha equivalence relation.}
+\label{fig:alpha}
+\end{figure}
+
+We are able to prove that this is an equivalent relation, and also preserved under swapping operation in a similar way as previously did in chapter~\ref{ch:alphainductionsubst}.
+
+As we do before with swapping, we now prove how the presented iteration principles behaves under \alp-conversion. We begin proving that the fold operation is \alp-compatible if applied to \alp-compatible functions. In figure~\ref{fig:foldmapalphaf} we prove this lemma for the fold-map fusion. It is a direct induction on terms. In the functor embeding case ({\AgdaInductiveConstructor{|Ef|} $G$) we use the reflexive property of \alp-conversion. The only interesting case is the last binder case, which is direct by using the \alp-conversion relations is preserved by swapping operation. 
+
+\begin{figure}[h!]
+  \ExecuteMetaData[Alpha.tex]{lemafoldmapfalpha}
+  \caption{Fold map function \alp-compatible property.}
+\label{fig:foldmapalphaf}
+\end{figure}
+
+Finally, in figure~\ref{fig:foldalphaf} we proof this lemma for the fold as a direct recursive case instance of previous fold-map lemma.
+
+\begin{figure}[h!]
+  \ExecuteMetaData[Alpha.tex]{lemma-foldfalpha}
+  \caption{Fold function \alp-compatible property.}
+\label{fig:foldalphaf}
+\end{figure}
+
+We can directly derive as a corollary of previous lemma the result in figure~\ref{fig:foldalphaf}. This lemma states that our fold instance in figure~\ref{fig:foldCtx} is \alp-compatible in its context argument if the folded function is also \alp-compatible in its arguments.
+
+\begin{figure}[h!]
+  \ExecuteMetaData[Alpha.tex]{lemmafoldCtxalphactx}
+  \caption{Fold context function \alp-compatible corollary.}
+\label{fig:foldalphaf}
+\end{figure}
+
+In a similar way to how we introduce before the \alp-equivalence relation we define other relations over our universe. For instance, we present in figure~\ref{fig:freshness} the signature of a freshness relation. This relation holds if a variable $x$\ of some sort $S$\ does not occur free associated to this sort in a term. Note that it could be free but associated to other sort of variables.
+
+\begin{figure}[h]
+  \ExecuteMetaData[Fresh.tex]{freshsignature}
+  \caption{Freshness relation.}
+\label{fig:freshness}
+\end{figure}
+
+The \AgdaDatatype{notOccurBind} relation holds if some given variable does not occur in a term binder position associated to any sort of variables. In this relation we took a different approach to the taken in the freshness relation definition, as we discard the variables sort information. We do so to simplify the our next development as we will explain latter.  %as if we use the sort information regarding binded positions, we would have to introduce several freshness context, one for each sort of variable. 
+
+\begin{figure}[h]
+  \ExecuteMetaData[OccurBind.tex]{notOccurBind}
+  \caption{Occurr Bind.}
+\label{fig:notOccurrBind}
+\end{figure}
+
+
+We introduce an useful extension fo previous relation to lists of variables, named as \AgdaDatatype{ListNotOccurBind}, which holds if some list of variables do not occur in a term binder possition associated with any sort. 
+
+Using this last freshness relation we are able to prove the lemma in figure~\ref{fig:foldalphacomp}. This lemma states the fold with context principle is \alp-compatible in its two arguments if the provided function is \alp-compatible and well-behaved with respect to swapping operation. Note that this lemma extends the given before in~\ref{fig:foldalphaf}, but for this it requires extra freshness premises, and that the folded operation is preserved under swapping operation.
+
+\begin{figure}[h!]
+  \ExecuteMetaData[Alpha.tex]{lemmafoldCtxalpha}
+  \caption{Fold context \alp-compatible property.}
+\label{fig:foldalphacomp}
+\end{figure}
+
+%\ExecuteMetaData[OccurBind.tex]{notOccurBind}
+  
+
+%\ExecuteMetaData[OccurBind.tex]{listnotocurrbind}
+  
+\section{Alpha Fold} \label{sec:alphafold}
+  
+In this section we present a fold operation that works at the level of \alp-equivalence classes of terms, that is, it defines \alp-compatible functions. 
+
+First, we introduce the function \AgdaFunction{bindersFreeαElem} that takes a list of variables $xs$\ and an element $e$, and returns an \alp-compatible fresh element, with its binders not in the given list. This freshness function will be useful to reproduce the BVC premise presented in the introduction chapter, which basically states that we can always pick a term with its binders fresh from a given context. 
+
+\ExecuteMetaData[AlphaInduction.tex]{bindersfreealphaelem}
+
+%\ExecuteMetaData[AlphaInduction.tex]{lemmabindersfreealpha}
+%\ExecuteMetaData[AlphaInduction.tex]{bindersalpha}
+
+This function has the important property of being strong \alp-compatible, i.e. it returns the same result for \alp-convertible terms. Now, based on this freshness function, we direct implement the fold principle in the following in figure~\ref{fig:foldalpha}. 
+  
+\begin{figure}[h]
+  \ExecuteMetaData[AlphaInduction.tex]{foldCtxalpha}
+  \caption{Fold alpha.}
+\label{fig:foldalpha}
+\end{figure}
+
+This iteration principle first finds a fresh term for a given context $c$, and then directly applies the fold operation over it. We developed this iteration principle following another approach to the previously taken in chapter~\ref{ch:alphainductionsubst}, where we renamed the binders during the fold transverse. In this development we choose to separate these two stages in order to re-utilise the previously introduced fold operation, and its properties.
+
+We can now properly justify the ``alpha'' name given to previous iteration principle. First, as \AgdaFunction{bindersFreeαElem} returns syntactical equal terms when applied to \alp-convertible terms. Hence, it is trivially strong \alp-compatible in its last term argument. Second, as a direct consequence the lemma already proved for our iteration principle \AgdaFunction{foldCtx} in figure~\ref{fig:foldalphaf}, this new principle inherits its \alp-compatibility in its context argument, given that the function passed is also \alp-compatible in its arguments. Thus, the presented iteration principle works at the real calculus level when the given a function working at the same level of \alp-equivalence classes.
+  
+%   \Wider[5em]{{\small \ExecuteMetaData[AlphaInduction.tex]{strongalphacompatible}}}
+
+%   Direct consequence of lemma \textsf{lemma-bindersFreeαElem}
+
+%   \hspace{5px}
+    
+%   \Wider[5em]{{\small \ExecuteMetaData[AlphaInduction.tex]{foldCtxalphastrongalphacompatible}}}
+    
+
+% \begin{figure}[h]
+%   \ExecuteMetaData[AlphaInduction.tex]{foldctxalpha-cxtalpha}
+%   \caption{Fold alpha is \alp-compatible in its context argument.}
+% \label{fig:foldalphacomp}
+% \end{figure}
+
+Now we are able to derive the proper capture avoiding substitution operation for the lambda calculus example by  a direct application of the introduced alpha fold principle. In fact this definition is exactly the same given before for the naive substitution operation in figure~\ref{fig:naivesubst}, but using now the alpha fold operation instead of the classic fold one.
+
+\ExecuteMetaData[Examples/LambdaCalculus.tex]{subst}
+
+The classic substitution lemmas stating that the substitution is well-behaved with respect to \alp-conversions (figure~\ref{fig:substprop}) are direct inherited from the \alp-compatible property of this induction principle.
+
+\begin{figure}[h]
+  \ExecuteMetaData[Examples/LambdaCalculus.tex]{substlemma1}
+
+  \hspace{150px}
+
+  \ExecuteMetaData[Examples/LambdaCalculus.tex]{substlemma2}
+  \caption{Subtitution lemmas.}
+\label{fig:substprop}
+\end{figure}
+
+
+Next lemma in figure~\ref{fig:foldfoldalpha} relates the presented alpha iteration principle with the previously defined one, giving sufficient conditions under which the two principles returns \alp-convertible terms. First, the folded function must be \alp-compatible in its two arguments, and also well-behaved with respect to swapping operation. Second, we need a freshness premise stating that the free variables in the context do not occur binded in the applied term.
+
+\begin{figure}[h]
+  \ExecuteMetaData[AlphaInduction.tex]{lemmafoldCtxalpha}
+  \caption{Fold and fold alpha relation.}
+\label{fig:foldfoldalpha}
+\end{figure}
+
+We can instantiate previous lemma to $\lambda$-calculus to obtain a corresponding lemma stating under which conditions the two presented substitution operations are \alp-convertible. Its proof requires two direct lemmas about \AgdaFunction{substaux} function, the first about its \alp-compatible property, and the second one about being well-behaved under swapping operation, which was already used to prove the subtitution lemma presented before in figure~\ref{fig:swapsubst}.
+
+\begin{figure}[h]
+  \ExecuteMetaData[Examples/LambdaCalculus.tex]{lemmanaivesubst}
+  \caption{Substitution operations \alp-equivalents.}
+\label{fig:substalpha}
+\end{figure}
+
+\section{Alpha Induction Principle}
+
+As did before in chapter~\ref{ch:alphainductionCR}, in this section we develop a similar \alp-induction principle for \alp-compatible predicates, that is, predicates that are preserved under \alp-conversion. We derive it in a similar way to the the given in section~\ref{sec:pimind} to develop an induction principle. Hence, we define the auxiliary function \AgdaFunction{fihα} extending some predicate $P$\ over a datatype \AgdaDatatype{μ F} to a predicate over the datatype \AgdaDatatype{⟦ G ⟧ (μ F)}. This predicate represents that the predicate $P$\ holds for every recursive position \AgdaDatatype{μ F} in a datatype \AgdaDatatype{⟦ G ⟧ (μ F)}. Besides, this function adds freshness assertions with respect to some given list $xs$\ in the recursive and binder cases of its definition. In the binder case, it states the binder it is not in the given list $xs$. While, in the recursive case, it states that any variable in the list $xs$\ does not occur in a binder position in its recursive term as it can be seen in figure~\ref{fig:alphaindaux}.
+
+
+\begin{figure}[h!]
+  \ExecuteMetaData[AlphaInduction.tex]{alphainductionhypotheses}
+  \caption{Alpha induction auxiliary function.}
+\label{fig:alphaindaux}
+\end{figure}
+
+
+We enunciate the induction principle in figure~\ref{fig:alphaind}. Its implementation is similar to how we derive the alpha fold from the fold operation. First, we invoke function \AgdaFunction{bindersFreeαElem} to get an \alp-equivalent term with enough fresh binders, and then we apply the induction principle (in fig.~\ref{fig:ind}) over the fresh term. Hence, as the predicate $P$\ is \alp-compatible, and we just proved the predicate over an \alp-equivalent term, the predicate also holds for the original term.
+
+\begin{figure}[h!]
+  \ExecuteMetaData[AlphaInduction.tex]{alphainductionprinciple}
+  \caption{Alpha induction principle.}
+\label{fig:alphaind}
+\end{figure}
+
+With a similar induction principle we were able to prove the Church-Rosser theorem in chapter~\ref{ch:alphainductionCR}. Therefore, we infer we could follow the same steps as done in previous chapter in this generic framework to achieve the Church-Rosser result. However, we sketch another approach in next section.
+
+\section{Alpha Proof}
+
+In figure~\ref{fig:alphaproof} we state a result that in a sense validates the BVC convention and common practices in pen-and-paper proofs. However, our lemma introduces an explicit premise about the \alp-compatibility of the predicate being proved which in general is not clearly explicited. This result certifies we can prove any \alp-compatible property for any enough fresh term, and consequently prove it for any term. The freshness premises states that for some given context, in the form of a list of variables, we can assume the binders of the considered term in the proof are not in the given context, neither in its own free variables.
+
+This result is directly derived by first finding a fresh \alp-compatible element, using the function introduced at the begining of section~\ref{sec:alphafold}. Then, we can apply the proof obligation in the premises to conclude that the property holds for this enough fresh element. Finally, as the predicate is \alp-compatible the predicate must also holds for the original \alp-compatible element.
+
+Note this is not an induction principle over a recursive datatype, and thus it can be used to prove properties by induction on relations, or to composite datatypes as it will be the case in the next presented example.
+
+
+\begin{figure}[h!]
+  
+  \ExecuteMetaData[AlphaInduction.tex]{alphaproof}
+  
+  \caption{Alpha proof principle.}
+\label{fig:alphaproof}
+\end{figure}
+
+
+
+% Example: System F, Alpha Compatible Substitution
+
+%   \Wider[5em]{{\small \ExecuteMetaData[Examples/SystemF.tex]{subst}}}
+
+
+  
+ %  \Wider[5em]{{\small \ExecuteMetaData[Examples/SystemF.tex]{substlemma1}}}
+  
+
+% Example: System F, Substitution Lemmas
+
+%   \Wider[7em]{{\small \ExecuteMetaData[Examples/SystemF.tex]{lemmasubstaux}}}
+
+%   \hspace{50px}
+  
+%   \Wider[7em]{{\small \ExecuteMetaData[Examples/SystemF.tex]{substlemma2}}}
+  
+
+
+% Example: System F, Substitution and relation with the naive one
+
+%   \Wider[5em]{{\small \ExecuteMetaData[Examples/SystemF.tex]{substauxSwap}}}
+
+
+  
+%   \Wider[5em]{{\small \ExecuteMetaData[Examples/SystemF.tex]{lemmasubsts}}}
+  
+We use this proof technique to prove the substitution composition lemma for the System F language. First, we prove this lemma for the naive substitution operation. In figure~\ref{fig:pred} we introduce the property to be proved which requires an extra freshness premise stating $x$\ does not ocurr binded in the term $L$.
+
+\begin{figure}[h!]
+  \ExecuteMetaData[Examples/SystemF.tex]{substnaivecompositionpredicate}
+  
+  \caption{Substitution composition predicate.}
+\label{fig:pred}
+\end{figure}
+
+We prove this property in figure~\ref{fig:substproof} using the classic induction principle given in section~\ref{sec:pimind}. This proof uses the auxiliar lemma \AgdaFunction{lemma-substCompositionNAux} resolving all the proof cases. In figure~\ref{fig:absnaivesubstproofcase} we show the interesting abstraction case of this auxiliar lemma. 
+  
+\begin{figure}[h!]
+  \ExecuteMetaData[Examples/SystemF.tex]{substcompositionNdef}
+  \caption{Naive substitution composition proof.}
+\label{fig:substproof}
+\end{figure}
+
+The abstraction case of this equational proof is done like common practice in pen-and-papers proofs: first pushing the substitution operation inside the abstraction, then by using the inductive hypothesis we know the composition of substitutions in the abstraction bodies are \alp-convertible, and hence we are able to reconstruct that the entire abstraction are \alp-convertible too, by the use of the auxiliar lemma \AgdaFunction{lemma∼+B}. Finally, we push back the substitution operations outside the abstraction to end the proof.
+% Naive Substitution Composition Lemma
+
+%   Abstraction proof case.
+
+%   \hspace{70px}
+  
+\begin{figure}[h]
+  \ExecuteMetaData[Examples/SystemF.tex]{substncompositionabstractioncase}
+  
+  \caption{Abstraction case of the naive substitution composition lemma.}
+\label{fig:absnaivesubstproofcase}
+\end{figure}
+
+Now we prove the substitution composition lemma for the correct substitution operation using the introduced alpha proof technique. We begin defining the functor describing a triplet of terms \AgdaDatatype{TreeTermF}. Then, we introduce the predicate \AgdaDatatype{PSComp} over a triplets of terms, stating the composition lemma now for the proper substitution operation, and with its classic premises.
+
+%   \hspace{50px}
+  
+\begin{figure}[h!]
+  \ExecuteMetaData[Examples/SystemF.tex]{substcompositionpredicate}
+  \caption{Substitution composition predicate.}
+\label{fig:substcomppred}
+\end{figure}
+
+% Substitution Composition Predicate Alpha Compatible
+In figure~\ref{fig:alpcompatible} we need to prove that \AgdaDatatype{PSComp} is \alp-compatible with respect to triples of terms. It can be seen in the proof parameters how we can pattern-match in the triplet \alp-equivalence premise in order to retrieve the \alp-compatibility of each of the terms in the triplet. The equiational proof basically uses previous substitution lemmas and the inductive hypothesis, and it is interleaved with commentaries explaining each step.
+
+\begin{figure}[h!]
+  \ExecuteMetaData[Examples/SystemF.tex]{substcompositionpredicatealpha}
+  \caption{\AgdaDatatype{PSComp} predicate is \alp-compatible.}
+\label{fig:alpcompatible}
+\end{figure}
+% Substitution Composition Lemma Proof
+
+While, in figure~\ref{fig:substcompproof} we show the core of the proof. It uses previous substitution lemmas to replace the proper substitution operations with the naive ones. This can be done because we have enough freshness premises, as in the introduced triplet context, all binders are different from the free variables in any of the involved terms, and also from variables $x,y$. Therefore, we are able to use the naive substitution composition lemma at the middle of the proof. Finally, we work analogous to the begining to recover the proper substitutuion operations from the naive ones. 
+
+There are a lot of hidden proofs in auxiliary lemmas, and boilerplate code about the handling of the freshness premises involved in the last proof which we do not explicit its proofs. These are hidden inside auxiliar lemmas as: \AgdaFunction{y:fvL∉bM[x≔N]ₙ} and \AgdaFunction{y:fvL∉bN} ocurring in this proof. For example, the first lemma requires to prove that neither the variable $y$\ nor the free variables in $L$\ ocurr binded in $M[x≔N]_n$, which it is easy to informally verify from the previously enumerated freshness premises. However, we believe further work is necessary to automatise some of these proofs, or even rewriting the freshness relations in order to alleviate its handling.
+
+\begin{figure}[h!]
+  \ExecuteMetaData[Examples/SystemF.tex]{substitutioncompositionproof}
+  \caption{Subsitution composition lemma proof.}
+\label{fig:substcompproof}
+\end{figure}
+
+Finally, in figure~\ref{fig:substcompproof} we use the introduced alpha proof principle (fig.~\ref{fig:alphaproof}) with previous proofs obligations to end the proof.
+
+\begin{figure}[h!]
+  \ExecuteMetaData[Examples/SystemF.tex]{substcompalphaproof}
+  \caption{Substitution composition final proof using alpha proof principle.}
+\label{fig:substcompproof}
+\end{figure}
+
+
+\bibliographystyle{alpha}
+\bibliography{resumen.bib}
+
+\end{document}

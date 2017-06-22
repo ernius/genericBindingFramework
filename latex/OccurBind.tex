@@ -1,0 +1,726 @@
+\begin{code}%
+\>\AgdaKeyword{module} \AgdaModule{OccurBind} \AgdaKeyword{where}\<%
+\\
+%
+\\
+\>\AgdaKeyword{open} \AgdaKeyword{import} \AgdaModule{GPBindings}\<%
+\\
+\>\AgdaKeyword{open} \AgdaKeyword{import} \AgdaModule{Fresh}\<%
+\\
+\>\AgdaKeyword{open} \AgdaKeyword{import} \AgdaModule{List.ListProperties}\<%
+\\
+%
+\\
+\>\AgdaKeyword{open} \AgdaKeyword{import} \AgdaModule{Function}\<%
+\\
+\>\AgdaKeyword{open} \AgdaKeyword{import} \AgdaModule{Data.Empty}\<%
+\\
+\>\AgdaKeyword{open} \AgdaKeyword{import} \AgdaModule{Data.Unit}\<%
+\\
+\>\AgdaKeyword{open} \AgdaKeyword{import} \AgdaModule{Data.Sum}\<%
+\\
+\>\AgdaKeyword{open} \AgdaKeyword{import} \AgdaModule{Data.Product} \AgdaKeyword{hiding} \AgdaSymbol{(}\AgdaFunction{swap}\AgdaSymbol{)}\<%
+\\
+\>\AgdaKeyword{open} \AgdaKeyword{import} \AgdaModule{Relation.Binary.PropositionalEquality} \AgdaKeyword{hiding} \AgdaSymbol{(}\AgdaInductiveConstructor{[\_]}\AgdaSymbol{)}\<%
+\\
+\>\AgdaKeyword{open} \AgdaKeyword{import} \AgdaModule{Data.List} \AgdaKeyword{hiding} \AgdaSymbol{(}\AgdaFunction{unfold}\AgdaSymbol{)}\<%
+\\
+\>\AgdaKeyword{open} \AgdaKeyword{import} \AgdaModule{Data.List.All}\<%
+\\
+\>\AgdaKeyword{open} \AgdaKeyword{import} \AgdaModule{Data.List.Any} \AgdaSymbol{as} \AgdaModule{Any} \AgdaKeyword{hiding} \AgdaSymbol{(}\AgdaFunction{tail}\AgdaSymbol{;}\AgdaFunction{map}\AgdaSymbol{)}\<%
+\\
+\>\AgdaKeyword{open} \AgdaModule{Any.}\AgdaModule{Membership-≡}\<%
+\\
+\>\<%
+\end{code}
+
+
+\begin{code}%
+\>\AgdaKeyword{data} \AgdaDatatype{∈bF} \AgdaSymbol{(}\AgdaBound{x} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{)\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}} \AgdaSymbol{:} \AgdaSymbol{(}\AgdaBound{G} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaFunction{⟦} \AgdaBound{G} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaPrimitiveType{Set} \AgdaKeyword{where}\<%
+\\
+\>[0]\AgdaIndent{3}{}\<[3]%
+\>[3]\AgdaInductiveConstructor{∈bFEf} \<[12]%
+\>[12]\AgdaSymbol{:} \<[15]%
+\>[15]\AgdaSymbol{\{}\AgdaBound{G} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{G}\AgdaSymbol{)\}}\<%
+\\
+\>[3]\AgdaIndent{15}{}\<[15]%
+\>[15]\AgdaSymbol{→} \AgdaDatatype{∈bF} \AgdaBound{x} \AgdaBound{G} \AgdaBound{e} \<[46]%
+\>[46]\AgdaSymbol{→} \<[49]%
+\>[49]\AgdaDatatype{∈bF} \AgdaBound{x} \AgdaSymbol{(}\AgdaInductiveConstructor{|Ef|} \AgdaBound{G} \AgdaSymbol{)} \<[68]%
+\>[68]\AgdaInductiveConstructor{⟨} \AgdaBound{e} \AgdaInductiveConstructor{⟩}\<%
+\\
+\>[0]\AgdaIndent{3}{}\<[3]%
+\>[3]\AgdaInductiveConstructor{∈bFR} \<[12]%
+\>[12]\AgdaSymbol{:} \<[15]%
+\>[15]\AgdaSymbol{\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}}\<%
+\\
+\>[3]\AgdaIndent{15}{}\<[15]%
+\>[15]\AgdaSymbol{→} \AgdaDatatype{∈bF} \AgdaBound{x} \AgdaBound{F} \AgdaBound{e} \<[46]%
+\>[46]\AgdaSymbol{→} \<[49]%
+\>[49]\AgdaDatatype{∈bF} \AgdaBound{x} \AgdaInductiveConstructor{|R|} \<[68]%
+\>[68]\AgdaInductiveConstructor{⟨} \AgdaBound{e} \AgdaInductiveConstructor{⟩} \<[85]%
+\>[85]\<%
+\\
+\>[0]\AgdaIndent{3}{}\<[3]%
+\>[3]\AgdaInductiveConstructor{∈bFinj₁} \<[12]%
+\>[12]\AgdaSymbol{:} \<[15]%
+\>[15]\AgdaSymbol{\{}\AgdaBound{G₁} \AgdaBound{G₂} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G₁} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}}\<%
+\\
+\>[3]\AgdaIndent{15}{}\<[15]%
+\>[15]\AgdaSymbol{→} \AgdaDatatype{∈bF} \AgdaBound{x} \AgdaBound{G₁} \AgdaBound{e} \<[46]%
+\>[46]\AgdaSymbol{→} \<[49]%
+\>[49]\AgdaDatatype{∈bF} \AgdaBound{x} \AgdaSymbol{(}\AgdaBound{G₁} \AgdaInductiveConstructor{|+|} \AgdaBound{G₂}\AgdaSymbol{)} \<[68]%
+\>[68]\AgdaSymbol{(}\AgdaInductiveConstructor{inj₁} \AgdaBound{e}\AgdaSymbol{)} \<[77]%
+\>[77]\<%
+\\
+\>[0]\AgdaIndent{3}{}\<[3]%
+\>[3]\AgdaInductiveConstructor{∈bFinj₂} \<[12]%
+\>[12]\AgdaSymbol{:} \<[15]%
+\>[15]\AgdaSymbol{\{}\AgdaBound{G₁} \AgdaBound{G₂} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G₂} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}}\<%
+\\
+\>[3]\AgdaIndent{15}{}\<[15]%
+\>[15]\AgdaSymbol{→} \AgdaDatatype{∈bF} \AgdaBound{x} \AgdaBound{G₂} \AgdaBound{e} \<[46]%
+\>[46]\AgdaSymbol{→} \<[49]%
+\>[49]\AgdaDatatype{∈bF} \AgdaBound{x} \AgdaSymbol{(}\AgdaBound{G₁} \AgdaInductiveConstructor{|+|} \AgdaBound{G₂}\AgdaSymbol{)} \<[68]%
+\>[68]\AgdaSymbol{(}\AgdaInductiveConstructor{inj₂} \AgdaBound{e}\AgdaSymbol{)} \<[77]%
+\>[77]\<%
+\\
+\>[0]\AgdaIndent{3}{}\<[3]%
+\>[3]\AgdaInductiveConstructor{∈bFx₁} \<[12]%
+\>[12]\AgdaSymbol{:} \<[15]%
+\>[15]\AgdaSymbol{\{}\AgdaBound{G₁} \AgdaBound{G₂} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e₁} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G₁} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}\{}\AgdaBound{e₂} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G₂} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}}\<%
+\\
+\>[3]\AgdaIndent{15}{}\<[15]%
+\>[15]\AgdaSymbol{→} \AgdaDatatype{∈bF} \AgdaBound{x} \AgdaBound{G₁} \AgdaBound{e₁} \<[46]%
+\>[46]\AgdaSymbol{→} \<[49]%
+\>[49]\AgdaDatatype{∈bF} \AgdaBound{x} \AgdaSymbol{(}\AgdaBound{G₁} \AgdaInductiveConstructor{|x|} \AgdaBound{G₂}\AgdaSymbol{)} \<[68]%
+\>[68]\AgdaSymbol{(}\AgdaBound{e₁} \AgdaInductiveConstructor{,} \AgdaBound{e₂}\AgdaSymbol{)}\<%
+\\
+\>[0]\AgdaIndent{3}{}\<[3]%
+\>[3]\AgdaInductiveConstructor{∈bFx₂} \<[12]%
+\>[12]\AgdaSymbol{:} \<[15]%
+\>[15]\AgdaSymbol{\{}\AgdaBound{G₁} \AgdaBound{G₂} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e₁} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G₁} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}\{}\AgdaBound{e₂} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G₂} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}}\<%
+\\
+\>[3]\AgdaIndent{15}{}\<[15]%
+\>[15]\AgdaSymbol{→} \AgdaDatatype{∈bF} \AgdaBound{x} \AgdaBound{G₂} \AgdaBound{e₂} \<[46]%
+\>[46]\AgdaSymbol{→} \<[49]%
+\>[49]\AgdaDatatype{∈bF} \AgdaBound{x} \AgdaSymbol{(}\AgdaBound{G₁} \AgdaInductiveConstructor{|x|} \AgdaBound{G₂}\AgdaSymbol{)} \<[68]%
+\>[68]\AgdaSymbol{(}\AgdaBound{e₁} \AgdaInductiveConstructor{,} \AgdaBound{e₂}\AgdaSymbol{)} \<[78]%
+\>[78]\<%
+\\
+\>[0]\AgdaIndent{3}{}\<[3]%
+\>[3]\AgdaInductiveConstructor{∈bFB≡} \<[12]%
+\>[12]\AgdaSymbol{:} \<[15]%
+\>[15]\AgdaSymbol{\{}\AgdaBound{G} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}\{}\AgdaBound{S} \AgdaSymbol{:} \AgdaFunction{Sort}\AgdaSymbol{\}}\<%
+\\
+\>[3]\AgdaIndent{46}{}\<[46]%
+\>[46]\AgdaSymbol{→} \<[49]%
+\>[49]\AgdaDatatype{∈bF} \AgdaBound{x} \AgdaSymbol{(}\AgdaInductiveConstructor{|B|} \AgdaBound{S} \AgdaBound{G}\AgdaSymbol{)} \<[68]%
+\>[68]\AgdaSymbol{(}\AgdaBound{x} \AgdaInductiveConstructor{,} \AgdaBound{e}\AgdaSymbol{)}\<%
+\\
+\>[0]\AgdaIndent{3}{}\<[3]%
+\>[3]\AgdaInductiveConstructor{∈bFB} \<[12]%
+\>[12]\AgdaSymbol{:} \<[15]%
+\>[15]\AgdaSymbol{\{}\AgdaBound{G} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}\{}\AgdaBound{y} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{S} \AgdaSymbol{:} \AgdaFunction{Sort}\AgdaSymbol{\}}\<%
+\\
+\>[3]\AgdaIndent{15}{}\<[15]%
+\>[15]\AgdaSymbol{→} \AgdaDatatype{∈bF} \AgdaBound{x} \AgdaBound{G} \AgdaBound{e} \<[46]%
+\>[46]\AgdaSymbol{→} \<[49]%
+\>[49]\AgdaDatatype{∈bF} \AgdaBound{x} \AgdaSymbol{(}\AgdaInductiveConstructor{|B|} \AgdaBound{S} \AgdaBound{G}\AgdaSymbol{)} \<[68]%
+\>[68]\AgdaSymbol{(}\AgdaBound{y} \AgdaInductiveConstructor{,} \AgdaBound{e}\AgdaSymbol{)}\<%
+\\
+%
+\\
+\>\AgdaFunction{\_∈b\_} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}(}\AgdaBound{n} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaPrimitiveType{Set}\<%
+\\
+\>\AgdaFunction{\_∈b\_} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaBound{x} \AgdaSymbol{=} \AgdaDatatype{∈bF} \AgdaBound{x} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaInductiveConstructor{|R|}\<%
+\\
+%
+\\
+\>\AgdaFunction{ListOccurBindF} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}(}\AgdaBound{G} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaDatatype{List} \AgdaFunction{V} \AgdaSymbol{→} \AgdaFunction{⟦} \AgdaBound{G} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaPrimitiveType{Set}\<%
+\\
+\>\AgdaFunction{ListOccurBindF} \AgdaBound{G} \AgdaBound{xs} \AgdaBound{e} \AgdaSymbol{=} \AgdaDatatype{All} \AgdaSymbol{(λ} \AgdaBound{x} \AgdaSymbol{→} \AgdaDatatype{∈bF} \AgdaBound{x} \AgdaBound{G} \AgdaBound{e}\AgdaSymbol{)} \AgdaBound{xs}\<%
+\\
+%
+\\
+\>\AgdaFunction{lemma-ListOccurBindF-Ef} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{G} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{G}\AgdaSymbol{)\}}\<%
+\\
+\>[0]\AgdaIndent{2}{}\<[2]%
+\>[2]\AgdaSymbol{→} \AgdaFunction{ListOccurBindF} \AgdaSymbol{\{}\AgdaBound{G}\AgdaSymbol{\}} \AgdaBound{G} \AgdaBound{xs} \AgdaBound{e} \AgdaSymbol{→} \AgdaFunction{ListOccurBindF} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaSymbol{(}\AgdaInductiveConstructor{|Ef|} \AgdaBound{G}\AgdaSymbol{)} \AgdaBound{xs} \AgdaInductiveConstructor{⟨} \AgdaBound{e} \AgdaInductiveConstructor{⟩}\<%
+\\
+\>\AgdaFunction{lemma-ListOccurBindF-Ef} \AgdaBound{ocurr} \AgdaSymbol{=} \<[33]%
+\>[33]\AgdaFunction{tabulate} \AgdaSymbol{(}\AgdaInductiveConstructor{∈bFEf} \AgdaFunction{∘} \AgdaSymbol{(}\AgdaFunction{lookup} \AgdaBound{ocurr}\AgdaSymbol{))}\<%
+\\
+%
+\\
+\>\AgdaFunction{ListOccurBind} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}} \AgdaSymbol{→} \AgdaDatatype{List} \AgdaFunction{V} \AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{F} \AgdaSymbol{→} \AgdaPrimitiveType{Set}\<%
+\\
+\>\AgdaFunction{ListOccurBind} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaBound{xs} \AgdaBound{e} \AgdaSymbol{=} \AgdaFunction{ListOccurBindF} \AgdaInductiveConstructor{|R|} \AgdaBound{xs} \AgdaBound{e}\<%
+\end{code}
+
+\begin{code}%
+\>\AgdaComment{-- Inversion lemmas}\<%
+\\
+\>\AgdaFunction{lemma-inv∈bFEf} \<[16]%
+\>[16]\AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaBound{G} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{G}\AgdaSymbol{)\}\{}\AgdaBound{x} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{\}}\<%
+\\
+\>[2]\AgdaIndent{16}{}\<[16]%
+\>[16]\AgdaSymbol{→} \AgdaDatatype{∈bF} \AgdaBound{x} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaSymbol{(}\AgdaInductiveConstructor{|Ef|} \AgdaBound{G} \AgdaSymbol{)} \AgdaInductiveConstructor{⟨} \AgdaBound{e} \AgdaInductiveConstructor{⟩}\<%
+\\
+\>[2]\AgdaIndent{16}{}\<[16]%
+\>[16]\AgdaSymbol{→} \AgdaDatatype{∈bF} \AgdaBound{x} \AgdaBound{G} \AgdaBound{e} \<[47]%
+\>[47]\<%
+\\
+\>\AgdaFunction{lemma-inv∈bFEf} \AgdaSymbol{(}\AgdaInductiveConstructor{∈bFEf} \AgdaBound{∈bF}\AgdaSymbol{)} \AgdaSymbol{=} \AgdaBound{∈bF} \<%
+\end{code}
+
+%<*notOccurBind>
+\begin{code}%
+\>\AgdaKeyword{data} \AgdaDatatype{notOccurBindF} \AgdaSymbol{(}\AgdaBound{x} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{)\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}} \AgdaSymbol{:}\<%
+\\
+\>[0]\AgdaIndent{3}{}\<[3]%
+\>[3]\AgdaSymbol{(}\AgdaBound{G} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaFunction{⟦} \AgdaBound{G} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaPrimitiveType{Set} \AgdaKeyword{where}\<%
+\\
+\>[0]\AgdaIndent{3}{}\<[3]%
+\>[3]\AgdaInductiveConstructor{notOccurBv} \<[18]%
+\>[18]\AgdaSymbol{:} \<[21]%
+\>[21]\AgdaSymbol{\{}\AgdaBound{m} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{S} \AgdaSymbol{:} \AgdaFunction{Sort}\AgdaSymbol{\}}\<%
+\\
+\>[3]\AgdaIndent{18}{}\<[18]%
+\>[18]\AgdaSymbol{→} \<[21]%
+\>[21]\AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaSymbol{(}\AgdaInductiveConstructor{|v|} \AgdaBound{S}\AgdaSymbol{)} \<[50]%
+\>[50]\AgdaBound{m}\<%
+\\
+\>[0]\AgdaIndent{3}{}\<[3]%
+\>[3]\AgdaInductiveConstructor{notOccurB1} \<[18]%
+\>[18]\AgdaSymbol{:} \<[21]%
+\>[21]\AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaInductiveConstructor{|1|} \<[50]%
+\>[50]\AgdaInductiveConstructor{tt}\<%
+\\
+\>[0]\AgdaIndent{3}{}\<[3]%
+\>[3]\AgdaInductiveConstructor{notOccurBE} \<[18]%
+\>[18]\AgdaSymbol{:} \<[21]%
+\>[21]\AgdaSymbol{\{}\AgdaBound{B} \AgdaSymbol{:} \AgdaPrimitiveType{Set}\AgdaSymbol{\}\{}\AgdaBound{b} \AgdaSymbol{:} \AgdaBound{B}\AgdaSymbol{\}}\<%
+\\
+\>[3]\AgdaIndent{18}{}\<[18]%
+\>[18]\AgdaSymbol{→} \<[21]%
+\>[21]\AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaSymbol{(}\AgdaInductiveConstructor{|E|} \AgdaBound{B}\AgdaSymbol{)} \<[50]%
+\>[50]\AgdaBound{b}\<%
+\\
+\>[0]\AgdaIndent{3}{}\<[3]%
+\>[3]\AgdaInductiveConstructor{notOccurBEf} \<[18]%
+\>[18]\AgdaSymbol{:} \<[21]%
+\>[21]\AgdaSymbol{\{}\AgdaBound{G} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{G}\AgdaSymbol{)\}}\<%
+\\
+\>[3]\AgdaIndent{18}{}\<[18]%
+\>[18]\AgdaSymbol{→} \<[21]%
+\>[21]\AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaBound{G} \AgdaBound{e}\<%
+\\
+\>[3]\AgdaIndent{18}{}\<[18]%
+\>[18]\AgdaSymbol{→} \<[21]%
+\>[21]\AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaSymbol{(}\AgdaInductiveConstructor{|Ef|} \AgdaBound{G} \AgdaSymbol{)} \<[50]%
+\>[50]\AgdaInductiveConstructor{⟨} \AgdaBound{e} \AgdaInductiveConstructor{⟩}\<%
+\\
+\>[0]\AgdaIndent{3}{}\<[3]%
+\>[3]\AgdaInductiveConstructor{notOccurBR} \<[18]%
+\>[18]\AgdaSymbol{:} \<[21]%
+\>[21]\AgdaSymbol{\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}}\<%
+\\
+\>[3]\AgdaIndent{18}{}\<[18]%
+\>[18]\AgdaSymbol{→} \<[21]%
+\>[21]\AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaBound{F} \AgdaBound{e}\<%
+\\
+\>[3]\AgdaIndent{18}{}\<[18]%
+\>[18]\AgdaSymbol{→} \<[21]%
+\>[21]\AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaInductiveConstructor{|R|} \<[50]%
+\>[50]\AgdaInductiveConstructor{⟨} \AgdaBound{e} \AgdaInductiveConstructor{⟩} \<[67]%
+\>[67]\<%
+\\
+\>[0]\AgdaIndent{3}{}\<[3]%
+\>[3]\AgdaInductiveConstructor{notOccurBinj₁} \<[18]%
+\>[18]\AgdaSymbol{:} \<[21]%
+\>[21]\AgdaSymbol{\{}\AgdaBound{G₁} \AgdaBound{G₂} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G₁} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}}\<%
+\\
+\>[3]\AgdaIndent{18}{}\<[18]%
+\>[18]\AgdaSymbol{→} \<[21]%
+\>[21]\AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaBound{G₁} \AgdaBound{e}\<%
+\\
+\>[3]\AgdaIndent{18}{}\<[18]%
+\>[18]\AgdaSymbol{→} \<[21]%
+\>[21]\AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaSymbol{(}\AgdaBound{G₁} \AgdaInductiveConstructor{|+|} \AgdaBound{G₂}\AgdaSymbol{)} \<[50]%
+\>[50]\AgdaSymbol{(}\AgdaInductiveConstructor{inj₁} \AgdaBound{e}\AgdaSymbol{)} \<[59]%
+\>[59]\<%
+\\
+\>[0]\AgdaIndent{3}{}\<[3]%
+\>[3]\AgdaInductiveConstructor{notOccurBinj₂} \<[18]%
+\>[18]\AgdaSymbol{:} \<[21]%
+\>[21]\AgdaSymbol{\{}\AgdaBound{G₁} \AgdaBound{G₂} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G₂} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}}\<%
+\\
+\>[3]\AgdaIndent{18}{}\<[18]%
+\>[18]\AgdaSymbol{→} \<[21]%
+\>[21]\AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaBound{G₂} \AgdaBound{e}\<%
+\\
+\>[3]\AgdaIndent{18}{}\<[18]%
+\>[18]\AgdaSymbol{→} \<[21]%
+\>[21]\AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaSymbol{(}\AgdaBound{G₁} \AgdaInductiveConstructor{|+|} \AgdaBound{G₂}\AgdaSymbol{)} \<[50]%
+\>[50]\AgdaSymbol{(}\AgdaInductiveConstructor{inj₂} \AgdaBound{e}\AgdaSymbol{)} \<[59]%
+\>[59]\<%
+\\
+\>[0]\AgdaIndent{3}{}\<[3]%
+\>[3]\AgdaInductiveConstructor{notOccurBx} \<[18]%
+\>[18]\AgdaSymbol{:} \<[21]%
+\>[21]\AgdaSymbol{\{}\AgdaBound{G₁} \AgdaBound{G₂} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}}\<%
+\\
+\>[3]\AgdaIndent{21}{}\<[21]%
+\>[21]\AgdaSymbol{\{}\AgdaBound{e₁} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G₁} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}\{}\AgdaBound{e₂} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G₂} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}}\<%
+\\
+\>[0]\AgdaIndent{18}{}\<[18]%
+\>[18]\AgdaSymbol{→} \<[21]%
+\>[21]\AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaBound{G₁} \AgdaBound{e₁}\<%
+\\
+\>[0]\AgdaIndent{18}{}\<[18]%
+\>[18]\AgdaSymbol{→} \<[21]%
+\>[21]\AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaBound{G₂} \AgdaBound{e₂}\<%
+\\
+\>[0]\AgdaIndent{18}{}\<[18]%
+\>[18]\AgdaSymbol{→} \<[21]%
+\>[21]\AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaSymbol{(}\AgdaBound{G₁} \AgdaInductiveConstructor{|x|} \AgdaBound{G₂}\AgdaSymbol{)} \<[50]%
+\>[50]\AgdaSymbol{(}\AgdaBound{e₁} \AgdaInductiveConstructor{,} \AgdaBound{e₂}\AgdaSymbol{)} \<[60]%
+\>[60]\<%
+\\
+\>[0]\AgdaIndent{3}{}\<[3]%
+\>[3]\AgdaInductiveConstructor{notOccurBB≢} \<[17]%
+\>[17]\AgdaSymbol{:} \<[20]%
+\>[20]\AgdaSymbol{\{}\AgdaBound{G} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}\{}\AgdaBound{y} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{S} \AgdaSymbol{:} \AgdaFunction{Sort}\AgdaSymbol{\}}\<%
+\\
+\>[3]\AgdaIndent{18}{}\<[18]%
+\>[18]\AgdaSymbol{→} \<[21]%
+\>[21]\AgdaBound{x} \AgdaFunction{≢} \AgdaBound{y} \AgdaSymbol{→} \AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaBound{G} \AgdaBound{e}\<%
+\\
+\>[3]\AgdaIndent{18}{}\<[18]%
+\>[18]\AgdaSymbol{→} \<[21]%
+\>[21]\AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaSymbol{(}\AgdaInductiveConstructor{|B|} \AgdaBound{S} \AgdaBound{G}\AgdaSymbol{)} \<[50]%
+\>[50]\AgdaSymbol{(}\AgdaBound{y} \AgdaInductiveConstructor{,} \AgdaBound{e}\AgdaSymbol{)}\<%
+\\
+%
+\\
+\>\AgdaFunction{\_notOccurBind\_} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}(}\AgdaBound{n} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaPrimitiveType{Set}\<%
+\\
+\>\AgdaFunction{\_notOccurBind\_} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaBound{x} \AgdaSymbol{=} \AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaInductiveConstructor{|R|}\<%
+\end{code}
+%</notOccurBind>
+
+\begin{code}%
+\>\AgdaKeyword{data} \AgdaDatatype{notOccurBindExceptF} \AgdaSymbol{(}\AgdaBound{x} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{)\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{y} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{\}} \AgdaSymbol{:} \AgdaSymbol{(}\AgdaBound{G} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{)(}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{))} \AgdaSymbol{→} \AgdaDatatype{∈bF} \AgdaBound{y} \AgdaBound{G} \AgdaBound{e} \AgdaSymbol{→} \AgdaPrimitiveType{Set} \AgdaKeyword{where}\<%
+\\
+\>[0]\AgdaIndent{3}{}\<[3]%
+\>[3]\AgdaInductiveConstructor{notOccurBExceptEf} \<[24]%
+\>[24]\AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{G} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{G}\AgdaSymbol{)\}\{}\AgdaBound{y∈be} \AgdaSymbol{:} \AgdaDatatype{∈bF} \AgdaBound{y} \AgdaBound{G} \AgdaBound{e}\AgdaSymbol{\}}\<%
+\\
+\>[3]\AgdaIndent{19}{}\<[19]%
+\>[19]\AgdaSymbol{→} \AgdaDatatype{notOccurBindExceptF} \AgdaBound{x} \AgdaBound{G} \AgdaBound{e} \AgdaBound{y∈be} \<[63]%
+\>[63]\AgdaSymbol{→} \<[66]%
+\>[66]\AgdaDatatype{notOccurBindExceptF} \AgdaBound{x} \AgdaSymbol{(}\AgdaInductiveConstructor{|Ef|} \AgdaBound{G} \AgdaSymbol{)} \AgdaSymbol{(}\AgdaInductiveConstructor{⟨} \AgdaBound{e} \AgdaInductiveConstructor{⟩}\AgdaSymbol{)} \AgdaSymbol{(}\AgdaInductiveConstructor{∈bFEf} \AgdaBound{y∈be}\AgdaSymbol{)}\<%
+\\
+\>[0]\AgdaIndent{3}{}\<[3]%
+\>[3]\AgdaInductiveConstructor{notOccurBExceptR} \<[24]%
+\>[24]\AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}\{}\AgdaBound{y∈be} \AgdaSymbol{:} \AgdaDatatype{∈bF} \AgdaBound{y} \AgdaBound{F} \AgdaBound{e}\AgdaSymbol{\}}\<%
+\\
+\>[3]\AgdaIndent{18}{}\<[18]%
+\>[18]\AgdaSymbol{→} \AgdaDatatype{notOccurBindExceptF} \AgdaBound{x} \AgdaBound{F} \AgdaBound{e} \AgdaBound{y∈be} \<[63]%
+\>[63]\AgdaSymbol{→} \<[66]%
+\>[66]\AgdaDatatype{notOccurBindExceptF} \AgdaBound{x} \AgdaInductiveConstructor{|R|} \AgdaSymbol{(}\AgdaInductiveConstructor{⟨} \AgdaBound{e} \AgdaInductiveConstructor{⟩}\AgdaSymbol{)} \AgdaSymbol{(}\AgdaInductiveConstructor{∈bFR} \AgdaBound{y∈be}\AgdaSymbol{)}\<%
+\\
+\>[0]\AgdaIndent{3}{}\<[3]%
+\>[3]\AgdaInductiveConstructor{notOccurBExceptinj₁} \<[24]%
+\>[24]\AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{G₁} \AgdaBound{G₂} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G₁} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}\{}\AgdaBound{y∈be} \AgdaSymbol{:} \AgdaDatatype{∈bF} \AgdaBound{y} \AgdaBound{G₁} \AgdaBound{e}\AgdaSymbol{\}}\<%
+\\
+\>[3]\AgdaIndent{18}{}\<[18]%
+\>[18]\AgdaSymbol{→} \AgdaDatatype{notOccurBindExceptF} \AgdaBound{x} \AgdaBound{G₁} \AgdaBound{e} \AgdaBound{y∈be} \<[63]%
+\>[63]\AgdaSymbol{→} \<[66]%
+\>[66]\AgdaDatatype{notOccurBindExceptF} \AgdaBound{x} \AgdaSymbol{(}\AgdaBound{G₁} \AgdaInductiveConstructor{|+|} \AgdaBound{G₂}\AgdaSymbol{)} \AgdaSymbol{(}\AgdaInductiveConstructor{inj₁} \AgdaBound{e}\AgdaSymbol{)} \AgdaSymbol{(}\AgdaInductiveConstructor{∈bFinj₁} \AgdaBound{y∈be}\AgdaSymbol{)}\<%
+\\
+\>[0]\AgdaIndent{3}{}\<[3]%
+\>[3]\AgdaInductiveConstructor{notOccurBExceptinj₂} \<[24]%
+\>[24]\AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{G₁} \AgdaBound{G₂} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G₂} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}\{}\AgdaBound{y∈be} \AgdaSymbol{:} \AgdaDatatype{∈bF} \AgdaBound{y} \AgdaBound{G₂} \AgdaBound{e}\AgdaSymbol{\}}\<%
+\\
+\>[3]\AgdaIndent{18}{}\<[18]%
+\>[18]\AgdaSymbol{→} \AgdaDatatype{notOccurBindExceptF} \AgdaBound{x} \AgdaBound{G₂} \AgdaBound{e} \AgdaBound{y∈be} \<[63]%
+\>[63]\AgdaSymbol{→} \<[66]%
+\>[66]\AgdaDatatype{notOccurBindExceptF} \AgdaBound{x} \AgdaSymbol{(}\AgdaBound{G₁} \AgdaInductiveConstructor{|+|} \AgdaBound{G₂}\AgdaSymbol{)} \AgdaSymbol{(}\AgdaInductiveConstructor{inj₂} \AgdaBound{e}\AgdaSymbol{)} \AgdaSymbol{(}\AgdaInductiveConstructor{∈bFinj₂} \AgdaBound{y∈be}\AgdaSymbol{)} \<[138]%
+\>[138]\<%
+\\
+\>[0]\AgdaIndent{3}{}\<[3]%
+\>[3]\AgdaInductiveConstructor{notOccurBExceptx₁} \<[25]%
+\>[25]\AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{G₁} \AgdaBound{G₂} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e₁} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G₁} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}\{}\AgdaBound{e₂} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G₂} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}\{}\AgdaBound{y∈be1} \AgdaSymbol{:} \AgdaDatatype{∈bF} \AgdaBound{y} \AgdaBound{G₁} \AgdaBound{e₁}\AgdaSymbol{\}}\<%
+\\
+\>[3]\AgdaIndent{19}{}\<[19]%
+\>[19]\AgdaSymbol{→} \AgdaDatatype{notOccurBindExceptF} \AgdaBound{x} \AgdaBound{G₁} \AgdaBound{e₁} \AgdaBound{y∈be1}\<%
+\\
+\>[3]\AgdaIndent{19}{}\<[19]%
+\>[19]\AgdaSymbol{→} \AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaBound{G₂} \AgdaBound{e₂} \<[63]%
+\>[63]\AgdaSymbol{→} \<[66]%
+\>[66]\AgdaDatatype{notOccurBindExceptF} \AgdaBound{x} \AgdaSymbol{(}\AgdaBound{G₁} \AgdaInductiveConstructor{|x|} \AgdaBound{G₂}\AgdaSymbol{)} \<[101]%
+\>[101]\AgdaSymbol{(}\AgdaBound{e₁} \AgdaInductiveConstructor{,} \AgdaBound{e₂}\AgdaSymbol{)} \AgdaSymbol{(}\AgdaInductiveConstructor{∈bFx₁} \AgdaBound{y∈be1}\AgdaSymbol{)}\<%
+\\
+\>[0]\AgdaIndent{3}{}\<[3]%
+\>[3]\AgdaInductiveConstructor{notOccurBExceptx₂} \<[25]%
+\>[25]\AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{G₁} \AgdaBound{G₂} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e₁} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G₁} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}\{}\AgdaBound{e₂} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G₂} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}\{}\AgdaBound{y∈be2} \AgdaSymbol{:} \AgdaDatatype{∈bF} \AgdaBound{y} \AgdaBound{G₂} \AgdaBound{e₂}\AgdaSymbol{\}}\<%
+\\
+\>[3]\AgdaIndent{19}{}\<[19]%
+\>[19]\AgdaSymbol{→} \AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaBound{G₁} \AgdaBound{e₁}\<%
+\\
+\>[3]\AgdaIndent{19}{}\<[19]%
+\>[19]\AgdaSymbol{→} \AgdaDatatype{notOccurBindExceptF} \AgdaBound{x} \AgdaBound{G₂} \AgdaBound{e₂} \AgdaBound{y∈be2} \<[63]%
+\>[63]\AgdaSymbol{→} \<[66]%
+\>[66]\AgdaDatatype{notOccurBindExceptF} \AgdaBound{x} \AgdaSymbol{(}\AgdaBound{G₁} \AgdaInductiveConstructor{|x|} \AgdaBound{G₂}\AgdaSymbol{)} \<[101]%
+\>[101]\AgdaSymbol{(}\AgdaBound{e₁} \AgdaInductiveConstructor{,} \AgdaBound{e₂}\AgdaSymbol{)} \AgdaSymbol{(}\AgdaInductiveConstructor{∈bFx₂} \AgdaBound{y∈be2}\AgdaSymbol{)}\<%
+\\
+\>[0]\AgdaIndent{3}{}\<[3]%
+\>[3]\AgdaInductiveConstructor{notOccurBExceptB≡} \<[23]%
+\>[23]\AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{G} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}\{}\AgdaBound{S} \AgdaSymbol{:} \AgdaFunction{Sort}\AgdaSymbol{\}}\<%
+\\
+\>[3]\AgdaIndent{19}{}\<[19]%
+\>[19]\AgdaSymbol{→} \AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaBound{G} \AgdaBound{e} \<[63]%
+\>[63]\AgdaSymbol{→} \<[66]%
+\>[66]\AgdaDatatype{notOccurBindExceptF} \AgdaBound{x} \AgdaSymbol{(}\AgdaInductiveConstructor{|B|} \AgdaBound{S} \AgdaBound{G}\AgdaSymbol{)} \AgdaSymbol{(}\AgdaBound{y} \AgdaInductiveConstructor{,} \AgdaBound{e}\AgdaSymbol{)} \AgdaInductiveConstructor{∈bFB≡}\<%
+\\
+\>[0]\AgdaIndent{3}{}\<[3]%
+\>[3]\AgdaInductiveConstructor{notOccurBExceptB} \<[23]%
+\>[23]\AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{G} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}\{}\AgdaBound{z} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{S} \AgdaSymbol{:} \AgdaFunction{Sort}\AgdaSymbol{\}\{}\AgdaBound{y∈be} \AgdaSymbol{:} \AgdaDatatype{∈bF} \AgdaBound{y} \AgdaBound{G} \AgdaBound{e}\AgdaSymbol{\}}\<%
+\\
+\>[3]\AgdaIndent{19}{}\<[19]%
+\>[19]\AgdaSymbol{→} \AgdaDatatype{notOccurBindExceptF} \AgdaBound{x} \AgdaBound{G} \AgdaBound{e} \AgdaBound{y∈be} \AgdaSymbol{→} \AgdaBound{x} \AgdaFunction{≢} \AgdaBound{z} \<[63]%
+\>[63]\AgdaSymbol{→} \<[66]%
+\>[66]\AgdaDatatype{notOccurBindExceptF} \AgdaBound{x} \AgdaSymbol{(}\AgdaInductiveConstructor{|B|} \AgdaBound{S} \AgdaBound{G}\AgdaSymbol{)} \AgdaSymbol{(}\AgdaBound{z} \AgdaInductiveConstructor{,} \AgdaBound{e}\AgdaSymbol{)} \AgdaSymbol{(}\AgdaInductiveConstructor{∈bFB} \AgdaBound{y∈be}\AgdaSymbol{)}\<%
+\\
+%
+\\
+\>\AgdaFunction{notOccurBindExcept} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{y} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{\}(}\AgdaBound{x} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{)(}\AgdaBound{e} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaBound{y} \AgdaFunction{∈b} \AgdaBound{e} \AgdaSymbol{→} \AgdaPrimitiveType{Set}\<%
+\\
+\>\AgdaFunction{notOccurBindExcept} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaBound{e} \AgdaBound{y∈be} \AgdaSymbol{=} \AgdaDatatype{notOccurBindExceptF} \AgdaBound{e} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaInductiveConstructor{|R|} \AgdaBound{y∈be}\<%
+\end{code}
+
+
+\begin{code}%
+\>\AgdaComment{-- Inversion lemmas}\<%
+\\
+\>\AgdaFunction{notOccurBinj₁inv} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{x} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{F} \AgdaBound{G₁} \AgdaBound{G₂} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G₁} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}} \AgdaSymbol{→} \AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaSymbol{(}\AgdaBound{G₁} \AgdaInductiveConstructor{|+|} \AgdaBound{G₂}\AgdaSymbol{)} \AgdaSymbol{(}\AgdaInductiveConstructor{inj₁} \AgdaBound{e}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaBound{G₁} \AgdaBound{e} \<[126]%
+\>[126]\<%
+\\
+\>\AgdaFunction{notOccurBinj₁inv} \AgdaSymbol{(}\AgdaInductiveConstructor{notOccurBinj₁} \AgdaBound{notOccur}\AgdaSymbol{)} \AgdaSymbol{=} \AgdaBound{notOccur}\<%
+\\
+%
+\\
+\>\AgdaFunction{notOccurBinj₂inv} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{x} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{F} \AgdaBound{G₁} \AgdaBound{G₂} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G₂} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}} \AgdaSymbol{→} \AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaSymbol{(}\AgdaBound{G₁} \AgdaInductiveConstructor{|+|} \AgdaBound{G₂}\AgdaSymbol{)} \AgdaSymbol{(}\AgdaInductiveConstructor{inj₂} \AgdaBound{e}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaBound{G₂} \AgdaBound{e} \<[126]%
+\>[126]\<%
+\\
+\>\AgdaFunction{notOccurBinj₂inv} \AgdaSymbol{(}\AgdaInductiveConstructor{notOccurBinj₂} \AgdaBound{notOccur}\AgdaSymbol{)} \AgdaSymbol{=} \AgdaBound{notOccur}\<%
+\\
+%
+\\
+\>\AgdaFunction{notOccurBx₁inv} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{x} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{F} \AgdaBound{G₁} \AgdaBound{G₂} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e₁} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G₁} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}\{}\AgdaBound{e₂} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G₂} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}} \AgdaSymbol{→} \AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaSymbol{(}\AgdaBound{G₁} \AgdaInductiveConstructor{|x|} \AgdaBound{G₂}\AgdaSymbol{)} \AgdaSymbol{(}\AgdaBound{e₁} \AgdaInductiveConstructor{,} \AgdaBound{e₂}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaBound{G₁} \AgdaBound{e₁} \<[146]%
+\>[146]\<%
+\\
+\>\AgdaFunction{notOccurBx₁inv} \AgdaSymbol{(}\AgdaInductiveConstructor{notOccurBx} \AgdaBound{notOccur₁} \AgdaBound{notOccur₂}\AgdaSymbol{)} \AgdaSymbol{=} \AgdaBound{notOccur₁}\<%
+\\
+%
+\\
+\>\AgdaFunction{notOccurBx₂inv} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{x} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{F} \AgdaBound{G₁} \AgdaBound{G₂} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e₁} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G₁} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}\{}\AgdaBound{e₂} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G₂} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}} \AgdaSymbol{→} \AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaSymbol{(}\AgdaBound{G₁} \AgdaInductiveConstructor{|x|} \AgdaBound{G₂}\AgdaSymbol{)} \AgdaSymbol{(}\AgdaBound{e₁} \AgdaInductiveConstructor{,} \AgdaBound{e₂}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaBound{G₂} \AgdaBound{e₂} \<[146]%
+\>[146]\<%
+\\
+\>\AgdaFunction{notOccurBx₂inv} \AgdaSymbol{(}\AgdaInductiveConstructor{notOccurBx} \AgdaBound{notOccur₁} \AgdaBound{notOccur₂}\AgdaSymbol{)} \AgdaSymbol{=} \AgdaBound{notOccur₂}\<%
+\\
+%
+\\
+\>\AgdaFunction{notOccurBBinv} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{x} \AgdaBound{y} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{F} \AgdaBound{G} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{S} \AgdaSymbol{:} \AgdaFunction{Sort}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}} \AgdaSymbol{→} \AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaSymbol{(}\AgdaInductiveConstructor{|B|} \AgdaBound{S} \AgdaBound{G}\AgdaSymbol{)} \AgdaSymbol{(}\AgdaBound{y} \AgdaInductiveConstructor{,} \AgdaBound{e}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaBound{G} \AgdaBound{e} \<[126]%
+\>[126]\<%
+\\
+\>\AgdaFunction{notOccurBBinv} \AgdaSymbol{(}\AgdaInductiveConstructor{notOccurBB≢} \AgdaSymbol{\_} \AgdaBound{notOccur}\AgdaSymbol{)} \AgdaSymbol{=} \AgdaBound{notOccur}\<%
+\\
+%
+\\
+\>\AgdaFunction{notOccurBRinv} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{x} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}} \AgdaSymbol{→} \AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaInductiveConstructor{|R|} \AgdaInductiveConstructor{⟨} \AgdaBound{e} \AgdaInductiveConstructor{⟩} \AgdaSymbol{→} \AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaBound{F} \AgdaBound{e} \<[108]%
+\>[108]\<%
+\\
+\>\AgdaFunction{notOccurBRinv} \AgdaSymbol{(}\AgdaInductiveConstructor{notOccurBR} \AgdaBound{notOccur}\AgdaSymbol{)} \AgdaSymbol{=} \AgdaBound{notOccur}\<%
+\\
+%
+\\
+\>\AgdaFunction{notOccurBEfinv} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{x} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{F} \AgdaBound{G} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{G}\AgdaSymbol{)\}} \AgdaSymbol{→} \AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaSymbol{(}\AgdaInductiveConstructor{|Ef|} \AgdaBound{G}\AgdaSymbol{)} \AgdaInductiveConstructor{⟨} \AgdaBound{e} \AgdaInductiveConstructor{⟩} \AgdaSymbol{→} \AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaBound{G} \AgdaBound{e} \<[116]%
+\>[116]\<%
+\\
+\>\AgdaFunction{notOccurBEfinv} \AgdaSymbol{(}\AgdaInductiveConstructor{notOccurBEf} \AgdaBound{notOccur}\AgdaSymbol{)} \AgdaSymbol{=} \AgdaBound{notOccur}\<%
+\\
+%
+\\
+\>\AgdaFunction{notOccurBBinv≢} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{x} \AgdaBound{y} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{F} \AgdaBound{G} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{S} \AgdaSymbol{:} \AgdaFunction{Sort}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}} \AgdaSymbol{→} \AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaSymbol{(}\AgdaInductiveConstructor{|B|} \AgdaBound{S} \AgdaBound{G}\AgdaSymbol{)} \AgdaSymbol{(}\AgdaBound{y} \AgdaInductiveConstructor{,} \AgdaBound{e}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaBound{x} \AgdaFunction{≢} \AgdaBound{y}\<%
+\\
+\>\AgdaFunction{notOccurBBinv≢} \AgdaSymbol{(}\AgdaInductiveConstructor{notOccurBB≢} \AgdaBound{x≢y} \AgdaSymbol{\_)} \AgdaSymbol{=} \AgdaBound{x≢y}\<%
+\\
+%
+\\
+\>\AgdaFunction{notOccurBindR→notOccurBindEf} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaBound{F'} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{\}} \AgdaSymbol{→} \AgdaSymbol{∀} \AgdaSymbol{\{}\AgdaBound{x}\AgdaSymbol{\}} \AgdaSymbol{→} \AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaInductiveConstructor{|R|} \AgdaBound{e} \AgdaSymbol{→} \AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaSymbol{\{}\AgdaBound{F'}\AgdaSymbol{\}} \AgdaSymbol{(}\AgdaInductiveConstructor{|Ef|} \AgdaBound{F}\AgdaSymbol{)} \AgdaBound{e}\<%
+\\
+\>\AgdaFunction{notOccurBindR→notOccurBindEf} \AgdaSymbol{\{}\AgdaArgument{e} \AgdaSymbol{=} \AgdaInductiveConstructor{⟨} \AgdaBound{e} \AgdaInductiveConstructor{⟩}\AgdaSymbol{\}} \AgdaBound{notOccur} \AgdaSymbol{=} \AgdaInductiveConstructor{notOccurBEf} \AgdaSymbol{(}\AgdaFunction{notOccurBRinv} \AgdaBound{notOccur}\AgdaSymbol{)}\<%
+\\
+%
+\\
+\>\AgdaFunction{notOccurBindEf→notOccurBindR} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaBound{F'} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{\}} \AgdaSymbol{→} \AgdaSymbol{∀} \AgdaSymbol{\{}\AgdaBound{x}\AgdaSymbol{\}} \AgdaSymbol{→} \AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaSymbol{\{}\AgdaBound{F'}\AgdaSymbol{\}} \AgdaSymbol{(}\AgdaInductiveConstructor{|Ef|} \AgdaBound{F}\AgdaSymbol{)} \AgdaBound{e} \AgdaSymbol{→} \AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaInductiveConstructor{|R|} \AgdaBound{e}\<%
+\\
+\>\AgdaFunction{notOccurBindEf→notOccurBindR} \AgdaSymbol{\{}\AgdaArgument{e} \AgdaSymbol{=} \AgdaInductiveConstructor{⟨} \AgdaBound{e} \AgdaInductiveConstructor{⟩}\AgdaSymbol{\}} \AgdaBound{notOccur} \AgdaSymbol{=} \AgdaInductiveConstructor{notOccurBR} \AgdaSymbol{(}\AgdaFunction{notOccurBEfinv} \AgdaBound{notOccur}\AgdaSymbol{)}\<%
+\\
+%
+\\
+\>\AgdaComment{--notOccurBindR→notOccurBindF : \{F : Functor\}\{e : ⟦ F ⟧ (μ F)\} → ∀ \{x\} → notOccurBindF x \{F\} |R| ⟨ e ⟩ → notOccurBindF x \{F\} F e}\<%
+\\
+\>\AgdaComment{--notOccurBindR→notOccurBindF  = notOccurBRinv}\<%
+\end{code}
+
+%<*listnotocurrbind>
+\begin{code}%
+\>\AgdaFunction{ListNotOccurBindF} \<[19]%
+\>[19]\AgdaSymbol{:} \<[22]%
+\>[22]\AgdaSymbol{\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}(}\AgdaBound{G} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{)}\<%
+\\
+\>[3]\AgdaIndent{19}{}\<[19]%
+\>[19]\AgdaSymbol{→} \<[22]%
+\>[22]\AgdaDatatype{List} \AgdaFunction{V} \AgdaSymbol{→} \AgdaFunction{⟦} \AgdaBound{G} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaPrimitiveType{Set}\<%
+\\
+\>\AgdaFunction{ListNotOccurBindF} \AgdaBound{G} \AgdaBound{xs} \AgdaBound{e} \AgdaSymbol{=} \AgdaDatatype{All} \AgdaSymbol{(λ} \AgdaBound{x} \AgdaSymbol{→} \AgdaDatatype{notOccurBindF} \AgdaBound{x} \AgdaBound{G} \AgdaBound{e}\AgdaSymbol{)} \AgdaBound{xs}\<%
+\\
+%
+\\
+\>\AgdaFunction{ListNotOccurBind} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}} \AgdaSymbol{→} \AgdaDatatype{List} \AgdaFunction{V} \AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{F} \AgdaSymbol{→} \AgdaPrimitiveType{Set}\<%
+\\
+\>\AgdaFunction{ListNotOccurBind} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaBound{xs} \AgdaBound{e} \AgdaSymbol{=} \AgdaFunction{ListNotOccurBindF} \AgdaInductiveConstructor{|R|} \AgdaBound{xs} \AgdaBound{e}\<%
+\end{code}
+%</listnotocurrbind>
+
+\begin{code}%
+\>\AgdaComment{-- Inversion lemmas}\<%
+\\
+\>\AgdaFunction{lemmalistNotOccurBindEf→ListNotOccurBindR} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaBound{F'} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{\}\{}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{\}}\<%
+\\
+\>[0]\AgdaIndent{2}{}\<[2]%
+\>[2]\AgdaSymbol{→} \AgdaFunction{ListNotOccurBindF} \AgdaSymbol{\{}\AgdaBound{F'}\AgdaSymbol{\}} \AgdaSymbol{(}\AgdaInductiveConstructor{|Ef|} \AgdaBound{F}\AgdaSymbol{)} \AgdaBound{xs} \AgdaBound{e} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBindF} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaInductiveConstructor{|R|} \AgdaBound{xs} \AgdaBound{e} \<[74]%
+\>[74]\<%
+\\
+\>\AgdaFunction{lemmalistNotOccurBindEf→ListNotOccurBindR} \AgdaSymbol{=} \AgdaFunction{Data.List.All.map} \AgdaFunction{notOccurBindEf→notOccurBindR}\<%
+\\
+%
+\\
+\>\AgdaFunction{lemmalistNotOccurBindFR→ListNotOccurBindEf} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaBound{F'} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{\}\{}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{\}}\<%
+\\
+\>[0]\AgdaIndent{2}{}\<[2]%
+\>[2]\AgdaSymbol{→} \AgdaFunction{ListNotOccurBindF} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaInductiveConstructor{|R|} \AgdaBound{xs} \AgdaBound{e} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBindF} \AgdaSymbol{\{}\AgdaBound{F'}\AgdaSymbol{\}} \AgdaSymbol{(}\AgdaInductiveConstructor{|Ef|} \AgdaBound{F}\AgdaSymbol{)} \AgdaBound{xs} \AgdaBound{e} \<[75]%
+\>[75]\<%
+\\
+\>\AgdaFunction{lemmalistNotOccurBindFR→ListNotOccurBindEf} \AgdaSymbol{=} \AgdaFunction{Data.List.All.map} \AgdaFunction{notOccurBindR→notOccurBindEf}\<%
+\\
+%
+\\
+\>\AgdaFunction{lemmalistNotOccurBindFR→ListNotOccurBindF} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}\{}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{\}}\<%
+\\
+\>[0]\AgdaIndent{2}{}\<[2]%
+\>[2]\AgdaSymbol{→} \AgdaFunction{ListNotOccurBindF} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaInductiveConstructor{|R|} \AgdaBound{xs} \AgdaInductiveConstructor{⟨} \AgdaBound{e} \AgdaInductiveConstructor{⟩} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBindF} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaBound{F} \AgdaBound{xs} \AgdaBound{e} \<[71]%
+\>[71]\<%
+\\
+\>\AgdaFunction{lemmalistNotOccurBindFR→ListNotOccurBindF} \<[43]%
+\>[43]\AgdaSymbol{=} \AgdaFunction{Data.List.All.map} \AgdaFunction{notOccurBRinv} \<[77]%
+\>[77]\<%
+\\
+%
+\\
+\>\AgdaFunction{listNotOccurBinj₁inv} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{F} \AgdaBound{G₁} \AgdaBound{G₂} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G₁} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}}\<%
+\\
+\>[0]\AgdaIndent{2}{}\<[2]%
+\>[2]\AgdaSymbol{→} \AgdaFunction{ListNotOccurBindF} \AgdaSymbol{(}\AgdaBound{G₁} \AgdaInductiveConstructor{|+|} \AgdaBound{G₂}\AgdaSymbol{)} \AgdaBound{xs} \AgdaSymbol{(}\AgdaInductiveConstructor{inj₁} \AgdaBound{e}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBindF} \AgdaBound{G₁} \AgdaBound{xs} \AgdaBound{e} \<[74]%
+\>[74]\<%
+\\
+\>\AgdaFunction{listNotOccurBinj₁inv} \<[22]%
+\>[22]\AgdaSymbol{=} \<[25]%
+\>[25]\AgdaFunction{Data.List.All.map} \AgdaSymbol{(λ} \AgdaSymbol{\{} \AgdaSymbol{(}\AgdaInductiveConstructor{notOccurBinj₁} \AgdaBound{nb}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaBound{nb}\AgdaSymbol{\})}\<%
+\\
+%
+\\
+\>\AgdaFunction{listNotOccurBinj₂inv} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{F} \AgdaBound{G₁} \AgdaBound{G₂} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G₂} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}}\<%
+\\
+\>[0]\AgdaIndent{2}{}\<[2]%
+\>[2]\AgdaSymbol{→} \AgdaFunction{ListNotOccurBindF} \AgdaSymbol{(}\AgdaBound{G₁} \AgdaInductiveConstructor{|+|} \AgdaBound{G₂}\AgdaSymbol{)} \AgdaBound{xs} \AgdaSymbol{(}\AgdaInductiveConstructor{inj₂} \AgdaBound{e}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBindF} \AgdaBound{G₂} \AgdaBound{xs} \AgdaBound{e} \<[74]%
+\>[74]\<%
+\\
+\>\AgdaFunction{listNotOccurBinj₂inv} \<[22]%
+\>[22]\AgdaSymbol{=} \<[25]%
+\>[25]\AgdaFunction{Data.List.All.map} \AgdaSymbol{(λ} \AgdaSymbol{\{} \AgdaSymbol{(}\AgdaInductiveConstructor{notOccurBinj₂} \AgdaBound{nb}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaBound{nb}\AgdaSymbol{\})}\<%
+\\
+%
+\\
+\>\AgdaFunction{listNotOccurBx₁inv} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{F} \AgdaBound{G₁} \AgdaBound{G₂} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G₁} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}\{}\AgdaBound{e'} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G₂} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}}\<%
+\\
+\>[0]\AgdaIndent{2}{}\<[2]%
+\>[2]\AgdaSymbol{→} \AgdaFunction{ListNotOccurBindF} \AgdaSymbol{(}\AgdaBound{G₁} \AgdaInductiveConstructor{|x|} \AgdaBound{G₂}\AgdaSymbol{)} \AgdaBound{xs} \AgdaSymbol{(}\AgdaBound{e} \AgdaInductiveConstructor{,} \AgdaBound{e'}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBindF} \AgdaBound{G₁} \AgdaBound{xs} \AgdaBound{e} \<[74]%
+\>[74]\<%
+\\
+\>\AgdaFunction{listNotOccurBx₁inv} \<[20]%
+\>[20]\AgdaSymbol{=} \<[23]%
+\>[23]\AgdaFunction{Data.List.All.map} \AgdaSymbol{(λ} \AgdaSymbol{\{} \AgdaSymbol{(}\AgdaInductiveConstructor{notOccurBx} \AgdaBound{nb} \AgdaSymbol{\_)} \AgdaSymbol{→} \AgdaBound{nb}\AgdaSymbol{\})}\<%
+\\
+%
+\\
+\>\AgdaFunction{listNotOccurBx₂inv} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{F} \AgdaBound{G₁} \AgdaBound{G₂} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G₁} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}\{}\AgdaBound{e'} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G₂} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}}\<%
+\\
+\>[0]\AgdaIndent{2}{}\<[2]%
+\>[2]\AgdaSymbol{→} \AgdaFunction{ListNotOccurBindF} \AgdaSymbol{(}\AgdaBound{G₁} \AgdaInductiveConstructor{|x|} \AgdaBound{G₂}\AgdaSymbol{)} \AgdaBound{xs} \AgdaSymbol{(}\AgdaBound{e} \AgdaInductiveConstructor{,} \AgdaBound{e'}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBindF} \AgdaBound{G₂} \AgdaBound{xs} \AgdaBound{e'} \<[75]%
+\>[75]\<%
+\\
+\>\AgdaFunction{listNotOccurBx₂inv} \<[20]%
+\>[20]\AgdaSymbol{=} \<[23]%
+\>[23]\AgdaFunction{Data.List.All.map} \AgdaSymbol{(λ} \AgdaSymbol{\{} \AgdaSymbol{(}\AgdaInductiveConstructor{notOccurBx} \AgdaSymbol{\_} \AgdaBound{nb}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaBound{nb}\AgdaSymbol{\})}\<%
+\\
+%
+\\
+\>\AgdaFunction{get} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{\}} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBind} \AgdaBound{xs} \AgdaBound{e} \AgdaSymbol{→} \AgdaSymbol{(}\AgdaBound{x} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaBound{x} \AgdaFunction{∈} \AgdaBound{xs} \AgdaSymbol{→} \AgdaBound{x} \AgdaFunction{notOccurBind} \AgdaBound{e}\<%
+\\
+\>\AgdaFunction{get} \AgdaBound{nb} \AgdaBound{x} \AgdaBound{x∉xs} \AgdaSymbol{=} \AgdaFunction{lookup} \AgdaBound{nb} \AgdaBound{x∉xs}\<%
+\\
+%
+\\
+\>\AgdaFunction{listNotOccurBBinv} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{F} \AgdaBound{G} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{x} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}\{}\AgdaBound{S} \AgdaSymbol{:} \AgdaFunction{Sort}\AgdaSymbol{\}}\<%
+\\
+\>[0]\AgdaIndent{2}{}\<[2]%
+\>[2]\AgdaSymbol{→} \AgdaFunction{ListNotOccurBindF} \AgdaSymbol{(}\AgdaInductiveConstructor{|B|} \AgdaBound{S} \AgdaBound{G}\AgdaSymbol{)} \AgdaBound{xs} \AgdaSymbol{(}\AgdaBound{x} \AgdaInductiveConstructor{,} \AgdaBound{e}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBindF} \AgdaBound{G} \AgdaBound{xs} \AgdaBound{e}\<%
+\\
+\>\AgdaFunction{listNotOccurBBinv} \AgdaSymbol{=} \AgdaFunction{Data.List.All.map} \AgdaSymbol{(λ} \AgdaSymbol{\{} \AgdaSymbol{(}\AgdaInductiveConstructor{notOccurBB≢} \AgdaSymbol{\_} \AgdaBound{nb}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaBound{nb}\AgdaSymbol{\})} \<[69]%
+\>[69]\<%
+\\
+%
+\\
+\>\AgdaFunction{listNotOccurBBinv∉fv} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{F} \AgdaBound{G} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{x} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}\{}\AgdaBound{S} \AgdaSymbol{:} \AgdaFunction{Sort}\AgdaSymbol{\}}\<%
+\\
+\>[0]\AgdaIndent{2}{}\<[2]%
+\>[2]\AgdaSymbol{→} \AgdaFunction{ListNotOccurBindF} \AgdaSymbol{(}\AgdaInductiveConstructor{|B|} \AgdaBound{S} \AgdaBound{G}\AgdaSymbol{)} \AgdaBound{xs} \AgdaSymbol{(}\AgdaBound{x} \AgdaInductiveConstructor{,} \AgdaBound{e}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaBound{x} \AgdaFunction{∉} \AgdaBound{xs}\<%
+\\
+\>\AgdaFunction{listNotOccurBBinv∉fv} \AgdaBound{nb} \AgdaBound{x∈xs} \AgdaKeyword{with} \AgdaFunction{lookup} \AgdaBound{nb} \AgdaBound{x∈xs}\<%
+\\
+\>\AgdaSymbol{...} \AgdaSymbol{|} \AgdaInductiveConstructor{notOccurBB≢} \AgdaBound{n≢n} \AgdaSymbol{\_} \AgdaSymbol{=} \AgdaFunction{⊥-elim} \AgdaSymbol{(}\AgdaBound{n≢n} \AgdaInductiveConstructor{refl}\AgdaSymbol{)}\<%
+\\
+%
+\\
+\>\AgdaFunction{lemma-binds+2} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaBound{G₁} \AgdaBound{G₂} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G₂} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}\{}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{\}}\<%
+\\
+\>[2]\AgdaIndent{16}{}\<[16]%
+\>[16]\AgdaSymbol{→} \AgdaFunction{ListNotOccurBindF} \AgdaBound{G₂} \AgdaBound{xs} \AgdaBound{e} \<[45]%
+\>[45]\AgdaSymbol{→} \AgdaFunction{ListNotOccurBindF} \AgdaSymbol{(}\AgdaBound{G₁} \AgdaInductiveConstructor{|+|} \AgdaBound{G₂}\AgdaSymbol{)} \AgdaBound{xs} \AgdaSymbol{(}\AgdaInductiveConstructor{inj₂} \AgdaBound{e}\AgdaSymbol{)}\<%
+\\
+\>\AgdaFunction{lemma-binds+2} \AgdaBound{notOccur} \AgdaSymbol{=} \AgdaFunction{tabulate} \AgdaSymbol{(}\AgdaInductiveConstructor{notOccurBinj₂} \AgdaFunction{∘} \AgdaSymbol{(}\AgdaFunction{lookup} \AgdaBound{notOccur}\AgdaSymbol{))}\<%
+\\
+%
+\\
+\>\AgdaFunction{lemma-binds+1} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaBound{G₁} \AgdaBound{G₂} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G₁} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}\{}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{\}}\<%
+\\
+\>[2]\AgdaIndent{16}{}\<[16]%
+\>[16]\AgdaSymbol{→} \AgdaFunction{ListNotOccurBindF} \AgdaBound{G₁} \AgdaBound{xs} \AgdaBound{e} \<[45]%
+\>[45]\AgdaSymbol{→} \AgdaFunction{ListNotOccurBindF} \AgdaSymbol{(}\AgdaBound{G₁} \AgdaInductiveConstructor{|+|} \AgdaBound{G₂}\AgdaSymbol{)} \AgdaBound{xs} \AgdaSymbol{(}\AgdaInductiveConstructor{inj₁} \AgdaBound{e}\AgdaSymbol{)}\<%
+\\
+\>\AgdaFunction{lemma-binds+1} \AgdaBound{notOccur} \AgdaSymbol{=} \AgdaFunction{tabulate} \AgdaSymbol{(}\AgdaInductiveConstructor{notOccurBinj₁} \AgdaFunction{∘} \AgdaSymbol{(}\AgdaFunction{lookup} \AgdaBound{notOccur}\AgdaSymbol{))}\<%
+\\
+%
+\\
+\>\AgdaFunction{lemma-binds×} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaBound{G₁} \AgdaBound{G₂} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G₁} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}\{}\AgdaBound{e′} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G₂} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}\{}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{\}}\<%
+\\
+\>[16]\AgdaIndent{17}{}\<[17]%
+\>[17]\AgdaSymbol{→} \AgdaFunction{ListNotOccurBindF} \AgdaBound{G₁} \AgdaBound{xs} \AgdaBound{e} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBindF} \AgdaBound{G₂} \AgdaBound{xs} \AgdaBound{e′} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBindF} \AgdaSymbol{(}\AgdaBound{G₁} \AgdaInductiveConstructor{|x|} \AgdaBound{G₂}\AgdaSymbol{)} \AgdaBound{xs} \AgdaSymbol{(}\AgdaBound{e} \AgdaInductiveConstructor{,} \AgdaBound{e′}\AgdaSymbol{)}\<%
+\\
+\>\AgdaFunction{lemma-binds×} \AgdaBound{noe} \AgdaBound{noe'} \AgdaSymbol{=} \AgdaFunction{tabulate} \AgdaSymbol{(λ} \AgdaBound{x∈xs} \AgdaSymbol{→} \AgdaInductiveConstructor{notOccurBx} \AgdaSymbol{((}\AgdaFunction{lookup} \AgdaBound{noe}\AgdaSymbol{)} \AgdaBound{x∈xs}\AgdaSymbol{)} \AgdaSymbol{((}\AgdaFunction{lookup} \AgdaBound{noe'}\AgdaSymbol{)} \AgdaBound{x∈xs}\AgdaSymbol{))}\<%
+\\
+%
+\\
+\>\AgdaFunction{lemma-binds1} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{\}}\<%
+\\
+\>[0]\AgdaIndent{15}{}\<[15]%
+\>[15]\AgdaSymbol{→} \AgdaFunction{ListNotOccurBindF} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaInductiveConstructor{|1|} \AgdaBound{xs} \AgdaInductiveConstructor{tt}\<%
+\\
+\>\AgdaFunction{lemma-binds1} \AgdaSymbol{=} \AgdaFunction{tabulate} \AgdaSymbol{(λ} \AgdaBound{\_} \AgdaSymbol{→} \AgdaInductiveConstructor{notOccurB1}\AgdaSymbol{)} \<[59]%
+\>[59]\<%
+\\
+%
+\\
+\>\AgdaFunction{lemma-bindsE} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{A} \AgdaSymbol{:} \AgdaPrimitiveType{Set} \AgdaSymbol{\}\{}\AgdaBound{a} \AgdaSymbol{:} \AgdaBound{A}\AgdaSymbol{\}\{}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{\}}\<%
+\\
+\>[15]\AgdaIndent{16}{}\<[16]%
+\>[16]\AgdaSymbol{→} \AgdaFunction{ListNotOccurBindF} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaSymbol{(}\AgdaInductiveConstructor{|E|} \AgdaBound{A}\AgdaSymbol{)} \AgdaBound{xs} \AgdaBound{a}\<%
+\\
+\>\AgdaFunction{lemma-bindsE} \AgdaSymbol{=} \AgdaFunction{tabulate} \AgdaSymbol{(λ} \AgdaBound{\_} \AgdaSymbol{→} \AgdaInductiveConstructor{notOccurBE}\AgdaSymbol{)}\<%
+\\
+%
+\\
+\>\AgdaFunction{lemma-bindsEf} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaBound{G} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}\{}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{\}}\<%
+\\
+\>[16]\AgdaIndent{17}{}\<[17]%
+\>[17]\AgdaSymbol{→} \AgdaFunction{ListNotOccurBindF} \AgdaBound{F} \AgdaBound{xs} \AgdaBound{e} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBindF} \AgdaSymbol{\{}\AgdaBound{G}\AgdaSymbol{\}} \AgdaSymbol{(}\AgdaInductiveConstructor{|Ef|} \AgdaBound{F}\AgdaSymbol{)} \AgdaBound{xs} \AgdaInductiveConstructor{⟨} \AgdaBound{e} \AgdaInductiveConstructor{⟩}\<%
+\\
+\>\AgdaFunction{lemma-bindsEf} \AgdaBound{notOccur} \AgdaSymbol{=} \AgdaFunction{tabulate} \AgdaSymbol{(}\AgdaInductiveConstructor{notOccurBEf} \AgdaFunction{∘} \AgdaSymbol{(}\AgdaFunction{lookup} \AgdaBound{notOccur}\AgdaSymbol{))}\<%
+\\
+%
+\\
+\>\AgdaFunction{lemma-bindsR} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \<[19]%
+\>[19]\AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}\{}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{\}}\<%
+\\
+\>[16]\AgdaIndent{17}{}\<[17]%
+\>[17]\AgdaSymbol{→} \AgdaFunction{ListNotOccurBindF} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaBound{F} \AgdaBound{xs} \AgdaBound{e} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBindF} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaInductiveConstructor{|R|} \AgdaBound{xs} \AgdaInductiveConstructor{⟨} \AgdaBound{e} \AgdaInductiveConstructor{⟩}\<%
+\\
+\>\AgdaFunction{lemma-bindsR} \AgdaBound{notOccur} \AgdaSymbol{=} \AgdaFunction{tabulate} \AgdaSymbol{(}\AgdaInductiveConstructor{notOccurBR} \AgdaFunction{∘} \AgdaSymbol{(}\AgdaFunction{lookup} \AgdaBound{notOccur}\AgdaSymbol{))}\<%
+\\
+%
+\\
+\>\AgdaFunction{lemma-bindsB} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaBound{G} \<[21]%
+\>[21]\AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}\{}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{S} \AgdaSymbol{:} \AgdaFunction{Sort}\AgdaSymbol{\}\{}\AgdaBound{x} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{\}}\<%
+\\
+\>[0]\AgdaIndent{15}{}\<[15]%
+\>[15]\AgdaSymbol{→} \AgdaBound{x} \AgdaFunction{∉} \AgdaBound{xs} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBindF} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaBound{G} \AgdaBound{xs} \AgdaBound{e} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBindF} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaSymbol{(}\AgdaInductiveConstructor{|B|} \AgdaBound{S} \AgdaBound{G}\AgdaSymbol{)} \AgdaBound{xs} \AgdaSymbol{(}\AgdaBound{x} \AgdaInductiveConstructor{,} \AgdaBound{e}\AgdaSymbol{)}\<%
+\\
+\>\AgdaFunction{lemma-bindsB} \AgdaBound{x∉xs} \AgdaBound{notOccur} \AgdaSymbol{=} \AgdaFunction{tabulate} \AgdaSymbol{(λ} \AgdaBound{y∈xs} \AgdaSymbol{→} \AgdaInductiveConstructor{notOccurBB≢} \AgdaSymbol{(}\AgdaFunction{x∉xs∧y∈xs⇒y≢x} \AgdaBound{x∉xs} \AgdaBound{y∈xs}\AgdaSymbol{)} \AgdaSymbol{((}\AgdaFunction{lookup} \AgdaBound{notOccur}\AgdaSymbol{)} \AgdaBound{y∈xs}\AgdaSymbol{))}\<%
+\\
+%
+\\
+\>\AgdaFunction{lemma-bindsv} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{x} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{S} \AgdaSymbol{:} \AgdaFunction{Sort}\AgdaSymbol{\}} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBindF} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaSymbol{(}\AgdaInductiveConstructor{|v|} \AgdaBound{S}\AgdaSymbol{)} \AgdaBound{xs} \AgdaBound{x} \<[96]%
+\>[96]\<%
+\\
+\>\AgdaFunction{lemma-bindsv} \AgdaSymbol{=} \AgdaFunction{tabulate} \AgdaSymbol{(λ} \AgdaBound{\_} \AgdaSymbol{→} \AgdaInductiveConstructor{notOccurBv}\AgdaSymbol{)}\<%
+\\
+%
+\\
+\>\AgdaKeyword{postulate}\<%
+\\
+\>[0]\AgdaIndent{2}{}\<[2]%
+\>[2]\AgdaPostulate{lemma-binds:head} \<[20]%
+\>[20]\AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{x} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{\}} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBind} \AgdaSymbol{(}\AgdaBound{x} \AgdaInductiveConstructor{∷} \AgdaBound{xs}\AgdaSymbol{)} \AgdaBound{e} \AgdaSymbol{→} \AgdaBound{x} \AgdaFunction{notOccurBind} \AgdaBound{e}\<%
+\\
+\>[0]\AgdaIndent{2}{}\<[2]%
+\>[2]\AgdaPostulate{lemma-binds:tail} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{x} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{\}} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBind} \AgdaSymbol{(}\AgdaBound{x} \AgdaInductiveConstructor{∷} \AgdaBound{xs}\AgdaSymbol{)} \AgdaBound{e} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBind} \AgdaBound{xs} \AgdaBound{e}\<%
+\\
+\>[0]\AgdaIndent{2}{}\<[2]%
+\>[2]\AgdaPostulate{lemma-binds:cons} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{x} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{\}} \AgdaSymbol{→} \AgdaBound{x} \AgdaFunction{notOccurBind} \AgdaBound{e} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBind} \AgdaBound{xs} \AgdaBound{e} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBind} \AgdaSymbol{(}\AgdaBound{x} \AgdaInductiveConstructor{∷} \AgdaBound{xs}\AgdaSymbol{)} \AgdaBound{e}\<%
+\\
+\>[0]\AgdaIndent{2}{}\<[2]%
+\>[2]\AgdaPostulate{lemma-binds++} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{xs} \AgdaBound{ys} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{\}} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBind} \AgdaBound{xs} \AgdaBound{e} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBind} \AgdaBound{ys} \AgdaBound{e} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBind} \AgdaSymbol{(}\AgdaBound{xs} \AgdaFunction{++} \AgdaBound{ys}\AgdaSymbol{)} \AgdaBound{e} \<[137]%
+\>[137]\<%
+\\
+\>[0]\AgdaIndent{2}{}\<[2]%
+\>[2]\AgdaPostulate{lemma-binds++l} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{xs} \AgdaBound{ys} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{\}} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBind} \AgdaSymbol{(}\AgdaBound{xs} \AgdaFunction{++} \AgdaBound{ys}\AgdaSymbol{)} \AgdaBound{e} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBind} \AgdaBound{xs} \AgdaBound{e}\<%
+\\
+\>[0]\AgdaIndent{2}{}\<[2]%
+\>[2]\AgdaPostulate{lemma-binds++r} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{xs} \AgdaBound{ys} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{\}} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBind} \AgdaSymbol{(}\AgdaBound{xs} \AgdaFunction{++} \AgdaBound{ys}\AgdaSymbol{)} \AgdaBound{e} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBind} \AgdaBound{ys} \AgdaBound{e}\<%
+\\
+\>[0]\AgdaIndent{2}{}\<[2]%
+\>[2]\AgdaPostulate{lemma-binds⊆} \<[17]%
+\>[17]\AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{xs} \AgdaBound{ys} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{\}} \AgdaSymbol{→} \AgdaBound{ys} \AgdaFunction{⊆} \AgdaBound{xs} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBind} \AgdaBound{xs} \AgdaBound{e} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBind} \AgdaBound{ys} \AgdaBound{e}\<%
+\\
+\>[0]\AgdaIndent{2}{}\<[2]%
+\>[2]\AgdaPostulate{lemma-foldCtxBinds} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{C} \AgdaBound{H} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{f} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{C} \AgdaSymbol{→} \AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{\}\{}\AgdaBound{c} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{C}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{\}}\<%
+\\
+\>[2]\AgdaIndent{21}{}\<[21]%
+\>[21]\AgdaSymbol{\{}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{\}} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBind} \AgdaBound{xs} \AgdaBound{e} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBind} \AgdaBound{xs} \AgdaBound{c} \AgdaSymbol{→} \<[86]%
+\>[86]\AgdaFunction{ListNotOccurBind} \AgdaBound{xs} \AgdaSymbol{(}\AgdaFunction{foldCtx} \AgdaBound{F} \AgdaBound{f} \AgdaBound{c} \AgdaBound{e}\AgdaSymbol{)}\<%
+\end{code}

@@ -1,0 +1,1793 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >SwapInduction</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Keyword"
+      >module</a
+      ><a name="7"
+      > </a
+      ><a name="8" href="SwapInduction.html#1" class="Module"
+      >SwapInduction</a
+      ><a name="21"
+      > </a
+      ><a name="22" class="Keyword"
+      >where</a
+      ><a name="27"
+      >
+
+</a
+      ><a name="29" class="Keyword"
+      >open</a
+      ><a name="33"
+      > </a
+      ><a name="34" class="Keyword"
+      >import</a
+      ><a name="40"
+      > </a
+      ><a name="41" href="GPBindings.html#1" class="Module"
+      >GPBindings</a
+      ><a name="51"
+      >
+</a
+      ><a name="52" class="Keyword"
+      >open</a
+      ><a name="56"
+      > </a
+      ><a name="57" class="Keyword"
+      >import</a
+      ><a name="63"
+      > </a
+      ><a name="64" href="Swap.html#1" class="Module"
+      >Swap</a
+      ><a name="68"
+      >
+
+</a
+      ><a name="70" class="Keyword"
+      >open</a
+      ><a name="74"
+      > </a
+      ><a name="75" class="Keyword"
+      >import</a
+      ><a name="81"
+      > </a
+      ><a name="82" href="Data.Unit.html#1" class="Module"
+      >Data.Unit</a
+      ><a name="91"
+      >
+</a
+      ><a name="92" class="Keyword"
+      >open</a
+      ><a name="96"
+      > </a
+      ><a name="97" class="Keyword"
+      >import</a
+      ><a name="103"
+      > </a
+      ><a name="104" href="Data.Empty.html#1" class="Module"
+      >Data.Empty</a
+      ><a name="114"
+      >
+</a
+      ><a name="115" class="Keyword"
+      >open</a
+      ><a name="119"
+      > </a
+      ><a name="120" class="Keyword"
+      >import</a
+      ><a name="126"
+      > </a
+      ><a name="127" href="Data.Sum.html#1" class="Module"
+      >Data.Sum</a
+      ><a name="135"
+      >
+</a
+      ><a name="136" class="Keyword"
+      >open</a
+      ><a name="140"
+      > </a
+      ><a name="141" class="Keyword"
+      >import</a
+      ><a name="147"
+      > </a
+      ><a name="148" href="Data.Product.html#1" class="Module"
+      >Data.Product</a
+      ><a name="160"
+      >
+
+</a
+      ><a name="162" href="SwapInduction.html#162" class="Function"
+      >fihS</a
+      ><a name="166"
+      > </a
+      ><a name="167" class="Symbol"
+      >:</a
+      ><a name="168"
+      > </a
+      ><a name="169" class="Symbol"
+      >{</a
+      ><a name="170" href="SwapInduction.html#170" class="Bound"
+      >F</a
+      ><a name="171"
+      > </a
+      ><a name="172" class="Symbol"
+      >:</a
+      ><a name="173"
+      > </a
+      ><a name="174" href="GPBindings.html#539" class="Datatype"
+      >Functor</a
+      ><a name="181" class="Symbol"
+      >}(</a
+      ><a name="183" href="SwapInduction.html#183" class="Bound"
+      >G</a
+      ><a name="184"
+      > </a
+      ><a name="185" class="Symbol"
+      >:</a
+      ><a name="186"
+      > </a
+      ><a name="187" href="GPBindings.html#539" class="Datatype"
+      >Functor</a
+      ><a name="194" class="Symbol"
+      >)(</a
+      ><a name="196" href="SwapInduction.html#196" class="Bound"
+      >P</a
+      ><a name="197"
+      > </a
+      ><a name="198" class="Symbol"
+      >:</a
+      ><a name="199"
+      > </a
+      ><a name="200" href="GPBindings.html#1264" class="Datatype"
+      >&#956;</a
+      ><a name="201"
+      > </a
+      ><a name="202" href="SwapInduction.html#170" class="Bound"
+      >F</a
+      ><a name="203"
+      > </a
+      ><a name="204" class="Symbol"
+      >&#8594;</a
+      ><a name="205"
+      > </a
+      ><a name="206" class="PrimitiveType"
+      >Set</a
+      ><a name="209" class="Symbol"
+      >)</a
+      ><a name="210"
+      > </a
+      ><a name="211" class="Symbol"
+      >&#8594;</a
+      ><a name="212"
+      > </a
+      ><a name="213" href="GPBindings.html#989" class="Function Operator"
+      >&#10214;</a
+      ><a name="214"
+      > </a
+      ><a name="215" href="SwapInduction.html#183" class="Bound"
+      >G</a
+      ><a name="216"
+      > </a
+      ><a name="217" href="GPBindings.html#989" class="Function Operator"
+      >&#10215;</a
+      ><a name="218"
+      > </a
+      ><a name="219" class="Symbol"
+      >(</a
+      ><a name="220" href="GPBindings.html#1264" class="Datatype"
+      >&#956;</a
+      ><a name="221"
+      > </a
+      ><a name="222" href="SwapInduction.html#170" class="Bound"
+      >F</a
+      ><a name="223" class="Symbol"
+      >)</a
+      ><a name="224"
+      > </a
+      ><a name="225" class="Symbol"
+      >&#8594;</a
+      ><a name="226"
+      > </a
+      ><a name="227" class="PrimitiveType"
+      >Set</a
+      ><a name="230"
+      >
+</a
+      ><a name="231" href="SwapInduction.html#162" class="Function"
+      >fihS</a
+      ><a name="235"
+      > </a
+      ><a name="236" class="Symbol"
+      >(</a
+      ><a name="237" href="GPBindings.html#577" class="InductiveConstructor"
+      >|v|</a
+      ><a name="240"
+      > </a
+      ><a name="241" href="SwapInduction.html#241" class="Bound"
+      >S</a
+      ><a name="242" class="Symbol"
+      >)</a
+      ><a name="243"
+      >       </a
+      ><a name="250" href="SwapInduction.html#250" class="Bound"
+      >P</a
+      ><a name="251"
+      > </a
+      ><a name="252" href="SwapInduction.html#252" class="Bound"
+      >n</a
+      ><a name="253"
+      >        </a
+      ><a name="261" class="Symbol"
+      >=</a
+      ><a name="262"
+      > </a
+      ><a name="263" href="Agda.Builtin.Unit.html#41" class="Record"
+      >&#8868;</a
+      ><a name="264"
+      >
+</a
+      ><a name="265" href="SwapInduction.html#162" class="Function"
+      >fihS</a
+      ><a name="269"
+      > </a
+      ><a name="270" href="GPBindings.html#618" class="InductiveConstructor"
+      >|1|</a
+      ><a name="273"
+      >           </a
+      ><a name="284" href="SwapInduction.html#284" class="Bound"
+      >P</a
+      ><a name="285"
+      > </a
+      ><a name="286" href="Agda.Builtin.Unit.html#78" class="InductiveConstructor"
+      >tt</a
+      ><a name="288"
+      >       </a
+      ><a name="295" class="Symbol"
+      >=</a
+      ><a name="296"
+      > </a
+      ><a name="297" href="Agda.Builtin.Unit.html#41" class="Record"
+      >&#8868;</a
+      ><a name="298"
+      >
+</a
+      ><a name="299" href="SwapInduction.html#162" class="Function"
+      >fihS</a
+      ><a name="303"
+      > </a
+      ><a name="304" class="Symbol"
+      >(</a
+      ><a name="305" href="GPBindings.html#700" class="InductiveConstructor"
+      >|E|</a
+      ><a name="308"
+      > </a
+      ><a name="309" href="SwapInduction.html#309" class="Bound"
+      >B</a
+      ><a name="310" class="Symbol"
+      >)</a
+      ><a name="311"
+      >       </a
+      ><a name="318" href="SwapInduction.html#318" class="Bound"
+      >P</a
+      ><a name="319"
+      > </a
+      ><a name="320" href="SwapInduction.html#320" class="Bound"
+      >b</a
+      ><a name="321"
+      >        </a
+      ><a name="329" class="Symbol"
+      >=</a
+      ><a name="330"
+      > </a
+      ><a name="331" href="Agda.Builtin.Unit.html#41" class="Record"
+      >&#8868;</a
+      ><a name="332"
+      >
+</a
+      ><a name="333" href="SwapInduction.html#162" class="Function"
+      >fihS</a
+      ><a name="337"
+      > </a
+      ><a name="338" class="Symbol"
+      >(</a
+      ><a name="339" href="GPBindings.html#749" class="InductiveConstructor"
+      >|Ef|</a
+      ><a name="343"
+      > </a
+      ><a name="344" href="SwapInduction.html#344" class="Bound"
+      >G</a
+      ><a name="345" class="Symbol"
+      >)</a
+      ><a name="346"
+      >      </a
+      ><a name="352" href="SwapInduction.html#352" class="Bound"
+      >P</a
+      ><a name="353"
+      > </a
+      ><a name="354" href="SwapInduction.html#354" class="Bound"
+      >e</a
+      ><a name="355"
+      >        </a
+      ><a name="363" class="Symbol"
+      >=</a
+      ><a name="364"
+      > </a
+      ><a name="365" href="Agda.Builtin.Unit.html#41" class="Record"
+      >&#8868;</a
+      ><a name="366"
+      >
+</a
+      ><a name="367" href="SwapInduction.html#162" class="Function"
+      >fihS</a
+      ><a name="371"
+      > </a
+      ><a name="372" href="GPBindings.html#659" class="InductiveConstructor"
+      >|R|</a
+      ><a name="375"
+      >           </a
+      ><a name="386" href="SwapInduction.html#386" class="Bound"
+      >P</a
+      ><a name="387"
+      > </a
+      ><a name="388" href="SwapInduction.html#388" class="Bound"
+      >e</a
+      ><a name="389"
+      >        </a
+      ><a name="397" class="Symbol"
+      >=</a
+      ><a name="398"
+      > </a
+      ><a name="399" href="SwapInduction.html#386" class="Bound"
+      >P</a
+      ><a name="400"
+      > </a
+      ><a name="401" href="SwapInduction.html#388" class="Bound"
+      >e</a
+      ><a name="402"
+      > 
+</a
+      ><a name="404" href="SwapInduction.html#162" class="Function"
+      >fihS</a
+      ><a name="408"
+      > </a
+      ><a name="409" class="Symbol"
+      >(</a
+      ><a name="410" href="SwapInduction.html#410" class="Bound"
+      >G</a
+      ><a name="411"
+      > </a
+      ><a name="412" href="GPBindings.html#798" class="InductiveConstructor Operator"
+      >|+|</a
+      ><a name="415"
+      > </a
+      ><a name="416" href="SwapInduction.html#416" class="Bound"
+      >G'</a
+      ><a name="418" class="Symbol"
+      >)</a
+      ><a name="419"
+      >    </a
+      ><a name="423" href="SwapInduction.html#423" class="Bound"
+      >P</a
+      ><a name="424"
+      > </a
+      ><a name="425" class="Symbol"
+      >(</a
+      ><a name="426" href="Data.Sum.html#489" class="InductiveConstructor"
+      >inj&#8321;</a
+      ><a name="430"
+      > </a
+      ><a name="431" href="SwapInduction.html#431" class="Bound"
+      >e</a
+      ><a name="432" class="Symbol"
+      >)</a
+      ><a name="433"
+      > </a
+      ><a name="434" class="Symbol"
+      >=</a
+      ><a name="435"
+      > </a
+      ><a name="436" href="SwapInduction.html#162" class="Function"
+      >fihS</a
+      ><a name="440"
+      > </a
+      ><a name="441" href="SwapInduction.html#410" class="Bound"
+      >G</a
+      ><a name="442"
+      >  </a
+      ><a name="444" href="SwapInduction.html#423" class="Bound"
+      >P</a
+      ><a name="445"
+      > </a
+      ><a name="446" href="SwapInduction.html#431" class="Bound"
+      >e</a
+      ><a name="447"
+      > 
+</a
+      ><a name="449" href="SwapInduction.html#162" class="Function"
+      >fihS</a
+      ><a name="453"
+      > </a
+      ><a name="454" class="Symbol"
+      >(</a
+      ><a name="455" href="SwapInduction.html#455" class="Bound"
+      >G</a
+      ><a name="456"
+      > </a
+      ><a name="457" href="GPBindings.html#798" class="InductiveConstructor Operator"
+      >|+|</a
+      ><a name="460"
+      > </a
+      ><a name="461" href="SwapInduction.html#461" class="Bound"
+      >G'</a
+      ><a name="463" class="Symbol"
+      >)</a
+      ><a name="464"
+      >    </a
+      ><a name="468" href="SwapInduction.html#468" class="Bound"
+      >P</a
+      ><a name="469"
+      > </a
+      ><a name="470" class="Symbol"
+      >(</a
+      ><a name="471" href="Data.Sum.html#514" class="InductiveConstructor"
+      >inj&#8322;</a
+      ><a name="475"
+      > </a
+      ><a name="476" href="SwapInduction.html#476" class="Bound"
+      >e</a
+      ><a name="477" class="Symbol"
+      >)</a
+      ><a name="478"
+      > </a
+      ><a name="479" class="Symbol"
+      >=</a
+      ><a name="480"
+      > </a
+      ><a name="481" href="SwapInduction.html#162" class="Function"
+      >fihS</a
+      ><a name="485"
+      > </a
+      ><a name="486" href="SwapInduction.html#461" class="Bound"
+      >G'</a
+      ><a name="488"
+      > </a
+      ><a name="489" href="SwapInduction.html#468" class="Bound"
+      >P</a
+      ><a name="490"
+      > </a
+      ><a name="491" href="SwapInduction.html#476" class="Bound"
+      >e</a
+      ><a name="492"
+      > 
+</a
+      ><a name="494" href="SwapInduction.html#162" class="Function"
+      >fihS</a
+      ><a name="498"
+      > </a
+      ><a name="499" class="Symbol"
+      >(</a
+      ><a name="500" href="SwapInduction.html#500" class="Bound"
+      >G</a
+      ><a name="501"
+      > </a
+      ><a name="502" href="GPBindings.html#844" class="InductiveConstructor Operator"
+      >|x|</a
+      ><a name="505"
+      > </a
+      ><a name="506" href="SwapInduction.html#506" class="Bound"
+      >G'</a
+      ><a name="508" class="Symbol"
+      >)</a
+      ><a name="509"
+      >    </a
+      ><a name="513" href="SwapInduction.html#513" class="Bound"
+      >P</a
+      ><a name="514"
+      > </a
+      ><a name="515" class="Symbol"
+      >(</a
+      ><a name="516" href="SwapInduction.html#516" class="Bound"
+      >e</a
+      ><a name="517"
+      > </a
+      ><a name="518" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="519"
+      > </a
+      ><a name="520" href="SwapInduction.html#520" class="Bound"
+      >e'</a
+      ><a name="522" class="Symbol"
+      >)</a
+      ><a name="523"
+      > </a
+      ><a name="524" class="Symbol"
+      >=</a
+      ><a name="525"
+      > </a
+      ><a name="526" href="SwapInduction.html#162" class="Function"
+      >fihS</a
+      ><a name="530"
+      > </a
+      ><a name="531" href="SwapInduction.html#500" class="Bound"
+      >G</a
+      ><a name="532"
+      >  </a
+      ><a name="534" href="SwapInduction.html#513" class="Bound"
+      >P</a
+      ><a name="535"
+      > </a
+      ><a name="536" href="SwapInduction.html#516" class="Bound"
+      >e</a
+      ><a name="537"
+      >  </a
+      ><a name="539" href="Data.Product.html#1073" class="Function Operator"
+      >&#215;</a
+      ><a name="540"
+      > </a
+      ><a name="541" href="SwapInduction.html#162" class="Function"
+      >fihS</a
+      ><a name="545"
+      > </a
+      ><a name="546" href="SwapInduction.html#506" class="Bound"
+      >G'</a
+      ><a name="548"
+      > </a
+      ><a name="549" href="SwapInduction.html#513" class="Bound"
+      >P</a
+      ><a name="550"
+      > </a
+      ><a name="551" href="SwapInduction.html#520" class="Bound"
+      >e'</a
+      ><a name="553"
+      > 
+</a
+      ><a name="555" href="SwapInduction.html#162" class="Function"
+      >fihS</a
+      ><a name="559"
+      > </a
+      ><a name="560" class="Symbol"
+      >{</a
+      ><a name="561" href="SwapInduction.html#561" class="Bound"
+      >F</a
+      ><a name="562" class="Symbol"
+      >}</a
+      ><a name="563"
+      > </a
+      ><a name="564" class="Symbol"
+      >(</a
+      ><a name="565" href="GPBindings.html#890" class="InductiveConstructor"
+      >|B|</a
+      ><a name="568"
+      > </a
+      ><a name="569" href="SwapInduction.html#569" class="Bound"
+      >S</a
+      ><a name="570"
+      > </a
+      ><a name="571" href="SwapInduction.html#571" class="Bound"
+      >G</a
+      ><a name="572" class="Symbol"
+      >)</a
+      ><a name="573"
+      > </a
+      ><a name="574" href="SwapInduction.html#574" class="Bound"
+      >P</a
+      ><a name="575"
+      > </a
+      ><a name="576" class="Symbol"
+      >(</a
+      ><a name="577" href="SwapInduction.html#577" class="Bound"
+      >x</a
+      ><a name="578"
+      > </a
+      ><a name="579" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="580"
+      > </a
+      ><a name="581" href="SwapInduction.html#581" class="Bound"
+      >e</a
+      ><a name="582" class="Symbol"
+      >)</a
+      ><a name="583"
+      >  </a
+      ><a name="585" class="Symbol"
+      >=</a
+      ><a name="586"
+      > </a
+      ><a name="587" class="Symbol"
+      >(</a
+      ><a name="588" href="SwapInduction.html#588" class="Bound"
+      >y</a
+      ><a name="589"
+      > </a
+      ><a name="590" class="Symbol"
+      >:</a
+      ><a name="591"
+      > </a
+      ><a name="592" href="GPBindings.html#442" class="Function"
+      >V</a
+      ><a name="593" class="Symbol"
+      >)</a
+      ><a name="594"
+      > </a
+      ><a name="595" class="Symbol"
+      >&#8594;</a
+      ><a name="596"
+      > </a
+      ><a name="597" href="SwapInduction.html#162" class="Function"
+      >fihS</a
+      ><a name="601"
+      > </a
+      ><a name="602" href="SwapInduction.html#571" class="Bound"
+      >G</a
+      ><a name="603"
+      >  </a
+      ><a name="605" href="SwapInduction.html#574" class="Bound"
+      >P</a
+      ><a name="606"
+      > </a
+      ><a name="607" class="Symbol"
+      >(</a
+      ><a name="608" href="Swap.html#392" class="Function"
+      >swapF</a
+      ><a name="613"
+      > </a
+      ><a name="614" href="SwapInduction.html#571" class="Bound"
+      >G</a
+      ><a name="615"
+      > </a
+      ><a name="616" href="SwapInduction.html#569" class="Bound"
+      >S</a
+      ><a name="617"
+      > </a
+      ><a name="618" href="SwapInduction.html#577" class="Bound"
+      >x</a
+      ><a name="619"
+      > </a
+      ><a name="620" href="SwapInduction.html#588" class="Bound"
+      >y</a
+      ><a name="621"
+      > </a
+      ><a name="622" href="SwapInduction.html#581" class="Bound"
+      >e</a
+      ><a name="623" class="Symbol"
+      >)</a
+      ><a name="624"
+      >
+
+</a
+      ><a name="626" href="SwapInduction.html#626" class="Function"
+      >foldmapFS</a
+      ><a name="635"
+      > </a
+      ><a name="636" class="Symbol"
+      >:</a
+      ><a name="637"
+      > </a
+      ><a name="638" class="Symbol"
+      >{</a
+      ><a name="639" href="SwapInduction.html#639" class="Bound"
+      >F</a
+      ><a name="640"
+      > </a
+      ><a name="641" class="Symbol"
+      >:</a
+      ><a name="642"
+      > </a
+      ><a name="643" href="GPBindings.html#539" class="Datatype"
+      >Functor</a
+      ><a name="650" class="Symbol"
+      >}(</a
+      ><a name="652" href="SwapInduction.html#652" class="Bound"
+      >G</a
+      ><a name="653"
+      > </a
+      ><a name="654" class="Symbol"
+      >:</a
+      ><a name="655"
+      > </a
+      ><a name="656" href="GPBindings.html#539" class="Datatype"
+      >Functor</a
+      ><a name="663" class="Symbol"
+      >)(</a
+      ><a name="665" href="SwapInduction.html#665" class="Bound"
+      >P</a
+      ><a name="666"
+      > </a
+      ><a name="667" class="Symbol"
+      >:</a
+      ><a name="668"
+      > </a
+      ><a name="669" href="GPBindings.html#1264" class="Datatype"
+      >&#956;</a
+      ><a name="670"
+      > </a
+      ><a name="671" href="SwapInduction.html#639" class="Bound"
+      >F</a
+      ><a name="672"
+      > </a
+      ><a name="673" class="Symbol"
+      >&#8594;</a
+      ><a name="674"
+      > </a
+      ><a name="675" class="PrimitiveType"
+      >Set</a
+      ><a name="678" class="Symbol"
+      >)</a
+      ><a name="679"
+      >
+          </a
+      ><a name="690" class="Symbol"
+      >&#8594;</a
+      ><a name="691"
+      > </a
+      ><a name="692" class="Symbol"
+      >((</a
+      ><a name="694" href="SwapInduction.html#694" class="Bound"
+      >e</a
+      ><a name="695"
+      > </a
+      ><a name="696" class="Symbol"
+      >:</a
+      ><a name="697"
+      > </a
+      ><a name="698" href="GPBindings.html#989" class="Function Operator"
+      >&#10214;</a
+      ><a name="699"
+      > </a
+      ><a name="700" href="SwapInduction.html#639" class="Bound"
+      >F</a
+      ><a name="701"
+      > </a
+      ><a name="702" href="GPBindings.html#989" class="Function Operator"
+      >&#10215;</a
+      ><a name="703"
+      > </a
+      ><a name="704" class="Symbol"
+      >(</a
+      ><a name="705" href="GPBindings.html#1264" class="Datatype"
+      >&#956;</a
+      ><a name="706"
+      > </a
+      ><a name="707" href="SwapInduction.html#639" class="Bound"
+      >F</a
+      ><a name="708" class="Symbol"
+      >))</a
+      ><a name="710"
+      > </a
+      ><a name="711" class="Symbol"
+      >&#8594;</a
+      ><a name="712"
+      > </a
+      ><a name="713" href="SwapInduction.html#162" class="Function"
+      >fihS</a
+      ><a name="717"
+      > </a
+      ><a name="718" href="SwapInduction.html#639" class="Bound"
+      >F</a
+      ><a name="719"
+      > </a
+      ><a name="720" href="SwapInduction.html#665" class="Bound"
+      >P</a
+      ><a name="721"
+      > </a
+      ><a name="722" href="SwapInduction.html#694" class="Bound"
+      >e</a
+      ><a name="723"
+      > </a
+      ><a name="724" class="Symbol"
+      >&#8594;</a
+      ><a name="725"
+      >  </a
+      ><a name="727" href="SwapInduction.html#665" class="Bound"
+      >P</a
+      ><a name="728"
+      > </a
+      ><a name="729" href="GPBindings.html#1296" class="InductiveConstructor Operator"
+      >&#10216;</a
+      ><a name="730"
+      > </a
+      ><a name="731" href="SwapInduction.html#694" class="Bound"
+      >e</a
+      ><a name="732"
+      > </a
+      ><a name="733" href="GPBindings.html#1296" class="InductiveConstructor Operator"
+      >&#10217;</a
+      ><a name="734" class="Symbol"
+      >)</a
+      ><a name="735"
+      >
+          </a
+      ><a name="746" class="Symbol"
+      >&#8594;</a
+      ><a name="747"
+      > </a
+      ><a name="748" class="Symbol"
+      >(</a
+      ><a name="749" href="SwapInduction.html#749" class="Bound"
+      >e</a
+      ><a name="750"
+      > </a
+      ><a name="751" class="Symbol"
+      >:</a
+      ><a name="752"
+      > </a
+      ><a name="753" href="GPBindings.html#989" class="Function Operator"
+      >&#10214;</a
+      ><a name="754"
+      > </a
+      ><a name="755" href="SwapInduction.html#652" class="Bound"
+      >G</a
+      ><a name="756"
+      > </a
+      ><a name="757" href="GPBindings.html#989" class="Function Operator"
+      >&#10215;</a
+      ><a name="758"
+      > </a
+      ><a name="759" class="Symbol"
+      >(</a
+      ><a name="760" href="GPBindings.html#1264" class="Datatype"
+      >&#956;</a
+      ><a name="761"
+      > </a
+      ><a name="762" href="SwapInduction.html#639" class="Bound"
+      >F</a
+      ><a name="763" class="Symbol"
+      >))</a
+      ><a name="765"
+      >
+          </a
+      ><a name="776" class="Symbol"
+      >&#8594;</a
+      ><a name="777"
+      > </a
+      ><a name="778" href="Swap.html#3717" class="Datatype"
+      >AccF</a
+      ><a name="782"
+      > </a
+      ><a name="783" href="SwapInduction.html#639" class="Bound"
+      >F</a
+      ><a name="784"
+      > </a
+      ><a name="785" href="SwapInduction.html#652" class="Bound"
+      >G</a
+      ><a name="786"
+      > </a
+      ><a name="787" href="SwapInduction.html#749" class="Bound"
+      >e</a
+      ><a name="788"
+      >
+          </a
+      ><a name="799" class="Symbol"
+      >&#8594;</a
+      ><a name="800"
+      > </a
+      ><a name="801" href="SwapInduction.html#162" class="Function"
+      >fihS</a
+      ><a name="805"
+      > </a
+      ><a name="806" href="SwapInduction.html#652" class="Bound"
+      >G</a
+      ><a name="807"
+      > </a
+      ><a name="808" href="SwapInduction.html#665" class="Bound"
+      >P</a
+      ><a name="809"
+      > </a
+      ><a name="810" href="SwapInduction.html#749" class="Bound"
+      >e</a
+      ><a name="811"
+      >
+</a
+      ><a name="812" href="SwapInduction.html#626" class="Function"
+      >foldmapFS</a
+      ><a name="821"
+      > </a
+      ><a name="822" class="Symbol"
+      >(</a
+      ><a name="823" href="GPBindings.html#577" class="InductiveConstructor"
+      >|v|</a
+      ><a name="826"
+      > </a
+      ><a name="827" href="SwapInduction.html#827" class="Bound"
+      >S</a
+      ><a name="828" class="Symbol"
+      >)</a
+      ><a name="829"
+      >        </a
+      ><a name="837" href="SwapInduction.html#837" class="Bound"
+      >P</a
+      ><a name="838"
+      > </a
+      ><a name="839" href="SwapInduction.html#839" class="Bound"
+      >hi</a
+      ><a name="841"
+      > </a
+      ><a name="842" href="SwapInduction.html#842" class="Bound"
+      >n</a
+      ><a name="843"
+      >        </a
+      ><a name="851" class="Symbol"
+      >_</a
+      ><a name="852"
+      >                  </a
+      ><a name="870" class="Symbol"
+      >=</a
+      ><a name="871"
+      > </a
+      ><a name="872" href="Agda.Builtin.Unit.html#78" class="InductiveConstructor"
+      >tt</a
+      ><a name="874"
+      >
+</a
+      ><a name="875" href="SwapInduction.html#626" class="Function"
+      >foldmapFS</a
+      ><a name="884"
+      > </a
+      ><a name="885" href="GPBindings.html#618" class="InductiveConstructor"
+      >|1|</a
+      ><a name="888"
+      >            </a
+      ><a name="900" href="SwapInduction.html#900" class="Bound"
+      >P</a
+      ><a name="901"
+      > </a
+      ><a name="902" href="SwapInduction.html#902" class="Bound"
+      >hi</a
+      ><a name="904"
+      > </a
+      ><a name="905" href="Agda.Builtin.Unit.html#78" class="InductiveConstructor"
+      >tt</a
+      ><a name="907"
+      >       </a
+      ><a name="914" class="Symbol"
+      >_</a
+      ><a name="915"
+      >                  </a
+      ><a name="933" class="Symbol"
+      >=</a
+      ><a name="934"
+      > </a
+      ><a name="935" href="Agda.Builtin.Unit.html#78" class="InductiveConstructor"
+      >tt</a
+      ><a name="937"
+      >
+</a
+      ><a name="938" href="SwapInduction.html#626" class="Function"
+      >foldmapFS</a
+      ><a name="947"
+      > </a
+      ><a name="948" class="Symbol"
+      >(</a
+      ><a name="949" href="GPBindings.html#700" class="InductiveConstructor"
+      >|E|</a
+      ><a name="952"
+      > </a
+      ><a name="953" href="SwapInduction.html#953" class="Bound"
+      >B</a
+      ><a name="954" class="Symbol"
+      >)</a
+      ><a name="955"
+      >        </a
+      ><a name="963" href="SwapInduction.html#963" class="Bound"
+      >P</a
+      ><a name="964"
+      > </a
+      ><a name="965" href="SwapInduction.html#965" class="Bound"
+      >hi</a
+      ><a name="967"
+      > </a
+      ><a name="968" href="SwapInduction.html#968" class="Bound"
+      >b</a
+      ><a name="969"
+      >        </a
+      ><a name="977" class="Symbol"
+      >_</a
+      ><a name="978"
+      >                  </a
+      ><a name="996" class="Symbol"
+      >=</a
+      ><a name="997"
+      > </a
+      ><a name="998" href="Agda.Builtin.Unit.html#78" class="InductiveConstructor"
+      >tt</a
+      ><a name="1000"
+      >
+</a
+      ><a name="1001" href="SwapInduction.html#626" class="Function"
+      >foldmapFS</a
+      ><a name="1010"
+      > </a
+      ><a name="1011" class="Symbol"
+      >(</a
+      ><a name="1012" href="GPBindings.html#749" class="InductiveConstructor"
+      >|Ef|</a
+      ><a name="1016"
+      > </a
+      ><a name="1017" href="SwapInduction.html#1017" class="Bound"
+      >F</a
+      ><a name="1018" class="Symbol"
+      >)</a
+      ><a name="1019"
+      >       </a
+      ><a name="1026" href="SwapInduction.html#1026" class="Bound"
+      >P</a
+      ><a name="1027"
+      > </a
+      ><a name="1028" href="SwapInduction.html#1028" class="Bound"
+      >hi</a
+      ><a name="1030"
+      > </a
+      ><a name="1031" href="SwapInduction.html#1031" class="Bound"
+      >b</a
+      ><a name="1032"
+      >        </a
+      ><a name="1040" class="Symbol"
+      >_</a
+      ><a name="1041"
+      >                  </a
+      ><a name="1059" class="Symbol"
+      >=</a
+      ><a name="1060"
+      > </a
+      ><a name="1061" href="Agda.Builtin.Unit.html#78" class="InductiveConstructor"
+      >tt</a
+      ><a name="1063"
+      >
+</a
+      ><a name="1064" href="SwapInduction.html#626" class="Function"
+      >foldmapFS</a
+      ><a name="1073"
+      > </a
+      ><a name="1074" class="Symbol"
+      >{</a
+      ><a name="1075" href="SwapInduction.html#1075" class="Bound"
+      >F</a
+      ><a name="1076" class="Symbol"
+      >}</a
+      ><a name="1077"
+      > </a
+      ><a name="1078" href="GPBindings.html#659" class="InductiveConstructor"
+      >|R|</a
+      ><a name="1081"
+      >        </a
+      ><a name="1089" href="SwapInduction.html#1089" class="Bound"
+      >P</a
+      ><a name="1090"
+      > </a
+      ><a name="1091" href="SwapInduction.html#1091" class="Bound"
+      >hi</a
+      ><a name="1093"
+      > </a
+      ><a name="1094" href="GPBindings.html#1296" class="InductiveConstructor Operator"
+      >&#10216;</a
+      ><a name="1095"
+      > </a
+      ><a name="1096" href="SwapInduction.html#1096" class="Bound"
+      >e</a
+      ><a name="1097"
+      > </a
+      ><a name="1098" href="GPBindings.html#1296" class="InductiveConstructor Operator"
+      >&#10217;</a
+      ><a name="1099"
+      >    </a
+      ><a name="1103" class="Symbol"
+      >(</a
+      ><a name="1104" href="Swap.html#4113" class="InductiveConstructor"
+      >accR</a
+      ><a name="1108"
+      > </a
+      ><a name="1109" href="SwapInduction.html#1109" class="Bound"
+      >acce</a
+      ><a name="1113" class="Symbol"
+      >)</a
+      ><a name="1114"
+      >        </a
+      ><a name="1122" class="Symbol"
+      >=</a
+      ><a name="1123"
+      > </a
+      ><a name="1124" href="SwapInduction.html#1091" class="Bound"
+      >hi</a
+      ><a name="1126"
+      > </a
+      ><a name="1127" href="SwapInduction.html#1096" class="Bound"
+      >e</a
+      ><a name="1128"
+      > </a
+      ><a name="1129" class="Symbol"
+      >(</a
+      ><a name="1130" href="SwapInduction.html#626" class="Function"
+      >foldmapFS</a
+      ><a name="1139"
+      > </a
+      ><a name="1140" class="Symbol"
+      >{</a
+      ><a name="1141" href="SwapInduction.html#1075" class="Bound"
+      >F</a
+      ><a name="1142" class="Symbol"
+      >}</a
+      ><a name="1143"
+      > </a
+      ><a name="1144" href="SwapInduction.html#1075" class="Bound"
+      >F</a
+      ><a name="1145"
+      > </a
+      ><a name="1146" href="SwapInduction.html#1089" class="Bound"
+      >P</a
+      ><a name="1147"
+      > </a
+      ><a name="1148" href="SwapInduction.html#1091" class="Bound"
+      >hi</a
+      ><a name="1150"
+      > </a
+      ><a name="1151" href="SwapInduction.html#1096" class="Bound"
+      >e</a
+      ><a name="1152"
+      > </a
+      ><a name="1153" href="SwapInduction.html#1109" class="Bound"
+      >acce</a
+      ><a name="1157" class="Symbol"
+      >)</a
+      ><a name="1158"
+      >
+</a
+      ><a name="1159" href="SwapInduction.html#626" class="Function"
+      >foldmapFS</a
+      ><a name="1168"
+      > </a
+      ><a name="1169" class="Symbol"
+      >(</a
+      ><a name="1170" href="SwapInduction.html#1170" class="Bound"
+      >F</a
+      ><a name="1171"
+      > </a
+      ><a name="1172" href="GPBindings.html#798" class="InductiveConstructor Operator"
+      >|+|</a
+      ><a name="1175"
+      > </a
+      ><a name="1176" href="SwapInduction.html#1176" class="Bound"
+      >F'</a
+      ><a name="1178" class="Symbol"
+      >)</a
+      ><a name="1179"
+      >     </a
+      ><a name="1184" href="SwapInduction.html#1184" class="Bound"
+      >P</a
+      ><a name="1185"
+      > </a
+      ><a name="1186" href="SwapInduction.html#1186" class="Bound"
+      >hi</a
+      ><a name="1188"
+      > </a
+      ><a name="1189" class="Symbol"
+      >(</a
+      ><a name="1190" href="Data.Sum.html#489" class="InductiveConstructor"
+      >inj&#8321;</a
+      ><a name="1194"
+      > </a
+      ><a name="1195" href="SwapInduction.html#1195" class="Bound"
+      >e</a
+      ><a name="1196" class="Symbol"
+      >)</a
+      ><a name="1197"
+      > </a
+      ><a name="1198" class="Symbol"
+      >(</a
+      ><a name="1199" href="Swap.html#4186" class="InductiveConstructor"
+      >acc+&#8321;</a
+      ><a name="1204"
+      > </a
+      ><a name="1205" href="SwapInduction.html#1205" class="Bound"
+      >acce</a
+      ><a name="1209" class="Symbol"
+      >)</a
+      ><a name="1210"
+      >       </a
+      ><a name="1217" class="Symbol"
+      >=</a
+      ><a name="1218"
+      > </a
+      ><a name="1219" href="SwapInduction.html#626" class="Function"
+      >foldmapFS</a
+      ><a name="1228"
+      > </a
+      ><a name="1229" href="SwapInduction.html#1170" class="Bound"
+      >F</a
+      ><a name="1230"
+      >  </a
+      ><a name="1232" href="SwapInduction.html#1184" class="Bound"
+      >P</a
+      ><a name="1233"
+      > </a
+      ><a name="1234" href="SwapInduction.html#1186" class="Bound"
+      >hi</a
+      ><a name="1236"
+      > </a
+      ><a name="1237" href="SwapInduction.html#1195" class="Bound"
+      >e</a
+      ><a name="1238"
+      > </a
+      ><a name="1239" href="SwapInduction.html#1205" class="Bound"
+      >acce</a
+      ><a name="1243"
+      >
+</a
+      ><a name="1244" href="SwapInduction.html#626" class="Function"
+      >foldmapFS</a
+      ><a name="1253"
+      > </a
+      ><a name="1254" class="Symbol"
+      >(</a
+      ><a name="1255" href="SwapInduction.html#1255" class="Bound"
+      >F</a
+      ><a name="1256"
+      > </a
+      ><a name="1257" href="GPBindings.html#798" class="InductiveConstructor Operator"
+      >|+|</a
+      ><a name="1260"
+      > </a
+      ><a name="1261" href="SwapInduction.html#1261" class="Bound"
+      >F'</a
+      ><a name="1263" class="Symbol"
+      >)</a
+      ><a name="1264"
+      >     </a
+      ><a name="1269" href="SwapInduction.html#1269" class="Bound"
+      >P</a
+      ><a name="1270"
+      > </a
+      ><a name="1271" href="SwapInduction.html#1271" class="Bound"
+      >hi</a
+      ><a name="1273"
+      > </a
+      ><a name="1274" class="Symbol"
+      >(</a
+      ><a name="1275" href="Data.Sum.html#514" class="InductiveConstructor"
+      >inj&#8322;</a
+      ><a name="1279"
+      > </a
+      ><a name="1280" href="SwapInduction.html#1280" class="Bound"
+      >e</a
+      ><a name="1281" class="Symbol"
+      >)</a
+      ><a name="1282"
+      > </a
+      ><a name="1283" class="Symbol"
+      >(</a
+      ><a name="1284" href="Swap.html#4316" class="InductiveConstructor"
+      >acc+&#8322;</a
+      ><a name="1289"
+      > </a
+      ><a name="1290" href="SwapInduction.html#1290" class="Bound"
+      >acce</a
+      ><a name="1294" class="Symbol"
+      >)</a
+      ><a name="1295"
+      >       </a
+      ><a name="1302" class="Symbol"
+      >=</a
+      ><a name="1303"
+      > </a
+      ><a name="1304" href="SwapInduction.html#626" class="Function"
+      >foldmapFS</a
+      ><a name="1313"
+      > </a
+      ><a name="1314" href="SwapInduction.html#1261" class="Bound"
+      >F'</a
+      ><a name="1316"
+      > </a
+      ><a name="1317" href="SwapInduction.html#1269" class="Bound"
+      >P</a
+      ><a name="1318"
+      > </a
+      ><a name="1319" href="SwapInduction.html#1271" class="Bound"
+      >hi</a
+      ><a name="1321"
+      > </a
+      ><a name="1322" href="SwapInduction.html#1280" class="Bound"
+      >e</a
+      ><a name="1323"
+      > </a
+      ><a name="1324" href="SwapInduction.html#1290" class="Bound"
+      >acce</a
+      ><a name="1328"
+      >
+</a
+      ><a name="1329" href="SwapInduction.html#626" class="Function"
+      >foldmapFS</a
+      ><a name="1338"
+      > </a
+      ><a name="1339" class="Symbol"
+      >(</a
+      ><a name="1340" href="SwapInduction.html#1340" class="Bound"
+      >F</a
+      ><a name="1341"
+      > </a
+      ><a name="1342" href="GPBindings.html#844" class="InductiveConstructor Operator"
+      >|x|</a
+      ><a name="1345"
+      > </a
+      ><a name="1346" href="SwapInduction.html#1346" class="Bound"
+      >F'</a
+      ><a name="1348" class="Symbol"
+      >)</a
+      ><a name="1349"
+      >     </a
+      ><a name="1354" href="SwapInduction.html#1354" class="Bound"
+      >P</a
+      ><a name="1355"
+      > </a
+      ><a name="1356" href="SwapInduction.html#1356" class="Bound"
+      >hi</a
+      ><a name="1358"
+      > </a
+      ><a name="1359" class="Symbol"
+      >(</a
+      ><a name="1360" href="SwapInduction.html#1360" class="Bound"
+      >e</a
+      ><a name="1361"
+      > </a
+      ><a name="1362" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1363"
+      > </a
+      ><a name="1364" href="SwapInduction.html#1364" class="Bound"
+      >e'</a
+      ><a name="1366" class="Symbol"
+      >)</a
+      ><a name="1367"
+      > </a
+      ><a name="1368" class="Symbol"
+      >(</a
+      ><a name="1369" href="Swap.html#4446" class="InductiveConstructor"
+      >accx</a
+      ><a name="1373"
+      > </a
+      ><a name="1374" href="SwapInduction.html#1374" class="Bound"
+      >acce</a
+      ><a name="1378"
+      > </a
+      ><a name="1379" href="SwapInduction.html#1379" class="Bound"
+      >acce'</a
+      ><a name="1384" class="Symbol"
+      >)</a
+      ><a name="1385"
+      >  </a
+      ><a name="1387" class="Symbol"
+      >=</a
+      ><a name="1388"
+      > </a
+      ><a name="1389" href="SwapInduction.html#626" class="Function"
+      >foldmapFS</a
+      ><a name="1398"
+      > </a
+      ><a name="1399" href="SwapInduction.html#1340" class="Bound"
+      >F</a
+      ><a name="1400"
+      >  </a
+      ><a name="1402" href="SwapInduction.html#1354" class="Bound"
+      >P</a
+      ><a name="1403"
+      > </a
+      ><a name="1404" href="SwapInduction.html#1356" class="Bound"
+      >hi</a
+      ><a name="1406"
+      > </a
+      ><a name="1407" href="SwapInduction.html#1360" class="Bound"
+      >e</a
+      ><a name="1408"
+      > </a
+      ><a name="1409" href="SwapInduction.html#1374" class="Bound"
+      >acce</a
+      ><a name="1413"
+      > </a
+      ><a name="1414" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1415"
+      > </a
+      ><a name="1416" href="SwapInduction.html#626" class="Function"
+      >foldmapFS</a
+      ><a name="1425"
+      > </a
+      ><a name="1426" href="SwapInduction.html#1346" class="Bound"
+      >F'</a
+      ><a name="1428"
+      > </a
+      ><a name="1429" href="SwapInduction.html#1354" class="Bound"
+      >P</a
+      ><a name="1430"
+      > </a
+      ><a name="1431" href="SwapInduction.html#1356" class="Bound"
+      >hi</a
+      ><a name="1433"
+      > </a
+      ><a name="1434" href="SwapInduction.html#1364" class="Bound"
+      >e'</a
+      ><a name="1436"
+      > </a
+      ><a name="1437" href="SwapInduction.html#1379" class="Bound"
+      >acce'</a
+      ><a name="1442"
+      >
+</a
+      ><a name="1443" href="SwapInduction.html#626" class="Function"
+      >foldmapFS</a
+      ><a name="1452"
+      > </a
+      ><a name="1453" class="Symbol"
+      >{</a
+      ><a name="1454" href="SwapInduction.html#1454" class="Bound"
+      >F</a
+      ><a name="1455" class="Symbol"
+      >}</a
+      ><a name="1456"
+      > </a
+      ><a name="1457" class="Symbol"
+      >(</a
+      ><a name="1458" href="GPBindings.html#890" class="InductiveConstructor"
+      >|B|</a
+      ><a name="1461"
+      > </a
+      ><a name="1462" href="SwapInduction.html#1462" class="Bound"
+      >S</a
+      ><a name="1463"
+      > </a
+      ><a name="1464" href="SwapInduction.html#1464" class="Bound"
+      >G</a
+      ><a name="1465" class="Symbol"
+      >)</a
+      ><a name="1466"
+      >  </a
+      ><a name="1468" href="SwapInduction.html#1468" class="Bound"
+      >P</a
+      ><a name="1469"
+      > </a
+      ><a name="1470" href="SwapInduction.html#1470" class="Bound"
+      >hi</a
+      ><a name="1472"
+      > </a
+      ><a name="1473" class="Symbol"
+      >(</a
+      ><a name="1474" href="SwapInduction.html#1474" class="Bound"
+      >x</a
+      ><a name="1475"
+      > </a
+      ><a name="1476" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1477"
+      > </a
+      ><a name="1478" href="SwapInduction.html#1478" class="Bound"
+      >e</a
+      ><a name="1479" class="Symbol"
+      >)</a
+      ><a name="1480"
+      >  </a
+      ><a name="1482" class="Symbol"
+      >(</a
+      ><a name="1483" href="Swap.html#4596" class="InductiveConstructor"
+      >accB</a
+      ><a name="1487"
+      > </a
+      ><a name="1488" href="SwapInduction.html#1488" class="Bound"
+      >facc</a
+      ><a name="1492" class="Symbol"
+      >)</a
+      ><a name="1493"
+      >        </a
+      ><a name="1501" class="Symbol"
+      >=</a
+      ><a name="1502"
+      > </a
+      ><a name="1503" class="Symbol"
+      >&#955;</a
+      ><a name="1504"
+      > </a
+      ><a name="1505" href="SwapInduction.html#1505" class="Bound"
+      >y</a
+      ><a name="1506"
+      > </a
+      ><a name="1507" class="Symbol"
+      >&#8594;</a
+      ><a name="1508"
+      > </a
+      ><a name="1509" href="SwapInduction.html#626" class="Function"
+      >foldmapFS</a
+      ><a name="1518"
+      > </a
+      ><a name="1519" href="SwapInduction.html#1464" class="Bound"
+      >G</a
+      ><a name="1520"
+      > </a
+      ><a name="1521" href="SwapInduction.html#1468" class="Bound"
+      >P</a
+      ><a name="1522"
+      > </a
+      ><a name="1523" href="SwapInduction.html#1470" class="Bound"
+      >hi</a
+      ><a name="1525"
+      > </a
+      ><a name="1526" class="Symbol"
+      >(</a
+      ><a name="1527" href="Swap.html#392" class="Function"
+      >swapF</a
+      ><a name="1532"
+      > </a
+      ><a name="1533" href="SwapInduction.html#1464" class="Bound"
+      >G</a
+      ><a name="1534"
+      > </a
+      ><a name="1535" href="SwapInduction.html#1462" class="Bound"
+      >S</a
+      ><a name="1536"
+      > </a
+      ><a name="1537" href="SwapInduction.html#1474" class="Bound"
+      >x</a
+      ><a name="1538"
+      > </a
+      ><a name="1539" href="SwapInduction.html#1505" class="Bound"
+      >y</a
+      ><a name="1540"
+      > </a
+      ><a name="1541" href="SwapInduction.html#1478" class="Bound"
+      >e</a
+      ><a name="1542" class="Symbol"
+      >)</a
+      ><a name="1543"
+      > </a
+      ><a name="1544" class="Symbol"
+      >(</a
+      ><a name="1545" href="SwapInduction.html#1488" class="Bound"
+      >facc</a
+      ><a name="1549"
+      > </a
+      ><a name="1550" href="SwapInduction.html#1505" class="Bound"
+      >y</a
+      ><a name="1551" class="Symbol"
+      >)</a
+      ><a name="1552"
+      > 
+
+</a
+      ><a name="1555" href="SwapInduction.html#1555" class="Function"
+      >swapInd</a
+      ><a name="1562"
+      > </a
+      ><a name="1563" class="Symbol"
+      >:</a
+      ><a name="1564"
+      > </a
+      ><a name="1565" class="Symbol"
+      >(</a
+      ><a name="1566" href="SwapInduction.html#1566" class="Bound"
+      >F</a
+      ><a name="1567"
+      > </a
+      ><a name="1568" class="Symbol"
+      >:</a
+      ><a name="1569"
+      > </a
+      ><a name="1570" href="GPBindings.html#539" class="Datatype"
+      >Functor</a
+      ><a name="1577" class="Symbol"
+      >)(</a
+      ><a name="1579" href="SwapInduction.html#1579" class="Bound"
+      >P</a
+      ><a name="1580"
+      > </a
+      ><a name="1581" class="Symbol"
+      >:</a
+      ><a name="1582"
+      > </a
+      ><a name="1583" href="GPBindings.html#1264" class="Datatype"
+      >&#956;</a
+      ><a name="1584"
+      > </a
+      ><a name="1585" href="SwapInduction.html#1566" class="Bound"
+      >F</a
+      ><a name="1586"
+      > </a
+      ><a name="1587" class="Symbol"
+      >&#8594;</a
+      ><a name="1588"
+      > </a
+      ><a name="1589" class="PrimitiveType"
+      >Set</a
+      ><a name="1592" class="Symbol"
+      >)</a
+      ><a name="1593"
+      >    
+  </a
+      ><a name="1600" class="Symbol"
+      >&#8594;</a
+      ><a name="1601"
+      > </a
+      ><a name="1602" class="Symbol"
+      >((</a
+      ><a name="1604" href="SwapInduction.html#1604" class="Bound"
+      >e</a
+      ><a name="1605"
+      > </a
+      ><a name="1606" class="Symbol"
+      >:</a
+      ><a name="1607"
+      > </a
+      ><a name="1608" href="GPBindings.html#989" class="Function Operator"
+      >&#10214;</a
+      ><a name="1609"
+      > </a
+      ><a name="1610" href="SwapInduction.html#1566" class="Bound"
+      >F</a
+      ><a name="1611"
+      > </a
+      ><a name="1612" href="GPBindings.html#989" class="Function Operator"
+      >&#10215;</a
+      ><a name="1613"
+      > </a
+      ><a name="1614" class="Symbol"
+      >(</a
+      ><a name="1615" href="GPBindings.html#1264" class="Datatype"
+      >&#956;</a
+      ><a name="1616"
+      > </a
+      ><a name="1617" href="SwapInduction.html#1566" class="Bound"
+      >F</a
+      ><a name="1618" class="Symbol"
+      >))</a
+      ><a name="1620"
+      > </a
+      ><a name="1621" class="Symbol"
+      >&#8594;</a
+      ><a name="1622"
+      > </a
+      ><a name="1623" href="SwapInduction.html#162" class="Function"
+      >fihS</a
+      ><a name="1627"
+      > </a
+      ><a name="1628" href="SwapInduction.html#1566" class="Bound"
+      >F</a
+      ><a name="1629"
+      > </a
+      ><a name="1630" href="SwapInduction.html#1579" class="Bound"
+      >P</a
+      ><a name="1631"
+      > </a
+      ><a name="1632" href="SwapInduction.html#1604" class="Bound"
+      >e</a
+      ><a name="1633"
+      > </a
+      ><a name="1634" class="Symbol"
+      >&#8594;</a
+      ><a name="1635"
+      >  </a
+      ><a name="1637" href="SwapInduction.html#1579" class="Bound"
+      >P</a
+      ><a name="1638"
+      > </a
+      ><a name="1639" href="GPBindings.html#1296" class="InductiveConstructor Operator"
+      >&#10216;</a
+      ><a name="1640"
+      > </a
+      ><a name="1641" href="SwapInduction.html#1604" class="Bound"
+      >e</a
+      ><a name="1642"
+      > </a
+      ><a name="1643" href="GPBindings.html#1296" class="InductiveConstructor Operator"
+      >&#10217;</a
+      ><a name="1644" class="Symbol"
+      >)</a
+      ><a name="1645"
+      >  
+  </a
+      ><a name="1650" class="Symbol"
+      >&#8594;</a
+      ><a name="1651"
+      > </a
+      ><a name="1652" class="Symbol"
+      >(</a
+      ><a name="1653" href="SwapInduction.html#1653" class="Bound"
+      >e</a
+      ><a name="1654"
+      > </a
+      ><a name="1655" class="Symbol"
+      >:</a
+      ><a name="1656"
+      > </a
+      ><a name="1657" href="GPBindings.html#1264" class="Datatype"
+      >&#956;</a
+      ><a name="1658"
+      > </a
+      ><a name="1659" href="SwapInduction.html#1566" class="Bound"
+      >F</a
+      ><a name="1660" class="Symbol"
+      >)</a
+      ><a name="1661"
+      > </a
+      ><a name="1662" class="Symbol"
+      >&#8594;</a
+      ><a name="1663"
+      > </a
+      ><a name="1664" href="SwapInduction.html#1579" class="Bound"
+      >P</a
+      ><a name="1665"
+      > </a
+      ><a name="1666" href="SwapInduction.html#1653" class="Bound"
+      >e</a
+      ><a name="1667"
+      >
+</a
+      ><a name="1668" href="SwapInduction.html#1555" class="Function"
+      >swapInd</a
+      ><a name="1675"
+      > </a
+      ><a name="1676" href="SwapInduction.html#1676" class="Bound"
+      >F</a
+      ><a name="1677"
+      > </a
+      ><a name="1678" href="SwapInduction.html#1678" class="Bound"
+      >P</a
+      ><a name="1679"
+      > </a
+      ><a name="1680" href="SwapInduction.html#1680" class="Bound"
+      >hi</a
+      ><a name="1682"
+      > </a
+      ><a name="1683" href="SwapInduction.html#1683" class="Bound"
+      >e</a
+      ><a name="1684"
+      > </a
+      ><a name="1685" class="Symbol"
+      >=</a
+      ><a name="1686"
+      > </a
+      ><a name="1687" href="SwapInduction.html#626" class="Function"
+      >foldmapFS</a
+      ><a name="1696"
+      > </a
+      ><a name="1697" class="Symbol"
+      >{</a
+      ><a name="1698" href="SwapInduction.html#1676" class="Bound"
+      >F</a
+      ><a name="1699" class="Symbol"
+      >}</a
+      ><a name="1700"
+      > </a
+      ><a name="1701" href="GPBindings.html#659" class="InductiveConstructor"
+      >|R|</a
+      ><a name="1704"
+      > </a
+      ><a name="1705" href="SwapInduction.html#1678" class="Bound"
+      >P</a
+      ><a name="1706"
+      > </a
+      ><a name="1707" href="SwapInduction.html#1680" class="Bound"
+      >hi</a
+      ><a name="1709"
+      > </a
+      ><a name="1710" href="SwapInduction.html#1683" class="Bound"
+      >e</a
+      ><a name="1711"
+      > </a
+      ><a name="1712" class="Symbol"
+      >(</a
+      ><a name="1713" href="Swap.html#6034" class="Function"
+      >accF</a
+      ><a name="1717"
+      > </a
+      ><a name="1718" href="SwapInduction.html#1683" class="Bound"
+      >e</a
+      ><a name="1719" class="Symbol"
+      >)</a
+      ><a name="1720"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

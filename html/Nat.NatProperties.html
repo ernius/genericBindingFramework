@@ -1,0 +1,620 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >Nat.NatProperties</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Keyword"
+      >module</a
+      ><a name="7"
+      > </a
+      ><a name="8" href="Nat.NatProperties.html#1" class="Module"
+      >Nat.NatProperties</a
+      ><a name="25"
+      > </a
+      ><a name="26" class="Keyword"
+      >where</a
+      ><a name="31"
+      >
+
+</a
+      ><a name="33" class="Keyword"
+      >open</a
+      ><a name="37"
+      > </a
+      ><a name="38" class="Keyword"
+      >import</a
+      ><a name="44"
+      > </a
+      ><a name="45" href="Relation.Binary.html#1" class="Module"
+      >Relation.Binary</a
+      ><a name="60"
+      >
+</a
+      ><a name="61" class="Keyword"
+      >open</a
+      ><a name="65"
+      > </a
+      ><a name="66" class="Keyword"
+      >import</a
+      ><a name="72"
+      > </a
+      ><a name="73" href="Relation.Binary.PropositionalEquality.html#1" class="Module"
+      >Relation.Binary.PropositionalEquality</a
+      ><a name="110"
+      >
+</a
+      ><a name="111" class="Keyword"
+      >open</a
+      ><a name="115"
+      > </a
+      ><a name="116" class="Keyword"
+      >import</a
+      ><a name="122"
+      > </a
+      ><a name="123" href="Data.Nat.html#1" class="Module"
+      >Data.Nat</a
+      ><a name="131"
+      >
+</a
+      ><a name="132" class="Keyword"
+      >open</a
+      ><a name="136"
+      > </a
+      ><a name="137" class="Keyword"
+      >import</a
+      ><a name="143"
+      > </a
+      ><a name="144" href="Data.Nat.Properties.html#1" class="Module"
+      >Data.Nat.Properties</a
+      ><a name="163"
+      >
+</a
+      ><a name="164" class="Keyword"
+      >open</a
+      ><a name="168"
+      > </a
+      ><a name="169" class="Keyword"
+      >import</a
+      ><a name="175"
+      > </a
+      ><a name="176" href="Algebra.html#1" class="Module"
+      >Algebra</a
+      ><a name="183"
+      >
+</a
+      ><a name="184" class="Keyword"
+      >open</a
+      ><a name="188"
+      > </a
+      ><a name="189" class="Keyword"
+      >import</a
+      ><a name="195"
+      > </a
+      ><a name="196" href="Algebra.Structures.html#1" class="Module"
+      >Algebra.Structures</a
+      ><a name="214"
+      >
+
+</a
+      ><a name="216" href="Nat.NatProperties.html#216" class="Function"
+      >+-comm</a
+      ><a name="222"
+      > </a
+      ><a name="223" class="Symbol"
+      >=</a
+      ><a name="224"
+      > </a
+      ><a name="225" href="Algebra.Structures.html#1414" class="Field"
+      >IsCommutativeMonoid.comm</a
+      ><a name="249"
+      > </a
+      ><a name="250" class="Symbol"
+      >(</a
+      ><a name="251" href="Algebra.Structures.html#6846" class="Field"
+      >IsCommutativeSemiring.+-isCommutativeMonoid</a
+      ><a name="294"
+      > </a
+      ><a name="295" href="Data.Nat.Properties.html#1086" class="Function"
+      >isCommutativeSemiring</a
+      ><a name="316" class="Symbol"
+      >)</a
+      ><a name="317"
+      >
+
+</a
+      ><a name="319" class="Keyword"
+      >open</a
+      ><a name="323"
+      > </a
+      ><a name="324" href="Relation.Binary.html#9224" class="Module"
+      >DecTotalOrder</a
+      ><a name="337"
+      > </a
+      ><a name="338" href="Data.Nat.html#946" class="Function"
+      >Data.Nat.decTotalOrder</a
+      ><a name="360"
+      > </a
+      ><a name="361" class="Keyword"
+      >using</a
+      ><a name="366"
+      > </a
+      ><a name="367" class="Symbol"
+      >()</a
+      ><a name="369"
+      > </a
+      ><a name="370" class="Keyword"
+      >renaming</a
+      ><a name="378"
+      > </a
+      ><a name="379" class="Symbol"
+      >(</a
+      ><a name="380"
+      >refl </a
+      ><a name="385" class="Symbol"
+      >to</a
+      ><a name="387"
+      > &#8804;-refl</a
+      ><a name="394" class="Symbol"
+      >)</a
+      ><a name="395"
+      >
+</a
+      ><a name="396" class="Keyword"
+      >open</a
+      ><a name="400"
+      > </a
+      ><a name="401" href="Data.Nat.html#2179" class="Module"
+      >&#8804;-Reasoning</a
+      ><a name="412"
+      >
+  </a
+      ><a name="415" class="Keyword"
+      >renaming</a
+      ><a name="423"
+      > </a
+      ><a name="424" class="Symbol"
+      >(</a
+      ><a name="425" href="Relation.Binary.PreorderReasoning.html#1154" class="Function Operator"
+      >begin_</a
+      ><a name="431"
+      > </a
+      ><a name="432" class="Symbol"
+      >to</a
+      ><a name="434"
+      > </a
+      ><a name="435" href="Relation.Binary.PreorderReasoning.html#1154" class="Function Operator"
+      >start_</a
+      ><a name="441" class="Symbol"
+      >;</a
+      ><a name="442"
+      > </a
+      ><a name="443" href="Relation.Binary.PreorderReasoning.html#1519" class="Function Operator"
+      >_&#8718;</a
+      ><a name="445"
+      > </a
+      ><a name="446" class="Symbol"
+      >to</a
+      ><a name="448"
+      > </a
+      ><a name="449" href="Relation.Binary.PreorderReasoning.html#1519" class="Function Operator"
+      >_&#9725;</a
+      ><a name="451" class="Symbol"
+      >;</a
+      ><a name="452"
+      > </a
+      ><a name="453" href="Relation.Binary.PreorderReasoning.html#1329" class="Function Operator"
+      >_&#8801;&#10216;_&#10217;_</a
+      ><a name="459"
+      > </a
+      ><a name="460" class="Symbol"
+      >to</a
+      ><a name="462"
+      > </a
+      ><a name="463" href="Relation.Binary.PreorderReasoning.html#1329" class="Function Operator"
+      >_&#8804;&#10216;_&#10217;'_</a
+      ><a name="470" class="Symbol"
+      >)</a
+      ><a name="471"
+      >
+
+
+</a
+      ><a name="474" href="Nat.NatProperties.html#474" class="Function"
+      >lemmam&gt;0&#8594;n+1&#8804;m+n</a
+      ><a name="490"
+      > </a
+      ><a name="491" class="Symbol"
+      >:</a
+      ><a name="492"
+      > </a
+      ><a name="493" class="Symbol"
+      >{</a
+      ><a name="494" href="Nat.NatProperties.html#494" class="Bound"
+      >m</a
+      ><a name="495"
+      > </a
+      ><a name="496" href="Nat.NatProperties.html#496" class="Bound"
+      >n</a
+      ><a name="497"
+      > </a
+      ><a name="498" class="Symbol"
+      >:</a
+      ><a name="499"
+      > </a
+      ><a name="500" href="Agda.Builtin.Nat.html#69" class="Datatype"
+      >&#8469;</a
+      ><a name="501" class="Symbol"
+      >}</a
+      ><a name="502"
+      > </a
+      ><a name="503" class="Symbol"
+      >&#8594;</a
+      ><a name="504"
+      > </a
+      ><a name="505" href="Nat.NatProperties.html#494" class="Bound"
+      >m</a
+      ><a name="506"
+      > </a
+      ><a name="507" href="Data.Nat.Base.html#1000" class="Function Operator"
+      >&gt;</a
+      ><a name="508"
+      > </a
+      ><a name="509" href="Agda.Builtin.Nat.html#87" class="InductiveConstructor"
+      >zero</a
+      ><a name="513"
+      > </a
+      ><a name="514" class="Symbol"
+      >&#8594;</a
+      ><a name="515"
+      > </a
+      ><a name="516" href="Agda.Builtin.Nat.html#100" class="InductiveConstructor"
+      >suc</a
+      ><a name="519"
+      > </a
+      ><a name="520" href="Nat.NatProperties.html#496" class="Bound"
+      >n</a
+      ><a name="521"
+      > </a
+      ><a name="522" href="Data.Nat.Base.html#1349" class="Datatype Operator"
+      >&#8804;&#8242;</a
+      ><a name="524"
+      > </a
+      ><a name="525" href="Nat.NatProperties.html#494" class="Bound"
+      >m</a
+      ><a name="526"
+      > </a
+      ><a name="527" href="Agda.Builtin.Nat.html#202" class="Primitive Operator"
+      >+</a
+      ><a name="528"
+      > </a
+      ><a name="529" href="Nat.NatProperties.html#496" class="Bound"
+      >n</a
+      ><a name="530"
+      >
+</a
+      ><a name="531" href="Nat.NatProperties.html#474" class="Function"
+      >lemmam&gt;0&#8594;n+1&#8804;m+n</a
+      ><a name="547"
+      > </a
+      ><a name="548" class="Symbol"
+      >{</a
+      ><a name="549" class="Number"
+      >0</a
+      ><a name="550" class="Symbol"
+      >}</a
+      ><a name="551"
+      >     </a
+      ><a name="556" class="Symbol"
+      >{</a
+      ><a name="557" href="Nat.NatProperties.html#557" class="Bound"
+      >n</a
+      ><a name="558" class="Symbol"
+      >}</a
+      ><a name="559"
+      > </a
+      ><a name="560" class="Symbol"
+      >()</a
+      ><a name="562"
+      >
+</a
+      ><a name="563" href="Nat.NatProperties.html#474" class="Function"
+      >lemmam&gt;0&#8594;n+1&#8804;m+n</a
+      ><a name="579"
+      > </a
+      ><a name="580" class="Symbol"
+      >{</a
+      ><a name="581" href="Agda.Builtin.Nat.html#100" class="InductiveConstructor"
+      >suc</a
+      ><a name="584"
+      > </a
+      ><a name="585" href="Nat.NatProperties.html#585" class="Bound"
+      >m</a
+      ><a name="586" class="Symbol"
+      >}</a
+      ><a name="587"
+      > </a
+      ><a name="588" class="Symbol"
+      >{</a
+      ><a name="589" href="Nat.NatProperties.html#589" class="Bound"
+      >n</a
+      ><a name="590" class="Symbol"
+      >}</a
+      ><a name="591"
+      > </a
+      ><a name="592" href="Nat.NatProperties.html#592" class="Bound"
+      >1&#8804;m</a
+      ><a name="595"
+      >
+  </a
+      ><a name="598" class="Symbol"
+      >=</a
+      ><a name="599"
+      > </a
+      ><a name="600" href="Data.Nat.Properties.html#7182" class="Function"
+      >&#8804;&#8658;&#8804;&#8242;</a
+      ><a name="604"
+      > </a
+      ><a name="605" class="Symbol"
+      >(</a
+      ><a name="606" href="Relation.Binary.PreorderReasoning.html#1154" class="Function Operator"
+      >start</a
+      ><a name="611"
+      >
+            </a
+      ><a name="624" href="Agda.Builtin.Nat.html#100" class="InductiveConstructor"
+      >suc</a
+      ><a name="627"
+      > </a
+      ><a name="628" href="Nat.NatProperties.html#589" class="Bound"
+      >n</a
+      ><a name="629"
+      >
+            </a
+      ><a name="642" href="Relation.Binary.PreorderReasoning.html#1220" class="Function Operator"
+      >&#8804;&#10216;</a
+      ><a name="644"
+      > </a
+      ><a name="645" href="Data.Nat.Base.html#875" class="InductiveConstructor"
+      >s&#8804;s</a
+      ><a name="648"
+      > </a
+      ><a name="649" class="Symbol"
+      >(</a
+      ><a name="650" href="Data.Nat.Properties.html#7716" class="Function"
+      >n&#8804;m+n</a
+      ><a name="655"
+      > </a
+      ><a name="656" href="Nat.NatProperties.html#585" class="Bound"
+      >m</a
+      ><a name="657"
+      > </a
+      ><a name="658" href="Nat.NatProperties.html#589" class="Bound"
+      >n</a
+      ><a name="659" class="Symbol"
+      >)</a
+      ><a name="660"
+      > </a
+      ><a name="661" href="Relation.Binary.PreorderReasoning.html#1220" class="Function Operator"
+      >&#10217;</a
+      ><a name="662"
+      >
+            </a
+      ><a name="675" href="Agda.Builtin.Nat.html#100" class="InductiveConstructor"
+      >suc</a
+      ><a name="678"
+      > </a
+      ><a name="679" class="Symbol"
+      >(</a
+      ><a name="680" href="Nat.NatProperties.html#585" class="Bound"
+      >m</a
+      ><a name="681"
+      > </a
+      ><a name="682" href="Agda.Builtin.Nat.html#202" class="Primitive Operator"
+      >+</a
+      ><a name="683"
+      > </a
+      ><a name="684" href="Nat.NatProperties.html#589" class="Bound"
+      >n</a
+      ><a name="685" class="Symbol"
+      >)</a
+      ><a name="686"
+      >
+            </a
+      ><a name="699" href="Relation.Binary.PreorderReasoning.html#1220" class="Function Operator"
+      >&#8804;&#10216;</a
+      ><a name="701"
+      > </a
+      ><a name="702" href="Relation.Binary.html#1267" class="Function"
+      >&#8804;-refl</a
+      ><a name="708"
+      > </a
+      ><a name="709" href="Relation.Binary.PreorderReasoning.html#1220" class="Function Operator"
+      >&#10217;</a
+      ><a name="710"
+      >
+            </a
+      ><a name="723" href="Agda.Builtin.Nat.html#100" class="InductiveConstructor"
+      >suc</a
+      ><a name="726"
+      > </a
+      ><a name="727" href="Nat.NatProperties.html#585" class="Bound"
+      >m</a
+      ><a name="728"
+      > </a
+      ><a name="729" href="Agda.Builtin.Nat.html#202" class="Primitive Operator"
+      >+</a
+      ><a name="730"
+      > </a
+      ><a name="731" href="Nat.NatProperties.html#589" class="Bound"
+      >n</a
+      ><a name="732"
+      >
+          </a
+      ><a name="743" href="Relation.Binary.PreorderReasoning.html#1519" class="Function Operator"
+      >&#9725;</a
+      ><a name="744" class="Symbol"
+      >)</a
+      ><a name="745"
+      >
+
+</a
+      ><a name="747" href="Nat.NatProperties.html#747" class="Function"
+      >lemman&gt;0&#8594;m+1&#8804;m+n</a
+      ><a name="763"
+      > </a
+      ><a name="764" class="Symbol"
+      >:</a
+      ><a name="765"
+      > </a
+      ><a name="766" class="Symbol"
+      >{</a
+      ><a name="767" href="Nat.NatProperties.html#767" class="Bound"
+      >m</a
+      ><a name="768"
+      > </a
+      ><a name="769" href="Nat.NatProperties.html#769" class="Bound"
+      >n</a
+      ><a name="770"
+      > </a
+      ><a name="771" class="Symbol"
+      >:</a
+      ><a name="772"
+      > </a
+      ><a name="773" href="Agda.Builtin.Nat.html#69" class="Datatype"
+      >&#8469;</a
+      ><a name="774" class="Symbol"
+      >}</a
+      ><a name="775"
+      > </a
+      ><a name="776" class="Symbol"
+      >&#8594;</a
+      ><a name="777"
+      > </a
+      ><a name="778" href="Nat.NatProperties.html#769" class="Bound"
+      >n</a
+      ><a name="779"
+      > </a
+      ><a name="780" href="Data.Nat.Base.html#1000" class="Function Operator"
+      >&gt;</a
+      ><a name="781"
+      > </a
+      ><a name="782" href="Agda.Builtin.Nat.html#87" class="InductiveConstructor"
+      >zero</a
+      ><a name="786"
+      > </a
+      ><a name="787" class="Symbol"
+      >&#8594;</a
+      ><a name="788"
+      > </a
+      ><a name="789" href="Agda.Builtin.Nat.html#100" class="InductiveConstructor"
+      >suc</a
+      ><a name="792"
+      > </a
+      ><a name="793" href="Nat.NatProperties.html#767" class="Bound"
+      >m</a
+      ><a name="794"
+      > </a
+      ><a name="795" href="Data.Nat.Base.html#1349" class="Datatype Operator"
+      >&#8804;&#8242;</a
+      ><a name="797"
+      > </a
+      ><a name="798" href="Nat.NatProperties.html#767" class="Bound"
+      >m</a
+      ><a name="799"
+      > </a
+      ><a name="800" href="Agda.Builtin.Nat.html#202" class="Primitive Operator"
+      >+</a
+      ><a name="801"
+      > </a
+      ><a name="802" href="Nat.NatProperties.html#769" class="Bound"
+      >n</a
+      ><a name="803"
+      >
+</a
+      ><a name="804" href="Nat.NatProperties.html#747" class="Function"
+      >lemman&gt;0&#8594;m+1&#8804;m+n</a
+      ><a name="820"
+      > </a
+      ><a name="821" class="Symbol"
+      >{</a
+      ><a name="822" href="Nat.NatProperties.html#822" class="Bound"
+      >m</a
+      ><a name="823" class="Symbol"
+      >}</a
+      ><a name="824"
+      > </a
+      ><a name="825" class="Symbol"
+      >{</a
+      ><a name="826" href="Nat.NatProperties.html#826" class="Bound"
+      >n</a
+      ><a name="827" class="Symbol"
+      >}</a
+      ><a name="828"
+      > </a
+      ><a name="829" href="Nat.NatProperties.html#829" class="Bound"
+      >1&#8804;n</a
+      ><a name="832"
+      > </a
+      ><a name="833" class="Keyword"
+      >rewrite</a
+      ><a name="840"
+      > </a
+      ><a name="841" href="Relation.Binary.PropositionalEquality.Core.html#565" class="Function"
+      >sym</a
+      ><a name="844"
+      > </a
+      ><a name="845" class="Symbol"
+      >(</a
+      ><a name="846" href="Nat.NatProperties.html#216" class="Function"
+      >+-comm</a
+      ><a name="852"
+      > </a
+      ><a name="853" href="Nat.NatProperties.html#826" class="Bound"
+      >n</a
+      ><a name="854"
+      > </a
+      ><a name="855" href="Nat.NatProperties.html#822" class="Bound"
+      >m</a
+      ><a name="856" class="Symbol"
+      >)</a
+      ><a name="857"
+      > </a
+      ><a name="858" class="Symbol"
+      >=</a
+      ><a name="859"
+      > </a
+      ><a name="860" href="Nat.NatProperties.html#474" class="Function"
+      >lemmam&gt;0&#8594;n+1&#8804;m+n</a
+      ><a name="876"
+      > </a
+      ><a name="877" class="Symbol"
+      >{</a
+      ><a name="878" href="Nat.NatProperties.html#826" class="Bound"
+      >n</a
+      ><a name="879" class="Symbol"
+      >}</a
+      ><a name="880"
+      > </a
+      ><a name="881" class="Symbol"
+      >{</a
+      ><a name="882" href="Nat.NatProperties.html#822" class="Bound"
+      >m</a
+      ><a name="883" class="Symbol"
+      >}</a
+      ><a name="884"
+      > </a
+      ><a name="885" href="Nat.NatProperties.html#829" class="Bound"
+      >1&#8804;n</a
+      ><a name="888"
+      >  
+</a
+      ></pre
+    ></body
+  ></html
+>

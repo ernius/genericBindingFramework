@@ -1,0 +1,426 @@
+\documentclass{beamer}
+%\documentclass{article}
+\beamertemplatenavigationsymbolsempty
+%\usepackage{beamer}
+\usepackage{graphicx}
+% \usepackage[references,links]{agda}
+\usepackage{agda}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{mathtools}
+\usepackage{textgreek}
+\usepackage{catchfilebetweentags}
+\usepackage{tipa}
+
+%\include{common-unicode}
+%\usetheme{default}
+
+\newcommand\Wider[2][3em]{%
+\makebox[\linewidth][c]{%
+  \begin{minipage}{\dimexpr\textwidth+#1\relax}
+  \raggedright#2
+  \end{minipage}%
+  }%
+}
+
+\usepackage{newunicodechar}
+%\DeclareUnicodeCharacter{126}{\ensuremath{\sim}}
+\DeclareUnicodeCharacter{411}{\ensuremath{\lambda}}
+\DeclareUnicodeCharacter{8799}{\ensuremath{{\stackrel{?}{=}}}}
+\DeclareUnicodeCharacter{8788}{\ensuremath{{\coloneqq}}}
+\DeclareUnicodeCharacter{8348}{\ensuremath{{_t}}}
+\DeclareUnicodeCharacter{65288}{\ensuremath{{(}}}
+\DeclareUnicodeCharacter{65289}{\ensuremath{{)}}}
+\DeclareUnicodeCharacter{8336}{\ensuremath{{_a}}}
+\DeclareUnicodeCharacter{8759}{\ensuremath{\dblcolon}}
+\DeclareUnicodeCharacter{8718}{\ensuremath{\blacksquare}}
+
+\begin{document}
+
+
+\begin{frame}{Table of Contents}
+  \tableofcontents
+\end{frame}
+
+
+\section{Regular Trees Types with Binders}
+
+\begin{frame}{Regular Trees Types with Binders}
+
+  \AgdaTarget{Functor}
+  \ExecuteMetaData[GPBindings.tex]{functor} 
+
+\end{frame}
+
+\begin{frame}{Regular Trees Types with Binders Interpretation}
+
+  \ExecuteMetaData[GPBindings.tex]{interpret}
+
+\end{frame}
+
+\begin{frame}{Limitations}
+  
+  \begin{block}{}
+    No mutual recursive definitions.
+  \end{block}
+  
+  \hspace{5px}
+
+  \begin{center}
+    \begin{tabular}{ccc}
+
+    Types && Session Types \\
+
+    $\begin{array}{lcl}
+      T &{:\!\!-}& S  \\
+      &|&  Nat \\
+      &|& \dots \\ 
+      &|& \dots \\
+      \end{array}$
+            &      &
+    $\begin{array}{lcl}
+      S  &{:\!\!-}& \mathit{end}  \\
+      &|& ?T.S    \\
+      &|& !T.S    \\
+      &|& \dots \\
+     \end{array}$ \\
+
+    \end{tabular}
+\end{center}
+
+\hspace{5px}
+
+\begin{block}{}
+  Can be represented using Regular Trees~\cite{Morris:2004}.
+\end{block}
+
+\end{frame}
+
+
+\section{Fold}
+\label{sec:fold}
+
+
+\begin{frame}{Fold}
+     \hspace{5px}
+  {\small \ExecuteMetaData[GPBindings.tex]{foldtermination}}  
+\end{frame}
+
+\begin{frame}{Terminating Fold }
+  \Wider[5em]{\small \ExecuteMetaData[GPBindings.tex]{foldmap}}
+
+  \begin{block}{}
+    Based on~\cite{Norell2009}, this technique fuses \textsl{map} and \textsl{fold} into a single function \textsl{foldmap}. It needs two functors as arguments, the \textsl{fold} part is always called on the same original functor, whereas \textsl{map} transverses the functor.
+  \end{block}
+
+\end{frame}
+
+\begin{frame}{Example: Lambda Calculus}
+   \begin{columns}[c] 
+    \column{.5\textwidth} 
+    {\scriptsize \ExecuteMetaData[Examples/LambdaCalculus.tex]{lambdacalculus}}
+    \column{.5\textwidth} 
+    \pause {\scriptsize \ExecuteMetaData[Examples/LambdaCalculus.tex]{lambdaconst}}
+  \end{columns}
+
+  \begin{columns}[c] 
+    \column{.5\textwidth} 
+    \pause {\scriptsize \ExecuteMetaData[Examples/LambdaCalculus.tex]{vars}}
+    \column{.5\textwidth}
+    \pause {\scriptsize \ExecuteMetaData[Examples/LambdaCalculus.tex]{varsfold}}
+  \end{columns}
+
+  \pause \textsl{vars} function could also be defined generically, but I try to ilustrate the usability of the constructed data $\mu\ tF$.
+\end{frame}
+
+\begin{frame}{Example: System F}
+
+    \hspace{5px}
+
+    {\scriptsize \ExecuteMetaData[Examples/SystemF.tex]{systemF}}
+\end{frame}
+
+\section{Primitive Induction}
+
+\label{sec:pimind}
+
+\begin{frame}[allowframebreaks]{Primitive Induction}
+  
+  \begin{block}{Original work}
+    Based on~\cite{Benke:2003} recursion principle but:
+    \begin{itemize}
+    \item using functors not signatures
+    \item terminating (fuses fold and map)
+    \item induction principle, whereas~\cite{Benke:2003} presents a generic proof for some decidable property (like vars' and vars)
+    \end{itemize}    
+ \end{block}
+
+   \hspace{5px}
+  \Wider[5em]{\scriptsize \ExecuteMetaData[GPBindings.tex]{primIndih}}
+  
+\end{frame}
+
+\begin{frame}{Primitive Induction}
+  \hspace{5px}
+  \Wider[5em]{\scriptsize \ExecuteMetaData[GPBindings.tex]{primInd}}
+\end{frame}
+
+\begin{frame}{Example: Lambda Calculus}
+     \hspace{5px}
+    {\scriptsize \ExecuteMetaData[Examples/LambdaCalculus.tex]{proof'}}
+
+    \pause
+    {\scriptsize \ExecuteMetaData[Examples/LambdaCalculus.tex]{proof}}
+\end{frame}
+
+\section{Fold with Context and a Functorial Return Type}
+
+\begin{frame}{Fold with Context $\mu C$ and a Functorial Return Type $\mu H$}
+  
+  \hspace{5px}
+
+  \Wider[9.5em]{{\footnotesize  \ExecuteMetaData[GPBindings.tex]{foldmapCtx}}}
+\end{frame}
+
+\section{Naive Substitution}
+
+\begin{frame}{Example: Lambda Calculus}
+  \hspace{5px}
+  {\scriptsize \ExecuteMetaData[Examples/LambdaCalculus.tex]{naivesubst}}
+\end{frame}
+
+\begin{frame}{Example: System F}
+
+  \hspace{5px}
+  
+  {\scriptsize \ExecuteMetaData[Examples/SystemF.tex]{naivesubst}}
+\end{frame}
+
+\section{Generic Operations and Functions}
+
+\begin{frame}{Swap}
+
+ {\scriptsize \ExecuteMetaData[Swap.tex]{swap}}
+  
+\end{frame}
+
+\begin{frame}{Context Fold is equivariant under a well behaved fold operation}
+
+ \Wider[9em]{\scriptsize \ExecuteMetaData[Swap.tex]{lemmaswapfold}}
+
+\end{frame}
+
+\begin{frame}{Sort Free Variables}
+
+  {\scriptsize \ExecuteMetaData[FreeVariables.tex]{freevariables}}
+  
+\end{frame}
+
+\begin{frame}{Free Variables}
+
+  {\scriptsize \ExecuteMetaData[FreeVariables.tex]{freevariablesneq}}
+  
+\end{frame}
+
+
+\section{Generic Properties and Relations}
+
+\begin{frame}{Fresh}
+  
+  {\scriptsize \ExecuteMetaData[Fresh.tex]{fresh}}
+
+\end{frame}
+
+\begin{frame}{Alpha}
+  
+  \Wider[2em]{\scriptsize \ExecuteMetaData[Alpha.tex]{alpha}}
+
+\end{frame}
+
+\begin{frame}{Variable Binder Ocurrences}
+
+  \Wider[8em]{\scriptsize \ExecuteMetaData[OcurrBind.tex]{notOcurrBind}}
+  
+\end{frame}
+
+\begin{frame}{Variables Binder Ocurrences}
+
+  \Wider[8em]{\scriptsize \ExecuteMetaData[OcurrBind.tex]{listnotocurrbind}}
+  
+\end{frame}
+
+\section{Fold Alpha}
+
+\begin{frame}{Fold Alpha}
+  \hspace{5px}
+  
+  {\small \ExecuteMetaData[AlphaInduction.tex]{bindersfreealphaelem}}
+
+  \begin{block}{Properties}
+    {\small \ExecuteMetaData[AlphaInduction.tex]{lemmabindersfreealpha}}
+
+    {\small \ExecuteMetaData[AlphaInduction.tex]{bindersalpha}}
+  \end{block}
+\end{frame}  
+
+
+\begin{frame}{Fold Alpha}
+ 
+  
+  {\small \ExecuteMetaData[AlphaInduction.tex]{foldCtxalpha}}
+
+  \begin{block}{Properties}
+  \end{block}
+  
+  \Wider[5em]{{\small \ExecuteMetaData[AlphaInduction.tex]{strongalphacompatible}}}
+
+
+  \hspace{5px}
+  
+  Direct consequence of lemma \textsf{lemma-bindersFreeαElem}
+
+  \hspace{5px}
+    
+  \Wider[5em]{{\small \ExecuteMetaData[AlphaInduction.tex]{foldCtxalphastrongalphacompatible}}}
+    
+\end{frame}
+
+\begin{frame}{Fold Alpha Properties}
+
+  \Wider[5em]{{\scriptsize \ExecuteMetaData[AlphaInduction.tex]{foldctxalpha-cxtalpha}}}
+
+  \hspace{50px}
+  
+  \Wider[5em]{{\scriptsize \ExecuteMetaData[AlphaInduction.tex]{lemmafoldCtxalpha}}}
+
+\end{frame}
+
+\section{Alpha Induction Principle}
+
+\begin{frame}{Alpha Induction Principle}
+
+  \Wider[5em]{{\scriptsize \ExecuteMetaData[AlphaInduction.tex]{alphainductionhypotheses}}}
+
+  \hspace{50px}
+  
+  \Wider[5em]{{\scriptsize \ExecuteMetaData[AlphaInduction.tex]{alphainductionprinciple}}}
+  
+\end{frame}
+
+\begin{frame}{Example: System F, Alpha Compatible Substitution}
+
+  \Wider[5em]{{\small \ExecuteMetaData[Examples/SystemF.tex]{subst}}}
+
+  \hspace{50px}
+  
+  \Wider[5em]{{\small \ExecuteMetaData[Examples/SystemF.tex]{substlemma1}}}
+  
+\end{frame}
+
+\begin{frame}{Example: System F, Substitution Lemmas}
+
+  \Wider[7em]{{\small \ExecuteMetaData[Examples/SystemF.tex]{lemmasubstaux}}}
+
+  \hspace{50px}
+  
+  \Wider[7em]{{\small \ExecuteMetaData[Examples/SystemF.tex]{substlemma2}}}
+  
+\end{frame}
+
+\begin{frame}{Example: System F, Substitution and relation with the naive one}
+
+  \Wider[5em]{{\small \ExecuteMetaData[Examples/SystemF.tex]{substauxSwap}}}
+
+  \hspace{50px}
+  
+  \Wider[5em]{{\small \ExecuteMetaData[Examples/SystemF.tex]{lemmasubsts}}}
+  
+\end{frame}
+
+\begin{frame}{Naive Substitution Composition Lemma}
+
+  First prove subtitution composition lemma for the \textbf{naive subsitution} operation.
+
+  \hspace{50px}
+  
+  \Wider[7em]{{\small \ExecuteMetaData[Examples/SystemF.tex]{substnaivecompositionpredicate}}}
+
+  \hspace{50px}
+  
+  \Wider[7em]{{\small \ExecuteMetaData[Examples/SystemF.tex]{substcompositionNdef}}}
+  
+\end{frame}
+
+\begin{frame}{Naive Substitution Composition Lemma}
+
+  Abstraction proof case.
+
+  \hspace{70px}
+  
+  \Wider[8em]{{\scriptsize \ExecuteMetaData[Examples/SystemF.tex]{substncompositionabstractioncase}}}
+  
+\end{frame}
+
+
+\section{Barendregt's Variable Convention Proof Principle} 
+
+
+\begin{frame}{Barendregt's Variable Convention}
+
+  \begin{block}{Barendregt's Variable Convention~\cite{barendregt81}[Page 26]}
+   If $M_1, \dots, M_n$\ occur in a certain mathematical context (e.g. definition, proof), then in these terms all bound variables are chosen to be different from the free variables.
+  \end{block}
+  
+  \hspace{50px}
+  
+  \Wider[7em]{{\small \ExecuteMetaData[AlphaInduction.tex]{alphaproof}}}
+
+  \hspace{20px}
+  
+  \begin{block}{}
+    Not an induction principle over terms ! It can be also used to prove properties by induction on relations.
+  \end{block}
+  
+\end{frame}
+
+
+\begin{frame}{Alpha proof usage: Substitution Composition Lemma}
+
+  Now we prove subtitution composition lemma for the \textbf{correct subsitution} operation using the alpha proof principle.
+
+  \hspace{50px}
+  
+  \Wider[7em]{{\scriptsize \ExecuteMetaData[Examples/SystemF.tex]{substcompositionpredicate}}}
+  
+\end{frame}
+
+\begin{frame}{Substitution Composition Predicate Alpha Compatible}
+
+  \Wider[7em]{{\scriptsize \ExecuteMetaData[Examples/SystemF.tex]{substcompositionpredicatealpha}}}
+
+\end{frame}
+
+\begin{frame}{Substitution Composition Lemma Proof}
+
+\Wider[7em]{{\scriptsize \ExecuteMetaData[Examples/SystemF.tex]{substitutioncompositionproof}}}
+
+\end{frame}
+
+\begin{frame}{Similar works}
+  
+  The more similar work is~\cite{Lee2012} but for a de Brujin representation of binders.
+
+  \begin{itemize}
+  \item Give generic operations and lemmas for locally-nameless and de Brujin representations.
+  \item No alpha-conversion, swap treatement.
+  \item Different implementation for the Functors with binders of differents sorts, can only have one Binder per Regular Tree (support System F, but no Session Types that has channels and ports)
+  \item No generic fold operations nor induction principles (no extensibile).
+  \item Has two interfaces user/internal given an isomorphism (easy usage).
+  \end{itemize}
+  
+\end{frame}
+\bibliographystyle{alpha}
+\bibliography{resumen.bib}
+
+\end{document}

@@ -1,0 +1,4762 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >FreeVariables</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Keyword"
+      >module</a
+      ><a name="7"
+      > </a
+      ><a name="8" href="FreeVariables.html#1" class="Module"
+      >FreeVariables</a
+      ><a name="21"
+      > </a
+      ><a name="22" class="Keyword"
+      >where</a
+      ><a name="27"
+      >
+
+</a
+      ><a name="29" class="Keyword"
+      >open</a
+      ><a name="33"
+      > </a
+      ><a name="34" class="Keyword"
+      >import</a
+      ><a name="40"
+      > </a
+      ><a name="41" href="GPBindings.html#1" class="Module"
+      >GPBindings</a
+      ><a name="51"
+      >
+</a
+      ><a name="52" class="Keyword"
+      >open</a
+      ><a name="56"
+      > </a
+      ><a name="57" class="Keyword"
+      >import</a
+      ><a name="63"
+      > </a
+      ><a name="64" href="Fresh.html#1" class="Module"
+      >Fresh</a
+      ><a name="69"
+      >
+</a
+      ><a name="70" class="Keyword"
+      >open</a
+      ><a name="74"
+      > </a
+      ><a name="75" class="Keyword"
+      >import</a
+      ><a name="81"
+      > </a
+      ><a name="82" href="List.ListProperties.html#1" class="Module"
+      >List.ListProperties</a
+      ><a name="101"
+      >
+</a
+      ><a name="102" class="Keyword"
+      >open</a
+      ><a name="106"
+      > </a
+      ><a name="107" class="Keyword"
+      >import</a
+      ><a name="113"
+      > </a
+      ><a name="114" href="Swap.html#1" class="Module"
+      >Swap</a
+      ><a name="118"
+      >
+</a
+      ><a name="119" class="Keyword"
+      >open</a
+      ><a name="123"
+      > </a
+      ><a name="124" class="Keyword"
+      >import</a
+      ><a name="130"
+      > </a
+      ><a name="131" href="SwapInduction.html#1" class="Module"
+      >SwapInduction</a
+      ><a name="144"
+      >
+</a
+      ><a name="145" class="Keyword"
+      >open</a
+      ><a name="149"
+      > </a
+      ><a name="150" class="Keyword"
+      >import</a
+      ><a name="156"
+      > </a
+      ><a name="157" href="Chi.html#1" class="Module"
+      >Chi</a
+      ><a name="160"
+      >
+
+</a
+      ><a name="162" class="Keyword"
+      >open</a
+      ><a name="166"
+      > </a
+      ><a name="167" class="Keyword"
+      >import</a
+      ><a name="173"
+      > </a
+      ><a name="174" href="Relation.Nullary.html#1" class="Module"
+      >Relation.Nullary</a
+      ><a name="190"
+      >
+</a
+      ><a name="191" class="Keyword"
+      >open</a
+      ><a name="195"
+      > </a
+      ><a name="196" class="Keyword"
+      >import</a
+      ><a name="202"
+      > </a
+      ><a name="203" href="Data.Empty.html#1" class="Module"
+      >Data.Empty</a
+      ><a name="213"
+      >
+</a
+      ><a name="214" class="Keyword"
+      >open</a
+      ><a name="218"
+      > </a
+      ><a name="219" class="Keyword"
+      >import</a
+      ><a name="225"
+      > </a
+      ><a name="226" href="Data.Sum.html#1" class="Module"
+      >Data.Sum</a
+      ><a name="234"
+      >
+</a
+      ><a name="235" class="Keyword"
+      >open</a
+      ><a name="239"
+      > </a
+      ><a name="240" class="Keyword"
+      >import</a
+      ><a name="246"
+      > </a
+      ><a name="247" href="Data.Product.html#1" class="Module"
+      >Data.Product</a
+      ><a name="259"
+      > </a
+      ><a name="260" class="Keyword"
+      >hiding</a
+      ><a name="266"
+      > </a
+      ><a name="267" class="Symbol"
+      >(</a
+      ><a name="268" href="Data.Product.html#2324" class="Function"
+      >swap</a
+      ><a name="272" class="Symbol"
+      >)</a
+      ><a name="273"
+      >
+</a
+      ><a name="274" class="Keyword"
+      >open</a
+      ><a name="278"
+      > </a
+      ><a name="279" class="Keyword"
+      >import</a
+      ><a name="285"
+      > </a
+      ><a name="286" href="Data.List.html#1" class="Module"
+      >Data.List</a
+      ><a name="295"
+      > </a
+      ><a name="296" class="Keyword"
+      >hiding</a
+      ><a name="302"
+      > </a
+      ><a name="303" class="Symbol"
+      >(</a
+      ><a name="304" href="Data.List.Base.html#2518" class="Function"
+      >any</a
+      ><a name="307" class="Symbol"
+      >)</a
+      ><a name="308"
+      >
+</a
+      ><a name="309" class="Keyword"
+      >open</a
+      ><a name="313"
+      > </a
+      ><a name="314" class="Keyword"
+      >import</a
+      ><a name="320"
+      > </a
+      ><a name="321" href="Data.List.Any.html#1" class="Module"
+      >Data.List.Any</a
+      ><a name="334"
+      >
+</a
+      ><a name="335" class="Keyword"
+      >open</a
+      ><a name="339"
+      > </a
+      ><a name="340" class="Keyword"
+      >import</a
+      ><a name="346"
+      > </a
+      ><a name="347" href="Data.Bool.html#1" class="Module"
+      >Data.Bool</a
+      ><a name="356"
+      >
+</a
+      ><a name="357" class="Keyword"
+      >open</a
+      ><a name="361"
+      > </a
+      ><a name="362" class="Keyword"
+      >import</a
+      ><a name="368"
+      > </a
+      ><a name="369" href="Relation.Nullary.Decidable.html#1" class="Module"
+      >Relation.Nullary.Decidable</a
+      ><a name="395"
+      > </a
+      ><a name="396" class="Keyword"
+      >hiding</a
+      ><a name="402"
+      > </a
+      ><a name="403" class="Symbol"
+      >(</a
+      ><a name="404" href="Relation.Nullary.Decidable.html#1632" class="Function"
+      >map</a
+      ><a name="407" class="Symbol"
+      >)</a
+      ><a name="408"
+      >
+</a
+      ><a name="409" class="Keyword"
+      >open</a
+      ><a name="413"
+      > </a
+      ><a name="414" class="Keyword"
+      >import</a
+      ><a name="420"
+      > </a
+      ><a name="421" href="Data.List.Any.html#1" class="Module"
+      >Data.List.Any</a
+      ><a name="434"
+      > </a
+      ><a name="435" class="Symbol"
+      >as</a
+      ><a name="437"
+      > </a
+      ><a name="438" class="Module"
+      >any</a
+      ><a name="441"
+      >
+</a
+      ><a name="442" class="Keyword"
+      >open</a
+      ><a name="446"
+      > </a
+      ><a name="447" href="Data.List.Any.html#260" class="Module"
+      >any.</a
+      ><a name="451" href="Data.List.Any.html#4582" class="Module"
+      >Membership-&#8801;</a
+      ><a name="463"
+      >
+</a
+      ><a name="464" class="Keyword"
+      >open</a
+      ><a name="468"
+      > </a
+      ><a name="469" class="Keyword"
+      >import</a
+      ><a name="475"
+      > </a
+      ><a name="476" href="Relation.Binary.PropositionalEquality.html#1" class="Module"
+      >Relation.Binary.PropositionalEquality</a
+      ><a name="513"
+      > </a
+      ><a name="514" class="Keyword"
+      >hiding</a
+      ><a name="520"
+      > </a
+      ><a name="521" class="Symbol"
+      >(</a
+      ><a name="522" href="Relation.Binary.PropositionalEquality.html#5124" class="InductiveConstructor Operator"
+      >[_]</a
+      ><a name="525" class="Symbol"
+      >)</a
+      ><a name="526"
+      >
+
+</a
+      ><a name="528" href="FreeVariables.html#528" class="Function"
+      >fvSF</a
+      ><a name="532"
+      > </a
+      ><a name="533" class="Symbol"
+      >:</a
+      ><a name="534"
+      > </a
+      ><a name="535" class="Symbol"
+      >{</a
+      ><a name="536" href="FreeVariables.html#536" class="Bound"
+      >F</a
+      ><a name="537"
+      > </a
+      ><a name="538" href="FreeVariables.html#538" class="Bound"
+      >G</a
+      ><a name="539"
+      > </a
+      ><a name="540" class="Symbol"
+      >:</a
+      ><a name="541"
+      > </a
+      ><a name="542" href="GPBindings.html#539" class="Datatype"
+      >Functor</a
+      ><a name="549" class="Symbol"
+      >}</a
+      ><a name="550"
+      > </a
+      ><a name="551" class="Symbol"
+      >&#8594;</a
+      ><a name="552"
+      > </a
+      ><a name="553" href="GPBindings.html#432" class="Function"
+      >Sort</a
+      ><a name="557"
+      > </a
+      ><a name="558" class="Symbol"
+      >&#8594;</a
+      ><a name="559"
+      > </a
+      ><a name="560" href="GPBindings.html#989" class="Function Operator"
+      >&#10214;</a
+      ><a name="561"
+      > </a
+      ><a name="562" href="FreeVariables.html#538" class="Bound"
+      >G</a
+      ><a name="563"
+      > </a
+      ><a name="564" href="GPBindings.html#989" class="Function Operator"
+      >&#10215;</a
+      ><a name="565"
+      > </a
+      ><a name="566" class="Symbol"
+      >(</a
+      ><a name="567" href="GPBindings.html#1264" class="Datatype"
+      >&#956;</a
+      ><a name="568"
+      > </a
+      ><a name="569" href="FreeVariables.html#536" class="Bound"
+      >F</a
+      ><a name="570" class="Symbol"
+      >)</a
+      ><a name="571"
+      > </a
+      ><a name="572" class="Symbol"
+      >&#8594;</a
+      ><a name="573"
+      > </a
+      ><a name="574" href="Agda.Builtin.List.html#52" class="Datatype"
+      >List</a
+      ><a name="578"
+      > </a
+      ><a name="579" href="GPBindings.html#442" class="Function"
+      >V</a
+      ><a name="580"
+      >  </a
+      ><a name="582" class="Comment"
+      >-- why not implemented with fold ?</a
+      ><a name="616"
+      >
+</a
+      ><a name="617" href="FreeVariables.html#528" class="Function"
+      >fvSF</a
+      ><a name="621"
+      > </a
+      ><a name="622" class="Symbol"
+      >{</a
+      ><a name="623" href="FreeVariables.html#623" class="Bound"
+      >F</a
+      ><a name="624" class="Symbol"
+      >}</a
+      ><a name="625"
+      > </a
+      ><a name="626" class="Symbol"
+      >{</a
+      ><a name="627" href="GPBindings.html#577" class="InductiveConstructor"
+      >|v|</a
+      ><a name="630"
+      > </a
+      ><a name="631" href="FreeVariables.html#631" class="Bound"
+      >S'</a
+      ><a name="633" class="Symbol"
+      >}</a
+      ><a name="634"
+      >   </a
+      ><a name="637" href="FreeVariables.html#637" class="Bound"
+      >S</a
+      ><a name="638"
+      > </a
+      ><a name="639" href="FreeVariables.html#639" class="Bound"
+      >e</a
+      ><a name="640"
+      > </a
+      ><a name="641" class="Keyword"
+      >with</a
+      ><a name="645"
+      > </a
+      ><a name="646" href="FreeVariables.html#631" class="Bound"
+      >S'</a
+      ><a name="648"
+      > </a
+      ><a name="649" href="GPBindings.html#476" class="Function Operator"
+      >&#8799;S</a
+      ><a name="651"
+      >  </a
+      ><a name="653" href="FreeVariables.html#637" class="Bound"
+      >S</a
+      ><a name="654"
+      >
+</a
+      ><a name="655" class="Symbol"
+      >...</a
+      ><a name="658"
+      > </a
+      ><a name="659" class="Symbol"
+      >|</a
+      ><a name="660"
+      > </a
+      ><a name="661" href="Relation.Nullary.html#520" class="InductiveConstructor"
+      >yes</a
+      ><a name="664"
+      > </a
+      ><a name="665" class="Symbol"
+      >_</a
+      ><a name="666"
+      >                      </a
+      ><a name="688" class="Symbol"
+      >=</a
+      ><a name="689"
+      > </a
+      ><a name="690" href="Data.List.Base.html#842" class="Function Operator"
+      >[</a
+      ><a name="691"
+      > </a
+      ><a name="692" href="FreeVariables.html#639" class="Bound"
+      >e</a
+      ><a name="693"
+      > </a
+      ><a name="694" href="Data.List.Base.html#842" class="Function Operator"
+      >]</a
+      ><a name="695"
+      >
+</a
+      ><a name="696" class="Symbol"
+      >...</a
+      ><a name="699"
+      > </a
+      ><a name="700" class="Symbol"
+      >|</a
+      ><a name="701"
+      > </a
+      ><a name="702" href="Relation.Nullary.html#547" class="InductiveConstructor"
+      >no</a
+      ><a name="704"
+      >  </a
+      ><a name="706" class="Symbol"
+      >_</a
+      ><a name="707"
+      >                      </a
+      ><a name="729" class="Symbol"
+      >=</a
+      ><a name="730"
+      > </a
+      ><a name="731" href="Agda.Builtin.List.html#89" class="InductiveConstructor"
+      >[]</a
+      ><a name="733"
+      >
+</a
+      ><a name="734" href="FreeVariables.html#528" class="Function"
+      >fvSF</a
+      ><a name="738"
+      > </a
+      ><a name="739" class="Symbol"
+      >{</a
+      ><a name="740" href="FreeVariables.html#740" class="Bound"
+      >F</a
+      ><a name="741" class="Symbol"
+      >}</a
+      ><a name="742"
+      > </a
+      ><a name="743" class="Symbol"
+      >{</a
+      ><a name="744" href="GPBindings.html#618" class="InductiveConstructor"
+      >|1|</a
+      ><a name="747" class="Symbol"
+      >}</a
+      ><a name="748"
+      >        </a
+      ><a name="756" href="FreeVariables.html#756" class="Bound"
+      >S</a
+      ><a name="757"
+      > </a
+      ><a name="758" href="FreeVariables.html#758" class="Bound"
+      >tt</a
+      ><a name="760"
+      >       </a
+      ><a name="767" class="Symbol"
+      >=</a
+      ><a name="768"
+      > </a
+      ><a name="769" href="Agda.Builtin.List.html#89" class="InductiveConstructor"
+      >[]</a
+      ><a name="771"
+      >
+</a
+      ><a name="772" href="FreeVariables.html#528" class="Function"
+      >fvSF</a
+      ><a name="776"
+      > </a
+      ><a name="777" class="Symbol"
+      >{</a
+      ><a name="778" href="FreeVariables.html#778" class="Bound"
+      >F</a
+      ><a name="779" class="Symbol"
+      >}</a
+      ><a name="780"
+      > </a
+      ><a name="781" class="Symbol"
+      >{</a
+      ><a name="782" href="GPBindings.html#700" class="InductiveConstructor"
+      >|E|</a
+      ><a name="785"
+      > </a
+      ><a name="786" href="FreeVariables.html#786" class="Bound"
+      >x</a
+      ><a name="787" class="Symbol"
+      >}</a
+      ><a name="788"
+      >      </a
+      ><a name="794" href="FreeVariables.html#794" class="Bound"
+      >S</a
+      ><a name="795"
+      > </a
+      ><a name="796" href="FreeVariables.html#796" class="Bound"
+      >e</a
+      ><a name="797"
+      >        </a
+      ><a name="805" class="Symbol"
+      >=</a
+      ><a name="806"
+      > </a
+      ><a name="807" href="Agda.Builtin.List.html#89" class="InductiveConstructor"
+      >[]</a
+      ><a name="809"
+      >
+</a
+      ><a name="810" href="FreeVariables.html#528" class="Function"
+      >fvSF</a
+      ><a name="814"
+      > </a
+      ><a name="815" class="Symbol"
+      >{</a
+      ><a name="816" href="FreeVariables.html#816" class="Bound"
+      >F</a
+      ><a name="817" class="Symbol"
+      >}</a
+      ><a name="818"
+      > </a
+      ><a name="819" class="Symbol"
+      >{</a
+      ><a name="820" href="GPBindings.html#749" class="InductiveConstructor"
+      >|Ef|</a
+      ><a name="824"
+      >   </a
+      ><a name="827" href="FreeVariables.html#827" class="Bound"
+      >G</a
+      ><a name="828" class="Symbol"
+      >}</a
+      ><a name="829"
+      >   </a
+      ><a name="832" href="FreeVariables.html#832" class="Bound"
+      >S</a
+      ><a name="833"
+      > </a
+      ><a name="834" href="GPBindings.html#1296" class="InductiveConstructor Operator"
+      >&#10216;</a
+      ><a name="835"
+      > </a
+      ><a name="836" href="FreeVariables.html#836" class="Bound"
+      >e</a
+      ><a name="837"
+      > </a
+      ><a name="838" href="GPBindings.html#1296" class="InductiveConstructor Operator"
+      >&#10217;</a
+      ><a name="839"
+      >    </a
+      ><a name="843" class="Symbol"
+      >=</a
+      ><a name="844"
+      > </a
+      ><a name="845" href="FreeVariables.html#528" class="Function"
+      >fvSF</a
+      ><a name="849"
+      > </a
+      ><a name="850" class="Symbol"
+      >{</a
+      ><a name="851" href="FreeVariables.html#827" class="Bound"
+      >G</a
+      ><a name="852" class="Symbol"
+      >}</a
+      ><a name="853"
+      > </a
+      ><a name="854" class="Symbol"
+      >{</a
+      ><a name="855" href="FreeVariables.html#827" class="Bound"
+      >G</a
+      ><a name="856" class="Symbol"
+      >}</a
+      ><a name="857"
+      > </a
+      ><a name="858" href="FreeVariables.html#832" class="Bound"
+      >S</a
+      ><a name="859"
+      > </a
+      ><a name="860" href="FreeVariables.html#836" class="Bound"
+      >e</a
+      ><a name="861"
+      >
+</a
+      ><a name="862" href="FreeVariables.html#528" class="Function"
+      >fvSF</a
+      ><a name="866"
+      > </a
+      ><a name="867" class="Symbol"
+      >{</a
+      ><a name="868" href="FreeVariables.html#868" class="Bound"
+      >F</a
+      ><a name="869" class="Symbol"
+      >}</a
+      ><a name="870"
+      > </a
+      ><a name="871" class="Symbol"
+      >{</a
+      ><a name="872" href="GPBindings.html#659" class="InductiveConstructor"
+      >|R|</a
+      ><a name="875" class="Symbol"
+      >}</a
+      ><a name="876"
+      >        </a
+      ><a name="884" href="FreeVariables.html#884" class="Bound"
+      >S</a
+      ><a name="885"
+      > </a
+      ><a name="886" href="GPBindings.html#1296" class="InductiveConstructor Operator"
+      >&#10216;</a
+      ><a name="887"
+      > </a
+      ><a name="888" href="FreeVariables.html#888" class="Bound"
+      >e</a
+      ><a name="889"
+      > </a
+      ><a name="890" href="GPBindings.html#1296" class="InductiveConstructor Operator"
+      >&#10217;</a
+      ><a name="891"
+      >    </a
+      ><a name="895" class="Symbol"
+      >=</a
+      ><a name="896"
+      > </a
+      ><a name="897" href="FreeVariables.html#528" class="Function"
+      >fvSF</a
+      ><a name="901"
+      > </a
+      ><a name="902" class="Symbol"
+      >{</a
+      ><a name="903" href="FreeVariables.html#868" class="Bound"
+      >F</a
+      ><a name="904" class="Symbol"
+      >}</a
+      ><a name="905"
+      > </a
+      ><a name="906" class="Symbol"
+      >{</a
+      ><a name="907" href="FreeVariables.html#868" class="Bound"
+      >F</a
+      ><a name="908" class="Symbol"
+      >}</a
+      ><a name="909"
+      > </a
+      ><a name="910" href="FreeVariables.html#884" class="Bound"
+      >S</a
+      ><a name="911"
+      > </a
+      ><a name="912" href="FreeVariables.html#888" class="Bound"
+      >e</a
+      ><a name="913"
+      >
+</a
+      ><a name="914" href="FreeVariables.html#528" class="Function"
+      >fvSF</a
+      ><a name="918"
+      > </a
+      ><a name="919" class="Symbol"
+      >{</a
+      ><a name="920" href="FreeVariables.html#920" class="Bound"
+      >F</a
+      ><a name="921" class="Symbol"
+      >}</a
+      ><a name="922"
+      > </a
+      ><a name="923" class="Symbol"
+      >{</a
+      ><a name="924" href="FreeVariables.html#924" class="Bound"
+      >F&#8321;</a
+      ><a name="926"
+      > </a
+      ><a name="927" href="GPBindings.html#798" class="InductiveConstructor Operator"
+      >|+|</a
+      ><a name="930"
+      > </a
+      ><a name="931" href="FreeVariables.html#931" class="Bound"
+      >F&#8322;</a
+      ><a name="933" class="Symbol"
+      >}</a
+      ><a name="934"
+      >  </a
+      ><a name="936" href="FreeVariables.html#936" class="Bound"
+      >S</a
+      ><a name="937"
+      > </a
+      ><a name="938" class="Symbol"
+      >(</a
+      ><a name="939" href="Data.Sum.html#489" class="InductiveConstructor"
+      >inj&#8321;</a
+      ><a name="943"
+      > </a
+      ><a name="944" href="FreeVariables.html#944" class="Bound"
+      >x</a
+      ><a name="945" class="Symbol"
+      >)</a
+      ><a name="946"
+      > </a
+      ><a name="947" class="Symbol"
+      >=</a
+      ><a name="948"
+      > </a
+      ><a name="949" href="FreeVariables.html#528" class="Function"
+      >fvSF</a
+      ><a name="953"
+      > </a
+      ><a name="954" class="Symbol"
+      >{</a
+      ><a name="955" href="FreeVariables.html#920" class="Bound"
+      >F</a
+      ><a name="956" class="Symbol"
+      >}</a
+      ><a name="957"
+      > </a
+      ><a name="958" class="Symbol"
+      >{</a
+      ><a name="959" href="FreeVariables.html#924" class="Bound"
+      >F&#8321;</a
+      ><a name="961" class="Symbol"
+      >}</a
+      ><a name="962"
+      > </a
+      ><a name="963" href="FreeVariables.html#936" class="Bound"
+      >S</a
+      ><a name="964"
+      > </a
+      ><a name="965" href="FreeVariables.html#944" class="Bound"
+      >x</a
+      ><a name="966"
+      >
+</a
+      ><a name="967" href="FreeVariables.html#528" class="Function"
+      >fvSF</a
+      ><a name="971"
+      > </a
+      ><a name="972" class="Symbol"
+      >{</a
+      ><a name="973" href="FreeVariables.html#973" class="Bound"
+      >F</a
+      ><a name="974" class="Symbol"
+      >}</a
+      ><a name="975"
+      > </a
+      ><a name="976" class="Symbol"
+      >{</a
+      ><a name="977" href="FreeVariables.html#977" class="Bound"
+      >F&#8321;</a
+      ><a name="979"
+      > </a
+      ><a name="980" href="GPBindings.html#798" class="InductiveConstructor Operator"
+      >|+|</a
+      ><a name="983"
+      > </a
+      ><a name="984" href="FreeVariables.html#984" class="Bound"
+      >F&#8322;</a
+      ><a name="986" class="Symbol"
+      >}</a
+      ><a name="987"
+      >  </a
+      ><a name="989" href="FreeVariables.html#989" class="Bound"
+      >S</a
+      ><a name="990"
+      > </a
+      ><a name="991" class="Symbol"
+      >(</a
+      ><a name="992" href="Data.Sum.html#514" class="InductiveConstructor"
+      >inj&#8322;</a
+      ><a name="996"
+      > </a
+      ><a name="997" href="FreeVariables.html#997" class="Bound"
+      >y</a
+      ><a name="998" class="Symbol"
+      >)</a
+      ><a name="999"
+      > </a
+      ><a name="1000" class="Symbol"
+      >=</a
+      ><a name="1001"
+      > </a
+      ><a name="1002" href="FreeVariables.html#528" class="Function"
+      >fvSF</a
+      ><a name="1006"
+      > </a
+      ><a name="1007" class="Symbol"
+      >{</a
+      ><a name="1008" href="FreeVariables.html#973" class="Bound"
+      >F</a
+      ><a name="1009" class="Symbol"
+      >}</a
+      ><a name="1010"
+      > </a
+      ><a name="1011" class="Symbol"
+      >{</a
+      ><a name="1012" href="FreeVariables.html#984" class="Bound"
+      >F&#8322;</a
+      ><a name="1014" class="Symbol"
+      >}</a
+      ><a name="1015"
+      > </a
+      ><a name="1016" href="FreeVariables.html#989" class="Bound"
+      >S</a
+      ><a name="1017"
+      > </a
+      ><a name="1018" href="FreeVariables.html#997" class="Bound"
+      >y</a
+      ><a name="1019"
+      >
+</a
+      ><a name="1020" href="FreeVariables.html#528" class="Function"
+      >fvSF</a
+      ><a name="1024"
+      > </a
+      ><a name="1025" class="Symbol"
+      >{</a
+      ><a name="1026" href="FreeVariables.html#1026" class="Bound"
+      >F</a
+      ><a name="1027" class="Symbol"
+      >}</a
+      ><a name="1028"
+      > </a
+      ><a name="1029" class="Symbol"
+      >{</a
+      ><a name="1030" href="FreeVariables.html#1030" class="Bound"
+      >F&#8321;</a
+      ><a name="1032"
+      > </a
+      ><a name="1033" href="GPBindings.html#844" class="InductiveConstructor Operator"
+      >|x|</a
+      ><a name="1036"
+      > </a
+      ><a name="1037" href="FreeVariables.html#1037" class="Bound"
+      >F&#8322;</a
+      ><a name="1039" class="Symbol"
+      >}</a
+      ><a name="1040"
+      >  </a
+      ><a name="1042" href="FreeVariables.html#1042" class="Bound"
+      >S</a
+      ><a name="1043"
+      > </a
+      ><a name="1044" class="Symbol"
+      >(</a
+      ><a name="1045" href="FreeVariables.html#1045" class="Bound"
+      >x</a
+      ><a name="1046"
+      > </a
+      ><a name="1047" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1048"
+      > </a
+      ><a name="1049" href="FreeVariables.html#1049" class="Bound"
+      >y</a
+      ><a name="1050" class="Symbol"
+      >)</a
+      ><a name="1051"
+      >  </a
+      ><a name="1053" class="Symbol"
+      >=</a
+      ><a name="1054"
+      > </a
+      ><a name="1055" href="FreeVariables.html#528" class="Function"
+      >fvSF</a
+      ><a name="1059"
+      > </a
+      ><a name="1060" class="Symbol"
+      >{</a
+      ><a name="1061" href="FreeVariables.html#1026" class="Bound"
+      >F</a
+      ><a name="1062" class="Symbol"
+      >}</a
+      ><a name="1063"
+      > </a
+      ><a name="1064" class="Symbol"
+      >{</a
+      ><a name="1065" href="FreeVariables.html#1030" class="Bound"
+      >F&#8321;</a
+      ><a name="1067" class="Symbol"
+      >}</a
+      ><a name="1068"
+      > </a
+      ><a name="1069" href="FreeVariables.html#1042" class="Bound"
+      >S</a
+      ><a name="1070"
+      > </a
+      ><a name="1071" href="FreeVariables.html#1045" class="Bound"
+      >x</a
+      ><a name="1072"
+      > </a
+      ><a name="1073" href="Data.List.Base.html#895" class="Function Operator"
+      >++</a
+      ><a name="1075"
+      > </a
+      ><a name="1076" href="FreeVariables.html#528" class="Function"
+      >fvSF</a
+      ><a name="1080"
+      > </a
+      ><a name="1081" class="Symbol"
+      >{</a
+      ><a name="1082" href="FreeVariables.html#1026" class="Bound"
+      >F</a
+      ><a name="1083" class="Symbol"
+      >}</a
+      ><a name="1084"
+      > </a
+      ><a name="1085" class="Symbol"
+      >{</a
+      ><a name="1086" href="FreeVariables.html#1037" class="Bound"
+      >F&#8322;</a
+      ><a name="1088" class="Symbol"
+      >}</a
+      ><a name="1089"
+      > </a
+      ><a name="1090" href="FreeVariables.html#1042" class="Bound"
+      >S</a
+      ><a name="1091"
+      > </a
+      ><a name="1092" href="FreeVariables.html#1049" class="Bound"
+      >y</a
+      ><a name="1093"
+      >
+</a
+      ><a name="1094" href="FreeVariables.html#528" class="Function"
+      >fvSF</a
+      ><a name="1098"
+      > </a
+      ><a name="1099" class="Symbol"
+      >{</a
+      ><a name="1100" href="FreeVariables.html#1100" class="Bound"
+      >F</a
+      ><a name="1101" class="Symbol"
+      >}</a
+      ><a name="1102"
+      > </a
+      ><a name="1103" class="Symbol"
+      >{</a
+      ><a name="1104" href="GPBindings.html#890" class="InductiveConstructor"
+      >|B|</a
+      ><a name="1107"
+      > </a
+      ><a name="1108" href="FreeVariables.html#1108" class="Bound"
+      >S'</a
+      ><a name="1110"
+      > </a
+      ><a name="1111" href="FreeVariables.html#1111" class="Bound"
+      >G</a
+      ><a name="1112" class="Symbol"
+      >}</a
+      ><a name="1113"
+      >   </a
+      ><a name="1116" href="FreeVariables.html#1116" class="Bound"
+      >S</a
+      ><a name="1117"
+      > </a
+      ><a name="1118" class="Symbol"
+      >(</a
+      ><a name="1119" href="FreeVariables.html#1119" class="Bound"
+      >x</a
+      ><a name="1120"
+      > </a
+      ><a name="1121" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1122"
+      > </a
+      ><a name="1123" href="FreeVariables.html#1123" class="Bound"
+      >e</a
+      ><a name="1124" class="Symbol"
+      >)</a
+      ><a name="1125"
+      > </a
+      ><a name="1126" class="Keyword"
+      >with</a
+      ><a name="1130"
+      > </a
+      ><a name="1131" href="FreeVariables.html#1108" class="Bound"
+      >S'</a
+      ><a name="1133"
+      > </a
+      ><a name="1134" href="GPBindings.html#476" class="Function Operator"
+      >&#8799;S</a
+      ><a name="1136"
+      >  </a
+      ><a name="1138" href="FreeVariables.html#1116" class="Bound"
+      >S</a
+      ><a name="1139"
+      >
+</a
+      ><a name="1140" class="Symbol"
+      >...</a
+      ><a name="1143"
+      > </a
+      ><a name="1144" class="Symbol"
+      >|</a
+      ><a name="1145"
+      > </a
+      ><a name="1146" href="Relation.Nullary.html#520" class="InductiveConstructor"
+      >yes</a
+      ><a name="1149"
+      > </a
+      ><a name="1150" class="Symbol"
+      >_</a
+      ><a name="1151"
+      >                     </a
+      ><a name="1172" class="Symbol"
+      >=</a
+      ><a name="1173"
+      > </a
+      ><a name="1174" href="FreeVariables.html#528" class="Function"
+      >fvSF</a
+      ><a name="1178"
+      > </a
+      ><a name="1179" class="Symbol"
+      >{</a
+      ><a name="1180" href="FreeVariables.html#1100" class="Bound"
+      >F</a
+      ><a name="1181" class="Symbol"
+      >}</a
+      ><a name="1182"
+      > </a
+      ><a name="1183" class="Symbol"
+      >{</a
+      ><a name="1184" href="FreeVariables.html#1111" class="Bound"
+      >G</a
+      ><a name="1185" class="Symbol"
+      >}</a
+      ><a name="1186"
+      > </a
+      ><a name="1187" href="FreeVariables.html#1116" class="Bound"
+      >S</a
+      ><a name="1188"
+      > </a
+      ><a name="1189" href="FreeVariables.html#1123" class="Bound"
+      >e</a
+      ><a name="1190"
+      > </a
+      ><a name="1191" href="List.ListProperties.html#3912" class="Function Operator"
+      >-</a
+      ><a name="1192"
+      > </a
+      ><a name="1193" href="FreeVariables.html#1119" class="Bound"
+      >x</a
+      ><a name="1194"
+      >
+</a
+      ><a name="1195" class="Symbol"
+      >...</a
+      ><a name="1198"
+      > </a
+      ><a name="1199" class="Symbol"
+      >|</a
+      ><a name="1200"
+      > </a
+      ><a name="1201" href="Relation.Nullary.html#547" class="InductiveConstructor"
+      >no</a
+      ><a name="1203"
+      >  </a
+      ><a name="1205" class="Symbol"
+      >_</a
+      ><a name="1206"
+      >                     </a
+      ><a name="1227" class="Symbol"
+      >=</a
+      ><a name="1228"
+      > </a
+      ><a name="1229" href="FreeVariables.html#528" class="Function"
+      >fvSF</a
+      ><a name="1233"
+      > </a
+      ><a name="1234" class="Symbol"
+      >{</a
+      ><a name="1235" href="FreeVariables.html#1100" class="Bound"
+      >F</a
+      ><a name="1236" class="Symbol"
+      >}</a
+      ><a name="1237"
+      > </a
+      ><a name="1238" class="Symbol"
+      >{</a
+      ><a name="1239" href="FreeVariables.html#1111" class="Bound"
+      >G</a
+      ><a name="1240" class="Symbol"
+      >}</a
+      ><a name="1241"
+      > </a
+      ><a name="1242" href="FreeVariables.html#1116" class="Bound"
+      >S</a
+      ><a name="1243"
+      > </a
+      ><a name="1244" href="FreeVariables.html#1123" class="Bound"
+      >e</a
+      ><a name="1245"
+      >
+
+</a
+      ><a name="1247" href="FreeVariables.html#1247" class="Function"
+      >fvS</a
+      ><a name="1250"
+      > </a
+      ><a name="1251" class="Symbol"
+      >:</a
+      ><a name="1252"
+      > </a
+      ><a name="1253" class="Symbol"
+      >{</a
+      ><a name="1254" href="FreeVariables.html#1254" class="Bound"
+      >F</a
+      ><a name="1255"
+      > </a
+      ><a name="1256" class="Symbol"
+      >:</a
+      ><a name="1257"
+      > </a
+      ><a name="1258" href="GPBindings.html#539" class="Datatype"
+      >Functor</a
+      ><a name="1265" class="Symbol"
+      >}</a
+      ><a name="1266"
+      > </a
+      ><a name="1267" class="Symbol"
+      >&#8594;</a
+      ><a name="1268"
+      > </a
+      ><a name="1269" href="GPBindings.html#432" class="Function"
+      >Sort</a
+      ><a name="1273"
+      > </a
+      ><a name="1274" class="Symbol"
+      >&#8594;</a
+      ><a name="1275"
+      > </a
+      ><a name="1276" href="GPBindings.html#1264" class="Datatype"
+      >&#956;</a
+      ><a name="1277"
+      > </a
+      ><a name="1278" href="FreeVariables.html#1254" class="Bound"
+      >F</a
+      ><a name="1279"
+      > </a
+      ><a name="1280" class="Symbol"
+      >&#8594;</a
+      ><a name="1281"
+      > </a
+      ><a name="1282" href="Agda.Builtin.List.html#52" class="Datatype"
+      >List</a
+      ><a name="1286"
+      > </a
+      ><a name="1287" href="GPBindings.html#442" class="Function"
+      >V</a
+      ><a name="1288"
+      >
+</a
+      ><a name="1289" href="FreeVariables.html#1247" class="Function"
+      >fvS</a
+      ><a name="1292"
+      > </a
+      ><a name="1293" class="Symbol"
+      >{</a
+      ><a name="1294" href="FreeVariables.html#1294" class="Bound"
+      >F</a
+      ><a name="1295" class="Symbol"
+      >}</a
+      ><a name="1296"
+      > </a
+      ><a name="1297" href="FreeVariables.html#1297" class="Bound"
+      >S</a
+      ><a name="1298"
+      > </a
+      ><a name="1299" href="FreeVariables.html#1299" class="Bound"
+      >e</a
+      ><a name="1300"
+      > </a
+      ><a name="1301" class="Symbol"
+      >=</a
+      ><a name="1302"
+      > </a
+      ><a name="1303" href="FreeVariables.html#528" class="Function"
+      >fvSF</a
+      ><a name="1307"
+      > </a
+      ><a name="1308" class="Symbol"
+      >{</a
+      ><a name="1309" href="FreeVariables.html#1294" class="Bound"
+      >F</a
+      ><a name="1310" class="Symbol"
+      >}</a
+      ><a name="1311"
+      > </a
+      ><a name="1312" class="Symbol"
+      >{</a
+      ><a name="1313" href="GPBindings.html#659" class="InductiveConstructor"
+      >|R|</a
+      ><a name="1316" class="Symbol"
+      >}</a
+      ><a name="1317"
+      > </a
+      ><a name="1318" href="FreeVariables.html#1297" class="Bound"
+      >S</a
+      ><a name="1319"
+      > </a
+      ><a name="1320" href="FreeVariables.html#1299" class="Bound"
+      >e</a
+      ><a name="1321"
+      > 
+  
+</a
+      ><a name="1326" class="Comment"
+      >-- fvcases : (F : Functor)(S : Sort) &#8594; &#10214; F &#10215; (List V) &#8594; List V</a
+      ><a name="1388"
+      >
+</a
+      ><a name="1389" class="Comment"
+      >-- fvcases (|v| S') S x with S' &#8799;S  S</a
+      ><a name="1426"
+      >
+</a
+      ><a name="1427" class="Comment"
+      >-- ... | yes _     = [ x ]</a
+      ><a name="1453"
+      >
+</a
+      ><a name="1454" class="Comment"
+      >-- ... | no  _     = []</a
+      ><a name="1477"
+      >
+</a
+      ><a name="1478" class="Comment"
+      >-- fvcases |1| S x = []</a
+      ><a name="1501"
+      >
+</a
+      ><a name="1502" class="Comment"
+      >-- fvcases |R| S R = R</a
+      ><a name="1524"
+      >
+</a
+      ><a name="1525" class="Comment"
+      >-- fvcases (|E| x) S _ =  []</a
+      ><a name="1553"
+      >
+</a
+      ><a name="1554" class="Comment"
+      >-- fvcases (|Ef| F) S R = {!R!} -- why not implemented with fold ? because of this case !!!</a
+      ><a name="1645"
+      >
+</a
+      ><a name="1646" class="Comment"
+      >-- fvcases (F |+| F&#8321;) S x = {!!}</a
+      ><a name="1678"
+      >
+</a
+      ><a name="1679" class="Comment"
+      >-- fvcases (F |x| F&#8321;) S x = {!!}</a
+      ><a name="1711"
+      >
+</a
+      ><a name="1712" class="Comment"
+      >-- fvcases (|B| x F) S x&#8321; = {!!}</a
+      ><a name="1744"
+      >
+
+</a
+      ><a name="1746" class="Comment"
+      >-- fv2 : {F : Functor} &#8594; Sort &#8594; &#956; F &#8594; List V</a
+      ><a name="1790"
+      >
+</a
+      ><a name="1791" class="Comment"
+      >-- fv2 {F} S e = fold F (fvcases F S) e</a
+      ><a name="1830"
+      >
+
+
+</a
+      ><a name="1833" href="FreeVariables.html#1833" class="Function"
+      >lemmafvSF#</a
+      ><a name="1843"
+      > </a
+      ><a name="1844" class="Symbol"
+      >:</a
+      ><a name="1845"
+      > </a
+      ><a name="1846" class="Symbol"
+      >{</a
+      ><a name="1847" href="FreeVariables.html#1847" class="Bound"
+      >F</a
+      ><a name="1848"
+      > </a
+      ><a name="1849" href="FreeVariables.html#1849" class="Bound"
+      >G</a
+      ><a name="1850"
+      > </a
+      ><a name="1851" class="Symbol"
+      >:</a
+      ><a name="1852"
+      > </a
+      ><a name="1853" href="GPBindings.html#539" class="Datatype"
+      >Functor</a
+      ><a name="1860" class="Symbol"
+      >}{</a
+      ><a name="1862" href="FreeVariables.html#1862" class="Bound"
+      >x</a
+      ><a name="1863"
+      > </a
+      ><a name="1864" class="Symbol"
+      >:</a
+      ><a name="1865"
+      > </a
+      ><a name="1866" href="GPBindings.html#442" class="Function"
+      >V</a
+      ><a name="1867" class="Symbol"
+      >}{</a
+      ><a name="1869" href="FreeVariables.html#1869" class="Bound"
+      >S</a
+      ><a name="1870"
+      > </a
+      ><a name="1871" class="Symbol"
+      >:</a
+      ><a name="1872"
+      > </a
+      ><a name="1873" href="GPBindings.html#432" class="Function"
+      >Sort</a
+      ><a name="1877" class="Symbol"
+      >}{</a
+      ><a name="1879" href="FreeVariables.html#1879" class="Bound"
+      >e</a
+      ><a name="1880"
+      > </a
+      ><a name="1881" class="Symbol"
+      >:</a
+      ><a name="1882"
+      > </a
+      ><a name="1883" href="GPBindings.html#989" class="Function Operator"
+      >&#10214;</a
+      ><a name="1884"
+      > </a
+      ><a name="1885" href="FreeVariables.html#1849" class="Bound"
+      >G</a
+      ><a name="1886"
+      > </a
+      ><a name="1887" href="GPBindings.html#989" class="Function Operator"
+      >&#10215;</a
+      ><a name="1888"
+      > </a
+      ><a name="1889" class="Symbol"
+      >(</a
+      ><a name="1890" href="GPBindings.html#1264" class="Datatype"
+      >&#956;</a
+      ><a name="1891"
+      > </a
+      ><a name="1892" href="FreeVariables.html#1847" class="Bound"
+      >F</a
+      ><a name="1893" class="Symbol"
+      >)}</a
+      ><a name="1895"
+      > </a
+      ><a name="1896" class="Symbol"
+      >&#8594;</a
+      ><a name="1897"
+      > </a
+      ><a name="1898" href="FreeVariables.html#1862" class="Bound"
+      >x</a
+      ><a name="1899"
+      > </a
+      ><a name="1900" href="Data.List.Any.html#2974" class="Function Operator"
+      >&#8713;</a
+      ><a name="1901"
+      > </a
+      ><a name="1902" class="Symbol"
+      >(</a
+      ><a name="1903" href="FreeVariables.html#528" class="Function"
+      >fvSF</a
+      ><a name="1907"
+      > </a
+      ><a name="1908" class="Symbol"
+      >{</a
+      ><a name="1909" href="FreeVariables.html#1847" class="Bound"
+      >F</a
+      ><a name="1910" class="Symbol"
+      >}</a
+      ><a name="1911"
+      > </a
+      ><a name="1912" class="Symbol"
+      >{</a
+      ><a name="1913" href="FreeVariables.html#1849" class="Bound"
+      >G</a
+      ><a name="1914" class="Symbol"
+      >}</a
+      ><a name="1915"
+      > </a
+      ><a name="1916" href="FreeVariables.html#1869" class="Bound"
+      >S</a
+      ><a name="1917"
+      > </a
+      ><a name="1918" href="FreeVariables.html#1879" class="Bound"
+      >e</a
+      ><a name="1919" class="Symbol"
+      >)</a
+      ><a name="1920"
+      > </a
+      ><a name="1921" class="Symbol"
+      >&#8594;</a
+      ><a name="1922"
+      > </a
+      ><a name="1923" href="Fresh.html#242" class="Datatype"
+      >freshF</a
+      ><a name="1929"
+      > </a
+      ><a name="1930" href="FreeVariables.html#1869" class="Bound"
+      >S</a
+      ><a name="1931"
+      > </a
+      ><a name="1932" href="FreeVariables.html#1862" class="Bound"
+      >x</a
+      ><a name="1933"
+      > </a
+      ><a name="1934" href="FreeVariables.html#1849" class="Bound"
+      >G</a
+      ><a name="1935"
+      > </a
+      ><a name="1936" href="FreeVariables.html#1879" class="Bound"
+      >e</a
+      ><a name="1937"
+      >
+</a
+      ><a name="1938" href="FreeVariables.html#1833" class="Function"
+      >lemmafvSF#</a
+      ><a name="1948"
+      > </a
+      ><a name="1949" class="Symbol"
+      >{</a
+      ><a name="1950" href="FreeVariables.html#1950" class="Bound"
+      >F</a
+      ><a name="1951" class="Symbol"
+      >}</a
+      ><a name="1952"
+      > </a
+      ><a name="1953" class="Symbol"
+      >{</a
+      ><a name="1954" href="GPBindings.html#577" class="InductiveConstructor"
+      >|v|</a
+      ><a name="1957"
+      > </a
+      ><a name="1958" href="FreeVariables.html#1958" class="Bound"
+      >S'</a
+      ><a name="1960" class="Symbol"
+      >}</a
+      ><a name="1961"
+      >    </a
+      ><a name="1965" class="Symbol"
+      >{</a
+      ><a name="1966" class="Argument"
+      >x</a
+      ><a name="1967"
+      > </a
+      ><a name="1968" class="Symbol"
+      >=</a
+      ><a name="1969"
+      > </a
+      ><a name="1970" href="FreeVariables.html#1970" class="Bound"
+      >e'</a
+      ><a name="1972" class="Symbol"
+      >}</a
+      ><a name="1973"
+      > </a
+      ><a name="1974" class="Symbol"
+      >{</a
+      ><a name="1975" class="Argument"
+      >S</a
+      ><a name="1976"
+      > </a
+      ><a name="1977" class="Symbol"
+      >=</a
+      ><a name="1978"
+      > </a
+      ><a name="1979" href="FreeVariables.html#1979" class="Bound"
+      >S</a
+      ><a name="1980" class="Symbol"
+      >}</a
+      ><a name="1981"
+      >   
+                      </a
+      ><a name="2007" class="Symbol"
+      >{</a
+      ><a name="2008" href="FreeVariables.html#2008" class="Bound"
+      >e</a
+      ><a name="2009" class="Symbol"
+      >}</a
+      ><a name="2010"
+      >          </a
+      ><a name="2020" href="FreeVariables.html#2020" class="Bound"
+      >x&#8713;fv</a
+      ><a name="2024"
+      > </a
+      ><a name="2025" class="Keyword"
+      >with</a
+      ><a name="2029"
+      > </a
+      ><a name="2030" href="FreeVariables.html#1958" class="Bound"
+      >S'</a
+      ><a name="2032"
+      > </a
+      ><a name="2033" href="GPBindings.html#476" class="Function Operator"
+      >&#8799;S</a
+      ><a name="2035"
+      >  </a
+      ><a name="2037" href="FreeVariables.html#1979" class="Bound"
+      >S</a
+      ><a name="2038"
+      >
+</a
+      ><a name="2039" class="Symbol"
+      >...</a
+      ><a name="2042"
+      > </a
+      ><a name="2043" class="Symbol"
+      >|</a
+      ><a name="2044"
+      > </a
+      ><a name="2045" href="Relation.Nullary.html#547" class="InductiveConstructor"
+      >no</a
+      ><a name="2047"
+      >  </a
+      ><a name="2049" href="FreeVariables.html#2049" class="Bound"
+      >S'&#8802;S</a
+      ><a name="2053"
+      >                        </a
+      ><a name="2077" class="Symbol"
+      >=</a
+      ><a name="2078"
+      > </a
+      ><a name="2079" href="Fresh.html#382" class="InductiveConstructor"
+      >freshV&#8802;S</a
+      ><a name="2087"
+      >  </a
+      ><a name="2089" href="FreeVariables.html#2049" class="Bound"
+      >S'&#8802;S</a
+      ><a name="2093"
+      >
+</a
+      ><a name="2094" href="FreeVariables.html#1833" class="Function"
+      >lemmafvSF#</a
+      ><a name="2104"
+      > </a
+      ><a name="2105" class="Symbol"
+      >{</a
+      ><a name="2106" href="FreeVariables.html#2106" class="Bound"
+      >F</a
+      ><a name="2107" class="Symbol"
+      >}</a
+      ><a name="2108"
+      >  </a
+      ><a name="2110" class="Symbol"
+      >{</a
+      ><a name="2111" href="GPBindings.html#577" class="InductiveConstructor"
+      >|v|</a
+      ><a name="2114"
+      > </a
+      ><a name="2115" href="FreeVariables.html#2115" class="Bound"
+      >S</a
+      ><a name="2116" class="Symbol"
+      >}</a
+      ><a name="2117"
+      >     </a
+      ><a name="2122" class="Symbol"
+      >{</a
+      ><a name="2123" class="Argument"
+      >x</a
+      ><a name="2124"
+      > </a
+      ><a name="2125" class="Symbol"
+      >=</a
+      ><a name="2126"
+      > </a
+      ><a name="2127" href="FreeVariables.html#2127" class="Bound"
+      >e'</a
+      ><a name="2129" class="Symbol"
+      >}</a
+      ><a name="2130"
+      > </a
+      ><a name="2131" class="Symbol"
+      >{</a
+      ><a name="2132" class="Argument"
+      >S</a
+      ><a name="2133"
+      > </a
+      ><a name="2134" class="Symbol"
+      >=</a
+      ><a name="2135"
+      > </a
+      ><a name="2136" class="DottedPattern Symbol"
+      >.</a
+      ><a name="2137" href="FreeVariables.html#2115" class="DottedPattern Bound"
+      >S</a
+      ><a name="2138" class="Symbol"
+      >}</a
+      ><a name="2139"
+      >
+                      </a
+      ><a name="2162" class="Symbol"
+      >{</a
+      ><a name="2163" href="FreeVariables.html#2163" class="Bound"
+      >e</a
+      ><a name="2164" class="Symbol"
+      >}</a
+      ><a name="2165"
+      >          </a
+      ><a name="2175" href="FreeVariables.html#2175" class="Bound"
+      >x&#8713;fv</a
+      ><a name="2179"
+      >
+    </a
+      ><a name="2184" class="Symbol"
+      >|</a
+      ><a name="2185"
+      > </a
+      ><a name="2186" href="Relation.Nullary.html#520" class="InductiveConstructor"
+      >yes</a
+      ><a name="2189"
+      > </a
+      ><a name="2190" href="Agda.Builtin.Equality.html#112" class="InductiveConstructor"
+      >refl</a
+      ><a name="2194"
+      >                        </a
+      ><a name="2218" class="Keyword"
+      >with</a
+      ><a name="2222"
+      > </a
+      ><a name="2223" href="FreeVariables.html#2127" class="Bound"
+      >e'</a
+      ><a name="2225"
+      > </a
+      ><a name="2226" href="GPBindings.html#455" class="Function Operator"
+      >&#8799;v</a
+      ><a name="2228"
+      >  </a
+      ><a name="2230" href="FreeVariables.html#2163" class="Bound"
+      >e</a
+      ><a name="2231"
+      >
+</a
+      ><a name="2232" class="Symbol"
+      >...</a
+      ><a name="2235"
+      > </a
+      ><a name="2236" class="Symbol"
+      >|</a
+      ><a name="2237"
+      > </a
+      ><a name="2238" href="Relation.Nullary.html#547" class="InductiveConstructor"
+      >no</a
+      ><a name="2240"
+      >  </a
+      ><a name="2242" href="FreeVariables.html#2242" class="Bound"
+      >e'&#8802;e</a
+      ><a name="2246"
+      >                        </a
+      ><a name="2270" class="Symbol"
+      >=</a
+      ><a name="2271"
+      > </a
+      ><a name="2272" href="Fresh.html#325" class="InductiveConstructor"
+      >freshV&#8802;</a
+      ><a name="2279"
+      > </a
+      ><a name="2280" href="FreeVariables.html#2242" class="Bound"
+      >e'&#8802;e</a
+      ><a name="2284"
+      >
+</a
+      ><a name="2285" href="FreeVariables.html#1833" class="Function"
+      >lemmafvSF#</a
+      ><a name="2295"
+      > </a
+      ><a name="2296" class="Symbol"
+      >{</a
+      ><a name="2297" href="FreeVariables.html#2297" class="Bound"
+      >F</a
+      ><a name="2298" class="Symbol"
+      >}</a
+      ><a name="2299"
+      > </a
+      ><a name="2300" class="Symbol"
+      >{</a
+      ><a name="2301" href="GPBindings.html#577" class="InductiveConstructor"
+      >|v|</a
+      ><a name="2304"
+      > </a
+      ><a name="2305" href="FreeVariables.html#2305" class="Bound"
+      >S</a
+      ><a name="2306" class="Symbol"
+      >}</a
+      ><a name="2307"
+      >     </a
+      ><a name="2312" class="Symbol"
+      >{</a
+      ><a name="2313" class="Argument"
+      >x</a
+      ><a name="2314"
+      > </a
+      ><a name="2315" class="Symbol"
+      >=</a
+      ><a name="2316"
+      > </a
+      ><a name="2317" class="DottedPattern Symbol"
+      >.</a
+      ><a name="2318" href="FreeVariables.html#2353" class="DottedPattern Bound"
+      >e</a
+      ><a name="2319" class="Symbol"
+      >}</a
+      ><a name="2320"
+      > </a
+      ><a name="2321" class="Symbol"
+      >{</a
+      ><a name="2322" class="Argument"
+      >S</a
+      ><a name="2323"
+      > </a
+      ><a name="2324" class="Symbol"
+      >=</a
+      ><a name="2325"
+      > </a
+      ><a name="2326" class="DottedPattern Symbol"
+      >.</a
+      ><a name="2327" href="FreeVariables.html#2305" class="DottedPattern Bound"
+      >S</a
+      ><a name="2328" class="Symbol"
+      >}</a
+      ><a name="2329"
+      >
+                      </a
+      ><a name="2352" class="Symbol"
+      >{</a
+      ><a name="2353" href="FreeVariables.html#2353" class="Bound"
+      >e</a
+      ><a name="2354" class="Symbol"
+      >}</a
+      ><a name="2355"
+      >          </a
+      ><a name="2365" href="FreeVariables.html#2365" class="Bound"
+      >x&#8713;[x]</a
+      ><a name="2370"
+      >
+    </a
+      ><a name="2375" class="Symbol"
+      >|</a
+      ><a name="2376"
+      > </a
+      ><a name="2377" href="Relation.Nullary.html#520" class="InductiveConstructor"
+      >yes</a
+      ><a name="2380"
+      > </a
+      ><a name="2381" href="Agda.Builtin.Equality.html#112" class="InductiveConstructor"
+      >refl</a
+      ><a name="2385"
+      >                        
+    </a
+      ><a name="2414" class="Symbol"
+      >|</a
+      ><a name="2415"
+      > </a
+      ><a name="2416" href="Relation.Nullary.html#520" class="InductiveConstructor"
+      >yes</a
+      ><a name="2419"
+      > </a
+      ><a name="2420" href="Agda.Builtin.Equality.html#112" class="InductiveConstructor"
+      >refl</a
+      ><a name="2424"
+      >                        </a
+      ><a name="2448" class="Symbol"
+      >=</a
+      ><a name="2449"
+      > </a
+      ><a name="2450" href="Data.Empty.html#348" class="Function"
+      >&#8869;-elim</a
+      ><a name="2456"
+      > </a
+      ><a name="2457" class="Symbol"
+      >(</a
+      ><a name="2458" href="List.ListProperties.html#3567" class="Function"
+      >lemmax&#8713;[x]absurd</a
+      ><a name="2474"
+      > </a
+      ><a name="2475" href="FreeVariables.html#2365" class="Bound"
+      >x&#8713;[x]</a
+      ><a name="2480" class="Symbol"
+      >)</a
+      ><a name="2481"
+      >
+</a
+      ><a name="2482" href="FreeVariables.html#1833" class="Function"
+      >lemmafvSF#</a
+      ><a name="2492"
+      > </a
+      ><a name="2493" class="Symbol"
+      >{</a
+      ><a name="2494" href="FreeVariables.html#2494" class="Bound"
+      >F</a
+      ><a name="2495" class="Symbol"
+      >}</a
+      ><a name="2496"
+      > </a
+      ><a name="2497" class="Symbol"
+      >{</a
+      ><a name="2498" href="GPBindings.html#618" class="InductiveConstructor"
+      >|1|</a
+      ><a name="2501" class="Symbol"
+      >}</a
+      ><a name="2502"
+      >       </a
+      ><a name="2509" class="Symbol"
+      >{</a
+      ><a name="2510" class="Argument"
+      >e</a
+      ><a name="2511"
+      > </a
+      ><a name="2512" class="Symbol"
+      >=</a
+      ><a name="2513"
+      > </a
+      ><a name="2514" href="FreeVariables.html#2514" class="Bound"
+      >tt</a
+      ><a name="2516" class="Symbol"
+      >}</a
+      ><a name="2517"
+      >         </a
+      ><a name="2526" href="FreeVariables.html#2526" class="Bound"
+      >x&#8713;fv</a
+      ><a name="2530"
+      > </a
+      ><a name="2531" class="Symbol"
+      >=</a
+      ><a name="2532"
+      > </a
+      ><a name="2533" href="Fresh.html#475" class="InductiveConstructor"
+      >fresh1</a
+      ><a name="2539"
+      >
+</a
+      ><a name="2540" href="FreeVariables.html#1833" class="Function"
+      >lemmafvSF#</a
+      ><a name="2550"
+      > </a
+      ><a name="2551" class="Symbol"
+      >{</a
+      ><a name="2552" href="FreeVariables.html#2552" class="Bound"
+      >F</a
+      ><a name="2553" class="Symbol"
+      >}</a
+      ><a name="2554"
+      > </a
+      ><a name="2555" class="Symbol"
+      >{</a
+      ><a name="2556" href="GPBindings.html#700" class="InductiveConstructor"
+      >|E|</a
+      ><a name="2559"
+      > </a
+      ><a name="2560" href="FreeVariables.html#2560" class="Bound"
+      >x</a
+      ><a name="2561" class="Symbol"
+      >}</a
+      ><a name="2562"
+      >     </a
+      ><a name="2567" class="Symbol"
+      >{</a
+      ><a name="2568" class="Argument"
+      >e</a
+      ><a name="2569"
+      > </a
+      ><a name="2570" class="Symbol"
+      >=</a
+      ><a name="2571"
+      > </a
+      ><a name="2572" href="FreeVariables.html#2572" class="Bound"
+      >e</a
+      ><a name="2573" class="Symbol"
+      >}</a
+      ><a name="2574"
+      >          </a
+      ><a name="2584" href="FreeVariables.html#2584" class="Bound"
+      >x&#8713;fv</a
+      ><a name="2588"
+      > </a
+      ><a name="2589" class="Symbol"
+      >=</a
+      ><a name="2590"
+      > </a
+      ><a name="2591" href="Fresh.html#533" class="InductiveConstructor"
+      >freshE</a
+      ><a name="2597"
+      >
+</a
+      ><a name="2598" href="FreeVariables.html#1833" class="Function"
+      >lemmafvSF#</a
+      ><a name="2608"
+      > </a
+      ><a name="2609" class="Symbol"
+      >{</a
+      ><a name="2610" href="FreeVariables.html#2610" class="Bound"
+      >F</a
+      ><a name="2611" class="Symbol"
+      >}</a
+      ><a name="2612"
+      > </a
+      ><a name="2613" class="Symbol"
+      >{</a
+      ><a name="2614" href="GPBindings.html#749" class="InductiveConstructor"
+      >|Ef|</a
+      ><a name="2618"
+      > </a
+      ><a name="2619" href="FreeVariables.html#2619" class="Bound"
+      >G</a
+      ><a name="2620" class="Symbol"
+      >}</a
+      ><a name="2621"
+      >    </a
+      ><a name="2625" class="Symbol"
+      >{</a
+      ><a name="2626" class="Argument"
+      >e</a
+      ><a name="2627"
+      > </a
+      ><a name="2628" class="Symbol"
+      >=</a
+      ><a name="2629"
+      > </a
+      ><a name="2630" href="GPBindings.html#1296" class="InductiveConstructor Operator"
+      >&#10216;</a
+      ><a name="2631"
+      > </a
+      ><a name="2632" href="FreeVariables.html#2632" class="Bound"
+      >e</a
+      ><a name="2633"
+      > </a
+      ><a name="2634" href="GPBindings.html#1296" class="InductiveConstructor Operator"
+      >&#10217;</a
+      ><a name="2635" class="Symbol"
+      >}</a
+      ><a name="2636"
+      >      </a
+      ><a name="2642" href="FreeVariables.html#2642" class="Bound"
+      >x&#8713;fv</a
+      ><a name="2646"
+      > </a
+      ><a name="2647" class="Symbol"
+      >=</a
+      ><a name="2648"
+      > </a
+      ><a name="2649" href="Fresh.html#590" class="InductiveConstructor"
+      >freshEf</a
+      ><a name="2656"
+      >   </a
+      ><a name="2659" class="Symbol"
+      >(</a
+      ><a name="2660" href="FreeVariables.html#1833" class="Function"
+      >lemmafvSF#</a
+      ><a name="2670"
+      > </a
+      ><a name="2671" href="FreeVariables.html#2642" class="Bound"
+      >x&#8713;fv</a
+      ><a name="2675" class="Symbol"
+      >)</a
+      ><a name="2676"
+      >
+</a
+      ><a name="2677" href="FreeVariables.html#1833" class="Function"
+      >lemmafvSF#</a
+      ><a name="2687"
+      > </a
+      ><a name="2688" class="Symbol"
+      >{</a
+      ><a name="2689" href="FreeVariables.html#2689" class="Bound"
+      >F</a
+      ><a name="2690" class="Symbol"
+      >}</a
+      ><a name="2691"
+      > </a
+      ><a name="2692" class="Symbol"
+      >{</a
+      ><a name="2693" href="GPBindings.html#659" class="InductiveConstructor"
+      >|R|</a
+      ><a name="2696" class="Symbol"
+      >}</a
+      ><a name="2697"
+      >       </a
+      ><a name="2704" class="Symbol"
+      >{</a
+      ><a name="2705" class="Argument"
+      >e</a
+      ><a name="2706"
+      > </a
+      ><a name="2707" class="Symbol"
+      >=</a
+      ><a name="2708"
+      > </a
+      ><a name="2709" href="GPBindings.html#1296" class="InductiveConstructor Operator"
+      >&#10216;</a
+      ><a name="2710"
+      > </a
+      ><a name="2711" href="FreeVariables.html#2711" class="Bound"
+      >e</a
+      ><a name="2712"
+      > </a
+      ><a name="2713" href="GPBindings.html#1296" class="InductiveConstructor Operator"
+      >&#10217;</a
+      ><a name="2714" class="Symbol"
+      >}</a
+      ><a name="2715"
+      >      </a
+      ><a name="2721" href="FreeVariables.html#2721" class="Bound"
+      >x&#8713;fv</a
+      ><a name="2725"
+      > </a
+      ><a name="2726" class="Symbol"
+      >=</a
+      ><a name="2727"
+      > </a
+      ><a name="2728" href="Fresh.html#699" class="InductiveConstructor"
+      >freshR</a
+      ><a name="2734"
+      >    </a
+      ><a name="2738" class="Symbol"
+      >(</a
+      ><a name="2739" href="FreeVariables.html#1833" class="Function"
+      >lemmafvSF#</a
+      ><a name="2749"
+      > </a
+      ><a name="2750" href="FreeVariables.html#2721" class="Bound"
+      >x&#8713;fv</a
+      ><a name="2754" class="Symbol"
+      >)</a
+      ><a name="2755"
+      >
+</a
+      ><a name="2756" href="FreeVariables.html#1833" class="Function"
+      >lemmafvSF#</a
+      ><a name="2766"
+      > </a
+      ><a name="2767" class="Symbol"
+      >{</a
+      ><a name="2768" href="FreeVariables.html#2768" class="Bound"
+      >F</a
+      ><a name="2769" class="Symbol"
+      >}</a
+      ><a name="2770"
+      > </a
+      ><a name="2771" class="Symbol"
+      >{</a
+      ><a name="2772" href="FreeVariables.html#2772" class="Bound"
+      >G</a
+      ><a name="2773"
+      > </a
+      ><a name="2774" href="GPBindings.html#798" class="InductiveConstructor Operator"
+      >|+|</a
+      ><a name="2777"
+      > </a
+      ><a name="2778" href="FreeVariables.html#2778" class="Bound"
+      >G&#8321;</a
+      ><a name="2780" class="Symbol"
+      >}</a
+      ><a name="2781"
+      >  </a
+      ><a name="2783" class="Symbol"
+      >{</a
+      ><a name="2784" class="Argument"
+      >e</a
+      ><a name="2785"
+      > </a
+      ><a name="2786" class="Symbol"
+      >=</a
+      ><a name="2787"
+      > </a
+      ><a name="2788" href="Data.Sum.html#489" class="InductiveConstructor"
+      >inj&#8321;</a
+      ><a name="2792"
+      > </a
+      ><a name="2793" href="FreeVariables.html#2793" class="Bound"
+      >e</a
+      ><a name="2794" class="Symbol"
+      >}</a
+      ><a name="2795"
+      >     </a
+      ><a name="2800" href="FreeVariables.html#2800" class="Bound"
+      >x&#8713;fv</a
+      ><a name="2804"
+      > </a
+      ><a name="2805" class="Symbol"
+      >=</a
+      ><a name="2806"
+      > </a
+      ><a name="2807" href="Fresh.html#807" class="InductiveConstructor"
+      >freshinj&#8321;</a
+      ><a name="2816"
+      > </a
+      ><a name="2817" class="Symbol"
+      >(</a
+      ><a name="2818" href="FreeVariables.html#1833" class="Function"
+      >lemmafvSF#</a
+      ><a name="2828"
+      > </a
+      ><a name="2829" href="FreeVariables.html#2800" class="Bound"
+      >x&#8713;fv</a
+      ><a name="2833" class="Symbol"
+      >)</a
+      ><a name="2834"
+      >
+</a
+      ><a name="2835" href="FreeVariables.html#1833" class="Function"
+      >lemmafvSF#</a
+      ><a name="2845"
+      > </a
+      ><a name="2846" class="Symbol"
+      >{</a
+      ><a name="2847" href="FreeVariables.html#2847" class="Bound"
+      >F</a
+      ><a name="2848" class="Symbol"
+      >}</a
+      ><a name="2849"
+      > </a
+      ><a name="2850" class="Symbol"
+      >{</a
+      ><a name="2851" href="FreeVariables.html#2851" class="Bound"
+      >G</a
+      ><a name="2852"
+      > </a
+      ><a name="2853" href="GPBindings.html#798" class="InductiveConstructor Operator"
+      >|+|</a
+      ><a name="2856"
+      > </a
+      ><a name="2857" href="FreeVariables.html#2857" class="Bound"
+      >G&#8321;</a
+      ><a name="2859" class="Symbol"
+      >}</a
+      ><a name="2860"
+      >  </a
+      ><a name="2862" class="Symbol"
+      >{</a
+      ><a name="2863" class="Argument"
+      >e</a
+      ><a name="2864"
+      > </a
+      ><a name="2865" class="Symbol"
+      >=</a
+      ><a name="2866"
+      > </a
+      ><a name="2867" href="Data.Sum.html#514" class="InductiveConstructor"
+      >inj&#8322;</a
+      ><a name="2871"
+      > </a
+      ><a name="2872" href="FreeVariables.html#2872" class="Bound"
+      >e</a
+      ><a name="2873" class="Symbol"
+      >}</a
+      ><a name="2874"
+      >     </a
+      ><a name="2879" href="FreeVariables.html#2879" class="Bound"
+      >x&#8713;fv</a
+      ><a name="2883"
+      > </a
+      ><a name="2884" class="Symbol"
+      >=</a
+      ><a name="2885"
+      > </a
+      ><a name="2886" href="Fresh.html#927" class="InductiveConstructor"
+      >freshinj&#8322;</a
+      ><a name="2895"
+      > </a
+      ><a name="2896" class="Symbol"
+      >(</a
+      ><a name="2897" href="FreeVariables.html#1833" class="Function"
+      >lemmafvSF#</a
+      ><a name="2907"
+      > </a
+      ><a name="2908" href="FreeVariables.html#2879" class="Bound"
+      >x&#8713;fv</a
+      ><a name="2912" class="Symbol"
+      >)</a
+      ><a name="2913"
+      >
+</a
+      ><a name="2914" href="FreeVariables.html#1833" class="Function"
+      >lemmafvSF#</a
+      ><a name="2924"
+      > </a
+      ><a name="2925" class="Symbol"
+      >{</a
+      ><a name="2926" href="FreeVariables.html#2926" class="Bound"
+      >F</a
+      ><a name="2927" class="Symbol"
+      >}</a
+      ><a name="2928"
+      > </a
+      ><a name="2929" class="Symbol"
+      >{</a
+      ><a name="2930" href="FreeVariables.html#2930" class="Bound"
+      >G</a
+      ><a name="2931"
+      > </a
+      ><a name="2932" href="GPBindings.html#844" class="InductiveConstructor Operator"
+      >|x|</a
+      ><a name="2935"
+      > </a
+      ><a name="2936" href="FreeVariables.html#2936" class="Bound"
+      >G&#8321;</a
+      ><a name="2938" class="Symbol"
+      >}</a
+      ><a name="2939"
+      >  </a
+      ><a name="2941" class="Symbol"
+      >{</a
+      ><a name="2942" class="Argument"
+      >S</a
+      ><a name="2943"
+      > </a
+      ><a name="2944" class="Symbol"
+      >=</a
+      ><a name="2945"
+      > </a
+      ><a name="2946" href="FreeVariables.html#2946" class="Bound"
+      >S</a
+      ><a name="2947" class="Symbol"
+      >}</a
+      ><a name="2948"
+      >
+                      </a
+      ><a name="2971" class="Symbol"
+      >{</a
+      ><a name="2972" class="Argument"
+      >e</a
+      ><a name="2973"
+      > </a
+      ><a name="2974" class="Symbol"
+      >=</a
+      ><a name="2975"
+      > </a
+      ><a name="2976" href="FreeVariables.html#2976" class="Bound"
+      >e&#8321;</a
+      ><a name="2978"
+      > </a
+      ><a name="2979" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2980"
+      > </a
+      ><a name="2981" href="FreeVariables.html#2981" class="Bound"
+      >e&#8322;</a
+      ><a name="2983" class="Symbol"
+      >}</a
+      ><a name="2984"
+      >    </a
+      ><a name="2988" href="FreeVariables.html#2988" class="Bound"
+      >x&#8713;fv</a
+      ><a name="2992"
+      > </a
+      ><a name="2993" class="Symbol"
+      >=</a
+      ><a name="2994"
+      > </a
+      ><a name="2995" href="Fresh.html#1047" class="InductiveConstructor"
+      >freshx</a
+      ><a name="3001"
+      >    </a
+      ><a name="3005" class="Symbol"
+      >(</a
+      ><a name="3006" href="FreeVariables.html#1833" class="Function"
+      >lemmafvSF#</a
+      ><a name="3016"
+      > </a
+      ><a name="3017" class="Symbol"
+      >(</a
+      ><a name="3018" href="List.ListProperties.html#1198" class="Function"
+      >c&#8713;xs++ys&#8594;c&#8713;xs</a
+      ><a name="3031"
+      > </a
+      ><a name="3032" href="FreeVariables.html#2988" class="Bound"
+      >x&#8713;fv</a
+      ><a name="3036" class="Symbol"
+      >))</a
+      ><a name="3038"
+      >
+                                                        </a
+      ><a name="3095" class="Symbol"
+      >(</a
+      ><a name="3096" href="FreeVariables.html#1833" class="Function"
+      >lemmafvSF#</a
+      ><a name="3106"
+      > </a
+      ><a name="3107" class="Symbol"
+      >(</a
+      ><a name="3108" href="List.ListProperties.html#1351" class="Function"
+      >c&#8713;xs++ys&#8594;c&#8713;ys</a
+      ><a name="3121"
+      > </a
+      ><a name="3122" class="Symbol"
+      >{</a
+      ><a name="3123" class="Argument"
+      >xs</a
+      ><a name="3125"
+      > </a
+      ><a name="3126" class="Symbol"
+      >=</a
+      ><a name="3127"
+      > </a
+      ><a name="3128" href="FreeVariables.html#528" class="Function"
+      >fvSF</a
+      ><a name="3132"
+      > </a
+      ><a name="3133" class="Symbol"
+      >{</a
+      ><a name="3134" href="FreeVariables.html#2926" class="Bound"
+      >F</a
+      ><a name="3135" class="Symbol"
+      >}</a
+      ><a name="3136"
+      > </a
+      ><a name="3137" class="Symbol"
+      >{</a
+      ><a name="3138" href="FreeVariables.html#2930" class="Bound"
+      >G</a
+      ><a name="3139" class="Symbol"
+      >}</a
+      ><a name="3140"
+      > </a
+      ><a name="3141" href="FreeVariables.html#2946" class="Bound"
+      >S</a
+      ><a name="3142"
+      > </a
+      ><a name="3143" href="FreeVariables.html#2976" class="Bound"
+      >e&#8321;</a
+      ><a name="3145" class="Symbol"
+      >}</a
+      ><a name="3146"
+      > </a
+      ><a name="3147" href="FreeVariables.html#2988" class="Bound"
+      >x&#8713;fv</a
+      ><a name="3151" class="Symbol"
+      >))</a
+      ><a name="3153"
+      >
+</a
+      ><a name="3154" href="FreeVariables.html#1833" class="Function"
+      >lemmafvSF#</a
+      ><a name="3164"
+      > </a
+      ><a name="3165" class="Symbol"
+      >{</a
+      ><a name="3166" href="FreeVariables.html#3166" class="Bound"
+      >F</a
+      ><a name="3167" class="Symbol"
+      >}</a
+      ><a name="3168"
+      > </a
+      ><a name="3169" class="Symbol"
+      >{</a
+      ><a name="3170" href="GPBindings.html#890" class="InductiveConstructor"
+      >|B|</a
+      ><a name="3173"
+      > </a
+      ><a name="3174" href="FreeVariables.html#3174" class="Bound"
+      >S'</a
+      ><a name="3176"
+      > </a
+      ><a name="3177" href="FreeVariables.html#3177" class="Bound"
+      >G</a
+      ><a name="3178" class="Symbol"
+      >}</a
+      ><a name="3179"
+      >  </a
+      ><a name="3181" class="Symbol"
+      >{</a
+      ><a name="3182" class="Argument"
+      >S</a
+      ><a name="3183"
+      > </a
+      ><a name="3184" class="Symbol"
+      >=</a
+      ><a name="3185"
+      > </a
+      ><a name="3186" href="FreeVariables.html#3186" class="Bound"
+      >S</a
+      ><a name="3187" class="Symbol"
+      >}</a
+      ><a name="3188"
+      >
+                      </a
+      ><a name="3211" class="Symbol"
+      >{</a
+      ><a name="3212" class="Argument"
+      >e</a
+      ><a name="3213"
+      > </a
+      ><a name="3214" class="Symbol"
+      >=</a
+      ><a name="3215"
+      > </a
+      ><a name="3216" href="FreeVariables.html#3216" class="Bound"
+      >a</a
+      ><a name="3217"
+      > </a
+      ><a name="3218" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="3219"
+      > </a
+      ><a name="3220" href="FreeVariables.html#3220" class="Bound"
+      >e</a
+      ><a name="3221" class="Symbol"
+      >}</a
+      ><a name="3222"
+      >      </a
+      ><a name="3228" href="FreeVariables.html#3228" class="Bound"
+      >x&#8713;fv</a
+      ><a name="3232"
+      > </a
+      ><a name="3233" class="Keyword"
+      >with</a
+      ><a name="3237"
+      > </a
+      ><a name="3238" href="FreeVariables.html#3174" class="Bound"
+      >S'</a
+      ><a name="3240"
+      > </a
+      ><a name="3241" href="GPBindings.html#476" class="Function Operator"
+      >&#8799;S</a
+      ><a name="3243"
+      >  </a
+      ><a name="3245" href="FreeVariables.html#3186" class="Bound"
+      >S</a
+      ><a name="3246"
+      >
+</a
+      ><a name="3247" class="Symbol"
+      >...</a
+      ><a name="3250"
+      > </a
+      ><a name="3251" class="Symbol"
+      >|</a
+      ><a name="3252"
+      > </a
+      ><a name="3253" href="Relation.Nullary.html#547" class="InductiveConstructor"
+      >no</a
+      ><a name="3255"
+      >  </a
+      ><a name="3257" href="FreeVariables.html#3257" class="Bound"
+      >S'&#8802;S</a
+      ><a name="3261"
+      >                              </a
+      ><a name="3291" class="Symbol"
+      >=</a
+      ><a name="3292"
+      > </a
+      ><a name="3293" href="Fresh.html#1331" class="InductiveConstructor"
+      >freshb</a
+      ><a name="3299"
+      >    </a
+      ><a name="3303" class="Symbol"
+      >(</a
+      ><a name="3304" href="FreeVariables.html#1833" class="Function"
+      >lemmafvSF#</a
+      ><a name="3314"
+      > </a
+      ><a name="3315" href="FreeVariables.html#3228" class="Bound"
+      >x&#8713;fv</a
+      ><a name="3319" class="Symbol"
+      >)</a
+      ><a name="3320"
+      >
+</a
+      ><a name="3321" href="FreeVariables.html#1833" class="Function"
+      >lemmafvSF#</a
+      ><a name="3331"
+      > </a
+      ><a name="3332" class="Symbol"
+      >{</a
+      ><a name="3333" href="FreeVariables.html#3333" class="Bound"
+      >F</a
+      ><a name="3334" class="Symbol"
+      >}</a
+      ><a name="3335"
+      > </a
+      ><a name="3336" class="Symbol"
+      >{</a
+      ><a name="3337" href="GPBindings.html#890" class="InductiveConstructor"
+      >|B|</a
+      ><a name="3340"
+      > </a
+      ><a name="3341" class="DottedPattern Symbol"
+      >.</a
+      ><a name="3342" href="FreeVariables.html#3361" class="DottedPattern Bound"
+      >S</a
+      ><a name="3343"
+      > </a
+      ><a name="3344" href="FreeVariables.html#3344" class="Bound"
+      >G</a
+      ><a name="3345" class="Symbol"
+      >}</a
+      ><a name="3346"
+      >  </a
+      ><a name="3348" class="Symbol"
+      >{</a
+      ><a name="3349" class="Argument"
+      >x</a
+      ><a name="3350"
+      > </a
+      ><a name="3351" class="Symbol"
+      >=</a
+      ><a name="3352"
+      > </a
+      ><a name="3353" href="FreeVariables.html#3353" class="Bound"
+      >b</a
+      ><a name="3354" class="Symbol"
+      >}</a
+      ><a name="3355"
+      > </a
+      ><a name="3356" class="Symbol"
+      >{</a
+      ><a name="3357" class="Argument"
+      >S</a
+      ><a name="3358"
+      > </a
+      ><a name="3359" class="Symbol"
+      >=</a
+      ><a name="3360"
+      > </a
+      ><a name="3361" href="FreeVariables.html#3361" class="Bound"
+      >S</a
+      ><a name="3362" class="Symbol"
+      >}</a
+      ><a name="3363"
+      >  
+                      </a
+      ><a name="3388" class="Symbol"
+      >{</a
+      ><a name="3389" class="Argument"
+      >e</a
+      ><a name="3390"
+      > </a
+      ><a name="3391" class="Symbol"
+      >=</a
+      ><a name="3392"
+      > </a
+      ><a name="3393" href="FreeVariables.html#3393" class="Bound"
+      >a</a
+      ><a name="3394"
+      > </a
+      ><a name="3395" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="3396"
+      > </a
+      ><a name="3397" href="FreeVariables.html#3397" class="Bound"
+      >e</a
+      ><a name="3398" class="Symbol"
+      >}</a
+      ><a name="3399"
+      >      </a
+      ><a name="3405" href="FreeVariables.html#3405" class="Bound"
+      >b&#8713;fv</a
+      ><a name="3409"
+      >
+    </a
+      ><a name="3414" class="Symbol"
+      >|</a
+      ><a name="3415"
+      > </a
+      ><a name="3416" href="Relation.Nullary.html#520" class="InductiveConstructor"
+      >yes</a
+      ><a name="3419"
+      > </a
+      ><a name="3420" href="Agda.Builtin.Equality.html#112" class="InductiveConstructor"
+      >refl</a
+      ><a name="3424"
+      >                        </a
+      ><a name="3448" class="Keyword"
+      >with</a
+      ><a name="3452"
+      > </a
+      ><a name="3453" href="FreeVariables.html#3393" class="Bound"
+      >a</a
+      ><a name="3454"
+      > </a
+      ><a name="3455" href="GPBindings.html#455" class="Function Operator"
+      >&#8799;v</a
+      ><a name="3457"
+      > </a
+      ><a name="3458" href="FreeVariables.html#3353" class="Bound"
+      >b</a
+      ><a name="3459"
+      >
+</a
+      ><a name="3460" class="Symbol"
+      >...</a
+      ><a name="3463"
+      > </a
+      ><a name="3464" class="Symbol"
+      >|</a
+      ><a name="3465"
+      > </a
+      ><a name="3466" href="Relation.Nullary.html#547" class="InductiveConstructor"
+      >no</a
+      ><a name="3468"
+      > </a
+      ><a name="3469" href="FreeVariables.html#3469" class="Bound"
+      >a&#8802;b</a
+      ><a name="3472"
+      >                                </a
+      ><a name="3504" class="Symbol"
+      >=</a
+      ><a name="3505"
+      > </a
+      ><a name="3506" href="Fresh.html#1331" class="InductiveConstructor"
+      >freshb</a
+      ><a name="3512"
+      >    </a
+      ><a name="3516" class="Symbol"
+      >(</a
+      ><a name="3517" href="FreeVariables.html#1833" class="Function"
+      >lemmafvSF#</a
+      ><a name="3527"
+      > </a
+      ><a name="3528" class="Symbol"
+      >(</a
+      ><a name="3529" href="List.ListProperties.html#5035" class="Function"
+      >lemma-&#8713;</a
+      ><a name="3536"
+      > </a
+      ><a name="3537" href="FreeVariables.html#3469" class="Bound"
+      >a&#8802;b</a
+      ><a name="3540"
+      > </a
+      ><a name="3541" href="FreeVariables.html#3405" class="Bound"
+      >b&#8713;fv</a
+      ><a name="3545" class="Symbol"
+      >))</a
+      ><a name="3547"
+      >
+</a
+      ><a name="3548" href="FreeVariables.html#1833" class="Function"
+      >lemmafvSF#</a
+      ><a name="3558"
+      > </a
+      ><a name="3559" class="Symbol"
+      >{</a
+      ><a name="3560" href="FreeVariables.html#3560" class="Bound"
+      >F</a
+      ><a name="3561" class="Symbol"
+      >}</a
+      ><a name="3562"
+      > </a
+      ><a name="3563" class="Symbol"
+      >{</a
+      ><a name="3564" href="GPBindings.html#890" class="InductiveConstructor"
+      >|B|</a
+      ><a name="3567"
+      > </a
+      ><a name="3568" class="DottedPattern Symbol"
+      >.</a
+      ><a name="3569" href="FreeVariables.html#3589" class="DottedPattern Bound"
+      >S</a
+      ><a name="3570"
+      > </a
+      ><a name="3571" href="FreeVariables.html#3571" class="Bound"
+      >G</a
+      ><a name="3572" class="Symbol"
+      >}</a
+      ><a name="3573"
+      >  </a
+      ><a name="3575" class="Symbol"
+      >{</a
+      ><a name="3576" class="Argument"
+      >x</a
+      ><a name="3577"
+      > </a
+      ><a name="3578" class="Symbol"
+      >=</a
+      ><a name="3579"
+      > </a
+      ><a name="3580" class="DottedPattern Symbol"
+      >.</a
+      ><a name="3581" href="FreeVariables.html#3617" class="DottedPattern Bound"
+      >a</a
+      ><a name="3582" class="Symbol"
+      >}</a
+      ><a name="3583"
+      > </a
+      ><a name="3584" class="Symbol"
+      >{</a
+      ><a name="3585" class="Argument"
+      >S</a
+      ><a name="3586"
+      > </a
+      ><a name="3587" class="Symbol"
+      >=</a
+      ><a name="3588"
+      > </a
+      ><a name="3589" href="FreeVariables.html#3589" class="Bound"
+      >S</a
+      ><a name="3590" class="Symbol"
+      >}</a
+      ><a name="3591"
+      >  
+                      </a
+      ><a name="3616" class="Symbol"
+      >{</a
+      ><a name="3617" href="FreeVariables.html#3617" class="Bound"
+      >a</a
+      ><a name="3618"
+      > </a
+      ><a name="3619" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="3620"
+      > </a
+      ><a name="3621" href="FreeVariables.html#3621" class="Bound"
+      >e</a
+      ><a name="3622" class="Symbol"
+      >}</a
+      ><a name="3623"
+      >          </a
+      ><a name="3633" href="FreeVariables.html#3633" class="Bound"
+      >a&#8713;fv</a
+      ><a name="3637"
+      >
+    </a
+      ><a name="3642" class="Symbol"
+      >|</a
+      ><a name="3643"
+      > </a
+      ><a name="3644" href="Relation.Nullary.html#520" class="InductiveConstructor"
+      >yes</a
+      ><a name="3647"
+      > </a
+      ><a name="3648" href="Agda.Builtin.Equality.html#112" class="InductiveConstructor"
+      >refl</a
+      ><a name="3652"
+      >                       
+    </a
+      ><a name="3680" class="Symbol"
+      >|</a
+      ><a name="3681"
+      > </a
+      ><a name="3682" href="Relation.Nullary.html#520" class="InductiveConstructor"
+      >yes</a
+      ><a name="3685"
+      > </a
+      ><a name="3686" href="Agda.Builtin.Equality.html#112" class="InductiveConstructor"
+      >refl</a
+      ><a name="3690"
+      >                               </a
+      ><a name="3721" class="Symbol"
+      >=</a
+      ><a name="3722"
+      > </a
+      ><a name="3723" href="Fresh.html#1220" class="InductiveConstructor"
+      >freshb&#8801;</a
+      ><a name="3730"
+      >
+
+</a
+      ><a name="3732" href="FreeVariables.html#3732" class="Function"
+      >lemmafvS#</a
+      ><a name="3741"
+      > </a
+      ><a name="3742" class="Symbol"
+      >:</a
+      ><a name="3743"
+      >  </a
+      ><a name="3745" class="Symbol"
+      >{</a
+      ><a name="3746" href="FreeVariables.html#3746" class="Bound"
+      >F</a
+      ><a name="3747"
+      > </a
+      ><a name="3748" class="Symbol"
+      >:</a
+      ><a name="3749"
+      > </a
+      ><a name="3750" href="GPBindings.html#539" class="Datatype"
+      >Functor</a
+      ><a name="3757" class="Symbol"
+      >}{</a
+      ><a name="3759" href="FreeVariables.html#3759" class="Bound"
+      >x</a
+      ><a name="3760"
+      > </a
+      ><a name="3761" class="Symbol"
+      >:</a
+      ><a name="3762"
+      > </a
+      ><a name="3763" href="GPBindings.html#442" class="Function"
+      >V</a
+      ><a name="3764" class="Symbol"
+      >}{</a
+      ><a name="3766" href="FreeVariables.html#3766" class="Bound"
+      >S</a
+      ><a name="3767"
+      > </a
+      ><a name="3768" class="Symbol"
+      >:</a
+      ><a name="3769"
+      > </a
+      ><a name="3770" href="GPBindings.html#432" class="Function"
+      >Sort</a
+      ><a name="3774" class="Symbol"
+      >}{</a
+      ><a name="3776" href="FreeVariables.html#3776" class="Bound"
+      >e</a
+      ><a name="3777"
+      > </a
+      ><a name="3778" class="Symbol"
+      >:</a
+      ><a name="3779"
+      > </a
+      ><a name="3780" href="GPBindings.html#1264" class="Datatype"
+      >&#956;</a
+      ><a name="3781"
+      > </a
+      ><a name="3782" href="FreeVariables.html#3746" class="Bound"
+      >F</a
+      ><a name="3783" class="Symbol"
+      >}</a
+      ><a name="3784"
+      >
+            </a
+      ><a name="3797" class="Symbol"
+      >&#8594;</a
+      ><a name="3798"
+      > </a
+      ><a name="3799" href="FreeVariables.html#3759" class="Bound"
+      >x</a
+      ><a name="3800"
+      > </a
+      ><a name="3801" href="Data.List.Any.html#2974" class="Function Operator"
+      >&#8713;</a
+      ><a name="3802"
+      > </a
+      ><a name="3803" href="FreeVariables.html#1247" class="Function"
+      >fvS</a
+      ><a name="3806"
+      > </a
+      ><a name="3807" href="FreeVariables.html#3766" class="Bound"
+      >S</a
+      ><a name="3808"
+      > </a
+      ><a name="3809" href="FreeVariables.html#3776" class="Bound"
+      >e</a
+      ><a name="3810"
+      >
+            </a
+      ><a name="3823" class="Symbol"
+      >&#8594;</a
+      ><a name="3824"
+      > </a
+      ><a name="3825" href="Fresh.html#1459" class="Function"
+      >fresh</a
+      ><a name="3830"
+      > </a
+      ><a name="3831" href="FreeVariables.html#3766" class="Bound"
+      >S</a
+      ><a name="3832"
+      > </a
+      ><a name="3833" href="FreeVariables.html#3759" class="Bound"
+      >x</a
+      ><a name="3834"
+      > </a
+      ><a name="3835" href="FreeVariables.html#3776" class="Bound"
+      >e</a
+      ><a name="3836"
+      >
+</a
+      ><a name="3837" href="FreeVariables.html#3732" class="Function"
+      >lemmafvS#</a
+      ><a name="3846"
+      > </a
+      ><a name="3847" class="Symbol"
+      >{</a
+      ><a name="3848" class="Argument"
+      >e</a
+      ><a name="3849"
+      > </a
+      ><a name="3850" class="Symbol"
+      >=</a
+      ><a name="3851"
+      > </a
+      ><a name="3852" href="GPBindings.html#1296" class="InductiveConstructor Operator"
+      >&#10216;</a
+      ><a name="3853"
+      > </a
+      ><a name="3854" href="FreeVariables.html#3854" class="Bound"
+      >e</a
+      ><a name="3855"
+      > </a
+      ><a name="3856" href="GPBindings.html#1296" class="InductiveConstructor Operator"
+      >&#10217;</a
+      ><a name="3857" class="Symbol"
+      >}</a
+      ><a name="3858"
+      > </a
+      ><a name="3859" href="FreeVariables.html#3859" class="Bound"
+      >x&#8713;fv</a
+      ><a name="3863"
+      > </a
+      ><a name="3864" class="Symbol"
+      >=</a
+      ><a name="3865"
+      > </a
+      ><a name="3866" href="FreeVariables.html#1833" class="Function"
+      >lemmafvSF#</a
+      ><a name="3876"
+      > </a
+      ><a name="3877" href="FreeVariables.html#3859" class="Bound"
+      >x&#8713;fv</a
+      ><a name="3881"
+      >
+
+</a
+      ><a name="3883" class="Comment"
+      >-- lemmafvSwap :  {F G : Functor}{e : &#10214; G &#10215; (&#956; F)}{S S' : Sort}{x y : V}</a
+      ><a name="3955"
+      >
+</a
+      ><a name="3956" class="Comment"
+      >--                &#8594; S' &#8802; S</a
+      ><a name="3982"
+      >
+</a
+      ><a name="3983" class="Comment"
+      >--                &#8594; fvF {G} {F} S (swapF F G  S' x y e) &#8801; fvF {G} {F} S e</a
+      ><a name="4056"
+      >
+</a
+      ><a name="4057" class="Comment"
+      >-- lemmafvSwap = {!!}</a
+      ><a name="4078"
+      >
+
+</a
+      ><a name="4080" class="Comment"
+      >-- lemma~fv :  {F G : Functor}{e e&#8242; : &#10214; G &#10215; (&#956; F)}(S : Sort)</a
+      ><a name="4140"
+      >
+</a
+      ><a name="4141" class="Comment"
+      >--             &#8594; ~&#945;F G e e&#8242;</a
+      ><a name="4168"
+      >
+</a
+      ><a name="4169" class="Comment"
+      >--             &#8594; fvF {G} {F} S e &#8801; fvF {G} {F} S e&#8242;</a
+      ><a name="4220"
+      >
+</a
+      ><a name="4221" class="Comment"
+      >-- lemma~fv S ~&#945;V               = refl</a
+      ><a name="4259"
+      >
+</a
+      ><a name="4260" class="Comment"
+      >-- lemma~fv S ~&#945;1               = refl</a
+      ><a name="4298"
+      >
+</a
+      ><a name="4299" class="Comment"
+      >-- lemma~fv S ~&#945;E               = refl</a
+      ><a name="4337"
+      >
+</a
+      ><a name="4338" class="Comment"
+      >-- lemma~fv S (~&#945;Ef e~e')       = lemma~fv S e~e'</a
+      ><a name="4387"
+      >
+</a
+      ><a name="4388" class="Comment"
+      >-- lemma~fv S (~&#945;R e~e')        = lemma~fv S e~e'</a
+      ><a name="4437"
+      >
+</a
+      ><a name="4438" class="Comment"
+      >-- lemma~fv S (~&#945;inj&#8321; e~e')     = lemma~fv S e~e'</a
+      ><a name="4487"
+      >
+</a
+      ><a name="4488" class="Comment"
+      >-- lemma~fv S (~&#945;inj&#8322; e~e')     = lemma~fv S e~e'</a
+      ><a name="4537"
+      >
+</a
+      ><a name="4538" class="Comment"
+      >-- lemma~fv S (~&#945;x e~e' e~e'')  = cong&#8322; _++_ (lemma~fv S e~e') (lemma~fv S e~e'')</a
+      ><a name="4619"
+      >
+</a
+      ><a name="4620" class="Comment"
+      >-- lemma~fv {F} {|B| S' G} {x , e} {y , e'}</a
+      ><a name="4663"
+      >
+</a
+      ><a name="4664" class="Comment"
+      >--          S (~&#945;b&#8801;S xs f)</a
+      ><a name="4690"
+      >
+</a
+      ><a name="4691" class="Comment"
+      >--   with S' &#8799;S  S</a
+      ><a name="4709"
+      >
+</a
+      ><a name="4710" class="Comment"
+      >-- ... | no  S'&#8802;S</a
+      ><a name="4727"
+      >
+</a
+      ><a name="4728" class="Comment"
+      >--   with &#967;' xs | lemma&#967;aux&#8713; xs</a
+      ><a name="4759"
+      >
+</a
+      ><a name="4760" class="Comment"
+      >-- ... | z      | z&#8713;xs</a
+      ><a name="4782"
+      >
+</a
+      ><a name="4783" class="Comment"
+      >--   = subst&#8322; _&#8801;_ (lemmafvSwap {F} {G} S'&#8802;S) (lemmafvSwap {F} {G} S'&#8802;S) (lemma~fv S (f z z&#8713;xs))</a
+      ><a name="4878"
+      >
+</a
+      ><a name="4879" class="Comment"
+      >-- lemma~fv {G = |B| .S G} {x , e} {y , e'}</a
+      ><a name="4922"
+      >
+</a
+      ><a name="4923" class="Comment"
+      >--          S (~&#945;b&#8801;S xs f)</a
+      ><a name="4949"
+      >
+</a
+      ><a name="4950" class="Comment"
+      >--     | yes refl</a
+      ><a name="4967"
+      >
+</a
+      ><a name="4968" class="Comment"
+      >--   = {!!}</a
+      ><a name="4979"
+      >
+
+
+</a
+      ><a name="4982" href="FreeVariables.html#4982" class="Function"
+      >fvSF&#8802;</a
+      ><a name="4987"
+      > </a
+      ><a name="4988" class="Symbol"
+      >:</a
+      ><a name="4989"
+      > </a
+      ><a name="4990" class="Symbol"
+      >{</a
+      ><a name="4991" href="FreeVariables.html#4991" class="Bound"
+      >F</a
+      ><a name="4992"
+      > </a
+      ><a name="4993" href="FreeVariables.html#4993" class="Bound"
+      >G</a
+      ><a name="4994"
+      > </a
+      ><a name="4995" class="Symbol"
+      >:</a
+      ><a name="4996"
+      > </a
+      ><a name="4997" href="GPBindings.html#539" class="Datatype"
+      >Functor</a
+      ><a name="5004" class="Symbol"
+      >}</a
+      ><a name="5005"
+      > </a
+      ><a name="5006" class="Symbol"
+      >&#8594;</a
+      ><a name="5007"
+      > </a
+      ><a name="5008" href="Agda.Builtin.List.html#52" class="Datatype"
+      >List</a
+      ><a name="5012"
+      > </a
+      ><a name="5013" href="GPBindings.html#432" class="Function"
+      >Sort</a
+      ><a name="5017"
+      > </a
+      ><a name="5018" class="Symbol"
+      >&#8594;</a
+      ><a name="5019"
+      > </a
+      ><a name="5020" href="GPBindings.html#989" class="Function Operator"
+      >&#10214;</a
+      ><a name="5021"
+      > </a
+      ><a name="5022" href="FreeVariables.html#4993" class="Bound"
+      >G</a
+      ><a name="5023"
+      > </a
+      ><a name="5024" href="GPBindings.html#989" class="Function Operator"
+      >&#10215;</a
+      ><a name="5025"
+      > </a
+      ><a name="5026" class="Symbol"
+      >(</a
+      ><a name="5027" href="GPBindings.html#1264" class="Datatype"
+      >&#956;</a
+      ><a name="5028"
+      > </a
+      ><a name="5029" href="FreeVariables.html#4991" class="Bound"
+      >F</a
+      ><a name="5030" class="Symbol"
+      >)</a
+      ><a name="5031"
+      > </a
+      ><a name="5032" class="Symbol"
+      >&#8594;</a
+      ><a name="5033"
+      > </a
+      ><a name="5034" href="Agda.Builtin.List.html#52" class="Datatype"
+      >List</a
+      ><a name="5038"
+      > </a
+      ><a name="5039" href="GPBindings.html#442" class="Function"
+      >V</a
+      ><a name="5040"
+      >
+</a
+      ><a name="5041" href="FreeVariables.html#4982" class="Function"
+      >fvSF&#8802;</a
+      ><a name="5046"
+      > </a
+      ><a name="5047" class="Symbol"
+      >{</a
+      ><a name="5048" href="FreeVariables.html#5048" class="Bound"
+      >F</a
+      ><a name="5049" class="Symbol"
+      >}</a
+      ><a name="5050"
+      > </a
+      ><a name="5051" class="Symbol"
+      >{</a
+      ><a name="5052" href="GPBindings.html#577" class="InductiveConstructor"
+      >|v|</a
+      ><a name="5055"
+      > </a
+      ><a name="5056" href="FreeVariables.html#5056" class="Bound"
+      >S</a
+      ><a name="5057" class="Symbol"
+      >}</a
+      ><a name="5058"
+      >      </a
+      ><a name="5064" href="FreeVariables.html#5064" class="Bound"
+      >Ss</a
+      ><a name="5066"
+      > </a
+      ><a name="5067" href="FreeVariables.html#5067" class="Bound"
+      >e</a
+      ><a name="5068"
+      > </a
+      ><a name="5069" class="Keyword"
+      >with</a
+      ><a name="5073"
+      > </a
+      ><a name="5074" href="Data.List.Any.html#1711" class="Function"
+      >any</a
+      ><a name="5077"
+      > </a
+      ><a name="5078" class="Symbol"
+      >(</a
+      ><a name="5079" href="GPBindings.html#476" class="Function Operator"
+      >_&#8799;S_</a
+      ><a name="5083"
+      > </a
+      ><a name="5084" href="FreeVariables.html#5056" class="Bound"
+      >S</a
+      ><a name="5085" class="Symbol"
+      >)</a
+      ><a name="5086"
+      > </a
+      ><a name="5087" href="FreeVariables.html#5064" class="Bound"
+      >Ss</a
+      ><a name="5089"
+      >
+</a
+      ><a name="5090" class="Symbol"
+      >...</a
+      ><a name="5093"
+      > </a
+      ><a name="5094" class="Symbol"
+      >|</a
+      ><a name="5095"
+      > </a
+      ><a name="5096" href="Relation.Nullary.html#520" class="InductiveConstructor"
+      >yes</a
+      ><a name="5099"
+      > </a
+      ><a name="5100" class="Symbol"
+      >_</a
+      ><a name="5101"
+      >                        </a
+      ><a name="5125" class="Symbol"
+      >=</a
+      ><a name="5126"
+      > </a
+      ><a name="5127" href="Agda.Builtin.List.html#89" class="InductiveConstructor"
+      >[]</a
+      ><a name="5129"
+      >
+</a
+      ><a name="5130" class="Symbol"
+      >...</a
+      ><a name="5133"
+      > </a
+      ><a name="5134" class="Symbol"
+      >|</a
+      ><a name="5135"
+      > </a
+      ><a name="5136" href="Relation.Nullary.html#547" class="InductiveConstructor"
+      >no</a
+      ><a name="5138"
+      >  </a
+      ><a name="5140" class="Symbol"
+      >_</a
+      ><a name="5141"
+      >                        </a
+      ><a name="5165" class="Symbol"
+      >=</a
+      ><a name="5166"
+      > </a
+      ><a name="5167" href="Data.List.Base.html#842" class="Function Operator"
+      >[</a
+      ><a name="5168"
+      > </a
+      ><a name="5169" href="FreeVariables.html#5067" class="Bound"
+      >e</a
+      ><a name="5170"
+      > </a
+      ><a name="5171" href="Data.List.Base.html#842" class="Function Operator"
+      >]</a
+      ><a name="5172"
+      >
+</a
+      ><a name="5173" href="FreeVariables.html#4982" class="Function"
+      >fvSF&#8802;</a
+      ><a name="5178"
+      > </a
+      ><a name="5179" class="Symbol"
+      >{</a
+      ><a name="5180" href="FreeVariables.html#5180" class="Bound"
+      >F</a
+      ><a name="5181" class="Symbol"
+      >}</a
+      ><a name="5182"
+      > </a
+      ><a name="5183" class="Symbol"
+      >{</a
+      ><a name="5184" href="GPBindings.html#618" class="InductiveConstructor"
+      >|1|</a
+      ><a name="5187" class="Symbol"
+      >}</a
+      ><a name="5188"
+      >        </a
+      ><a name="5196" href="FreeVariables.html#5196" class="Bound"
+      >Ss</a
+      ><a name="5198"
+      > </a
+      ><a name="5199" href="FreeVariables.html#5199" class="Bound"
+      >tt</a
+      ><a name="5201"
+      >       </a
+      ><a name="5208" class="Symbol"
+      >=</a
+      ><a name="5209"
+      > </a
+      ><a name="5210" href="Agda.Builtin.List.html#89" class="InductiveConstructor"
+      >[]</a
+      ><a name="5212"
+      >
+</a
+      ><a name="5213" href="FreeVariables.html#4982" class="Function"
+      >fvSF&#8802;</a
+      ><a name="5218"
+      > </a
+      ><a name="5219" class="Symbol"
+      >{</a
+      ><a name="5220" href="FreeVariables.html#5220" class="Bound"
+      >F</a
+      ><a name="5221" class="Symbol"
+      >}</a
+      ><a name="5222"
+      > </a
+      ><a name="5223" class="Symbol"
+      >{</a
+      ><a name="5224" href="GPBindings.html#700" class="InductiveConstructor"
+      >|E|</a
+      ><a name="5227"
+      > </a
+      ><a name="5228" href="FreeVariables.html#5228" class="Bound"
+      >x</a
+      ><a name="5229" class="Symbol"
+      >}</a
+      ><a name="5230"
+      >      </a
+      ><a name="5236" href="FreeVariables.html#5236" class="Bound"
+      >Ss</a
+      ><a name="5238"
+      > </a
+      ><a name="5239" href="FreeVariables.html#5239" class="Bound"
+      >e</a
+      ><a name="5240"
+      >        </a
+      ><a name="5248" class="Symbol"
+      >=</a
+      ><a name="5249"
+      > </a
+      ><a name="5250" href="Agda.Builtin.List.html#89" class="InductiveConstructor"
+      >[]</a
+      ><a name="5252"
+      >
+</a
+      ><a name="5253" href="FreeVariables.html#4982" class="Function"
+      >fvSF&#8802;</a
+      ><a name="5258"
+      > </a
+      ><a name="5259" class="Symbol"
+      >{</a
+      ><a name="5260" href="FreeVariables.html#5260" class="Bound"
+      >F</a
+      ><a name="5261" class="Symbol"
+      >}</a
+      ><a name="5262"
+      > </a
+      ><a name="5263" class="Symbol"
+      >{</a
+      ><a name="5264" href="GPBindings.html#749" class="InductiveConstructor"
+      >|Ef|</a
+      ><a name="5268"
+      >   </a
+      ><a name="5271" href="FreeVariables.html#5271" class="Bound"
+      >G</a
+      ><a name="5272" class="Symbol"
+      >}</a
+      ><a name="5273"
+      >   </a
+      ><a name="5276" href="FreeVariables.html#5276" class="Bound"
+      >Ss</a
+      ><a name="5278"
+      > </a
+      ><a name="5279" href="GPBindings.html#1296" class="InductiveConstructor Operator"
+      >&#10216;</a
+      ><a name="5280"
+      > </a
+      ><a name="5281" href="FreeVariables.html#5281" class="Bound"
+      >e</a
+      ><a name="5282"
+      > </a
+      ><a name="5283" href="GPBindings.html#1296" class="InductiveConstructor Operator"
+      >&#10217;</a
+      ><a name="5284"
+      >    </a
+      ><a name="5288" class="Symbol"
+      >=</a
+      ><a name="5289"
+      > </a
+      ><a name="5290" href="FreeVariables.html#4982" class="Function"
+      >fvSF&#8802;</a
+      ><a name="5295"
+      > </a
+      ><a name="5296" class="Symbol"
+      >{</a
+      ><a name="5297" href="FreeVariables.html#5271" class="Bound"
+      >G</a
+      ><a name="5298" class="Symbol"
+      >}</a
+      ><a name="5299"
+      > </a
+      ><a name="5300" class="Symbol"
+      >{</a
+      ><a name="5301" href="FreeVariables.html#5271" class="Bound"
+      >G</a
+      ><a name="5302" class="Symbol"
+      >}</a
+      ><a name="5303"
+      >  </a
+      ><a name="5305" href="FreeVariables.html#5276" class="Bound"
+      >Ss</a
+      ><a name="5307"
+      > </a
+      ><a name="5308" href="FreeVariables.html#5281" class="Bound"
+      >e</a
+      ><a name="5309"
+      >
+</a
+      ><a name="5310" href="FreeVariables.html#4982" class="Function"
+      >fvSF&#8802;</a
+      ><a name="5315"
+      > </a
+      ><a name="5316" class="Symbol"
+      >{</a
+      ><a name="5317" href="FreeVariables.html#5317" class="Bound"
+      >F</a
+      ><a name="5318" class="Symbol"
+      >}</a
+      ><a name="5319"
+      > </a
+      ><a name="5320" class="Symbol"
+      >{</a
+      ><a name="5321" href="GPBindings.html#659" class="InductiveConstructor"
+      >|R|</a
+      ><a name="5324" class="Symbol"
+      >}</a
+      ><a name="5325"
+      >        </a
+      ><a name="5333" href="FreeVariables.html#5333" class="Bound"
+      >Ss</a
+      ><a name="5335"
+      > </a
+      ><a name="5336" href="GPBindings.html#1296" class="InductiveConstructor Operator"
+      >&#10216;</a
+      ><a name="5337"
+      > </a
+      ><a name="5338" href="FreeVariables.html#5338" class="Bound"
+      >e</a
+      ><a name="5339"
+      > </a
+      ><a name="5340" href="GPBindings.html#1296" class="InductiveConstructor Operator"
+      >&#10217;</a
+      ><a name="5341"
+      >    </a
+      ><a name="5345" class="Symbol"
+      >=</a
+      ><a name="5346"
+      > </a
+      ><a name="5347" href="FreeVariables.html#4982" class="Function"
+      >fvSF&#8802;</a
+      ><a name="5352"
+      > </a
+      ><a name="5353" class="Symbol"
+      >{</a
+      ><a name="5354" href="FreeVariables.html#5317" class="Bound"
+      >F</a
+      ><a name="5355" class="Symbol"
+      >}</a
+      ><a name="5356"
+      > </a
+      ><a name="5357" class="Symbol"
+      >{</a
+      ><a name="5358" href="FreeVariables.html#5317" class="Bound"
+      >F</a
+      ><a name="5359" class="Symbol"
+      >}</a
+      ><a name="5360"
+      >  </a
+      ><a name="5362" href="FreeVariables.html#5333" class="Bound"
+      >Ss</a
+      ><a name="5364"
+      > </a
+      ><a name="5365" href="FreeVariables.html#5338" class="Bound"
+      >e</a
+      ><a name="5366"
+      >
+</a
+      ><a name="5367" href="FreeVariables.html#4982" class="Function"
+      >fvSF&#8802;</a
+      ><a name="5372"
+      > </a
+      ><a name="5373" class="Symbol"
+      >{</a
+      ><a name="5374" href="FreeVariables.html#5374" class="Bound"
+      >F</a
+      ><a name="5375" class="Symbol"
+      >}</a
+      ><a name="5376"
+      > </a
+      ><a name="5377" class="Symbol"
+      >{</a
+      ><a name="5378" href="FreeVariables.html#5378" class="Bound"
+      >F&#8321;</a
+      ><a name="5380"
+      > </a
+      ><a name="5381" href="GPBindings.html#798" class="InductiveConstructor Operator"
+      >|+|</a
+      ><a name="5384"
+      > </a
+      ><a name="5385" href="FreeVariables.html#5385" class="Bound"
+      >F&#8322;</a
+      ><a name="5387" class="Symbol"
+      >}</a
+      ><a name="5388"
+      >  </a
+      ><a name="5390" href="FreeVariables.html#5390" class="Bound"
+      >Ss</a
+      ><a name="5392"
+      > </a
+      ><a name="5393" class="Symbol"
+      >(</a
+      ><a name="5394" href="Data.Sum.html#489" class="InductiveConstructor"
+      >inj&#8321;</a
+      ><a name="5398"
+      > </a
+      ><a name="5399" href="FreeVariables.html#5399" class="Bound"
+      >x</a
+      ><a name="5400" class="Symbol"
+      >)</a
+      ><a name="5401"
+      > </a
+      ><a name="5402" class="Symbol"
+      >=</a
+      ><a name="5403"
+      > </a
+      ><a name="5404" href="FreeVariables.html#4982" class="Function"
+      >fvSF&#8802;</a
+      ><a name="5409"
+      > </a
+      ><a name="5410" class="Symbol"
+      >{</a
+      ><a name="5411" href="FreeVariables.html#5374" class="Bound"
+      >F</a
+      ><a name="5412" class="Symbol"
+      >}</a
+      ><a name="5413"
+      > </a
+      ><a name="5414" class="Symbol"
+      >{</a
+      ><a name="5415" href="FreeVariables.html#5378" class="Bound"
+      >F&#8321;</a
+      ><a name="5417" class="Symbol"
+      >}</a
+      ><a name="5418"
+      > </a
+      ><a name="5419" href="FreeVariables.html#5390" class="Bound"
+      >Ss</a
+      ><a name="5421"
+      > </a
+      ><a name="5422" href="FreeVariables.html#5399" class="Bound"
+      >x</a
+      ><a name="5423"
+      >
+</a
+      ><a name="5424" href="FreeVariables.html#4982" class="Function"
+      >fvSF&#8802;</a
+      ><a name="5429"
+      > </a
+      ><a name="5430" class="Symbol"
+      >{</a
+      ><a name="5431" href="FreeVariables.html#5431" class="Bound"
+      >F</a
+      ><a name="5432" class="Symbol"
+      >}</a
+      ><a name="5433"
+      > </a
+      ><a name="5434" class="Symbol"
+      >{</a
+      ><a name="5435" href="FreeVariables.html#5435" class="Bound"
+      >F&#8321;</a
+      ><a name="5437"
+      > </a
+      ><a name="5438" href="GPBindings.html#798" class="InductiveConstructor Operator"
+      >|+|</a
+      ><a name="5441"
+      > </a
+      ><a name="5442" href="FreeVariables.html#5442" class="Bound"
+      >F&#8322;</a
+      ><a name="5444" class="Symbol"
+      >}</a
+      ><a name="5445"
+      >  </a
+      ><a name="5447" href="FreeVariables.html#5447" class="Bound"
+      >Ss</a
+      ><a name="5449"
+      > </a
+      ><a name="5450" class="Symbol"
+      >(</a
+      ><a name="5451" href="Data.Sum.html#514" class="InductiveConstructor"
+      >inj&#8322;</a
+      ><a name="5455"
+      > </a
+      ><a name="5456" href="FreeVariables.html#5456" class="Bound"
+      >y</a
+      ><a name="5457" class="Symbol"
+      >)</a
+      ><a name="5458"
+      > </a
+      ><a name="5459" class="Symbol"
+      >=</a
+      ><a name="5460"
+      > </a
+      ><a name="5461" href="FreeVariables.html#4982" class="Function"
+      >fvSF&#8802;</a
+      ><a name="5466"
+      > </a
+      ><a name="5467" class="Symbol"
+      >{</a
+      ><a name="5468" href="FreeVariables.html#5431" class="Bound"
+      >F</a
+      ><a name="5469" class="Symbol"
+      >}</a
+      ><a name="5470"
+      > </a
+      ><a name="5471" class="Symbol"
+      >{</a
+      ><a name="5472" href="FreeVariables.html#5442" class="Bound"
+      >F&#8322;</a
+      ><a name="5474" class="Symbol"
+      >}</a
+      ><a name="5475"
+      > </a
+      ><a name="5476" href="FreeVariables.html#5447" class="Bound"
+      >Ss</a
+      ><a name="5478"
+      > </a
+      ><a name="5479" href="FreeVariables.html#5456" class="Bound"
+      >y</a
+      ><a name="5480"
+      >
+</a
+      ><a name="5481" href="FreeVariables.html#4982" class="Function"
+      >fvSF&#8802;</a
+      ><a name="5486"
+      > </a
+      ><a name="5487" class="Symbol"
+      >{</a
+      ><a name="5488" href="FreeVariables.html#5488" class="Bound"
+      >F</a
+      ><a name="5489" class="Symbol"
+      >}</a
+      ><a name="5490"
+      > </a
+      ><a name="5491" class="Symbol"
+      >{</a
+      ><a name="5492" href="FreeVariables.html#5492" class="Bound"
+      >F&#8321;</a
+      ><a name="5494"
+      > </a
+      ><a name="5495" href="GPBindings.html#844" class="InductiveConstructor Operator"
+      >|x|</a
+      ><a name="5498"
+      > </a
+      ><a name="5499" href="FreeVariables.html#5499" class="Bound"
+      >F&#8322;</a
+      ><a name="5501" class="Symbol"
+      >}</a
+      ><a name="5502"
+      >  </a
+      ><a name="5504" href="FreeVariables.html#5504" class="Bound"
+      >Ss</a
+      ><a name="5506"
+      > </a
+      ><a name="5507" class="Symbol"
+      >(</a
+      ><a name="5508" href="FreeVariables.html#5508" class="Bound"
+      >x</a
+      ><a name="5509"
+      > </a
+      ><a name="5510" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="5511"
+      > </a
+      ><a name="5512" href="FreeVariables.html#5512" class="Bound"
+      >y</a
+      ><a name="5513" class="Symbol"
+      >)</a
+      ><a name="5514"
+      >  </a
+      ><a name="5516" class="Symbol"
+      >=</a
+      ><a name="5517"
+      > </a
+      ><a name="5518" href="FreeVariables.html#4982" class="Function"
+      >fvSF&#8802;</a
+      ><a name="5523"
+      > </a
+      ><a name="5524" class="Symbol"
+      >{</a
+      ><a name="5525" href="FreeVariables.html#5488" class="Bound"
+      >F</a
+      ><a name="5526" class="Symbol"
+      >}</a
+      ><a name="5527"
+      > </a
+      ><a name="5528" class="Symbol"
+      >{</a
+      ><a name="5529" href="FreeVariables.html#5492" class="Bound"
+      >F&#8321;</a
+      ><a name="5531" class="Symbol"
+      >}</a
+      ><a name="5532"
+      > </a
+      ><a name="5533" href="FreeVariables.html#5504" class="Bound"
+      >Ss</a
+      ><a name="5535"
+      > </a
+      ><a name="5536" href="FreeVariables.html#5508" class="Bound"
+      >x</a
+      ><a name="5537"
+      > </a
+      ><a name="5538" href="Data.List.Base.html#895" class="Function Operator"
+      >++</a
+      ><a name="5540"
+      > </a
+      ><a name="5541" href="FreeVariables.html#4982" class="Function"
+      >fvSF&#8802;</a
+      ><a name="5546"
+      > </a
+      ><a name="5547" class="Symbol"
+      >{</a
+      ><a name="5548" href="FreeVariables.html#5488" class="Bound"
+      >F</a
+      ><a name="5549" class="Symbol"
+      >}</a
+      ><a name="5550"
+      > </a
+      ><a name="5551" class="Symbol"
+      >{</a
+      ><a name="5552" href="FreeVariables.html#5499" class="Bound"
+      >F&#8322;</a
+      ><a name="5554" class="Symbol"
+      >}</a
+      ><a name="5555"
+      > </a
+      ><a name="5556" href="FreeVariables.html#5504" class="Bound"
+      >Ss</a
+      ><a name="5558"
+      > </a
+      ><a name="5559" href="FreeVariables.html#5512" class="Bound"
+      >y</a
+      ><a name="5560"
+      >
+</a
+      ><a name="5561" href="FreeVariables.html#4982" class="Function"
+      >fvSF&#8802;</a
+      ><a name="5566"
+      > </a
+      ><a name="5567" class="Symbol"
+      >{</a
+      ><a name="5568" href="FreeVariables.html#5568" class="Bound"
+      >F</a
+      ><a name="5569" class="Symbol"
+      >}</a
+      ><a name="5570"
+      > </a
+      ><a name="5571" class="Symbol"
+      >{</a
+      ><a name="5572" href="GPBindings.html#890" class="InductiveConstructor"
+      >|B|</a
+      ><a name="5575"
+      > </a
+      ><a name="5576" href="FreeVariables.html#5576" class="Bound"
+      >S</a
+      ><a name="5577"
+      > </a
+      ><a name="5578" href="FreeVariables.html#5578" class="Bound"
+      >G</a
+      ><a name="5579" class="Symbol"
+      >}</a
+      ><a name="5580"
+      >    </a
+      ><a name="5584" href="FreeVariables.html#5584" class="Bound"
+      >Ss</a
+      ><a name="5586"
+      > </a
+      ><a name="5587" class="Symbol"
+      >(</a
+      ><a name="5588" href="FreeVariables.html#5588" class="Bound"
+      >x</a
+      ><a name="5589"
+      > </a
+      ><a name="5590" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="5591"
+      > </a
+      ><a name="5592" href="FreeVariables.html#5592" class="Bound"
+      >e</a
+      ><a name="5593" class="Symbol"
+      >)</a
+      ><a name="5594"
+      > </a
+      ><a name="5595" class="Keyword"
+      >with</a
+      ><a name="5599"
+      > </a
+      ><a name="5600" href="Data.List.Any.html#1711" class="Function"
+      >any</a
+      ><a name="5603"
+      > </a
+      ><a name="5604" class="Symbol"
+      >(</a
+      ><a name="5605" href="GPBindings.html#476" class="Function Operator"
+      >_&#8799;S_</a
+      ><a name="5609"
+      > </a
+      ><a name="5610" href="FreeVariables.html#5576" class="Bound"
+      >S</a
+      ><a name="5611" class="Symbol"
+      >)</a
+      ><a name="5612"
+      > </a
+      ><a name="5613" href="FreeVariables.html#5584" class="Bound"
+      >Ss</a
+      ><a name="5615"
+      >
+</a
+      ><a name="5616" class="Symbol"
+      >...</a
+      ><a name="5619"
+      > </a
+      ><a name="5620" class="Symbol"
+      >|</a
+      ><a name="5621"
+      > </a
+      ><a name="5622" href="Relation.Nullary.html#520" class="InductiveConstructor"
+      >yes</a
+      ><a name="5625"
+      > </a
+      ><a name="5626" class="Symbol"
+      >_</a
+      ><a name="5627"
+      >                        </a
+      ><a name="5651" class="Symbol"
+      >=</a
+      ><a name="5652"
+      > </a
+      ><a name="5653" href="FreeVariables.html#4982" class="Function"
+      >fvSF&#8802;</a
+      ><a name="5658"
+      > </a
+      ><a name="5659" class="Symbol"
+      >{</a
+      ><a name="5660" href="FreeVariables.html#5568" class="Bound"
+      >F</a
+      ><a name="5661" class="Symbol"
+      >}</a
+      ><a name="5662"
+      > </a
+      ><a name="5663" class="Symbol"
+      >{</a
+      ><a name="5664" href="FreeVariables.html#5578" class="Bound"
+      >G</a
+      ><a name="5665" class="Symbol"
+      >}</a
+      ><a name="5666"
+      > </a
+      ><a name="5667" href="FreeVariables.html#5584" class="Bound"
+      >Ss</a
+      ><a name="5669"
+      > </a
+      ><a name="5670" href="FreeVariables.html#5592" class="Bound"
+      >e</a
+      ><a name="5671"
+      > 
+</a
+      ><a name="5673" class="Symbol"
+      >...</a
+      ><a name="5676"
+      > </a
+      ><a name="5677" class="Symbol"
+      >|</a
+      ><a name="5678"
+      > </a
+      ><a name="5679" href="Relation.Nullary.html#547" class="InductiveConstructor"
+      >no</a
+      ><a name="5681"
+      >  </a
+      ><a name="5683" class="Symbol"
+      >_</a
+      ><a name="5684"
+      >                        </a
+      ><a name="5708" class="Symbol"
+      >=</a
+      ><a name="5709"
+      > </a
+      ><a name="5710" href="FreeVariables.html#4982" class="Function"
+      >fvSF&#8802;</a
+      ><a name="5715"
+      > </a
+      ><a name="5716" class="Symbol"
+      >{</a
+      ><a name="5717" href="FreeVariables.html#5568" class="Bound"
+      >F</a
+      ><a name="5718" class="Symbol"
+      >}</a
+      ><a name="5719"
+      > </a
+      ><a name="5720" class="Symbol"
+      >{</a
+      ><a name="5721" href="FreeVariables.html#5578" class="Bound"
+      >G</a
+      ><a name="5722" class="Symbol"
+      >}</a
+      ><a name="5723"
+      > </a
+      ><a name="5724" class="Symbol"
+      >(</a
+      ><a name="5725" href="FreeVariables.html#5576" class="Bound"
+      >S</a
+      ><a name="5726"
+      > </a
+      ><a name="5727" href="Agda.Builtin.List.html#104" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="5728"
+      > </a
+      ><a name="5729" href="FreeVariables.html#5584" class="Bound"
+      >Ss</a
+      ><a name="5731" class="Symbol"
+      >)</a
+      ><a name="5732"
+      > </a
+      ><a name="5733" href="FreeVariables.html#5592" class="Bound"
+      >e</a
+      ><a name="5734"
+      > </a
+      ><a name="5735" href="Data.List.Base.html#895" class="Function Operator"
+      >++</a
+      ><a name="5737"
+      > </a
+      ><a name="5738" class="Symbol"
+      >(</a
+      ><a name="5739" href="FreeVariables.html#528" class="Function"
+      >fvSF</a
+      ><a name="5743"
+      > </a
+      ><a name="5744" class="Symbol"
+      >{</a
+      ><a name="5745" href="FreeVariables.html#5568" class="Bound"
+      >F</a
+      ><a name="5746" class="Symbol"
+      >}</a
+      ><a name="5747"
+      > </a
+      ><a name="5748" class="Symbol"
+      >{</a
+      ><a name="5749" href="FreeVariables.html#5578" class="Bound"
+      >G</a
+      ><a name="5750" class="Symbol"
+      >}</a
+      ><a name="5751"
+      > </a
+      ><a name="5752" href="FreeVariables.html#5576" class="Bound"
+      >S</a
+      ><a name="5753"
+      > </a
+      ><a name="5754" href="FreeVariables.html#5592" class="Bound"
+      >e</a
+      ><a name="5755"
+      > </a
+      ><a name="5756" href="List.ListProperties.html#3912" class="Function Operator"
+      >-</a
+      ><a name="5757"
+      > </a
+      ><a name="5758" href="FreeVariables.html#5588" class="Bound"
+      >x</a
+      ><a name="5759" class="Symbol"
+      >)</a
+      ><a name="5760"
+      > 
+
+</a
+      ><a name="5763" href="FreeVariables.html#5763" class="Function"
+      >fvF</a
+      ><a name="5766"
+      > </a
+      ><a name="5767" class="Symbol"
+      >:</a
+      ><a name="5768"
+      > </a
+      ><a name="5769" class="Symbol"
+      >{</a
+      ><a name="5770" href="FreeVariables.html#5770" class="Bound"
+      >F</a
+      ><a name="5771"
+      > </a
+      ><a name="5772" href="FreeVariables.html#5772" class="Bound"
+      >G</a
+      ><a name="5773"
+      > </a
+      ><a name="5774" class="Symbol"
+      >:</a
+      ><a name="5775"
+      > </a
+      ><a name="5776" href="GPBindings.html#539" class="Datatype"
+      >Functor</a
+      ><a name="5783" class="Symbol"
+      >}</a
+      ><a name="5784"
+      > </a
+      ><a name="5785" class="Symbol"
+      >&#8594;</a
+      ><a name="5786"
+      > </a
+      ><a name="5787" href="GPBindings.html#989" class="Function Operator"
+      >&#10214;</a
+      ><a name="5788"
+      > </a
+      ><a name="5789" href="FreeVariables.html#5772" class="Bound"
+      >G</a
+      ><a name="5790"
+      > </a
+      ><a name="5791" href="GPBindings.html#989" class="Function Operator"
+      >&#10215;</a
+      ><a name="5792"
+      > </a
+      ><a name="5793" class="Symbol"
+      >(</a
+      ><a name="5794" href="GPBindings.html#1264" class="Datatype"
+      >&#956;</a
+      ><a name="5795"
+      > </a
+      ><a name="5796" href="FreeVariables.html#5770" class="Bound"
+      >F</a
+      ><a name="5797" class="Symbol"
+      >)</a
+      ><a name="5798"
+      > </a
+      ><a name="5799" class="Symbol"
+      >&#8594;</a
+      ><a name="5800"
+      > </a
+      ><a name="5801" href="Agda.Builtin.List.html#52" class="Datatype"
+      >List</a
+      ><a name="5805"
+      > </a
+      ><a name="5806" href="GPBindings.html#442" class="Function"
+      >V</a
+      ><a name="5807"
+      >
+</a
+      ><a name="5808" href="FreeVariables.html#5763" class="Function"
+      >fvF</a
+      ><a name="5811"
+      > </a
+      ><a name="5812" class="Symbol"
+      >{</a
+      ><a name="5813" href="FreeVariables.html#5813" class="Bound"
+      >F</a
+      ><a name="5814" class="Symbol"
+      >}</a
+      ><a name="5815"
+      > </a
+      ><a name="5816" class="Symbol"
+      >{</a
+      ><a name="5817" href="FreeVariables.html#5817" class="Bound"
+      >G</a
+      ><a name="5818" class="Symbol"
+      >}</a
+      ><a name="5819"
+      > </a
+      ><a name="5820" href="FreeVariables.html#5820" class="Bound"
+      >e</a
+      ><a name="5821"
+      > </a
+      ><a name="5822" class="Symbol"
+      >=</a
+      ><a name="5823"
+      > </a
+      ><a name="5824" href="FreeVariables.html#4982" class="Function"
+      >fvSF&#8802;</a
+      ><a name="5829"
+      > </a
+      ><a name="5830" class="Symbol"
+      >{</a
+      ><a name="5831" href="FreeVariables.html#5813" class="Bound"
+      >F</a
+      ><a name="5832" class="Symbol"
+      >}</a
+      ><a name="5833"
+      > </a
+      ><a name="5834" class="Symbol"
+      >{</a
+      ><a name="5835" href="FreeVariables.html#5817" class="Bound"
+      >G</a
+      ><a name="5836" class="Symbol"
+      >}</a
+      ><a name="5837"
+      > </a
+      ><a name="5838" href="Agda.Builtin.List.html#89" class="InductiveConstructor"
+      >[]</a
+      ><a name="5840"
+      > </a
+      ><a name="5841" href="FreeVariables.html#5820" class="Bound"
+      >e</a
+      ><a name="5842"
+      >
+
+</a
+      ><a name="5844" href="FreeVariables.html#5844" class="Function"
+      >fv</a
+      ><a name="5846"
+      > </a
+      ><a name="5847" class="Symbol"
+      >:</a
+      ><a name="5848"
+      > </a
+      ><a name="5849" class="Symbol"
+      >{</a
+      ><a name="5850" href="FreeVariables.html#5850" class="Bound"
+      >F</a
+      ><a name="5851"
+      > </a
+      ><a name="5852" class="Symbol"
+      >:</a
+      ><a name="5853"
+      > </a
+      ><a name="5854" href="GPBindings.html#539" class="Datatype"
+      >Functor</a
+      ><a name="5861" class="Symbol"
+      >}</a
+      ><a name="5862"
+      > </a
+      ><a name="5863" class="Symbol"
+      >&#8594;</a
+      ><a name="5864"
+      > </a
+      ><a name="5865" href="GPBindings.html#1264" class="Datatype"
+      >&#956;</a
+      ><a name="5866"
+      > </a
+      ><a name="5867" href="FreeVariables.html#5850" class="Bound"
+      >F</a
+      ><a name="5868"
+      > </a
+      ><a name="5869" class="Symbol"
+      >&#8594;</a
+      ><a name="5870"
+      > </a
+      ><a name="5871" href="Agda.Builtin.List.html#52" class="Datatype"
+      >List</a
+      ><a name="5875"
+      > </a
+      ><a name="5876" href="GPBindings.html#442" class="Function"
+      >V</a
+      ><a name="5877"
+      >
+</a
+      ><a name="5878" href="FreeVariables.html#5844" class="Function"
+      >fv</a
+      ><a name="5880"
+      > </a
+      ><a name="5881" class="Symbol"
+      >{</a
+      ><a name="5882" href="FreeVariables.html#5882" class="Bound"
+      >F</a
+      ><a name="5883" class="Symbol"
+      >}</a
+      ><a name="5884"
+      > </a
+      ><a name="5885" href="FreeVariables.html#5885" class="Bound"
+      >e</a
+      ><a name="5886"
+      > </a
+      ><a name="5887" class="Symbol"
+      >=</a
+      ><a name="5888"
+      > </a
+      ><a name="5889" href="FreeVariables.html#5763" class="Function"
+      >fvF</a
+      ><a name="5892"
+      > </a
+      ><a name="5893" class="Symbol"
+      >{</a
+      ><a name="5894" href="FreeVariables.html#5882" class="Bound"
+      >F</a
+      ><a name="5895" class="Symbol"
+      >}</a
+      ><a name="5896"
+      > </a
+      ><a name="5897" class="Symbol"
+      >{</a
+      ><a name="5898" href="GPBindings.html#659" class="InductiveConstructor"
+      >|R|</a
+      ><a name="5901" class="Symbol"
+      >}</a
+      ><a name="5902"
+      > </a
+      ><a name="5903" href="FreeVariables.html#5885" class="Bound"
+      >e</a
+      ><a name="5904"
+      >
+
+</a
+      ><a name="5906" class="Keyword"
+      >postulate</a
+      ><a name="5915"
+      >
+  </a
+      ><a name="5918" href="FreeVariables.html#5918" class="Postulate"
+      >lemmafvF#</a
+      ><a name="5927"
+      > </a
+      ><a name="5928" class="Symbol"
+      >:</a
+      ><a name="5929"
+      > </a
+      ><a name="5930" class="Symbol"
+      >{</a
+      ><a name="5931" href="FreeVariables.html#5931" class="Bound"
+      >F</a
+      ><a name="5932"
+      > </a
+      ><a name="5933" href="FreeVariables.html#5933" class="Bound"
+      >G</a
+      ><a name="5934"
+      > </a
+      ><a name="5935" class="Symbol"
+      >:</a
+      ><a name="5936"
+      > </a
+      ><a name="5937" href="GPBindings.html#539" class="Datatype"
+      >Functor</a
+      ><a name="5944" class="Symbol"
+      >}{</a
+      ><a name="5946" href="FreeVariables.html#5946" class="Bound"
+      >x</a
+      ><a name="5947"
+      > </a
+      ><a name="5948" class="Symbol"
+      >:</a
+      ><a name="5949"
+      > </a
+      ><a name="5950" href="GPBindings.html#442" class="Function"
+      >V</a
+      ><a name="5951" class="Symbol"
+      >}{</a
+      ><a name="5953" href="FreeVariables.html#5953" class="Bound"
+      >S</a
+      ><a name="5954"
+      > </a
+      ><a name="5955" class="Symbol"
+      >:</a
+      ><a name="5956"
+      > </a
+      ><a name="5957" href="GPBindings.html#432" class="Function"
+      >Sort</a
+      ><a name="5961" class="Symbol"
+      >}{</a
+      ><a name="5963" href="FreeVariables.html#5963" class="Bound"
+      >e</a
+      ><a name="5964"
+      > </a
+      ><a name="5965" class="Symbol"
+      >:</a
+      ><a name="5966"
+      > </a
+      ><a name="5967" href="GPBindings.html#989" class="Function Operator"
+      >&#10214;</a
+      ><a name="5968"
+      > </a
+      ><a name="5969" href="FreeVariables.html#5933" class="Bound"
+      >G</a
+      ><a name="5970"
+      > </a
+      ><a name="5971" href="GPBindings.html#989" class="Function Operator"
+      >&#10215;</a
+      ><a name="5972"
+      > </a
+      ><a name="5973" class="Symbol"
+      >(</a
+      ><a name="5974" href="GPBindings.html#1264" class="Datatype"
+      >&#956;</a
+      ><a name="5975"
+      > </a
+      ><a name="5976" href="FreeVariables.html#5931" class="Bound"
+      >F</a
+      ><a name="5977" class="Symbol"
+      >)}</a
+      ><a name="5979"
+      > </a
+      ><a name="5980" class="Symbol"
+      >&#8594;</a
+      ><a name="5981"
+      > </a
+      ><a name="5982" href="FreeVariables.html#5946" class="Bound"
+      >x</a
+      ><a name="5983"
+      > </a
+      ><a name="5984" href="Data.List.Any.html#2974" class="Function Operator"
+      >&#8713;</a
+      ><a name="5985"
+      > </a
+      ><a name="5986" class="Symbol"
+      >(</a
+      ><a name="5987" href="FreeVariables.html#5763" class="Function"
+      >fvF</a
+      ><a name="5990"
+      > </a
+      ><a name="5991" class="Symbol"
+      >{</a
+      ><a name="5992" href="FreeVariables.html#5931" class="Bound"
+      >F</a
+      ><a name="5993" class="Symbol"
+      >}</a
+      ><a name="5994"
+      > </a
+      ><a name="5995" class="Symbol"
+      >{</a
+      ><a name="5996" href="FreeVariables.html#5933" class="Bound"
+      >G</a
+      ><a name="5997" class="Symbol"
+      >}</a
+      ><a name="5998"
+      > </a
+      ><a name="5999" href="FreeVariables.html#5963" class="Bound"
+      >e</a
+      ><a name="6000" class="Symbol"
+      >)</a
+      ><a name="6001"
+      > </a
+      ><a name="6002" class="Symbol"
+      >&#8594;</a
+      ><a name="6003"
+      > </a
+      ><a name="6004" href="Fresh.html#242" class="Datatype"
+      >freshF</a
+      ><a name="6010"
+      > </a
+      ><a name="6011" href="FreeVariables.html#5953" class="Bound"
+      >S</a
+      ><a name="6012"
+      > </a
+      ><a name="6013" href="FreeVariables.html#5946" class="Bound"
+      >x</a
+      ><a name="6014"
+      > </a
+      ><a name="6015" href="FreeVariables.html#5933" class="Bound"
+      >G</a
+      ><a name="6016"
+      > </a
+      ><a name="6017" href="FreeVariables.html#5963" class="Bound"
+      >e</a
+      ><a name="6018"
+      >
+  </a
+      ><a name="6021" href="FreeVariables.html#6021" class="Postulate"
+      >lemma&#8713;fvfvS</a
+      ><a name="6032"
+      > </a
+      ><a name="6033" class="Symbol"
+      >:</a
+      ><a name="6034"
+      > </a
+      ><a name="6035" class="Symbol"
+      >{</a
+      ><a name="6036" href="FreeVariables.html#6036" class="Bound"
+      >F</a
+      ><a name="6037"
+      > </a
+      ><a name="6038" class="Symbol"
+      >:</a
+      ><a name="6039"
+      > </a
+      ><a name="6040" href="GPBindings.html#539" class="Datatype"
+      >Functor</a
+      ><a name="6047" class="Symbol"
+      >}{</a
+      ><a name="6049" href="FreeVariables.html#6049" class="Bound"
+      >S</a
+      ><a name="6050"
+      > </a
+      ><a name="6051" class="Symbol"
+      >:</a
+      ><a name="6052"
+      > </a
+      ><a name="6053" href="GPBindings.html#432" class="Function"
+      >Sort</a
+      ><a name="6057" class="Symbol"
+      >}{</a
+      ><a name="6059" href="FreeVariables.html#6059" class="Bound"
+      >e</a
+      ><a name="6060"
+      > </a
+      ><a name="6061" class="Symbol"
+      >:</a
+      ><a name="6062"
+      > </a
+      ><a name="6063" href="GPBindings.html#1264" class="Datatype"
+      >&#956;</a
+      ><a name="6064"
+      > </a
+      ><a name="6065" href="FreeVariables.html#6036" class="Bound"
+      >F</a
+      ><a name="6066" class="Symbol"
+      >}{</a
+      ><a name="6068" href="FreeVariables.html#6068" class="Bound"
+      >x</a
+      ><a name="6069"
+      > </a
+      ><a name="6070" class="Symbol"
+      >:</a
+      ><a name="6071"
+      > </a
+      ><a name="6072" href="GPBindings.html#442" class="Function"
+      >V</a
+      ><a name="6073" class="Symbol"
+      >}</a
+      ><a name="6074"
+      > </a
+      ><a name="6075" class="Symbol"
+      >&#8594;</a
+      ><a name="6076"
+      > </a
+      ><a name="6077" href="FreeVariables.html#6068" class="Bound"
+      >x</a
+      ><a name="6078"
+      > </a
+      ><a name="6079" href="Data.List.Any.html#2974" class="Function Operator"
+      >&#8713;</a
+      ><a name="6080"
+      > </a
+      ><a name="6081" href="FreeVariables.html#5844" class="Function"
+      >fv</a
+      ><a name="6083"
+      > </a
+      ><a name="6084" href="FreeVariables.html#6059" class="Bound"
+      >e</a
+      ><a name="6085"
+      > </a
+      ><a name="6086" class="Symbol"
+      >&#8594;</a
+      ><a name="6087"
+      > </a
+      ><a name="6088" href="FreeVariables.html#6068" class="Bound"
+      >x</a
+      ><a name="6089"
+      > </a
+      ><a name="6090" href="Data.List.Any.html#2974" class="Function Operator"
+      >&#8713;</a
+      ><a name="6091"
+      > </a
+      ><a name="6092" href="FreeVariables.html#1247" class="Function"
+      >fvS</a
+      ><a name="6095"
+      > </a
+      ><a name="6096" href="FreeVariables.html#6049" class="Bound"
+      >S</a
+      ><a name="6097"
+      > </a
+      ><a name="6098" href="FreeVariables.html#6059" class="Bound"
+      >e</a
+      ><a name="6099"
+      >
+  </a
+      ><a name="6102" href="FreeVariables.html#6102" class="Postulate"
+      >lemmafvSF&#8802;</a
+      ><a name="6112"
+      > </a
+      ><a name="6113" class="Symbol"
+      >:</a
+      ><a name="6114"
+      >  </a
+      ><a name="6116" class="Symbol"
+      >{</a
+      ><a name="6117" href="FreeVariables.html#6117" class="Bound"
+      >F</a
+      ><a name="6118"
+      > </a
+      ><a name="6119" class="Symbol"
+      >:</a
+      ><a name="6120"
+      > </a
+      ><a name="6121" href="GPBindings.html#539" class="Datatype"
+      >Functor</a
+      ><a name="6128" class="Symbol"
+      >}{</a
+      ><a name="6130" href="FreeVariables.html#6130" class="Bound"
+      >x</a
+      ><a name="6131"
+      > </a
+      ><a name="6132" class="Symbol"
+      >:</a
+      ><a name="6133"
+      > </a
+      ><a name="6134" href="GPBindings.html#442" class="Function"
+      >V</a
+      ><a name="6135" class="Symbol"
+      >}{</a
+      ><a name="6137" href="FreeVariables.html#6137" class="Bound"
+      >S</a
+      ><a name="6138"
+      > </a
+      ><a name="6139" class="Symbol"
+      >:</a
+      ><a name="6140"
+      > </a
+      ><a name="6141" href="GPBindings.html#432" class="Function"
+      >Sort</a
+      ><a name="6145" class="Symbol"
+      >}{</a
+      ><a name="6147" href="FreeVariables.html#6147" class="Bound"
+      >Ss</a
+      ><a name="6149"
+      > </a
+      ><a name="6150" class="Symbol"
+      >:</a
+      ><a name="6151"
+      > </a
+      ><a name="6152" href="Agda.Builtin.List.html#52" class="Datatype"
+      >List</a
+      ><a name="6156"
+      > </a
+      ><a name="6157" href="GPBindings.html#432" class="Function"
+      >Sort</a
+      ><a name="6161" class="Symbol"
+      >}{</a
+      ><a name="6163" href="FreeVariables.html#6163" class="Bound"
+      >e</a
+      ><a name="6164"
+      > </a
+      ><a name="6165" class="Symbol"
+      >:</a
+      ><a name="6166"
+      > </a
+      ><a name="6167" href="GPBindings.html#1264" class="Datatype"
+      >&#956;</a
+      ><a name="6168"
+      > </a
+      ><a name="6169" href="FreeVariables.html#6117" class="Bound"
+      >F</a
+      ><a name="6170" class="Symbol"
+      >}</a
+      ><a name="6171"
+      >
+                </a
+      ><a name="6188" class="Symbol"
+      >&#8594;</a
+      ><a name="6189"
+      > </a
+      ><a name="6190" href="FreeVariables.html#6137" class="Bound"
+      >S</a
+      ><a name="6191"
+      > </a
+      ><a name="6192" href="Data.List.Any.html#2974" class="Function Operator"
+      >&#8713;</a
+      ><a name="6193"
+      > </a
+      ><a name="6194" href="FreeVariables.html#6147" class="Bound"
+      >Ss</a
+      ><a name="6196"
+      > </a
+      ><a name="6197" class="Symbol"
+      >&#8594;</a
+      ><a name="6198"
+      > </a
+      ><a name="6199" href="FreeVariables.html#6130" class="Bound"
+      >x</a
+      ><a name="6200"
+      > </a
+      ><a name="6201" href="Data.List.Any.html#2974" class="Function Operator"
+      >&#8713;</a
+      ><a name="6202"
+      > </a
+      ><a name="6203" href="FreeVariables.html#4982" class="Function"
+      >fvSF&#8802;</a
+      ><a name="6208"
+      > </a
+      ><a name="6209" class="Symbol"
+      >{</a
+      ><a name="6210" href="FreeVariables.html#6117" class="Bound"
+      >F</a
+      ><a name="6211" class="Symbol"
+      >}</a
+      ><a name="6212"
+      > </a
+      ><a name="6213" class="Symbol"
+      >{</a
+      ><a name="6214" href="GPBindings.html#659" class="InductiveConstructor"
+      >|R|</a
+      ><a name="6217" class="Symbol"
+      >}</a
+      ><a name="6218"
+      > </a
+      ><a name="6219" href="FreeVariables.html#6147" class="Bound"
+      >Ss</a
+      ><a name="6221"
+      > </a
+      ><a name="6222" href="FreeVariables.html#6163" class="Bound"
+      >e</a
+      ><a name="6223"
+      > </a
+      ><a name="6224" class="Symbol"
+      >&#8594;</a
+      ><a name="6225"
+      > </a
+      ><a name="6226" href="Fresh.html#1459" class="Function"
+      >fresh</a
+      ><a name="6231"
+      > </a
+      ><a name="6232" href="FreeVariables.html#6137" class="Bound"
+      >S</a
+      ><a name="6233"
+      > </a
+      ><a name="6234" href="FreeVariables.html#6130" class="Bound"
+      >x</a
+      ><a name="6235"
+      > </a
+      ><a name="6236" href="FreeVariables.html#6163" class="Bound"
+      >e</a
+      ><a name="6237"
+      >
+  </a
+      ><a name="6240" href="FreeVariables.html#6240" class="Postulate"
+      >lemmafv#</a
+      ><a name="6248"
+      > </a
+      ><a name="6249" class="Symbol"
+      >:</a
+      ><a name="6250"
+      >  </a
+      ><a name="6252" class="Symbol"
+      >{</a
+      ><a name="6253" href="FreeVariables.html#6253" class="Bound"
+      >F</a
+      ><a name="6254"
+      > </a
+      ><a name="6255" class="Symbol"
+      >:</a
+      ><a name="6256"
+      > </a
+      ><a name="6257" href="GPBindings.html#539" class="Datatype"
+      >Functor</a
+      ><a name="6264" class="Symbol"
+      >}{</a
+      ><a name="6266" href="FreeVariables.html#6266" class="Bound"
+      >x</a
+      ><a name="6267"
+      > </a
+      ><a name="6268" class="Symbol"
+      >:</a
+      ><a name="6269"
+      > </a
+      ><a name="6270" href="GPBindings.html#442" class="Function"
+      >V</a
+      ><a name="6271" class="Symbol"
+      >}{</a
+      ><a name="6273" href="FreeVariables.html#6273" class="Bound"
+      >S</a
+      ><a name="6274"
+      > </a
+      ><a name="6275" class="Symbol"
+      >:</a
+      ><a name="6276"
+      > </a
+      ><a name="6277" href="GPBindings.html#432" class="Function"
+      >Sort</a
+      ><a name="6281" class="Symbol"
+      >}{</a
+      ><a name="6283" href="FreeVariables.html#6283" class="Bound"
+      >e</a
+      ><a name="6284"
+      > </a
+      ><a name="6285" class="Symbol"
+      >:</a
+      ><a name="6286"
+      > </a
+      ><a name="6287" href="GPBindings.html#1264" class="Datatype"
+      >&#956;</a
+      ><a name="6288"
+      > </a
+      ><a name="6289" href="FreeVariables.html#6253" class="Bound"
+      >F</a
+      ><a name="6290" class="Symbol"
+      >}</a
+      ><a name="6291"
+      > </a
+      ><a name="6292" class="Symbol"
+      >&#8594;</a
+      ><a name="6293"
+      > </a
+      ><a name="6294" href="FreeVariables.html#6266" class="Bound"
+      >x</a
+      ><a name="6295"
+      > </a
+      ><a name="6296" href="Data.List.Any.html#2974" class="Function Operator"
+      >&#8713;</a
+      ><a name="6297"
+      > </a
+      ><a name="6298" href="FreeVariables.html#5844" class="Function"
+      >fv</a
+      ><a name="6300"
+      > </a
+      ><a name="6301" href="FreeVariables.html#6283" class="Bound"
+      >e</a
+      ><a name="6302"
+      > </a
+      ><a name="6303" class="Symbol"
+      >&#8594;</a
+      ><a name="6304"
+      > </a
+      ><a name="6305" href="Fresh.html#1459" class="Function"
+      >fresh</a
+      ><a name="6310"
+      > </a
+      ><a name="6311" href="FreeVariables.html#6273" class="Bound"
+      >S</a
+      ><a name="6312"
+      > </a
+      ><a name="6313" href="FreeVariables.html#6266" class="Bound"
+      >x</a
+      ><a name="6314"
+      > </a
+      ><a name="6315" href="FreeVariables.html#6283" class="Bound"
+      >e</a
+      ><a name="6316"
+      >
+
+
+</a
+      ></pre
+    ></body
+  ></html
+>

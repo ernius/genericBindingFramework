@@ -1,0 +1,3 @@
+name: GPnominal-library
+depend: standard-library
+include: .

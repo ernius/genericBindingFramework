@@ -1,0 +1,2516 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >Fresh</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Keyword"
+      >module</a
+      ><a name="7"
+      > </a
+      ><a name="8" href="Fresh.html#1" class="Module"
+      >Fresh</a
+      ><a name="13"
+      > </a
+      ><a name="14" class="Keyword"
+      >where</a
+      ><a name="19"
+      >
+
+</a
+      ><a name="21" class="Keyword"
+      >open</a
+      ><a name="25"
+      > </a
+      ><a name="26" class="Keyword"
+      >import</a
+      ><a name="32"
+      > </a
+      ><a name="33" href="GPBindings.html#1" class="Module"
+      >GPBindings</a
+      ><a name="43"
+      >
+</a
+      ><a name="44" class="Keyword"
+      >open</a
+      ><a name="48"
+      > </a
+      ><a name="49" class="Keyword"
+      >import</a
+      ><a name="55"
+      > </a
+      ><a name="56" href="Swap.html#1" class="Module"
+      >Swap</a
+      ><a name="60"
+      >
+
+</a
+      ><a name="62" class="Keyword"
+      >open</a
+      ><a name="66"
+      > </a
+      ><a name="67" class="Keyword"
+      >import</a
+      ><a name="73"
+      > </a
+      ><a name="74" href="Data.Unit.html#1" class="Module"
+      >Data.Unit</a
+      ><a name="83"
+      >
+</a
+      ><a name="84" class="Keyword"
+      >open</a
+      ><a name="88"
+      > </a
+      ><a name="89" class="Keyword"
+      >import</a
+      ><a name="95"
+      > </a
+      ><a name="96" href="Relation.Nullary.html#1" class="Module"
+      >Relation.Nullary</a
+      ><a name="112"
+      >
+</a
+      ><a name="113" class="Keyword"
+      >open</a
+      ><a name="117"
+      > </a
+      ><a name="118" class="Keyword"
+      >import</a
+      ><a name="124"
+      > </a
+      ><a name="125" href="Data.Sum.html#1" class="Module"
+      >Data.Sum</a
+      ><a name="133"
+      >
+</a
+      ><a name="134" class="Keyword"
+      >open</a
+      ><a name="138"
+      > </a
+      ><a name="139" class="Keyword"
+      >import</a
+      ><a name="145"
+      > </a
+      ><a name="146" href="Data.Product.html#1" class="Module"
+      >Data.Product</a
+      ><a name="158"
+      > </a
+      ><a name="159" class="Keyword"
+      >hiding</a
+      ><a name="165"
+      > </a
+      ><a name="166" class="Symbol"
+      >(</a
+      ><a name="167" href="Data.Product.html#2324" class="Function"
+      >swap</a
+      ><a name="171" class="Symbol"
+      >)</a
+      ><a name="172"
+      >
+</a
+      ><a name="173" class="Keyword"
+      >open</a
+      ><a name="177"
+      > </a
+      ><a name="178" class="Keyword"
+      >import</a
+      ><a name="184"
+      > </a
+      ><a name="185" href="Relation.Binary.PropositionalEquality.html#1" class="Module"
+      >Relation.Binary.PropositionalEquality</a
+      ><a name="222"
+      > </a
+      ><a name="223" class="Keyword"
+      >hiding</a
+      ><a name="229"
+      > </a
+      ><a name="230" class="Symbol"
+      >(</a
+      ><a name="231" href="Relation.Binary.PropositionalEquality.html#5124" class="InductiveConstructor Operator"
+      >[_]</a
+      ><a name="234" class="Symbol"
+      >)</a
+      ><a name="235"
+      >
+
+</a
+      ><a name="237" class="Keyword"
+      >data</a
+      ><a name="241"
+      > </a
+      ><a name="242" href="Fresh.html#242" class="Datatype"
+      >freshF</a
+      ><a name="248"
+      > </a
+      ><a name="249" class="Symbol"
+      >(</a
+      ><a name="250" href="Fresh.html#250" class="Bound"
+      >S</a
+      ><a name="251"
+      > </a
+      ><a name="252" class="Symbol"
+      >:</a
+      ><a name="253"
+      > </a
+      ><a name="254" href="GPBindings.html#432" class="Function"
+      >Sort</a
+      ><a name="258" class="Symbol"
+      >)(</a
+      ><a name="260" href="Fresh.html#260" class="Bound"
+      >n</a
+      ><a name="261"
+      > </a
+      ><a name="262" class="Symbol"
+      >:</a
+      ><a name="263"
+      > </a
+      ><a name="264" href="GPBindings.html#442" class="Function"
+      >V</a
+      ><a name="265" class="Symbol"
+      >){</a
+      ><a name="267" href="Fresh.html#267" class="Bound"
+      >F</a
+      ><a name="268"
+      > </a
+      ><a name="269" class="Symbol"
+      >:</a
+      ><a name="270"
+      > </a
+      ><a name="271" href="GPBindings.html#539" class="Datatype"
+      >Functor</a
+      ><a name="278" class="Symbol"
+      >}</a
+      ><a name="279"
+      > </a
+      ><a name="280" class="Symbol"
+      >:</a
+      ><a name="281"
+      > </a
+      ><a name="282" class="Symbol"
+      >(</a
+      ><a name="283" href="Fresh.html#283" class="Bound"
+      >G</a
+      ><a name="284"
+      > </a
+      ><a name="285" class="Symbol"
+      >:</a
+      ><a name="286"
+      > </a
+      ><a name="287" href="GPBindings.html#539" class="Datatype"
+      >Functor</a
+      ><a name="294" class="Symbol"
+      >)</a
+      ><a name="295"
+      > </a
+      ><a name="296" class="Symbol"
+      >&#8594;</a
+      ><a name="297"
+      > </a
+      ><a name="298" href="GPBindings.html#989" class="Function Operator"
+      >&#10214;</a
+      ><a name="299"
+      > </a
+      ><a name="300" href="Fresh.html#283" class="Bound"
+      >G</a
+      ><a name="301"
+      > </a
+      ><a name="302" href="GPBindings.html#989" class="Function Operator"
+      >&#10215;</a
+      ><a name="303"
+      > </a
+      ><a name="304" class="Symbol"
+      >(</a
+      ><a name="305" href="GPBindings.html#1264" class="Datatype"
+      >&#956;</a
+      ><a name="306"
+      > </a
+      ><a name="307" href="Fresh.html#267" class="Bound"
+      >F</a
+      ><a name="308" class="Symbol"
+      >)</a
+      ><a name="309"
+      > </a
+      ><a name="310" class="Symbol"
+      >&#8594;</a
+      ><a name="311"
+      > </a
+      ><a name="312" class="PrimitiveType"
+      >Set</a
+      ><a name="315"
+      > </a
+      ><a name="316" class="Keyword"
+      >where</a
+      ><a name="321"
+      >
+   </a
+      ><a name="325" href="Fresh.html#325" class="InductiveConstructor"
+      >freshV&#8802;</a
+      ><a name="332"
+      >   </a
+      ><a name="335" class="Symbol"
+      >:</a
+      ><a name="336"
+      > </a
+      ><a name="337" class="Symbol"
+      >{</a
+      ><a name="338" href="Fresh.html#338" class="Bound"
+      >m</a
+      ><a name="339"
+      > </a
+      ><a name="340" class="Symbol"
+      >:</a
+      ><a name="341"
+      > </a
+      ><a name="342" href="GPBindings.html#442" class="Function"
+      >V</a
+      ><a name="343" class="Symbol"
+      >}</a
+      ><a name="344"
+      > </a
+      ><a name="345" class="Symbol"
+      >&#8594;</a
+      ><a name="346"
+      > </a
+      ><a name="347" href="Fresh.html#260" class="Bound"
+      >n</a
+      ><a name="348"
+      > </a
+      ><a name="349" href="Relation.Binary.Core.html#4493" class="Function Operator"
+      >&#8802;</a
+      ><a name="350"
+      > </a
+      ><a name="351" href="Fresh.html#338" class="Bound"
+      >m</a
+      ><a name="352"
+      >    </a
+      ><a name="356" class="Symbol"
+      >&#8594;</a
+      ><a name="357"
+      > </a
+      ><a name="358" href="Fresh.html#242" class="Datatype"
+      >freshF</a
+      ><a name="364"
+      > </a
+      ><a name="365" href="Fresh.html#250" class="Bound"
+      >S</a
+      ><a name="366"
+      > </a
+      ><a name="367" href="Fresh.html#260" class="Bound"
+      >n</a
+      ><a name="368"
+      > </a
+      ><a name="369" class="Symbol"
+      >(</a
+      ><a name="370" href="GPBindings.html#577" class="InductiveConstructor"
+      >|v|</a
+      ><a name="373"
+      > </a
+      ><a name="374" href="Fresh.html#250" class="Bound"
+      >S</a
+      ><a name="375" class="Symbol"
+      >)</a
+      ><a name="376"
+      > </a
+      ><a name="377" href="Fresh.html#338" class="Bound"
+      >m</a
+      ><a name="378"
+      >
+   </a
+      ><a name="382" href="Fresh.html#382" class="InductiveConstructor"
+      >freshV&#8802;S</a
+      ><a name="390"
+      >  </a
+      ><a name="392" class="Symbol"
+      >:</a
+      ><a name="393"
+      > </a
+      ><a name="394" class="Symbol"
+      >{</a
+      ><a name="395" href="Fresh.html#395" class="Bound"
+      >m</a
+      ><a name="396"
+      > </a
+      ><a name="397" class="Symbol"
+      >:</a
+      ><a name="398"
+      > </a
+      ><a name="399" href="GPBindings.html#442" class="Function"
+      >V</a
+      ><a name="400" class="Symbol"
+      >}{</a
+      ><a name="402" href="Fresh.html#402" class="Bound"
+      >S'</a
+      ><a name="404"
+      > </a
+      ><a name="405" class="Symbol"
+      >:</a
+      ><a name="406"
+      > </a
+      ><a name="407" href="GPBindings.html#432" class="Function"
+      >Sort</a
+      ><a name="411" class="Symbol"
+      >}</a
+      ><a name="412"
+      > 
+             </a
+      ><a name="427" class="Symbol"
+      >&#8594;</a
+      ><a name="428"
+      > </a
+      ><a name="429" href="Fresh.html#402" class="Bound"
+      >S'</a
+      ><a name="431"
+      > </a
+      ><a name="432" href="Relation.Binary.Core.html#4493" class="Function Operator"
+      >&#8802;</a
+      ><a name="433"
+      > </a
+      ><a name="434" href="Fresh.html#250" class="Bound"
+      >S</a
+      ><a name="435"
+      >             </a
+      ><a name="448" class="Symbol"
+      >&#8594;</a
+      ><a name="449"
+      > </a
+      ><a name="450" href="Fresh.html#242" class="Datatype"
+      >freshF</a
+      ><a name="456"
+      > </a
+      ><a name="457" href="Fresh.html#250" class="Bound"
+      >S</a
+      ><a name="458"
+      > </a
+      ><a name="459" href="Fresh.html#260" class="Bound"
+      >n</a
+      ><a name="460"
+      > </a
+      ><a name="461" class="Symbol"
+      >(</a
+      ><a name="462" href="GPBindings.html#577" class="InductiveConstructor"
+      >|v|</a
+      ><a name="465"
+      > </a
+      ><a name="466" href="Fresh.html#402" class="Bound"
+      >S'</a
+      ><a name="468" class="Symbol"
+      >)</a
+      ><a name="469"
+      > </a
+      ><a name="470" href="Fresh.html#395" class="Bound"
+      >m</a
+      ><a name="471"
+      >
+   </a
+      ><a name="475" href="Fresh.html#475" class="InductiveConstructor"
+      >fresh1</a
+      ><a name="481"
+      >    </a
+      ><a name="485" class="Symbol"
+      >:</a
+      ><a name="486"
+      >                      </a
+      ><a name="508" href="Fresh.html#242" class="Datatype"
+      >freshF</a
+      ><a name="514"
+      > </a
+      ><a name="515" href="Fresh.html#250" class="Bound"
+      >S</a
+      ><a name="516"
+      > </a
+      ><a name="517" href="Fresh.html#260" class="Bound"
+      >n</a
+      ><a name="518"
+      > </a
+      ><a name="519" href="GPBindings.html#618" class="InductiveConstructor"
+      >|1|</a
+      ><a name="522"
+      >     </a
+      ><a name="527" href="Agda.Builtin.Unit.html#78" class="InductiveConstructor"
+      >tt</a
+      ><a name="529"
+      >
+   </a
+      ><a name="533" href="Fresh.html#533" class="InductiveConstructor"
+      >freshE</a
+      ><a name="539"
+      >    </a
+      ><a name="543" class="Symbol"
+      >:</a
+      ><a name="544"
+      > </a
+      ><a name="545" class="Symbol"
+      >{</a
+      ><a name="546" href="Fresh.html#546" class="Bound"
+      >B</a
+      ><a name="547"
+      > </a
+      ><a name="548" class="Symbol"
+      >:</a
+      ><a name="549"
+      > </a
+      ><a name="550" class="PrimitiveType"
+      >Set</a
+      ><a name="553" class="Symbol"
+      >}{</a
+      ><a name="555" href="Fresh.html#555" class="Bound"
+      >b</a
+      ><a name="556"
+      > </a
+      ><a name="557" class="Symbol"
+      >:</a
+      ><a name="558"
+      > </a
+      ><a name="559" href="Fresh.html#546" class="Bound"
+      >B</a
+      ><a name="560" class="Symbol"
+      >}</a
+      ><a name="561"
+      >   </a
+      ><a name="564" class="Symbol"
+      >&#8594;</a
+      ><a name="565"
+      > </a
+      ><a name="566" href="Fresh.html#242" class="Datatype"
+      >freshF</a
+      ><a name="572"
+      > </a
+      ><a name="573" href="Fresh.html#250" class="Bound"
+      >S</a
+      ><a name="574"
+      > </a
+      ><a name="575" href="Fresh.html#260" class="Bound"
+      >n</a
+      ><a name="576"
+      > </a
+      ><a name="577" class="Symbol"
+      >(</a
+      ><a name="578" href="GPBindings.html#700" class="InductiveConstructor"
+      >|E|</a
+      ><a name="581"
+      > </a
+      ><a name="582" href="Fresh.html#546" class="Bound"
+      >B</a
+      ><a name="583" class="Symbol"
+      >)</a
+      ><a name="584"
+      > </a
+      ><a name="585" href="Fresh.html#555" class="Bound"
+      >b</a
+      ><a name="586"
+      >
+   </a
+      ><a name="590" href="Fresh.html#590" class="InductiveConstructor"
+      >freshEf</a
+      ><a name="597"
+      >   </a
+      ><a name="600" class="Symbol"
+      >:</a
+      ><a name="601"
+      > </a
+      ><a name="602" class="Symbol"
+      >{</a
+      ><a name="603" href="Fresh.html#603" class="Bound"
+      >G</a
+      ><a name="604"
+      > </a
+      ><a name="605" class="Symbol"
+      >:</a
+      ><a name="606"
+      > </a
+      ><a name="607" href="GPBindings.html#539" class="Datatype"
+      >Functor</a
+      ><a name="614" class="Symbol"
+      >}{</a
+      ><a name="616" href="Fresh.html#616" class="Bound"
+      >e</a
+      ><a name="617"
+      > </a
+      ><a name="618" class="Symbol"
+      >:</a
+      ><a name="619"
+      > </a
+      ><a name="620" href="GPBindings.html#989" class="Function Operator"
+      >&#10214;</a
+      ><a name="621"
+      > </a
+      ><a name="622" href="Fresh.html#603" class="Bound"
+      >G</a
+      ><a name="623"
+      > </a
+      ><a name="624" href="GPBindings.html#989" class="Function Operator"
+      >&#10215;</a
+      ><a name="625"
+      > </a
+      ><a name="626" class="Symbol"
+      >(</a
+      ><a name="627" href="GPBindings.html#1264" class="Datatype"
+      >&#956;</a
+      ><a name="628"
+      > </a
+      ><a name="629" href="Fresh.html#603" class="Bound"
+      >G</a
+      ><a name="630" class="Symbol"
+      >)}</a
+      ><a name="632"
+      >
+             </a
+      ><a name="646" class="Symbol"
+      >&#8594;</a
+      ><a name="647"
+      > </a
+      ><a name="648" href="Fresh.html#242" class="Datatype"
+      >freshF</a
+      ><a name="654"
+      > </a
+      ><a name="655" href="Fresh.html#250" class="Bound"
+      >S</a
+      ><a name="656"
+      > </a
+      ><a name="657" href="Fresh.html#260" class="Bound"
+      >n</a
+      ><a name="658"
+      > </a
+      ><a name="659" href="Fresh.html#603" class="Bound"
+      >G</a
+      ><a name="660"
+      > </a
+      ><a name="661" href="Fresh.html#616" class="Bound"
+      >e</a
+      ><a name="662"
+      >     </a
+      ><a name="667" class="Symbol"
+      >&#8594;</a
+      ><a name="668"
+      > </a
+      ><a name="669" href="Fresh.html#242" class="Datatype"
+      >freshF</a
+      ><a name="675"
+      > </a
+      ><a name="676" href="Fresh.html#250" class="Bound"
+      >S</a
+      ><a name="677"
+      > </a
+      ><a name="678" href="Fresh.html#260" class="Bound"
+      >n</a
+      ><a name="679"
+      > </a
+      ><a name="680" class="Symbol"
+      >(</a
+      ><a name="681" href="GPBindings.html#749" class="InductiveConstructor"
+      >|Ef|</a
+      ><a name="685"
+      > </a
+      ><a name="686" href="Fresh.html#603" class="Bound"
+      >G</a
+      ><a name="687"
+      > </a
+      ><a name="688" class="Symbol"
+      >)</a
+      ><a name="689"
+      > </a
+      ><a name="690" href="GPBindings.html#1296" class="InductiveConstructor Operator"
+      >&#10216;</a
+      ><a name="691"
+      > </a
+      ><a name="692" href="Fresh.html#616" class="Bound"
+      >e</a
+      ><a name="693"
+      > </a
+      ><a name="694" href="GPBindings.html#1296" class="InductiveConstructor Operator"
+      >&#10217;</a
+      ><a name="695"
+      >
+   </a
+      ><a name="699" href="Fresh.html#699" class="InductiveConstructor"
+      >freshR</a
+      ><a name="705"
+      >    </a
+      ><a name="709" class="Symbol"
+      >:</a
+      ><a name="710"
+      > </a
+      ><a name="711" class="Symbol"
+      >{</a
+      ><a name="712" href="Fresh.html#712" class="Bound"
+      >e</a
+      ><a name="713"
+      > </a
+      ><a name="714" class="Symbol"
+      >:</a
+      ><a name="715"
+      > </a
+      ><a name="716" href="GPBindings.html#989" class="Function Operator"
+      >&#10214;</a
+      ><a name="717"
+      > </a
+      ><a name="718" href="Fresh.html#267" class="Bound"
+      >F</a
+      ><a name="719"
+      > </a
+      ><a name="720" href="GPBindings.html#989" class="Function Operator"
+      >&#10215;</a
+      ><a name="721"
+      > </a
+      ><a name="722" class="Symbol"
+      >(</a
+      ><a name="723" href="GPBindings.html#1264" class="Datatype"
+      >&#956;</a
+      ><a name="724"
+      > </a
+      ><a name="725" href="Fresh.html#267" class="Bound"
+      >F</a
+      ><a name="726" class="Symbol"
+      >)}</a
+      ><a name="728"
+      >
+             </a
+      ><a name="742" class="Symbol"
+      >&#8594;</a
+      ><a name="743"
+      > </a
+      ><a name="744" href="Fresh.html#242" class="Datatype"
+      >freshF</a
+      ><a name="750"
+      > </a
+      ><a name="751" href="Fresh.html#250" class="Bound"
+      >S</a
+      ><a name="752"
+      > </a
+      ><a name="753" href="Fresh.html#260" class="Bound"
+      >n</a
+      ><a name="754"
+      > </a
+      ><a name="755" href="Fresh.html#267" class="Bound"
+      >F</a
+      ><a name="756"
+      > </a
+      ><a name="757" href="Fresh.html#712" class="Bound"
+      >e</a
+      ><a name="758"
+      >     </a
+      ><a name="763" class="Symbol"
+      >&#8594;</a
+      ><a name="764"
+      > </a
+      ><a name="765" href="Fresh.html#242" class="Datatype"
+      >freshF</a
+      ><a name="771"
+      > </a
+      ><a name="772" href="Fresh.html#250" class="Bound"
+      >S</a
+      ><a name="773"
+      > </a
+      ><a name="774" href="Fresh.html#260" class="Bound"
+      >n</a
+      ><a name="775"
+      > </a
+      ><a name="776" href="GPBindings.html#659" class="InductiveConstructor"
+      >|R|</a
+      ><a name="779"
+      >       </a
+      ><a name="786" href="GPBindings.html#1296" class="InductiveConstructor Operator"
+      >&#10216;</a
+      ><a name="787"
+      > </a
+      ><a name="788" href="Fresh.html#712" class="Bound"
+      >e</a
+      ><a name="789"
+      > </a
+      ><a name="790" href="GPBindings.html#1296" class="InductiveConstructor Operator"
+      >&#10217;</a
+      ><a name="791"
+      >            
+   </a
+      ><a name="807" href="Fresh.html#807" class="InductiveConstructor"
+      >freshinj&#8321;</a
+      ><a name="816"
+      > </a
+      ><a name="817" class="Symbol"
+      >:</a
+      ><a name="818"
+      > </a
+      ><a name="819" class="Symbol"
+      >{</a
+      ><a name="820" href="Fresh.html#820" class="Bound"
+      >F&#8321;</a
+      ><a name="822"
+      > </a
+      ><a name="823" href="Fresh.html#823" class="Bound"
+      >F&#8322;</a
+      ><a name="825"
+      > </a
+      ><a name="826" class="Symbol"
+      >:</a
+      ><a name="827"
+      > </a
+      ><a name="828" href="GPBindings.html#539" class="Datatype"
+      >Functor</a
+      ><a name="835" class="Symbol"
+      >}{</a
+      ><a name="837" href="Fresh.html#837" class="Bound"
+      >e</a
+      ><a name="838"
+      > </a
+      ><a name="839" class="Symbol"
+      >:</a
+      ><a name="840"
+      > </a
+      ><a name="841" href="GPBindings.html#989" class="Function Operator"
+      >&#10214;</a
+      ><a name="842"
+      > </a
+      ><a name="843" href="Fresh.html#820" class="Bound"
+      >F&#8321;</a
+      ><a name="845"
+      > </a
+      ><a name="846" href="GPBindings.html#989" class="Function Operator"
+      >&#10215;</a
+      ><a name="847"
+      > </a
+      ><a name="848" class="Symbol"
+      >(</a
+      ><a name="849" href="GPBindings.html#1264" class="Datatype"
+      >&#956;</a
+      ><a name="850"
+      > </a
+      ><a name="851" href="Fresh.html#267" class="Bound"
+      >F</a
+      ><a name="852" class="Symbol"
+      >)}</a
+      ><a name="854"
+      >
+             </a
+      ><a name="868" class="Symbol"
+      >&#8594;</a
+      ><a name="869"
+      > </a
+      ><a name="870" href="Fresh.html#242" class="Datatype"
+      >freshF</a
+      ><a name="876"
+      > </a
+      ><a name="877" href="Fresh.html#250" class="Bound"
+      >S</a
+      ><a name="878"
+      > </a
+      ><a name="879" href="Fresh.html#260" class="Bound"
+      >n</a
+      ><a name="880"
+      > </a
+      ><a name="881" href="Fresh.html#820" class="Bound"
+      >F&#8321;</a
+      ><a name="883"
+      > </a
+      ><a name="884" href="Fresh.html#837" class="Bound"
+      >e</a
+      ><a name="885"
+      >    </a
+      ><a name="889" class="Symbol"
+      >&#8594;</a
+      ><a name="890"
+      > </a
+      ><a name="891" href="Fresh.html#242" class="Datatype"
+      >freshF</a
+      ><a name="897"
+      > </a
+      ><a name="898" href="Fresh.html#250" class="Bound"
+      >S</a
+      ><a name="899"
+      > </a
+      ><a name="900" href="Fresh.html#260" class="Bound"
+      >n</a
+      ><a name="901"
+      > </a
+      ><a name="902" class="Symbol"
+      >(</a
+      ><a name="903" href="Fresh.html#820" class="Bound"
+      >F&#8321;</a
+      ><a name="905"
+      > </a
+      ><a name="906" href="GPBindings.html#798" class="InductiveConstructor Operator"
+      >|+|</a
+      ><a name="909"
+      > </a
+      ><a name="910" href="Fresh.html#823" class="Bound"
+      >F&#8322;</a
+      ><a name="912" class="Symbol"
+      >)</a
+      ><a name="913"
+      > </a
+      ><a name="914" class="Symbol"
+      >(</a
+      ><a name="915" href="Data.Sum.html#489" class="InductiveConstructor"
+      >inj&#8321;</a
+      ><a name="919"
+      > </a
+      ><a name="920" href="Fresh.html#837" class="Bound"
+      >e</a
+      ><a name="921" class="Symbol"
+      >)</a
+      ><a name="922"
+      > 
+   </a
+      ><a name="927" href="Fresh.html#927" class="InductiveConstructor"
+      >freshinj&#8322;</a
+      ><a name="936"
+      > </a
+      ><a name="937" class="Symbol"
+      >:</a
+      ><a name="938"
+      > </a
+      ><a name="939" class="Symbol"
+      >{</a
+      ><a name="940" href="Fresh.html#940" class="Bound"
+      >F&#8321;</a
+      ><a name="942"
+      > </a
+      ><a name="943" href="Fresh.html#943" class="Bound"
+      >F&#8322;</a
+      ><a name="945"
+      > </a
+      ><a name="946" class="Symbol"
+      >:</a
+      ><a name="947"
+      > </a
+      ><a name="948" href="GPBindings.html#539" class="Datatype"
+      >Functor</a
+      ><a name="955" class="Symbol"
+      >}{</a
+      ><a name="957" href="Fresh.html#957" class="Bound"
+      >e</a
+      ><a name="958"
+      > </a
+      ><a name="959" class="Symbol"
+      >:</a
+      ><a name="960"
+      > </a
+      ><a name="961" href="GPBindings.html#989" class="Function Operator"
+      >&#10214;</a
+      ><a name="962"
+      > </a
+      ><a name="963" href="Fresh.html#943" class="Bound"
+      >F&#8322;</a
+      ><a name="965"
+      > </a
+      ><a name="966" href="GPBindings.html#989" class="Function Operator"
+      >&#10215;</a
+      ><a name="967"
+      > </a
+      ><a name="968" class="Symbol"
+      >(</a
+      ><a name="969" href="GPBindings.html#1264" class="Datatype"
+      >&#956;</a
+      ><a name="970"
+      > </a
+      ><a name="971" href="Fresh.html#267" class="Bound"
+      >F</a
+      ><a name="972" class="Symbol"
+      >)}</a
+      ><a name="974"
+      >
+             </a
+      ><a name="988" class="Symbol"
+      >&#8594;</a
+      ><a name="989"
+      > </a
+      ><a name="990" href="Fresh.html#242" class="Datatype"
+      >freshF</a
+      ><a name="996"
+      > </a
+      ><a name="997" href="Fresh.html#250" class="Bound"
+      >S</a
+      ><a name="998"
+      > </a
+      ><a name="999" href="Fresh.html#260" class="Bound"
+      >n</a
+      ><a name="1000"
+      > </a
+      ><a name="1001" href="Fresh.html#943" class="Bound"
+      >F&#8322;</a
+      ><a name="1003"
+      > </a
+      ><a name="1004" href="Fresh.html#957" class="Bound"
+      >e</a
+      ><a name="1005"
+      >    </a
+      ><a name="1009" class="Symbol"
+      >&#8594;</a
+      ><a name="1010"
+      > </a
+      ><a name="1011" href="Fresh.html#242" class="Datatype"
+      >freshF</a
+      ><a name="1017"
+      > </a
+      ><a name="1018" href="Fresh.html#250" class="Bound"
+      >S</a
+      ><a name="1019"
+      > </a
+      ><a name="1020" href="Fresh.html#260" class="Bound"
+      >n</a
+      ><a name="1021"
+      > </a
+      ><a name="1022" class="Symbol"
+      >(</a
+      ><a name="1023" href="Fresh.html#940" class="Bound"
+      >F&#8321;</a
+      ><a name="1025"
+      > </a
+      ><a name="1026" href="GPBindings.html#798" class="InductiveConstructor Operator"
+      >|+|</a
+      ><a name="1029"
+      > </a
+      ><a name="1030" href="Fresh.html#943" class="Bound"
+      >F&#8322;</a
+      ><a name="1032" class="Symbol"
+      >)</a
+      ><a name="1033"
+      > </a
+      ><a name="1034" class="Symbol"
+      >(</a
+      ><a name="1035" href="Data.Sum.html#514" class="InductiveConstructor"
+      >inj&#8322;</a
+      ><a name="1039"
+      > </a
+      ><a name="1040" href="Fresh.html#957" class="Bound"
+      >e</a
+      ><a name="1041" class="Symbol"
+      >)</a
+      ><a name="1042"
+      > 
+   </a
+      ><a name="1047" href="Fresh.html#1047" class="InductiveConstructor"
+      >freshx</a
+      ><a name="1053"
+      >    </a
+      ><a name="1057" class="Symbol"
+      >:</a
+      ><a name="1058"
+      > </a
+      ><a name="1059" class="Symbol"
+      >{</a
+      ><a name="1060" href="Fresh.html#1060" class="Bound"
+      >F&#8321;</a
+      ><a name="1062"
+      > </a
+      ><a name="1063" href="Fresh.html#1063" class="Bound"
+      >F&#8322;</a
+      ><a name="1065"
+      > </a
+      ><a name="1066" class="Symbol"
+      >:</a
+      ><a name="1067"
+      > </a
+      ><a name="1068" href="GPBindings.html#539" class="Datatype"
+      >Functor</a
+      ><a name="1075" class="Symbol"
+      >}{</a
+      ><a name="1077" href="Fresh.html#1077" class="Bound"
+      >e&#8321;</a
+      ><a name="1079"
+      > </a
+      ><a name="1080" class="Symbol"
+      >:</a
+      ><a name="1081"
+      > </a
+      ><a name="1082" href="GPBindings.html#989" class="Function Operator"
+      >&#10214;</a
+      ><a name="1083"
+      > </a
+      ><a name="1084" href="Fresh.html#1060" class="Bound"
+      >F&#8321;</a
+      ><a name="1086"
+      > </a
+      ><a name="1087" href="GPBindings.html#989" class="Function Operator"
+      >&#10215;</a
+      ><a name="1088"
+      > </a
+      ><a name="1089" class="Symbol"
+      >(</a
+      ><a name="1090" href="GPBindings.html#1264" class="Datatype"
+      >&#956;</a
+      ><a name="1091"
+      > </a
+      ><a name="1092" href="Fresh.html#267" class="Bound"
+      >F</a
+      ><a name="1093" class="Symbol"
+      >)}{</a
+      ><a name="1096" href="Fresh.html#1096" class="Bound"
+      >e&#8322;</a
+      ><a name="1098"
+      > </a
+      ><a name="1099" class="Symbol"
+      >:</a
+      ><a name="1100"
+      > </a
+      ><a name="1101" href="GPBindings.html#989" class="Function Operator"
+      >&#10214;</a
+      ><a name="1102"
+      > </a
+      ><a name="1103" href="Fresh.html#1063" class="Bound"
+      >F&#8322;</a
+      ><a name="1105"
+      > </a
+      ><a name="1106" href="GPBindings.html#989" class="Function Operator"
+      >&#10215;</a
+      ><a name="1107"
+      > </a
+      ><a name="1108" class="Symbol"
+      >(</a
+      ><a name="1109" href="GPBindings.html#1264" class="Datatype"
+      >&#956;</a
+      ><a name="1110"
+      > </a
+      ><a name="1111" href="Fresh.html#267" class="Bound"
+      >F</a
+      ><a name="1112" class="Symbol"
+      >)}</a
+      ><a name="1114"
+      >
+             </a
+      ><a name="1128" class="Symbol"
+      >&#8594;</a
+      ><a name="1129"
+      > </a
+      ><a name="1130" href="Fresh.html#242" class="Datatype"
+      >freshF</a
+      ><a name="1136"
+      > </a
+      ><a name="1137" href="Fresh.html#250" class="Bound"
+      >S</a
+      ><a name="1138"
+      > </a
+      ><a name="1139" href="Fresh.html#260" class="Bound"
+      >n</a
+      ><a name="1140"
+      > </a
+      ><a name="1141" href="Fresh.html#1060" class="Bound"
+      >F&#8321;</a
+      ><a name="1143"
+      > </a
+      ><a name="1144" href="Fresh.html#1077" class="Bound"
+      >e&#8321;</a
+      ><a name="1146"
+      >
+             </a
+      ><a name="1160" class="Symbol"
+      >&#8594;</a
+      ><a name="1161"
+      > </a
+      ><a name="1162" href="Fresh.html#242" class="Datatype"
+      >freshF</a
+      ><a name="1168"
+      > </a
+      ><a name="1169" href="Fresh.html#250" class="Bound"
+      >S</a
+      ><a name="1170"
+      > </a
+      ><a name="1171" href="Fresh.html#260" class="Bound"
+      >n</a
+      ><a name="1172"
+      > </a
+      ><a name="1173" href="Fresh.html#1063" class="Bound"
+      >F&#8322;</a
+      ><a name="1175"
+      > </a
+      ><a name="1176" href="Fresh.html#1096" class="Bound"
+      >e&#8322;</a
+      ><a name="1178"
+      >   </a
+      ><a name="1181" class="Symbol"
+      >&#8594;</a
+      ><a name="1182"
+      > </a
+      ><a name="1183" href="Fresh.html#242" class="Datatype"
+      >freshF</a
+      ><a name="1189"
+      > </a
+      ><a name="1190" href="Fresh.html#250" class="Bound"
+      >S</a
+      ><a name="1191"
+      > </a
+      ><a name="1192" href="Fresh.html#260" class="Bound"
+      >n</a
+      ><a name="1193"
+      > </a
+      ><a name="1194" class="Symbol"
+      >(</a
+      ><a name="1195" href="Fresh.html#1060" class="Bound"
+      >F&#8321;</a
+      ><a name="1197"
+      > </a
+      ><a name="1198" href="GPBindings.html#844" class="InductiveConstructor Operator"
+      >|x|</a
+      ><a name="1201"
+      > </a
+      ><a name="1202" href="Fresh.html#1063" class="Bound"
+      >F&#8322;</a
+      ><a name="1204" class="Symbol"
+      >)</a
+      ><a name="1205"
+      > </a
+      ><a name="1206" class="Symbol"
+      >(</a
+      ><a name="1207" href="Fresh.html#1077" class="Bound"
+      >e&#8321;</a
+      ><a name="1209"
+      > </a
+      ><a name="1210" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1211"
+      > </a
+      ><a name="1212" href="Fresh.html#1096" class="Bound"
+      >e&#8322;</a
+      ><a name="1214" class="Symbol"
+      >)</a
+      ><a name="1215"
+      > 
+   </a
+      ><a name="1220" href="Fresh.html#1220" class="InductiveConstructor"
+      >freshb&#8801;</a
+      ><a name="1227"
+      >   </a
+      ><a name="1230" class="Symbol"
+      >:</a
+      ><a name="1231"
+      > </a
+      ><a name="1232" class="Symbol"
+      >{</a
+      ><a name="1233" href="Fresh.html#1233" class="Bound"
+      >G</a
+      ><a name="1234"
+      > </a
+      ><a name="1235" class="Symbol"
+      >:</a
+      ><a name="1236"
+      > </a
+      ><a name="1237" href="GPBindings.html#539" class="Datatype"
+      >Functor</a
+      ><a name="1244" class="Symbol"
+      >}{</a
+      ><a name="1246" href="Fresh.html#1246" class="Bound"
+      >e</a
+      ><a name="1247"
+      > </a
+      ><a name="1248" class="Symbol"
+      >:</a
+      ><a name="1249"
+      > </a
+      ><a name="1250" href="GPBindings.html#989" class="Function Operator"
+      >&#10214;</a
+      ><a name="1251"
+      > </a
+      ><a name="1252" href="Fresh.html#1233" class="Bound"
+      >G</a
+      ><a name="1253"
+      > </a
+      ><a name="1254" href="GPBindings.html#989" class="Function Operator"
+      >&#10215;</a
+      ><a name="1255"
+      > </a
+      ><a name="1256" class="Symbol"
+      >(</a
+      ><a name="1257" href="GPBindings.html#1264" class="Datatype"
+      >&#956;</a
+      ><a name="1258"
+      > </a
+      ><a name="1259" href="Fresh.html#267" class="Bound"
+      >F</a
+      ><a name="1260" class="Symbol"
+      >)}</a
+      ><a name="1262"
+      >
+                                  </a
+      ><a name="1297" class="Symbol"
+      >&#8594;</a
+      ><a name="1298"
+      > </a
+      ><a name="1299" href="Fresh.html#242" class="Datatype"
+      >freshF</a
+      ><a name="1305"
+      > </a
+      ><a name="1306" href="Fresh.html#250" class="Bound"
+      >S</a
+      ><a name="1307"
+      > </a
+      ><a name="1308" href="Fresh.html#260" class="Bound"
+      >n</a
+      ><a name="1309"
+      > </a
+      ><a name="1310" class="Symbol"
+      >(</a
+      ><a name="1311" href="GPBindings.html#890" class="InductiveConstructor"
+      >|B|</a
+      ><a name="1314"
+      > </a
+      ><a name="1315" href="Fresh.html#250" class="Bound"
+      >S</a
+      ><a name="1316"
+      > </a
+      ><a name="1317" href="Fresh.html#1233" class="Bound"
+      >G</a
+      ><a name="1318" class="Symbol"
+      >)</a
+      ><a name="1319"
+      > </a
+      ><a name="1320" class="Symbol"
+      >(</a
+      ><a name="1321" href="Fresh.html#260" class="Bound"
+      >n</a
+      ><a name="1322"
+      > </a
+      ><a name="1323" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1324"
+      > </a
+      ><a name="1325" href="Fresh.html#1246" class="Bound"
+      >e</a
+      ><a name="1326" class="Symbol"
+      >)</a
+      ><a name="1327"
+      >
+   </a
+      ><a name="1331" href="Fresh.html#1331" class="InductiveConstructor"
+      >freshb</a
+      ><a name="1337"
+      >    </a
+      ><a name="1341" class="Symbol"
+      >:</a
+      ><a name="1342"
+      > </a
+      ><a name="1343" class="Symbol"
+      >{</a
+      ><a name="1344" href="Fresh.html#1344" class="Bound"
+      >G</a
+      ><a name="1345"
+      > </a
+      ><a name="1346" class="Symbol"
+      >:</a
+      ><a name="1347"
+      > </a
+      ><a name="1348" href="GPBindings.html#539" class="Datatype"
+      >Functor</a
+      ><a name="1355" class="Symbol"
+      >}{</a
+      ><a name="1357" href="Fresh.html#1357" class="Bound"
+      >S'</a
+      ><a name="1359"
+      > </a
+      ><a name="1360" class="Symbol"
+      >:</a
+      ><a name="1361"
+      > </a
+      ><a name="1362" href="GPBindings.html#432" class="Function"
+      >Sort</a
+      ><a name="1366" class="Symbol"
+      >}{</a
+      ><a name="1368" href="Fresh.html#1368" class="Bound"
+      >e</a
+      ><a name="1369"
+      > </a
+      ><a name="1370" class="Symbol"
+      >:</a
+      ><a name="1371"
+      > </a
+      ><a name="1372" href="GPBindings.html#989" class="Function Operator"
+      >&#10214;</a
+      ><a name="1373"
+      > </a
+      ><a name="1374" href="Fresh.html#1344" class="Bound"
+      >G</a
+      ><a name="1375"
+      > </a
+      ><a name="1376" href="GPBindings.html#989" class="Function Operator"
+      >&#10215;</a
+      ><a name="1377"
+      > </a
+      ><a name="1378" class="Symbol"
+      >(</a
+      ><a name="1379" href="GPBindings.html#1264" class="Datatype"
+      >&#956;</a
+      ><a name="1380"
+      > </a
+      ><a name="1381" href="Fresh.html#267" class="Bound"
+      >F</a
+      ><a name="1382" class="Symbol"
+      >)}{</a
+      ><a name="1385" href="Fresh.html#1385" class="Bound"
+      >m</a
+      ><a name="1386"
+      > </a
+      ><a name="1387" class="Symbol"
+      >:</a
+      ><a name="1388"
+      > </a
+      ><a name="1389" href="GPBindings.html#442" class="Function"
+      >V</a
+      ><a name="1390" class="Symbol"
+      >}</a
+      ><a name="1391"
+      >
+             </a
+      ><a name="1405" class="Symbol"
+      >&#8594;</a
+      ><a name="1406"
+      > </a
+      ><a name="1407" href="Fresh.html#242" class="Datatype"
+      >freshF</a
+      ><a name="1413"
+      > </a
+      ><a name="1414" href="Fresh.html#250" class="Bound"
+      >S</a
+      ><a name="1415"
+      > </a
+      ><a name="1416" href="Fresh.html#260" class="Bound"
+      >n</a
+      ><a name="1417"
+      > </a
+      ><a name="1418" href="Fresh.html#1344" class="Bound"
+      >G</a
+      ><a name="1419"
+      > </a
+      ><a name="1420" href="Fresh.html#1368" class="Bound"
+      >e</a
+      ><a name="1421"
+      >     </a
+      ><a name="1426" class="Symbol"
+      >&#8594;</a
+      ><a name="1427"
+      > </a
+      ><a name="1428" href="Fresh.html#242" class="Datatype"
+      >freshF</a
+      ><a name="1434"
+      > </a
+      ><a name="1435" href="Fresh.html#250" class="Bound"
+      >S</a
+      ><a name="1436"
+      > </a
+      ><a name="1437" href="Fresh.html#260" class="Bound"
+      >n</a
+      ><a name="1438"
+      > </a
+      ><a name="1439" class="Symbol"
+      >(</a
+      ><a name="1440" href="GPBindings.html#890" class="InductiveConstructor"
+      >|B|</a
+      ><a name="1443"
+      > </a
+      ><a name="1444" href="Fresh.html#1357" class="Bound"
+      >S'</a
+      ><a name="1446"
+      > </a
+      ><a name="1447" href="Fresh.html#1344" class="Bound"
+      >G</a
+      ><a name="1448" class="Symbol"
+      >)</a
+      ><a name="1449"
+      > </a
+      ><a name="1450" class="Symbol"
+      >(</a
+      ><a name="1451" href="Fresh.html#1385" class="Bound"
+      >m</a
+      ><a name="1452"
+      > </a
+      ><a name="1453" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1454"
+      > </a
+      ><a name="1455" href="Fresh.html#1368" class="Bound"
+      >e</a
+      ><a name="1456" class="Symbol"
+      >)</a
+      ><a name="1457"
+      >
+
+</a
+      ><a name="1459" href="Fresh.html#1459" class="Function"
+      >fresh</a
+      ><a name="1464"
+      > </a
+      ><a name="1465" class="Symbol"
+      >:</a
+      ><a name="1466"
+      > </a
+      ><a name="1467" class="Symbol"
+      >(</a
+      ><a name="1468" href="Fresh.html#1468" class="Bound"
+      >S</a
+      ><a name="1469"
+      > </a
+      ><a name="1470" class="Symbol"
+      >:</a
+      ><a name="1471"
+      > </a
+      ><a name="1472" href="GPBindings.html#432" class="Function"
+      >Sort</a
+      ><a name="1476" class="Symbol"
+      >)(</a
+      ><a name="1478" href="Fresh.html#1478" class="Bound"
+      >n</a
+      ><a name="1479"
+      > </a
+      ><a name="1480" class="Symbol"
+      >:</a
+      ><a name="1481"
+      > </a
+      ><a name="1482" href="GPBindings.html#442" class="Function"
+      >V</a
+      ><a name="1483" class="Symbol"
+      >){</a
+      ><a name="1485" href="Fresh.html#1485" class="Bound"
+      >F</a
+      ><a name="1486"
+      > </a
+      ><a name="1487" class="Symbol"
+      >:</a
+      ><a name="1488"
+      > </a
+      ><a name="1489" href="GPBindings.html#539" class="Datatype"
+      >Functor</a
+      ><a name="1496" class="Symbol"
+      >}</a
+      ><a name="1497"
+      > </a
+      ><a name="1498" class="Symbol"
+      >&#8594;</a
+      ><a name="1499"
+      > </a
+      ><a name="1500" class="Symbol"
+      >(</a
+      ><a name="1501" href="GPBindings.html#1264" class="Datatype"
+      >&#956;</a
+      ><a name="1502"
+      > </a
+      ><a name="1503" href="Fresh.html#1485" class="Bound"
+      >F</a
+      ><a name="1504" class="Symbol"
+      >)</a
+      ><a name="1505"
+      > </a
+      ><a name="1506" class="Symbol"
+      >&#8594;</a
+      ><a name="1507"
+      > </a
+      ><a name="1508" class="PrimitiveType"
+      >Set</a
+      ><a name="1511"
+      >
+</a
+      ><a name="1512" href="Fresh.html#1459" class="Function"
+      >fresh</a
+      ><a name="1517"
+      > </a
+      ><a name="1518" href="Fresh.html#1518" class="Bound"
+      >S</a
+      ><a name="1519"
+      > </a
+      ><a name="1520" href="Fresh.html#1520" class="Bound"
+      >n</a
+      ><a name="1521"
+      > </a
+      ><a name="1522" class="Symbol"
+      >{</a
+      ><a name="1523" href="Fresh.html#1523" class="Bound"
+      >F</a
+      ><a name="1524" class="Symbol"
+      >}</a
+      ><a name="1525"
+      > </a
+      ><a name="1526" class="Symbol"
+      >=</a
+      ><a name="1527"
+      > </a
+      ><a name="1528" href="Fresh.html#242" class="Datatype"
+      >freshF</a
+      ><a name="1534"
+      > </a
+      ><a name="1535" href="Fresh.html#1518" class="Bound"
+      >S</a
+      ><a name="1536"
+      > </a
+      ><a name="1537" href="Fresh.html#1520" class="Bound"
+      >n</a
+      ><a name="1538"
+      > </a
+      ><a name="1539" href="GPBindings.html#659" class="InductiveConstructor"
+      >|R|</a
+      ><a name="1542"
+      > </a
+      ><a name="1543" class="Comment"
+      >-- &#10216; e &#10217; = freshF S n {F} F e</a
+      ><a name="1572"
+      >
+
+</a
+      ><a name="1574" class="Keyword"
+      >postulate</a
+      ><a name="1583"
+      >
+  </a
+      ><a name="1586" href="Fresh.html#1586" class="Postulate"
+      >lemmaSwapF#</a
+      ><a name="1597"
+      > </a
+      ><a name="1598" class="Symbol"
+      >:</a
+      ><a name="1599"
+      > </a
+      ><a name="1600" class="Symbol"
+      >{</a
+      ><a name="1601" href="Fresh.html#1601" class="Bound"
+      >F</a
+      ><a name="1602"
+      > </a
+      ><a name="1603" href="Fresh.html#1603" class="Bound"
+      >G</a
+      ><a name="1604"
+      > </a
+      ><a name="1605" class="Symbol"
+      >:</a
+      ><a name="1606"
+      > </a
+      ><a name="1607" href="GPBindings.html#539" class="Datatype"
+      >Functor</a
+      ><a name="1614" class="Symbol"
+      >}{</a
+      ><a name="1616" href="Fresh.html#1616" class="Bound"
+      >S</a
+      ><a name="1617"
+      > </a
+      ><a name="1618" class="Symbol"
+      >:</a
+      ><a name="1619"
+      > </a
+      ><a name="1620" href="GPBindings.html#432" class="Function"
+      >Sort</a
+      ><a name="1624" class="Symbol"
+      >}{</a
+      ><a name="1626" href="Fresh.html#1626" class="Bound"
+      >x</a
+      ><a name="1627"
+      > </a
+      ><a name="1628" href="Fresh.html#1628" class="Bound"
+      >y</a
+      ><a name="1629"
+      > </a
+      ><a name="1630" class="Symbol"
+      >:</a
+      ><a name="1631"
+      > </a
+      ><a name="1632" href="GPBindings.html#442" class="Function"
+      >V</a
+      ><a name="1633" class="Symbol"
+      >}{</a
+      ><a name="1635" href="Fresh.html#1635" class="Bound"
+      >e</a
+      ><a name="1636"
+      >  </a
+      ><a name="1638" class="Symbol"
+      >:</a
+      ><a name="1639"
+      > </a
+      ><a name="1640" href="GPBindings.html#989" class="Function Operator"
+      >&#10214;</a
+      ><a name="1641"
+      > </a
+      ><a name="1642" href="Fresh.html#1603" class="Bound"
+      >G</a
+      ><a name="1643"
+      > </a
+      ><a name="1644" href="GPBindings.html#989" class="Function Operator"
+      >&#10215;</a
+      ><a name="1645"
+      > </a
+      ><a name="1646" class="Symbol"
+      >(</a
+      ><a name="1647" href="GPBindings.html#1264" class="Datatype"
+      >&#956;</a
+      ><a name="1648"
+      > </a
+      ><a name="1649" href="Fresh.html#1601" class="Bound"
+      >F</a
+      ><a name="1650" class="Symbol"
+      >)}</a
+      ><a name="1652"
+      >
+        </a
+      ><a name="1661" class="Symbol"
+      >&#8594;</a
+      ><a name="1662"
+      > </a
+      ><a name="1663" href="Fresh.html#242" class="Datatype"
+      >freshF</a
+      ><a name="1669"
+      > </a
+      ><a name="1670" href="Fresh.html#1616" class="Bound"
+      >S</a
+      ><a name="1671"
+      > </a
+      ><a name="1672" href="Fresh.html#1628" class="Bound"
+      >y</a
+      ><a name="1673"
+      > </a
+      ><a name="1674" href="Fresh.html#1603" class="Bound"
+      >G</a
+      ><a name="1675"
+      > </a
+      ><a name="1676" href="Fresh.html#1635" class="Bound"
+      >e</a
+      ><a name="1677"
+      >
+        </a
+      ><a name="1686" class="Symbol"
+      >&#8594;</a
+      ><a name="1687"
+      > </a
+      ><a name="1688" href="Fresh.html#242" class="Datatype"
+      >freshF</a
+      ><a name="1694"
+      > </a
+      ><a name="1695" href="Fresh.html#1616" class="Bound"
+      >S</a
+      ><a name="1696"
+      > </a
+      ><a name="1697" href="Fresh.html#1626" class="Bound"
+      >x</a
+      ><a name="1698"
+      > </a
+      ><a name="1699" href="Fresh.html#1603" class="Bound"
+      >G</a
+      ><a name="1700"
+      > </a
+      ><a name="1701" class="Symbol"
+      >(</a
+      ><a name="1702" href="Swap.html#392" class="Function"
+      >swapF</a
+      ><a name="1707"
+      > </a
+      ><a name="1708" href="Fresh.html#1603" class="Bound"
+      >G</a
+      ><a name="1709"
+      > </a
+      ><a name="1710" href="Fresh.html#1616" class="Bound"
+      >S</a
+      ><a name="1711"
+      > </a
+      ><a name="1712" href="Fresh.html#1626" class="Bound"
+      >x</a
+      ><a name="1713"
+      > </a
+      ><a name="1714" href="Fresh.html#1628" class="Bound"
+      >y</a
+      ><a name="1715"
+      > </a
+      ><a name="1716" href="Fresh.html#1635" class="Bound"
+      >e</a
+      ><a name="1717" class="Symbol"
+      >)</a
+      ><a name="1718"
+      >
+</a
+      ><a name="1719" class="Comment"
+      >--lemmaSwapF# = {!!}</a
+      ><a name="1739"
+      >
+
+  </a
+      ><a name="1743" href="Fresh.html#1743" class="Postulate"
+      >lemmaSwapF#&#8802;&#8594;</a
+      ><a name="1756"
+      > </a
+      ><a name="1757" class="Symbol"
+      >:</a
+      ><a name="1758"
+      > </a
+      ><a name="1759" class="Symbol"
+      >{</a
+      ><a name="1760" href="Fresh.html#1760" class="Bound"
+      >F</a
+      ><a name="1761"
+      > </a
+      ><a name="1762" href="Fresh.html#1762" class="Bound"
+      >G</a
+      ><a name="1763"
+      > </a
+      ><a name="1764" class="Symbol"
+      >:</a
+      ><a name="1765"
+      > </a
+      ><a name="1766" href="GPBindings.html#539" class="Datatype"
+      >Functor</a
+      ><a name="1773" class="Symbol"
+      >}{</a
+      ><a name="1775" href="Fresh.html#1775" class="Bound"
+      >S</a
+      ><a name="1776"
+      > </a
+      ><a name="1777" class="Symbol"
+      >:</a
+      ><a name="1778"
+      > </a
+      ><a name="1779" href="GPBindings.html#432" class="Function"
+      >Sort</a
+      ><a name="1783" class="Symbol"
+      >}{</a
+      ><a name="1785" href="Fresh.html#1785" class="Bound"
+      >x</a
+      ><a name="1786"
+      > </a
+      ><a name="1787" href="Fresh.html#1787" class="Bound"
+      >y</a
+      ><a name="1788"
+      > </a
+      ><a name="1789" href="Fresh.html#1789" class="Bound"
+      >z</a
+      ><a name="1790"
+      > </a
+      ><a name="1791" class="Symbol"
+      >:</a
+      ><a name="1792"
+      > </a
+      ><a name="1793" href="GPBindings.html#442" class="Function"
+      >V</a
+      ><a name="1794" class="Symbol"
+      >}{</a
+      ><a name="1796" href="Fresh.html#1796" class="Bound"
+      >e</a
+      ><a name="1797"
+      >  </a
+      ><a name="1799" class="Symbol"
+      >:</a
+      ><a name="1800"
+      > </a
+      ><a name="1801" href="GPBindings.html#989" class="Function Operator"
+      >&#10214;</a
+      ><a name="1802"
+      > </a
+      ><a name="1803" href="Fresh.html#1762" class="Bound"
+      >G</a
+      ><a name="1804"
+      > </a
+      ><a name="1805" href="GPBindings.html#989" class="Function Operator"
+      >&#10215;</a
+      ><a name="1806"
+      > </a
+      ><a name="1807" class="Symbol"
+      >(</a
+      ><a name="1808" href="GPBindings.html#1264" class="Datatype"
+      >&#956;</a
+      ><a name="1809"
+      > </a
+      ><a name="1810" href="Fresh.html#1760" class="Bound"
+      >F</a
+      ><a name="1811" class="Symbol"
+      >)}</a
+      ><a name="1813"
+      >
+        </a
+      ><a name="1822" class="Symbol"
+      >&#8594;</a
+      ><a name="1823"
+      > </a
+      ><a name="1824" href="Fresh.html#1785" class="Bound"
+      >x</a
+      ><a name="1825"
+      > </a
+      ><a name="1826" href="Relation.Binary.Core.html#4493" class="Function Operator"
+      >&#8802;</a
+      ><a name="1827"
+      > </a
+      ><a name="1828" href="Fresh.html#1787" class="Bound"
+      >y</a
+      ><a name="1829"
+      > </a
+      ><a name="1830" class="Symbol"
+      >&#8594;</a
+      ><a name="1831"
+      > </a
+      ><a name="1832" href="Fresh.html#1785" class="Bound"
+      >x</a
+      ><a name="1833"
+      > </a
+      ><a name="1834" href="Relation.Binary.Core.html#4493" class="Function Operator"
+      >&#8802;</a
+      ><a name="1835"
+      > </a
+      ><a name="1836" href="Fresh.html#1789" class="Bound"
+      >z</a
+      ><a name="1837"
+      > 
+        </a
+      ><a name="1847" class="Symbol"
+      >&#8594;</a
+      ><a name="1848"
+      > </a
+      ><a name="1849" href="Fresh.html#242" class="Datatype"
+      >freshF</a
+      ><a name="1855"
+      > </a
+      ><a name="1856" href="Fresh.html#1775" class="Bound"
+      >S</a
+      ><a name="1857"
+      > </a
+      ><a name="1858" href="Fresh.html#1785" class="Bound"
+      >x</a
+      ><a name="1859"
+      > </a
+      ><a name="1860" href="Fresh.html#1762" class="Bound"
+      >G</a
+      ><a name="1861"
+      > </a
+      ><a name="1862" class="Symbol"
+      >(</a
+      ><a name="1863" href="Swap.html#392" class="Function"
+      >swapF</a
+      ><a name="1868"
+      > </a
+      ><a name="1869" href="Fresh.html#1762" class="Bound"
+      >G</a
+      ><a name="1870"
+      > </a
+      ><a name="1871" href="Fresh.html#1775" class="Bound"
+      >S</a
+      ><a name="1872"
+      > </a
+      ><a name="1873" href="Fresh.html#1787" class="Bound"
+      >y</a
+      ><a name="1874"
+      > </a
+      ><a name="1875" href="Fresh.html#1789" class="Bound"
+      >z</a
+      ><a name="1876"
+      > </a
+      ><a name="1877" href="Fresh.html#1796" class="Bound"
+      >e</a
+      ><a name="1878" class="Symbol"
+      >)</a
+      ><a name="1879"
+      >
+        </a
+      ><a name="1888" class="Symbol"
+      >&#8594;</a
+      ><a name="1889"
+      > </a
+      ><a name="1890" href="Fresh.html#242" class="Datatype"
+      >freshF</a
+      ><a name="1896"
+      > </a
+      ><a name="1897" href="Fresh.html#1775" class="Bound"
+      >S</a
+      ><a name="1898"
+      > </a
+      ><a name="1899" href="Fresh.html#1785" class="Bound"
+      >x</a
+      ><a name="1900"
+      > </a
+      ><a name="1901" href="Fresh.html#1762" class="Bound"
+      >G</a
+      ><a name="1902"
+      > </a
+      ><a name="1903" href="Fresh.html#1796" class="Bound"
+      >e</a
+      ><a name="1904"
+      >
+</a
+      ><a name="1905" class="Comment"
+      >--lemmaSwapF#&#8802;&#8594; = {!!}</a
+      ><a name="1927"
+      >
+
+  </a
+      ><a name="1931" href="Fresh.html#1931" class="Postulate"
+      >lemmaSwapF#&#8802;&#8592;</a
+      ><a name="1944"
+      > </a
+      ><a name="1945" class="Symbol"
+      >:</a
+      ><a name="1946"
+      > </a
+      ><a name="1947" class="Symbol"
+      >{</a
+      ><a name="1948" href="Fresh.html#1948" class="Bound"
+      >F</a
+      ><a name="1949"
+      > </a
+      ><a name="1950" href="Fresh.html#1950" class="Bound"
+      >G</a
+      ><a name="1951"
+      > </a
+      ><a name="1952" class="Symbol"
+      >:</a
+      ><a name="1953"
+      > </a
+      ><a name="1954" href="GPBindings.html#539" class="Datatype"
+      >Functor</a
+      ><a name="1961" class="Symbol"
+      >}{</a
+      ><a name="1963" href="Fresh.html#1963" class="Bound"
+      >S</a
+      ><a name="1964"
+      > </a
+      ><a name="1965" class="Symbol"
+      >:</a
+      ><a name="1966"
+      > </a
+      ><a name="1967" href="GPBindings.html#432" class="Function"
+      >Sort</a
+      ><a name="1971" class="Symbol"
+      >}{</a
+      ><a name="1973" href="Fresh.html#1973" class="Bound"
+      >x</a
+      ><a name="1974"
+      > </a
+      ><a name="1975" href="Fresh.html#1975" class="Bound"
+      >y</a
+      ><a name="1976"
+      > </a
+      ><a name="1977" href="Fresh.html#1977" class="Bound"
+      >z</a
+      ><a name="1978"
+      > </a
+      ><a name="1979" class="Symbol"
+      >:</a
+      ><a name="1980"
+      > </a
+      ><a name="1981" href="GPBindings.html#442" class="Function"
+      >V</a
+      ><a name="1982" class="Symbol"
+      >}{</a
+      ><a name="1984" href="Fresh.html#1984" class="Bound"
+      >e</a
+      ><a name="1985"
+      >  </a
+      ><a name="1987" class="Symbol"
+      >:</a
+      ><a name="1988"
+      > </a
+      ><a name="1989" href="GPBindings.html#989" class="Function Operator"
+      >&#10214;</a
+      ><a name="1990"
+      > </a
+      ><a name="1991" href="Fresh.html#1950" class="Bound"
+      >G</a
+      ><a name="1992"
+      > </a
+      ><a name="1993" href="GPBindings.html#989" class="Function Operator"
+      >&#10215;</a
+      ><a name="1994"
+      > </a
+      ><a name="1995" class="Symbol"
+      >(</a
+      ><a name="1996" href="GPBindings.html#1264" class="Datatype"
+      >&#956;</a
+      ><a name="1997"
+      > </a
+      ><a name="1998" href="Fresh.html#1948" class="Bound"
+      >F</a
+      ><a name="1999" class="Symbol"
+      >)}</a
+      ><a name="2001"
+      >
+        </a
+      ><a name="2010" class="Symbol"
+      >&#8594;</a
+      ><a name="2011"
+      > </a
+      ><a name="2012" href="Fresh.html#1973" class="Bound"
+      >x</a
+      ><a name="2013"
+      > </a
+      ><a name="2014" href="Relation.Binary.Core.html#4493" class="Function Operator"
+      >&#8802;</a
+      ><a name="2015"
+      > </a
+      ><a name="2016" href="Fresh.html#1975" class="Bound"
+      >y</a
+      ><a name="2017"
+      > </a
+      ><a name="2018" class="Symbol"
+      >&#8594;</a
+      ><a name="2019"
+      > </a
+      ><a name="2020" href="Fresh.html#1973" class="Bound"
+      >x</a
+      ><a name="2021"
+      > </a
+      ><a name="2022" href="Relation.Binary.Core.html#4493" class="Function Operator"
+      >&#8802;</a
+      ><a name="2023"
+      > </a
+      ><a name="2024" href="Fresh.html#1977" class="Bound"
+      >z</a
+      ><a name="2025"
+      > 
+        </a
+      ><a name="2035" class="Symbol"
+      >&#8594;</a
+      ><a name="2036"
+      > </a
+      ><a name="2037" href="Fresh.html#242" class="Datatype"
+      >freshF</a
+      ><a name="2043"
+      > </a
+      ><a name="2044" href="Fresh.html#1963" class="Bound"
+      >S</a
+      ><a name="2045"
+      > </a
+      ><a name="2046" href="Fresh.html#1973" class="Bound"
+      >x</a
+      ><a name="2047"
+      > </a
+      ><a name="2048" href="Fresh.html#1950" class="Bound"
+      >G</a
+      ><a name="2049"
+      > </a
+      ><a name="2050" href="Fresh.html#1984" class="Bound"
+      >e</a
+      ><a name="2051"
+      >
+        </a
+      ><a name="2060" class="Symbol"
+      >&#8594;</a
+      ><a name="2061"
+      > </a
+      ><a name="2062" href="Fresh.html#242" class="Datatype"
+      >freshF</a
+      ><a name="2068"
+      > </a
+      ><a name="2069" href="Fresh.html#1963" class="Bound"
+      >S</a
+      ><a name="2070"
+      > </a
+      ><a name="2071" href="Fresh.html#1973" class="Bound"
+      >x</a
+      ><a name="2072"
+      > </a
+      ><a name="2073" href="Fresh.html#1950" class="Bound"
+      >G</a
+      ><a name="2074"
+      > </a
+      ><a name="2075" class="Symbol"
+      >(</a
+      ><a name="2076" href="Swap.html#392" class="Function"
+      >swapF</a
+      ><a name="2081"
+      > </a
+      ><a name="2082" href="Fresh.html#1950" class="Bound"
+      >G</a
+      ><a name="2083"
+      > </a
+      ><a name="2084" href="Fresh.html#1963" class="Bound"
+      >S</a
+      ><a name="2085"
+      > </a
+      ><a name="2086" href="Fresh.html#1975" class="Bound"
+      >y</a
+      ><a name="2087"
+      > </a
+      ><a name="2088" href="Fresh.html#1977" class="Bound"
+      >z</a
+      ><a name="2089"
+      > </a
+      ><a name="2090" href="Fresh.html#1984" class="Bound"
+      >e</a
+      ><a name="2091" class="Symbol"
+      >)</a
+      ><a name="2092"
+      >
+</a
+      ><a name="2093" class="Comment"
+      >--lemmaSwapF#&#8802;&#8592; = {!!}</a
+      ><a name="2115"
+      >
+
+  </a
+      ><a name="2119" href="Fresh.html#2119" class="Postulate"
+      >lemmaSwapF#&#8802;S&#8594;</a
+      ><a name="2133"
+      > </a
+      ><a name="2134" class="Symbol"
+      >:</a
+      ><a name="2135"
+      > </a
+      ><a name="2136" class="Symbol"
+      >{</a
+      ><a name="2137" href="Fresh.html#2137" class="Bound"
+      >F</a
+      ><a name="2138"
+      > </a
+      ><a name="2139" href="Fresh.html#2139" class="Bound"
+      >G</a
+      ><a name="2140"
+      > </a
+      ><a name="2141" class="Symbol"
+      >:</a
+      ><a name="2142"
+      > </a
+      ><a name="2143" href="GPBindings.html#539" class="Datatype"
+      >Functor</a
+      ><a name="2150" class="Symbol"
+      >}{</a
+      ><a name="2152" href="Fresh.html#2152" class="Bound"
+      >S</a
+      ><a name="2153"
+      > </a
+      ><a name="2154" href="Fresh.html#2154" class="Bound"
+      >S'</a
+      ><a name="2156"
+      > </a
+      ><a name="2157" class="Symbol"
+      >:</a
+      ><a name="2158"
+      > </a
+      ><a name="2159" href="GPBindings.html#432" class="Function"
+      >Sort</a
+      ><a name="2163" class="Symbol"
+      >}{</a
+      ><a name="2165" href="Fresh.html#2165" class="Bound"
+      >x</a
+      ><a name="2166"
+      > </a
+      ><a name="2167" href="Fresh.html#2167" class="Bound"
+      >y</a
+      ><a name="2168"
+      > </a
+      ><a name="2169" href="Fresh.html#2169" class="Bound"
+      >z</a
+      ><a name="2170"
+      > </a
+      ><a name="2171" class="Symbol"
+      >:</a
+      ><a name="2172"
+      > </a
+      ><a name="2173" href="GPBindings.html#442" class="Function"
+      >V</a
+      ><a name="2174" class="Symbol"
+      >}{</a
+      ><a name="2176" href="Fresh.html#2176" class="Bound"
+      >e</a
+      ><a name="2177"
+      >  </a
+      ><a name="2179" class="Symbol"
+      >:</a
+      ><a name="2180"
+      > </a
+      ><a name="2181" href="GPBindings.html#989" class="Function Operator"
+      >&#10214;</a
+      ><a name="2182"
+      > </a
+      ><a name="2183" href="Fresh.html#2139" class="Bound"
+      >G</a
+      ><a name="2184"
+      > </a
+      ><a name="2185" href="GPBindings.html#989" class="Function Operator"
+      >&#10215;</a
+      ><a name="2186"
+      > </a
+      ><a name="2187" class="Symbol"
+      >(</a
+      ><a name="2188" href="GPBindings.html#1264" class="Datatype"
+      >&#956;</a
+      ><a name="2189"
+      > </a
+      ><a name="2190" href="Fresh.html#2137" class="Bound"
+      >F</a
+      ><a name="2191" class="Symbol"
+      >)}</a
+      ><a name="2193"
+      >
+        </a
+      ><a name="2202" class="Symbol"
+      >&#8594;</a
+      ><a name="2203"
+      > </a
+      ><a name="2204" href="Fresh.html#2152" class="Bound"
+      >S</a
+      ><a name="2205"
+      > </a
+      ><a name="2206" href="Relation.Binary.Core.html#4493" class="Function Operator"
+      >&#8802;</a
+      ><a name="2207"
+      > </a
+      ><a name="2208" href="Fresh.html#2154" class="Bound"
+      >S'</a
+      ><a name="2210"
+      >      
+        </a
+      ><a name="2225" class="Symbol"
+      >&#8594;</a
+      ><a name="2226"
+      > </a
+      ><a name="2227" href="Fresh.html#242" class="Datatype"
+      >freshF</a
+      ><a name="2233"
+      > </a
+      ><a name="2234" href="Fresh.html#2152" class="Bound"
+      >S</a
+      ><a name="2235"
+      > </a
+      ><a name="2236" href="Fresh.html#2165" class="Bound"
+      >x</a
+      ><a name="2237"
+      > </a
+      ><a name="2238" href="Fresh.html#2139" class="Bound"
+      >G</a
+      ><a name="2239"
+      > </a
+      ><a name="2240" class="Symbol"
+      >(</a
+      ><a name="2241" href="Swap.html#392" class="Function"
+      >swapF</a
+      ><a name="2246"
+      > </a
+      ><a name="2247" href="Fresh.html#2139" class="Bound"
+      >G</a
+      ><a name="2248"
+      > </a
+      ><a name="2249" href="Fresh.html#2154" class="Bound"
+      >S'</a
+      ><a name="2251"
+      > </a
+      ><a name="2252" href="Fresh.html#2167" class="Bound"
+      >y</a
+      ><a name="2253"
+      > </a
+      ><a name="2254" href="Fresh.html#2169" class="Bound"
+      >z</a
+      ><a name="2255"
+      > </a
+      ><a name="2256" href="Fresh.html#2176" class="Bound"
+      >e</a
+      ><a name="2257" class="Symbol"
+      >)</a
+      ><a name="2258"
+      >
+        </a
+      ><a name="2267" class="Symbol"
+      >&#8594;</a
+      ><a name="2268"
+      > </a
+      ><a name="2269" href="Fresh.html#242" class="Datatype"
+      >freshF</a
+      ><a name="2275"
+      > </a
+      ><a name="2276" href="Fresh.html#2152" class="Bound"
+      >S</a
+      ><a name="2277"
+      > </a
+      ><a name="2278" href="Fresh.html#2165" class="Bound"
+      >x</a
+      ><a name="2279"
+      > </a
+      ><a name="2280" href="Fresh.html#2139" class="Bound"
+      >G</a
+      ><a name="2281"
+      > </a
+      ><a name="2282" href="Fresh.html#2176" class="Bound"
+      >e</a
+      ><a name="2283"
+      >
+</a
+      ><a name="2284" class="Comment"
+      >--lemmaSwapF#&#8802;S&#8594; = {!!}</a
+      ><a name="2307"
+      >
+
+  </a
+      ><a name="2311" href="Fresh.html#2311" class="Postulate"
+      >lemmaSwapF#&#8802;S&#8592;</a
+      ><a name="2325"
+      > </a
+      ><a name="2326" class="Symbol"
+      >:</a
+      ><a name="2327"
+      > </a
+      ><a name="2328" class="Symbol"
+      >{</a
+      ><a name="2329" href="Fresh.html#2329" class="Bound"
+      >F</a
+      ><a name="2330"
+      > </a
+      ><a name="2331" href="Fresh.html#2331" class="Bound"
+      >G</a
+      ><a name="2332"
+      > </a
+      ><a name="2333" class="Symbol"
+      >:</a
+      ><a name="2334"
+      > </a
+      ><a name="2335" href="GPBindings.html#539" class="Datatype"
+      >Functor</a
+      ><a name="2342" class="Symbol"
+      >}{</a
+      ><a name="2344" href="Fresh.html#2344" class="Bound"
+      >S</a
+      ><a name="2345"
+      > </a
+      ><a name="2346" href="Fresh.html#2346" class="Bound"
+      >S'</a
+      ><a name="2348"
+      > </a
+      ><a name="2349" class="Symbol"
+      >:</a
+      ><a name="2350"
+      > </a
+      ><a name="2351" href="GPBindings.html#432" class="Function"
+      >Sort</a
+      ><a name="2355" class="Symbol"
+      >}{</a
+      ><a name="2357" href="Fresh.html#2357" class="Bound"
+      >x</a
+      ><a name="2358"
+      > </a
+      ><a name="2359" href="Fresh.html#2359" class="Bound"
+      >y</a
+      ><a name="2360"
+      > </a
+      ><a name="2361" href="Fresh.html#2361" class="Bound"
+      >z</a
+      ><a name="2362"
+      > </a
+      ><a name="2363" class="Symbol"
+      >:</a
+      ><a name="2364"
+      > </a
+      ><a name="2365" href="GPBindings.html#442" class="Function"
+      >V</a
+      ><a name="2366" class="Symbol"
+      >}{</a
+      ><a name="2368" href="Fresh.html#2368" class="Bound"
+      >e</a
+      ><a name="2369"
+      >  </a
+      ><a name="2371" class="Symbol"
+      >:</a
+      ><a name="2372"
+      > </a
+      ><a name="2373" href="GPBindings.html#989" class="Function Operator"
+      >&#10214;</a
+      ><a name="2374"
+      > </a
+      ><a name="2375" href="Fresh.html#2331" class="Bound"
+      >G</a
+      ><a name="2376"
+      > </a
+      ><a name="2377" href="GPBindings.html#989" class="Function Operator"
+      >&#10215;</a
+      ><a name="2378"
+      > </a
+      ><a name="2379" class="Symbol"
+      >(</a
+      ><a name="2380" href="GPBindings.html#1264" class="Datatype"
+      >&#956;</a
+      ><a name="2381"
+      > </a
+      ><a name="2382" href="Fresh.html#2329" class="Bound"
+      >F</a
+      ><a name="2383" class="Symbol"
+      >)}</a
+      ><a name="2385"
+      >
+        </a
+      ><a name="2394" class="Symbol"
+      >&#8594;</a
+      ><a name="2395"
+      > </a
+      ><a name="2396" href="Fresh.html#2344" class="Bound"
+      >S</a
+      ><a name="2397"
+      > </a
+      ><a name="2398" href="Relation.Binary.Core.html#4493" class="Function Operator"
+      >&#8802;</a
+      ><a name="2399"
+      > </a
+      ><a name="2400" href="Fresh.html#2346" class="Bound"
+      >S'</a
+      ><a name="2402"
+      >      
+        </a
+      ><a name="2417" class="Symbol"
+      >&#8594;</a
+      ><a name="2418"
+      > </a
+      ><a name="2419" href="Fresh.html#242" class="Datatype"
+      >freshF</a
+      ><a name="2425"
+      > </a
+      ><a name="2426" href="Fresh.html#2344" class="Bound"
+      >S</a
+      ><a name="2427"
+      > </a
+      ><a name="2428" href="Fresh.html#2357" class="Bound"
+      >x</a
+      ><a name="2429"
+      > </a
+      ><a name="2430" href="Fresh.html#2331" class="Bound"
+      >G</a
+      ><a name="2431"
+      > </a
+      ><a name="2432" href="Fresh.html#2368" class="Bound"
+      >e</a
+      ><a name="2433"
+      >
+        </a
+      ><a name="2442" class="Symbol"
+      >&#8594;</a
+      ><a name="2443"
+      > </a
+      ><a name="2444" href="Fresh.html#242" class="Datatype"
+      >freshF</a
+      ><a name="2450"
+      > </a
+      ><a name="2451" href="Fresh.html#2344" class="Bound"
+      >S</a
+      ><a name="2452"
+      > </a
+      ><a name="2453" href="Fresh.html#2357" class="Bound"
+      >x</a
+      ><a name="2454"
+      > </a
+      ><a name="2455" href="Fresh.html#2331" class="Bound"
+      >G</a
+      ><a name="2456"
+      > </a
+      ><a name="2457" class="Symbol"
+      >(</a
+      ><a name="2458" href="Swap.html#392" class="Function"
+      >swapF</a
+      ><a name="2463"
+      > </a
+      ><a name="2464" href="Fresh.html#2331" class="Bound"
+      >G</a
+      ><a name="2465"
+      > </a
+      ><a name="2466" href="Fresh.html#2346" class="Bound"
+      >S'</a
+      ><a name="2468"
+      > </a
+      ><a name="2469" href="Fresh.html#2359" class="Bound"
+      >y</a
+      ><a name="2470"
+      > </a
+      ><a name="2471" href="Fresh.html#2361" class="Bound"
+      >z</a
+      ><a name="2472"
+      > </a
+      ><a name="2473" href="Fresh.html#2368" class="Bound"
+      >e</a
+      ><a name="2474" class="Symbol"
+      >)</a
+      ><a name="2475"
+      >
+</a
+      ><a name="2476" class="Comment"
+      >--lemmaSwapF#&#8802;S&#8592; = {!!}</a
+      ><a name="2499"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>
