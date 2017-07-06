@@ -1,4 +1,4 @@
-## Generic Binding Framework
+# Generic Binding Framework
 
 In this work we generalise the techniques developed in the preceding works:
 
