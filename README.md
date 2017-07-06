@@ -1,37 +1,25 @@
-## Welcome to GitHub Pages
+## Generic Binding Framework
 
-You can use the [editor on GitHub](https://github.com/ernius/genericBindingFramework/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+In this work we generalise the techniques developed in the preceding works:
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+1. [Substitution Lemmas](https://github.com/ernius/formalmetatheory-nominal)
+2. [Church-Rosser and Subject Reduction](https://github.com/ernius/formalmetatheory-nominal-Church-Rosser)
 
-### Markdown
+, applying *generic programming* methods to address the formalisation of generic *structures with binders*.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+We define a universe of regular datatypes with variable binding information, and on  these we define generic formation, elimination, and induction operators. We also introduce an alpha-equivalence relation based on the swapping operation, and we derive alpha-iteration/induction principles that capture the BVC.
 
-```markdown
-Syntax highlighted code block
+# Examples
 
-# Header 1
-## Header 2
-### Header 3
+The principal usage examples are in *Examples/LambdaCalculus.lagda* and *Examples/SystemF.lagda*
 
-- Bulleted
-- List
+The entire code can be browsed in html format here: [https://ernius.github.io/genericBindingFramework/html/index.html](https://ernius.github.io/genericBindingFramework/html/index.html).
 
-1. Numbered
-2. List
+# Authors
 
-**Bold** and _Italic_ and `Code` text
+* Ernesto Copello 
+* Nora Szasz      
+* Álvaro Tasistro 
 
-[Link](url) and ![Image](src)
-```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
 
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/ernius/genericBindingFramework/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
