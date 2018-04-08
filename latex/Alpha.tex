@@ -201,7 +201,8 @@ Sort independent
 \\
 \>[0]\AgdaIndent{11}{}\<[11]%
 \>[11]\AgdaSymbol{→} \<[14]%
-\>[14]\AgdaDatatype{∼αF} \AgdaBound{F₁} \AgdaBound{e₁} \AgdaBound{e₁'} \AgdaSymbol{→} \AgdaDatatype{∼αF} \AgdaBound{F₂} \AgdaBound{e₂} \AgdaBound{e₂'}\<%
+\>[14]\AgdaDatatype{∼αF} \AgdaBound{F₁} \AgdaBound{e₁} \AgdaBound{e₁'} \<[34]%
+\>[34]\AgdaSymbol{→} \AgdaDatatype{∼αF} \AgdaBound{F₂} \AgdaBound{e₂} \AgdaBound{e₂'}\<%
 \\
 \>[11]\AgdaIndent{34}{}\<[34]%
 \>[34]\AgdaSymbol{→} \<[37]%
@@ -213,29 +214,21 @@ Sort independent
 \>[0]\AgdaIndent{4}{}\<[4]%
 \>[4]\AgdaInductiveConstructor{∼αB} \<[11]%
 \>[11]\AgdaSymbol{:} \<[14]%
-\>[14]\AgdaSymbol{(}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{)\{}\AgdaBound{S} \AgdaSymbol{:} \AgdaFunction{Sort}\AgdaSymbol{\}\{}\AgdaBound{x} \AgdaBound{y} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{\}}\<%
+\>[14]\AgdaSymbol{(}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{)\{}\AgdaBound{S} \AgdaSymbol{:} \AgdaFunction{Sort}\AgdaSymbol{\}\{}\AgdaBound{x} \AgdaBound{y} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{G} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaBound{e'} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}}\<%
 \\
-\>[4]\AgdaIndent{14}{}\<[14]%
-\>[14]\AgdaSymbol{\{}\AgdaBound{G} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaBound{e'} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)\}}\<%
-\\
-\>[0]\AgdaIndent{11}{}\<[11]%
+\>[4]\AgdaIndent{11}{}\<[11]%
 \>[11]\AgdaSymbol{→} \<[14]%
 \>[14]\AgdaSymbol{((}\AgdaBound{z} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaBound{z} \AgdaFunction{∉} \AgdaBound{xs} \<[34]%
 \>[34]\AgdaSymbol{→} \AgdaDatatype{∼αF} \AgdaBound{G} \<[43]%
-\>[43]\AgdaSymbol{(}\AgdaFunction{swapF} \AgdaBound{G} \AgdaBound{S} \AgdaBound{x} \AgdaBound{z} \AgdaBound{e}\AgdaSymbol{)} \<[61]%
-\>[61]\<%
+\>[43]\AgdaSymbol{(}\AgdaFunction{swapF} \AgdaBound{G} \AgdaBound{S} \AgdaBound{x} \AgdaBound{z} \AgdaBound{e}\AgdaSymbol{)} \AgdaSymbol{(}\AgdaFunction{swapF} \AgdaBound{G} \AgdaBound{S} \AgdaBound{y} \AgdaBound{z} \AgdaBound{e'}\AgdaSymbol{))} \<[81]%
+\>[81]\<%
 \\
-\>[11]\AgdaIndent{43}{}\<[43]%
-\>[43]\AgdaSymbol{(}\AgdaFunction{swapF} \AgdaBound{G} \AgdaBound{S} \AgdaBound{y} \AgdaBound{z} \AgdaBound{e'}\AgdaSymbol{))} \<[63]%
-\>[63]\<%
-\\
-\>[0]\AgdaIndent{34}{}\<[34]%
-\>[34]\AgdaSymbol{→} \<[37]%
-\>[37]\AgdaDatatype{∼αF} \AgdaSymbol{(}\AgdaInductiveConstructor{|B|} \AgdaBound{S} \AgdaBound{G}\AgdaSymbol{)} \<[55]%
-\>[55]\AgdaSymbol{(}\AgdaBound{x} \AgdaInductiveConstructor{,} \AgdaBound{e}\AgdaSymbol{)} \<[66]%
-\>[66]\AgdaSymbol{(}\AgdaBound{y} \<[71]%
-\>[71]\AgdaInductiveConstructor{,} \AgdaBound{e'}\AgdaSymbol{)} \<[78]%
-\>[78]\<%
+\>[11]\AgdaIndent{34}{}\<[34]%
+\>[34]\AgdaSymbol{→} \AgdaDatatype{∼αF} \AgdaSymbol{(}\AgdaInductiveConstructor{|B|} \AgdaBound{S} \AgdaBound{G}\AgdaSymbol{)} \<[51]%
+\>[51]\AgdaSymbol{(}\AgdaBound{x} \AgdaInductiveConstructor{,} \AgdaBound{e}\AgdaSymbol{)} \<[62]%
+\>[62]\AgdaSymbol{(}\AgdaBound{y} \<[67]%
+\>[67]\AgdaInductiveConstructor{,} \AgdaBound{e'}\AgdaSymbol{)} \<[74]%
+\>[74]\<%
 \\
 %
 \\
@@ -1874,12 +1867,12 @@ Sort independent
 \\
 \>[2]\AgdaIndent{14}{}\<[14]%
 \>[14]\AgdaSymbol{→} \AgdaSymbol{(}\AgdaBound{e} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaFunction{fold} \AgdaBound{F} \AgdaBound{f} \AgdaBound{e} \AgdaFunction{∼α} \AgdaFunction{fold} \AgdaBound{F} \AgdaBound{f'} \AgdaBound{e}\<%
-\\
-\>\AgdaFunction{lemma-foldfα} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaBound{p} \AgdaBound{e} \AgdaSymbol{=} \AgdaFunction{lemma-foldmapfα} \AgdaInductiveConstructor{|R|} \AgdaBound{p} \AgdaBound{e}\<%
 \end{code}
 %</lemma-foldfalpha>
 
-
+\begin{code}%
+\>\AgdaFunction{lemma-foldfα} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaBound{p} \AgdaBound{e} \AgdaSymbol{=} \AgdaFunction{lemma-foldmapfα} \AgdaInductiveConstructor{|R|} \AgdaBound{p} \AgdaBound{e}\<%
+\end{code}
 -- lemma-foldmapSCtx  : {F H C : Functor}(G : Functor){f : μ C → ⟦ F ⟧ (μ H) → μ H}{c c′ : μ C}
 --               → ({e e′ :  ⟦ F ⟧ (μ H)}{c c′ : μ C} → c ∼α c′ → ∼αF F e e′ → f c e ∼α f c′ e′)               
 --               → c ∼α c′
@@ -1898,35 +1891,21 @@ Sort independent
 %<*lemmafoldCtxalphactx>
 \begin{code}%
 \>\AgdaFunction{lemma-foldCtxαCtx} \<[19]%
-\>[19]\AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaBound{H} \AgdaBound{C} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}}\<%
-\\
-\>[0]\AgdaIndent{5}{}\<[5]%
-\>[5]\AgdaSymbol{\{}\AgdaBound{f} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{C} \AgdaSymbol{→} \AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{\}\{}\AgdaBound{c} \AgdaBound{c′} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{C}\AgdaSymbol{\}}\<%
+\>[19]\AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaBound{H} \AgdaBound{C} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{f} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{C} \AgdaSymbol{→} \AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{\}\{}\AgdaBound{c} \AgdaBound{c′} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{C}\AgdaSymbol{\}}\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
 \>[2]\AgdaSymbol{→} \<[5]%
 \>[5]\AgdaSymbol{(\{}\AgdaBound{e} \AgdaBound{e′} \AgdaSymbol{:} \<[15]%
-\>[15]\AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{)\}\{}\AgdaBound{c} \AgdaBound{c′} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{C}\AgdaSymbol{\}} \<[40]%
-\>[40]\<%
-\\
-\>[2]\AgdaIndent{10}{}\<[10]%
-\>[10]\AgdaSymbol{→} \AgdaBound{c} \AgdaFunction{∼α} \AgdaBound{c′} \AgdaSymbol{→} \AgdaDatatype{∼αF} \AgdaBound{F} \AgdaBound{e} \AgdaBound{e′} \AgdaSymbol{→} \AgdaBound{f} \AgdaBound{c} \AgdaBound{e} \AgdaFunction{∼α} \AgdaBound{f} \AgdaBound{c′} \AgdaBound{e′}\AgdaSymbol{)} \<[67]%
-\>[67]\<%
+\>[15]\AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{)\}\{}\AgdaBound{c} \AgdaBound{c′} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{C}\AgdaSymbol{\}} \AgdaSymbol{→} \AgdaBound{c} \AgdaFunction{∼α} \AgdaBound{c′} \AgdaSymbol{→} \AgdaDatatype{∼αF} \AgdaBound{F} \AgdaBound{e} \AgdaBound{e′} \AgdaSymbol{→} \AgdaBound{f} \AgdaBound{c} \AgdaBound{e} \AgdaFunction{∼α} \AgdaBound{f} \AgdaBound{c′} \AgdaBound{e′}\AgdaSymbol{)} \<[92]%
+\>[92]\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
 \>[2]\AgdaSymbol{→} \<[5]%
-\>[5]\AgdaBound{c} \AgdaFunction{∼α} \AgdaBound{c′}\<%
+\>[5]\AgdaBound{c} \AgdaFunction{∼α} \AgdaBound{c′} \AgdaSymbol{→} \<[16]%
+\>[16]\AgdaSymbol{(}\AgdaBound{e} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaFunction{foldCtx} \AgdaBound{F} \AgdaBound{f} \AgdaBound{c} \AgdaBound{e} \AgdaFunction{∼α} \AgdaFunction{foldCtx} \AgdaBound{F} \AgdaBound{f} \AgdaBound{c′} \AgdaBound{e}\<%
 \\
-\>[0]\AgdaIndent{2}{}\<[2]%
-\>[2]\AgdaSymbol{→} \<[5]%
-\>[5]\AgdaSymbol{(}\AgdaBound{e} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaFunction{foldCtx} \AgdaBound{F} \AgdaBound{f} \AgdaBound{c} \AgdaBound{e} \AgdaFunction{∼α} \AgdaFunction{foldCtx} \AgdaBound{F} \AgdaBound{f} \AgdaBound{c′} \AgdaBound{e}\<%
-\\
-\>\AgdaFunction{lemma-foldCtxαCtx} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaArgument{f} \AgdaSymbol{=} \AgdaBound{f}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{c}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{c′}\AgdaSymbol{\}} \AgdaBound{p} \AgdaBound{c∼c′} \AgdaBound{e} \<[48]%
-\>[48]\<%
-\\
-\>[0]\AgdaIndent{2}{}\<[2]%
-\>[2]\AgdaSymbol{=} \AgdaFunction{lemma-foldfα} \AgdaSymbol{(}\AgdaBound{p} \AgdaBound{c∼c′}\AgdaSymbol{)} \AgdaBound{e} \<[29]%
-\>[29]\<%
+\>\AgdaFunction{lemma-foldCtxαCtx} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaArgument{f} \AgdaSymbol{=} \AgdaBound{f}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{c}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{c′}\AgdaSymbol{\}} \AgdaBound{p} \AgdaBound{c∼c′} \AgdaBound{e} \AgdaSymbol{=} \AgdaFunction{lemma-foldfα} \AgdaSymbol{(}\AgdaBound{p} \AgdaBound{c∼c′}\AgdaSymbol{)} \AgdaBound{e} \<[75]%
+\>[75]\<%
 \end{code}
 %</lemmafoldCtxalphactx>
 
@@ -2250,41 +2229,26 @@ Sort independent
 %<*lemmafoldCtxalpha>
 \begin{code}%
 \>\AgdaFunction{lemma-foldCtxα} \<[16]%
-\>[16]\AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaBound{H} \AgdaBound{C} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{f} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{C} \AgdaSymbol{→} \AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{\}}\<%
-\\
-\>[0]\AgdaIndent{5}{}\<[5]%
-\>[5]\AgdaSymbol{\{}\AgdaBound{c} \AgdaBound{c'} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{C}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaBound{e'} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{\}}\<%
+\>[16]\AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaBound{H} \AgdaBound{C} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}\{}\AgdaBound{f} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{C} \AgdaSymbol{→} \AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{\}\{}\AgdaBound{c} \AgdaBound{c'} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{C}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaBound{e'} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{\}}\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
 \>[2]\AgdaSymbol{→} \<[5]%
 \>[5]\AgdaSymbol{(\{}\AgdaBound{e} \AgdaBound{e′} \AgdaSymbol{:} \<[15]%
-\>[15]\AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{)\}\{}\AgdaBound{c} \AgdaBound{c′} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{C}\AgdaSymbol{\}} \<[40]%
-\>[40]\<%
-\\
-\>[2]\AgdaIndent{7}{}\<[7]%
-\>[7]\AgdaSymbol{→} \AgdaBound{c} \AgdaFunction{∼α} \AgdaBound{c′} \AgdaSymbol{→} \AgdaDatatype{∼αF} \AgdaBound{F} \AgdaBound{e} \AgdaBound{e′} \AgdaSymbol{→} \AgdaBound{f} \AgdaBound{c} \AgdaBound{e} \AgdaFunction{∼α} \AgdaBound{f} \AgdaBound{c′} \AgdaBound{e′}\AgdaSymbol{)}\<%
+\>[15]\AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{)\}\{}\AgdaBound{c} \AgdaBound{c′} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{C}\AgdaSymbol{\}} \AgdaSymbol{→} \AgdaBound{c} \AgdaFunction{∼α} \AgdaBound{c′} \AgdaSymbol{→} \AgdaDatatype{∼αF} \AgdaBound{F} \AgdaBound{e} \AgdaBound{e′} \AgdaSymbol{→} \AgdaBound{f} \AgdaBound{c} \AgdaBound{e} \AgdaFunction{∼α} \AgdaBound{f} \AgdaBound{c′} \AgdaBound{e′}\AgdaSymbol{)}\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
-\>[2]\AgdaSymbol{→} \AgdaSymbol{(\{}\AgdaBound{c} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{C}\AgdaSymbol{\}\{}\AgdaBound{S} \AgdaSymbol{:} \AgdaFunction{Sort}\AgdaSymbol{\}\{}\AgdaBound{x} \AgdaBound{y} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{)\}} \<[51]%
-\>[51]\<%
+\>[2]\AgdaSymbol{→} \AgdaSymbol{(\{}\AgdaBound{c} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{C}\AgdaSymbol{\}\{}\AgdaBound{S} \AgdaSymbol{:} \AgdaFunction{Sort}\AgdaSymbol{\}\{}\AgdaBound{x} \AgdaBound{y} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{)\}}\<%
 \\
-\>[2]\AgdaIndent{7}{}\<[7]%
-\>[7]\AgdaSymbol{→} \AgdaBound{f} \AgdaSymbol{(}\AgdaFunction{swap} \AgdaBound{S} \AgdaBound{x} \AgdaBound{y} \AgdaBound{c}\AgdaSymbol{)} \AgdaSymbol{(}\AgdaFunction{swapF} \AgdaBound{F} \AgdaBound{S} \AgdaBound{x} \AgdaBound{y} \AgdaBound{e}\AgdaSymbol{)} \AgdaDatatype{≡} \AgdaFunction{swap} \AgdaBound{S} \AgdaBound{x} \AgdaBound{y} \AgdaSymbol{(}\AgdaBound{f} \AgdaBound{c} \AgdaBound{e}\AgdaSymbol{))}\<%
+\>[2]\AgdaIndent{14}{}\<[14]%
+\>[14]\AgdaSymbol{→} \AgdaBound{f} \AgdaSymbol{(}\AgdaFunction{swap} \AgdaBound{S} \AgdaBound{x} \AgdaBound{y} \AgdaBound{c}\AgdaSymbol{)} \AgdaSymbol{(}\AgdaFunction{swapF} \AgdaBound{F} \AgdaBound{S} \AgdaBound{x} \AgdaBound{y} \AgdaBound{e}\AgdaSymbol{)} \AgdaDatatype{≡} \AgdaFunction{swap} \AgdaBound{S} \AgdaBound{x} \AgdaBound{y} \AgdaSymbol{(}\AgdaBound{f} \AgdaBound{c} \AgdaBound{e}\AgdaSymbol{))}\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
 \>[2]\AgdaSymbol{→} \AgdaFunction{ListNotOccurBind} \AgdaSymbol{(}\AgdaFunction{fv} \AgdaBound{c}\AgdaSymbol{)} \<[30]%
-\>[30]\AgdaBound{e}\<%
+\>[30]\AgdaBound{e} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBind} \AgdaSymbol{(}\AgdaFunction{fv} \AgdaBound{c'}\AgdaSymbol{)} \<[60]%
+\>[60]\AgdaBound{e'}\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
-\>[2]\AgdaSymbol{→} \AgdaFunction{ListNotOccurBind} \AgdaSymbol{(}\AgdaFunction{fv} \AgdaBound{c'}\AgdaSymbol{)} \<[30]%
-\>[30]\AgdaBound{e'}\<%
-\\
-\>[0]\AgdaIndent{2}{}\<[2]%
-\>[2]\AgdaSymbol{→} \AgdaBound{c} \AgdaFunction{∼α} \AgdaBound{c'} \AgdaSymbol{→} \AgdaBound{e} \AgdaFunction{∼α} \AgdaBound{e'} \<[23]%
-\>[23]\<%
-\\
-\>[0]\AgdaIndent{2}{}\<[2]%
-\>[2]\AgdaSymbol{→} \AgdaFunction{foldCtx} \AgdaBound{F} \AgdaBound{f} \AgdaBound{c} \AgdaBound{e} \AgdaFunction{∼α} \AgdaFunction{foldCtx} \AgdaBound{F} \AgdaBound{f} \AgdaBound{c'} \AgdaBound{e'}\<%
+\>[2]\AgdaSymbol{→} \AgdaBound{c} \AgdaFunction{∼α} \AgdaBound{c'} \AgdaSymbol{→} \AgdaBound{e} \AgdaFunction{∼α} \AgdaBound{e'} \AgdaSymbol{→} \AgdaFunction{foldCtx} \AgdaBound{F} \AgdaBound{f} \AgdaBound{c} \AgdaBound{e} \AgdaFunction{∼α} \AgdaFunction{foldCtx} \AgdaBound{F} \AgdaBound{f} \AgdaBound{c'} \AgdaBound{e'}\<%
 \end{code}
 %</lemmafoldCtxalpha>
 

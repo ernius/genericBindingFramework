@@ -12,6 +12,7 @@
 \usepackage{textgreek}
 \usepackage{catchfilebetweentags}
 \usepackage{tipa}
+\usepackage{txfonts}
 
 %\include{common-unicode}
 %\usetheme{default}
@@ -26,15 +27,19 @@
 
 \usepackage{newunicodechar}
 %\DeclareUnicodeCharacter{126}{\ensuremath{\sim}}
-\DeclareUnicodeCharacter{411}{\ensuremath{\lambda}}
+\DeclareUnicodeCharacter{411}{\ensuremath{\lambdabar}}
 \DeclareUnicodeCharacter{8799}{\ensuremath{{\stackrel{?}{=}}}}
 \DeclareUnicodeCharacter{8788}{\ensuremath{{\coloneqq}}}
 \DeclareUnicodeCharacter{8348}{\ensuremath{{_t}}}
+\DeclareUnicodeCharacter{8345}{\ensuremath{{_n}}}
 \DeclareUnicodeCharacter{65288}{\ensuremath{{(}}}
 \DeclareUnicodeCharacter{65289}{\ensuremath{{)}}}
 \DeclareUnicodeCharacter{8336}{\ensuremath{{_a}}}
 \DeclareUnicodeCharacter{8759}{\ensuremath{\dblcolon}}
 \DeclareUnicodeCharacter{8718}{\ensuremath{\blacksquare}}
+\DeclareUnicodeCharacter{9632}{\ensuremath{\blacksquare}}
+\DeclareUnicodeCharacter{8667}{\ensuremath{\Rightarrow}}
+
 
 \begin{document}
 
@@ -104,15 +109,15 @@
 
 \begin{frame}{Fold}
      \hspace{5px}
-  {\small \ExecuteMetaData[GPBindings.tex]{foldtermination}}  
+     {\small \ExecuteMetaData[GPBindings.tex]{foldtermination}}
+     {\small \ExecuteMetaData[GPBindings.tex]{foldtermination2}}  
 \end{frame}
 
 \begin{frame}{Terminating Fold }
   \Wider[5em]{\small \ExecuteMetaData[GPBindings.tex]{foldmap}}
+  \Wider[5em]{\small \ExecuteMetaData[GPBindings.tex]{foldmap2}}
 
-  \begin{block}{}
     Based on~\cite{Norell2009}, this technique fuses \textsl{map} and \textsl{fold} into a single function \textsl{foldmap}. It needs two functors as arguments, the \textsl{fold} part is always called on the same original functor, whereas \textsl{map} transverses the functor.
-  \end{block}
 
 \end{frame}
 
@@ -164,6 +169,7 @@
 \begin{frame}{Primitive Induction}
   \hspace{5px}
   \Wider[5em]{\scriptsize \ExecuteMetaData[GPBindings.tex]{primInd}}
+  \Wider[5em]{\scriptsize \ExecuteMetaData[GPBindings.tex]{primInd2}}
 \end{frame}
 
 \begin{frame}{Example: Lambda Calculus}
@@ -180,13 +186,16 @@
   
   \hspace{5px}
 
-  \Wider[9.5em]{{\footnotesize  \ExecuteMetaData[GPBindings.tex]{foldmapCtx}}}
+  \Wider[9.5em]{{\footnotesize  \ExecuteMetaData[GPBindings.tex]{foldCtx}}}
 \end{frame}
 
 \section{Naive Substitution}
 
 \begin{frame}{Example: Lambda Calculus}
   \hspace{5px}
+  
+  {\scriptsize \ExecuteMetaData[Examples/LambdaCalculus.tex]{substcontext}}
+  {\scriptsize \ExecuteMetaData[Examples/LambdaCalculus.tex]{substaux}}
   {\scriptsize \ExecuteMetaData[Examples/LambdaCalculus.tex]{naivesubst}}
 \end{frame}
 
@@ -201,13 +210,15 @@
 
 \begin{frame}{Swap}
 
+ {\scriptsize \ExecuteMetaData[Swap.tex]{swapF}}
+  
  {\scriptsize \ExecuteMetaData[Swap.tex]{swap}}
   
 \end{frame}
 
 \begin{frame}{Context Fold is equivariant under a well behaved fold operation}
 
- \Wider[9em]{\scriptsize \ExecuteMetaData[Swap.tex]{lemmaswapfold}}
+ \Wider[9em]{\scriptsize \ExecuteMetaData[Swap.tex]{swapfoldequiv}}
 
 \end{frame}
 
@@ -240,13 +251,13 @@
 
 \begin{frame}{Variable Binder Ocurrences}
 
-  \Wider[8em]{\scriptsize \ExecuteMetaData[OcurrBind.tex]{notOcurrBind}}
+  \Wider[8em]{\scriptsize \ExecuteMetaData[OccurBind.tex]{notOcurrBind}}
   
 \end{frame}
 
 \begin{frame}{Variables Binder Ocurrences}
 
-  \Wider[8em]{\scriptsize \ExecuteMetaData[OcurrBind.tex]{listnotocurrbind}}
+  \Wider[8em]{\scriptsize \ExecuteMetaData[OccurBind.tex]{listnotocurrbind}}
   
 \end{frame}
 

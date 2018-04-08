@@ -180,11 +180,7 @@
 
 %<*bindersfreealphaelem>
 \begin{code}%
-\>\AgdaFunction{bindersFreeαElem} \AgdaSymbol{:} \<[20]%
-\>[20]\AgdaSymbol{\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}(}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{)(}\AgdaBound{e} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)}\<%
-\\
-\>[0]\AgdaIndent{20}{}\<[20]%
-\>[20]\AgdaSymbol{→} \AgdaFunction{∃} \AgdaSymbol{(λ} \AgdaBound{e'} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBind} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaBound{xs} \AgdaBound{e'}\AgdaSymbol{)}\<%
+\>\AgdaFunction{bindersFreeαElem} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}(}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{)(}\AgdaBound{e} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaFunction{∃} \AgdaSymbol{(λ} \AgdaBound{e'} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBind} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaBound{xs} \AgdaBound{e'}\AgdaSymbol{)}\<%
 \end{code}
 %</bindersfreealphaelem>
 
@@ -686,13 +682,30 @@ Next could be done as started in AlphaInduction2 file, all binders distinct
 %<*alphainductionhypotheses>
 \begin{code}%
 \>\AgdaFunction{fihα} \AgdaSymbol{:} \<[8]%
-\>[8]\AgdaSymbol{\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}(}\AgdaBound{G} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{)(}\AgdaBound{P} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F} \AgdaSymbol{→} \AgdaPrimitiveType{Set}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaDatatype{List} \AgdaFunction{V} \<[59]%
-\>[59]\<%
+\>[8]\AgdaSymbol{\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}(}\AgdaBound{G} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{)(}\AgdaBound{P} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F} \AgdaSymbol{→} \AgdaPrimitiveType{Set}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaDatatype{List} \AgdaFunction{V} \AgdaSymbol{→} \<[62]%
+\>[62]\AgdaFunction{⟦} \AgdaBound{G} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaPrimitiveType{Set}\<%
+\end{code}
+%</alphainductionhypotheses>
+
+%<*alphainductionhypothesescases>
+\begin{code}%
+\>\AgdaFunction{fihα} \AgdaInductiveConstructor{|R|} \<[19]%
+\>[19]\AgdaBound{P} \AgdaBound{xs} \AgdaBound{e} \<[35]%
+\>[35]\AgdaSymbol{=} \<[38]%
+\>[38]\AgdaBound{P} \AgdaBound{e} \<[47]%
+\>[47]\AgdaFunction{×} \AgdaSymbol{(∀} \AgdaBound{a} \AgdaSymbol{→} \AgdaBound{a} \AgdaFunction{∈} \AgdaBound{xs} \AgdaSymbol{→} \AgdaBound{a} \AgdaFunction{notOccurBind} \AgdaBound{e}\AgdaSymbol{)}\<%
 \\
-\>[0]\AgdaIndent{5}{}\<[5]%
-\>[5]\AgdaSymbol{→} \<[8]%
-\>[8]\AgdaFunction{⟦} \AgdaBound{G} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaPrimitiveType{Set}\<%
-\\
+\>\AgdaFunction{fihα} \AgdaSymbol{(}\AgdaInductiveConstructor{|B|} \AgdaBound{S} \<[14]%
+\>[14]\AgdaBound{G}\AgdaSymbol{)} \<[19]%
+\>[19]\AgdaBound{P} \AgdaBound{xs} \AgdaSymbol{(}\AgdaBound{x} \AgdaInductiveConstructor{,} \AgdaBound{e}\AgdaSymbol{)} \<[35]%
+\>[35]\AgdaSymbol{=} \<[38]%
+\>[38]\AgdaBound{x} \AgdaFunction{∉} \AgdaBound{xs} \<[47]%
+\>[47]\AgdaFunction{×} \AgdaFunction{fihα} \AgdaBound{G} \<[57]%
+\>[57]\AgdaBound{P} \AgdaBound{xs} \AgdaBound{e}\<%
+\end{code}
+%</alphainductionhypothesescases>
+
+\begin{code}%
 \>\AgdaFunction{fihα} \AgdaSymbol{(}\AgdaInductiveConstructor{|v|} \<[12]%
 \>[12]\AgdaBound{S}\AgdaSymbol{)} \<[19]%
 \>[19]\AgdaBound{P} \AgdaBound{xs} \AgdaBound{n} \<[35]%
@@ -715,16 +728,6 @@ Next could be done as started in AlphaInduction2 file, all binders distinct
 \>[19]\AgdaBound{P} \AgdaBound{xs} \AgdaBound{e} \<[35]%
 \>[35]\AgdaSymbol{=} \<[38]%
 \>[38]\AgdaRecord{⊤}\<%
-\\
-\>\AgdaFunction{fihα} \AgdaInductiveConstructor{|R|} \<[19]%
-\>[19]\AgdaBound{P} \AgdaBound{xs} \AgdaBound{e} \<[35]%
-\>[35]\AgdaSymbol{=} \<[38]%
-\>[38]\AgdaBound{P} \AgdaBound{e} \<[47]%
-\>[47]\AgdaFunction{×} \<[49]%
-\>[49]\<%
-\\
-\>[5]\AgdaIndent{38}{}\<[38]%
-\>[38]\AgdaSymbol{(∀} \AgdaBound{a} \AgdaSymbol{→} \AgdaBound{a} \AgdaFunction{∈} \AgdaBound{xs} \AgdaSymbol{→} \AgdaBound{a} \AgdaFunction{notOccurBind} \AgdaBound{e}\AgdaSymbol{)}\<%
 \\
 \>\AgdaFunction{fihα} \AgdaSymbol{(}\AgdaBound{G₁} \AgdaInductiveConstructor{|+|} \<[14]%
 \>[14]\AgdaBound{G₂}\AgdaSymbol{)} \<[19]%
@@ -749,16 +752,8 @@ Next could be done as started in AlphaInduction2 file, all binders distinct
 \>[38]\AgdaFunction{fihα} \AgdaBound{G₁} \<[47]%
 \>[47]\AgdaBound{P} \AgdaBound{xs} \AgdaBound{e₁} \<[56]%
 \>[56]\AgdaFunction{×} \AgdaFunction{fihα} \AgdaBound{G₂} \AgdaBound{P} \AgdaBound{xs} \AgdaBound{e₂}\<%
-\\
-\>\AgdaFunction{fihα} \AgdaSymbol{(}\AgdaInductiveConstructor{|B|} \AgdaBound{S} \<[14]%
-\>[14]\AgdaBound{G}\AgdaSymbol{)} \<[19]%
-\>[19]\AgdaBound{P} \AgdaBound{xs} \AgdaSymbol{(}\AgdaBound{x} \AgdaInductiveConstructor{,} \AgdaBound{e}\AgdaSymbol{)} \<[35]%
-\>[35]\AgdaSymbol{=} \<[38]%
-\>[38]\AgdaBound{x} \AgdaFunction{∉} \AgdaBound{xs} \<[47]%
-\>[47]\AgdaFunction{×} \AgdaFunction{fihα} \AgdaBound{G} \<[57]%
-\>[57]\AgdaBound{P} \AgdaBound{xs} \AgdaBound{e}\<%
 \end{code}
-%</alphainductionhypotheses>
+
 
 \begin{code}%
 \>\AgdaFunction{lemma-fih∧notOccurBind⇛fihα} \AgdaSymbol{:} \<[30]%
@@ -875,19 +870,15 @@ Next could be done as started in AlphaInduction2 file, all binders distinct
 
 %<*alphainductionprinciple>
 \begin{code}%
-\>\AgdaFunction{αPrimInd} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}(}\AgdaBound{P} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F} \AgdaSymbol{→} \AgdaPrimitiveType{Set}\AgdaSymbol{)(}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{)}\<%
+\>\AgdaFunction{αPrimInd} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}(}\AgdaBound{P} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F} \AgdaSymbol{→} \AgdaPrimitiveType{Set}\AgdaSymbol{)(}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaFunction{αCompatiblePred} \AgdaBound{P} \<[73]%
+\>[73]\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
-\>[2]\AgdaSymbol{→} \AgdaFunction{αCompatiblePred} \AgdaBound{P} \<[22]%
-\>[22]\<%
-\\
-\>[0]\AgdaIndent{2}{}\<[2]%
-\>[2]\AgdaSymbol{→} \AgdaSymbol{((}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{))} \AgdaSymbol{→} \AgdaFunction{fihα} \AgdaBound{F} \AgdaBound{P} \AgdaBound{xs} \AgdaBound{e} \AgdaSymbol{→} \AgdaBound{P} \AgdaInductiveConstructor{⟨} \AgdaBound{e} \AgdaInductiveConstructor{⟩}\AgdaSymbol{)} \<[51]%
-\>[51]\<%
-\\
-\>[0]\AgdaIndent{2}{}\<[2]%
-\>[2]\AgdaSymbol{→} \AgdaSymbol{∀} \AgdaBound{e} \AgdaSymbol{→} \AgdaBound{P} \AgdaBound{e}\<%
-\\
+\>[2]\AgdaSymbol{→} \AgdaSymbol{((}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{))} \AgdaSymbol{→} \AgdaFunction{fihα} \AgdaBound{F} \AgdaBound{P} \AgdaBound{xs} \AgdaBound{e} \AgdaSymbol{→} \AgdaBound{P} \AgdaInductiveConstructor{⟨} \AgdaBound{e} \AgdaInductiveConstructor{⟩}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaSymbol{∀} \AgdaBound{e} \AgdaSymbol{→} \AgdaBound{P} \AgdaBound{e}\<%
+\end{code}
+%</alphainductionprinciple>
+
+\begin{code}%
 \>\AgdaFunction{αPrimInd} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaBound{P} \AgdaBound{xs} \AgdaBound{αP} \AgdaBound{p} \AgdaBound{e}\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
@@ -932,8 +923,6 @@ Next could be done as started in AlphaInduction2 file, all binders distinct
 \>[0]\AgdaIndent{10}{}\<[10]%
 \>[10]\AgdaSymbol{(}\AgdaFunction{get} \AgdaBound{notBind}\AgdaSymbol{))}\<%
 \end{code}
-%</alphainductionprinciple>
-
 -- (aux {F} P xs p)
                          
 -- αIteration : {F : Functor}{A : Set}(xs : List V)
@@ -963,14 +952,8 @@ Next could be done as started in AlphaInduction2 file, all binders distinct
 %<*foldCtxalpha>
 \begin{code}%
 \>\AgdaFunction{foldCtxα} \AgdaSymbol{:} \<[12]%
-\>[12]\AgdaSymbol{\{}\AgdaBound{C} \AgdaBound{H} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}(}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{)}\<%
-\\
-\>[10]\AgdaIndent{12}{}\<[12]%
-\>[12]\AgdaSymbol{→} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{C} \AgdaSymbol{→} \AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{)} \<[34]%
-\>[34]\AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{)}\<%
-\\
-\>[10]\AgdaIndent{12}{}\<[12]%
-\>[12]\AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{C} \AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{F} \AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{H}\<%
+\>[12]\AgdaSymbol{\{}\AgdaBound{C} \AgdaBound{H} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}(}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{C} \AgdaSymbol{→} \AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{)} \<[63]%
+\>[63]\AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{C} \AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{F} \AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{H}\<%
 \\
 \>\AgdaFunction{foldCtxα} \AgdaBound{F} \AgdaBound{f} \AgdaBound{c} \AgdaBound{e} \AgdaSymbol{=} \AgdaFunction{foldCtx} \AgdaBound{F} \AgdaBound{f} \AgdaBound{c} \AgdaSymbol{(}\AgdaField{proj₁} \AgdaSymbol{(}\AgdaFunction{bindersFreeαElem} \AgdaSymbol{(}\AgdaFunction{fv} \AgdaBound{c}\AgdaSymbol{)} \AgdaBound{e}\AgdaSymbol{))}\<%
 \end{code}
@@ -978,20 +961,13 @@ Next could be done as started in AlphaInduction2 file, all binders distinct
 
 %<*lemmafoldCtxalpha>
 \begin{code}%
-\>\AgdaFunction{lemma-foldCtxα-foldCtx} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{C} \AgdaBound{H} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}(}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{)}\<%
-\\
-\>[0]\AgdaIndent{5}{}\<[5]%
-\>[5]\AgdaSymbol{\{}\AgdaBound{f} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{C} \AgdaSymbol{→} \AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{\}\{}\AgdaBound{c} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{C}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{\}}\<%
+\>\AgdaFunction{lemma-foldCtxα-foldCtx} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{C} \AgdaBound{H} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}(}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{)\{}\AgdaBound{f} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{C} \AgdaSymbol{→} \AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{\}\{}\AgdaBound{c} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{C}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{\}}\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
 \>[2]\AgdaSymbol{→} \<[5]%
 \>[5]\AgdaSymbol{(\{}\AgdaBound{e} \AgdaBound{e′} \<[13]%
 \>[13]\AgdaSymbol{:} \<[16]%
-\>[16]\AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{)\}\{}\AgdaBound{c} \AgdaBound{c′} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{C}\AgdaSymbol{\}} \AgdaSymbol{→} \AgdaBound{c} \AgdaFunction{∼α} \AgdaBound{c′} \AgdaSymbol{→} \AgdaDatatype{∼αF} \AgdaBound{F} \AgdaBound{e} \AgdaBound{e′} \<[64]%
-\>[64]\<%
-\\
-\>[2]\AgdaIndent{13}{}\<[13]%
-\>[13]\AgdaSymbol{→} \AgdaBound{f} \AgdaBound{c} \AgdaBound{e} \AgdaFunction{∼α} \AgdaBound{f} \AgdaBound{c′} \AgdaBound{e′}\AgdaSymbol{)}\<%
+\>[16]\AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{)\}\{}\AgdaBound{c} \AgdaBound{c′} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{C}\AgdaSymbol{\}} \AgdaSymbol{→} \AgdaBound{c} \AgdaFunction{∼α} \AgdaBound{c′} \AgdaSymbol{→} \AgdaDatatype{∼αF} \AgdaBound{F} \AgdaBound{e} \AgdaBound{e′} \AgdaSymbol{→} \AgdaBound{f} \AgdaBound{c} \AgdaBound{e} \AgdaFunction{∼α} \AgdaBound{f} \AgdaBound{c′} \AgdaBound{e′}\AgdaSymbol{)}\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
 \>[2]\AgdaSymbol{→} \<[5]%
@@ -1050,22 +1026,14 @@ Next could be done as started in AlphaInduction2 file, all binders distinct
 
 %<*alphaproof>
 \begin{code}%
-\>\AgdaFunction{αProof} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}(}\AgdaBound{P} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F} \AgdaSymbol{→} \AgdaPrimitiveType{Set}\AgdaSymbol{)(}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{)}\<%
-\\
-\>[0]\AgdaIndent{2}{}\<[2]%
-\>[2]\AgdaSymbol{→} \AgdaFunction{αCompatiblePred} \AgdaBound{P} \<[22]%
-\>[22]\<%
+\>\AgdaFunction{αProof} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}(}\AgdaBound{P} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F} \AgdaSymbol{→} \AgdaPrimitiveType{Set}\AgdaSymbol{)(}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaFunction{αCompatiblePred} \AgdaBound{P} \<[71]%
+\>[71]\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
 \>[2]\AgdaSymbol{→} \AgdaSymbol{((}\AgdaBound{e} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)} \<[16]%
-\>[16]\AgdaSymbol{→} \AgdaFunction{ListNotOccurBind} \AgdaBound{xs} \<[43]%
-\>[43]\AgdaBound{e} \<[45]%
-\>[45]\<%
-\\
-\>[2]\AgdaIndent{16}{}\<[16]%
-\>[16]\AgdaSymbol{→} \AgdaFunction{ListNotOccurBind} \AgdaSymbol{(}\AgdaFunction{fv} \AgdaBound{e}\AgdaSymbol{)} \<[43]%
-\>[43]\AgdaBound{e} \AgdaSymbol{→} \AgdaBound{P} \AgdaBound{e} \AgdaSymbol{)} \<[54]%
-\>[54]\<%
+\>[16]\AgdaSymbol{→} \AgdaFunction{ListNotOccurBind} \AgdaBound{xs} \AgdaBound{e} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBind} \AgdaSymbol{(}\AgdaFunction{fv} \AgdaBound{e}\AgdaSymbol{)} \<[67]%
+\>[67]\AgdaBound{e} \AgdaSymbol{→} \AgdaBound{P} \AgdaBound{e}\AgdaSymbol{)} \<[77]%
+\>[77]\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
 \>[2]\AgdaSymbol{→} \AgdaSymbol{∀} \AgdaBound{e} \AgdaSymbol{→} \AgdaBound{P} \AgdaBound{e}\<%

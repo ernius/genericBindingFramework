@@ -91,8 +91,7 @@ foldT F f ⟨ e ⟩ = f (mapF F (foldT F f) e)
 
 %<*foldmap>
 \begin{code}
-foldmap :  {A : Set}(F G  : Functor) →  (⟦ F ⟧ A → A) 
-        →  ⟦ G ⟧ (μ F) → ⟦ G ⟧ A
+foldmap :  {A : Set}(F G  : Functor) →  (⟦ F ⟧ A → A) →  ⟦ G ⟧ (μ F) → ⟦ G ⟧ A
 foldmap F (|v|   S)     f x          =  x
 foldmap F |1|           f tt         =  tt 
 foldmap F (|E|   A)     f e          =  e
@@ -100,10 +99,8 @@ foldmap F (|Ef|  G)     f e          =  e
 foldmap F |R|           f ⟨ e ⟩      =  f     (foldmap F F   f e) 
 foldmap F (G₁ |+|  G₂)  f (inj₁ e)   =  inj₁  (foldmap F G₁  f e)
 foldmap F (G₁ |+|  G₂)  f (inj₂ e)   =  inj₂  (foldmap F G₂  f e)
-foldmap F (G₁ |x|  G₂)  f (e₁ , e₂)  =  foldmap F G₁ f e₁   , 
-                                        foldmap F G₂  f e₂
-foldmap F (|B| S   G)   f (x , e)    =  x                   , 
-                                        foldmap F G   f e
+foldmap F (G₁ |x|  G₂)  f (e₁ , e₂)  =  foldmap F G₁ f e₁   , foldmap F G₂  f e₂
+foldmap F (|B| S   G)   f (x , e)    =  x                   , foldmap F G   f e
 \end{code}
 %</foldmap>
 
@@ -154,9 +151,8 @@ Now the function $f$\ has an explicit context $\mu C$, and the returned type is 
 
 %<*foldCtx>
 \begin{code}
-foldCtx :  {C H : Functor}(F : Functor)
-        →  (μ C → ⟦ F ⟧ (μ H) → μ H)
-        →  μ C → μ F → μ H
+foldCtx :  {C H : Functor}(F : Functor) → (μ C → ⟦ F ⟧ (μ H) → μ H)
+           → μ C → μ F → μ H
 foldCtx F f c = fold F (f c)
 \end{code}
 %</foldCtx>
@@ -217,8 +213,7 @@ Primitive Induction
 
 %<*primIndih>
 \begin{code}
-fih  :  {F : Functor}(G : Functor)(P : μ F → Set)
-     →  ⟦ G ⟧ (μ F) → Set
+fih  :  {F : Functor}(G : Functor)(P : μ F → Set) → ⟦ G ⟧ (μ F) → Set
 fih (|v|   S)     P x           = ⊤
 fih |1|           P tt          = ⊤
 fih (|E|   B)     P e           = ⊤
@@ -234,8 +229,7 @@ fih (|B| S   G)   P (x ,   e)   = fih G   P e
 %<*primInd>
 \begin{code}
 foldmapFh :  {F : Functor}(G : Functor)(P : μ F → Set)
-             → ((e : ⟦ F ⟧ (μ F)) → fih F P e →  P ⟨ e ⟩)
-             → (x : ⟦ G ⟧ (μ F)) → fih G P x
+             → ((e : ⟦ F ⟧ (μ F)) → fih F P e →  P ⟨ e ⟩) → (x : ⟦ G ⟧ (μ F)) → fih G P x
 foldmapFh (|v|   S)     P hi n           =  tt
 foldmapFh |1|           P hi tt          =  tt
 foldmapFh (|E|   B)     P hi b           =  tt
@@ -243,8 +237,7 @@ foldmapFh (|Ef|  F)     P hi b           =  tt
 foldmapFh {F} |R|       P hi ⟨ e ⟩       =  hi e (foldmapFh {F} F P hi e) 
 foldmapFh (G₁ |+|  G₂)  P hi (inj₁  e)   =  foldmapFh G₁  P hi e
 foldmapFh (G₁ |+|  G₂)  P hi (inj₂  e)   =  foldmapFh G₂  P hi e
-foldmapFh (G₁ |x|  G₂)  P hi (e₁  , e₂)  =  foldmapFh G₁  P hi e₁ , 
-                                            foldmapFh G₂  P hi e₂
+foldmapFh (G₁ |x|  G₂)  P hi (e₁  , e₂)  =  foldmapFh G₁  P hi e₁ , foldmapFh G₂  P hi e₂
 foldmapFh (|B| S   G)   P hi (x   , e)   =  foldmapFh G   P hi e
 \end{code}
 %</primInd>
@@ -252,9 +245,8 @@ foldmapFh (|B| S   G)   P hi (x   , e)   =  foldmapFh G   P hi e
 
 %<*primInd2>
 \begin{code}
-foldInd :  (F : Functor)(P : μ F → Set)    
-           → ((e : ⟦ F ⟧ (μ F)) → fih F P e →  P ⟨ e ⟩)
-           → (e : μ F) → P e
+foldInd :  (F : Functor)(P : μ F → Set) 
+           → ((e : ⟦ F ⟧ (μ F)) → fih F P e →  P ⟨ e ⟩) → (e : μ F) → P e
 foldInd F P hi e = foldmapFh {F} |R| P hi e
 \end{code}
 %</primInd2>

@@ -65,8 +65,7 @@ bindersFreeαElemF {F} (|B| S G)  xs (x , e) (accB facc)
 
 %<*bindersfreealphaelem>
 \begin{code}
-bindersFreeαElem :  {F : Functor}(xs : List V)(e : μ F)
-                    → ∃ (λ e' → ListNotOccurBind {F} xs e')
+bindersFreeαElem : {F : Functor}(xs : List V)(e : μ F) → ∃ (λ e' → ListNotOccurBind {F} xs e')
 \end{code}
 %</bindersfreealphaelem>
 
@@ -226,11 +225,11 @@ lemma-bindersFreeα-FV∉b : {F : Functor}(xs : List V)(e : μ F)
 lemma-bindersFreeα-FV∉b xs e = lemma-binds++l (lemma-bindersFreeα-∉b xs e)
 \end{code}
 
-Next could be done as started in AlphaInduction2 file, all binders distinct
+Next could be done as started in AlphaInduction2 file, all binders distinct, and is used only for Church-Rosser future development.
 
 \begin{code}
 postulate
-  lemma-bindersFreeα-BindersAll≢ : {F : Functor}(xs : List V)(e : μ F)
+  lemma-bindersFreeα-BindersAll≢ : {F : Functor}(xs : List V)(e : μ F) 
     → ({x : V}(x∈be' : x ∈b (bindersFreeα xs e)) → notOccurBindExcept x (bindersFreeα xs e) (x∈be')) 
 \end{code}
 
@@ -249,20 +248,27 @@ strong∼αCompatible f M = ∀ N → M ∼α N → f M ≡ f N
 
 %<*alphainductionhypotheses>
 \begin{code}
-fihα :  {F : Functor}(G : Functor)(P : μ F → Set) → List V 
-     →  ⟦ G ⟧ (μ F) → Set
+fihα :  {F : Functor}(G : Functor)(P : μ F → Set) → List V →  ⟦ G ⟧ (μ F) → Set
+\end{code}
+%</alphainductionhypotheses>
+
+%<*alphainductionhypothesescases>
+\begin{code}
+fihα |R|           P xs e          =  P e      × (∀ a → a ∈ xs → a notOccurBind e)
+fihα (|B| S   G)   P xs (x , e)    =  x ∉ xs   × fihα G  P xs e
+\end{code}
+%</alphainductionhypothesescases>
+
+\begin{code}
 fihα (|v|   S)     P xs n          =  ⊤
 fihα |1|           P xs tt         =  ⊤
 fihα (|E|   B)     P xs b          =  ⊤
 fihα (|Ef|  G)     P xs e          =  ⊤
-fihα |R|           P xs e          =  P e      × 
-                                      (∀ a → a ∈ xs → a notOccurBind e)
 fihα (G₁ |+|  G₂)  P xs (inj₁ e)   =  fihα G₁  P xs e 
 fihα (G₁ |+|  G₂)  P xs (inj₂ e)   =  fihα G₂  P xs e 
 fihα (G₁ |x|  G₂)  P xs (e₁ , e₂)  =  fihα G₁  P xs e₁  × fihα G₂ P xs e₂
-fihα (|B| S   G)   P xs (x , e)    =  x ∉ xs   × fihα G  P xs e
 \end{code}
-%</alphainductionhypotheses>
+
 
 \begin{code}
 lemma-fih∧notOccurBind⇛fihα : 
@@ -301,10 +307,12 @@ lemma-fih∧notOccurBind⇛fihα (|B| S G)   P (a  , e)   xs fih notOccur
 
 %<*alphainductionprinciple>
 \begin{code}
-αPrimInd : {F : Functor}(P : μ F → Set)(xs : List V)
-  → αCompatiblePred P 
-  → ((e : ⟦ F ⟧ (μ F)) → fihα F P xs e → P ⟨ e ⟩)  
-  → ∀ e → P e
+αPrimInd : {F : Functor}(P : μ F → Set)(xs : List V) → αCompatiblePred P 
+  → ((e : ⟦ F ⟧ (μ F)) → fihα F P xs e → P ⟨ e ⟩) → ∀ e → P e
+\end{code}
+%</alphainductionprinciple>
+
+\begin{code}
 αPrimInd {F} P xs αP p e
   with bindersFreeαElem xs e
      | lemma-bindersFreeαAlpha xs e
@@ -319,8 +327,6 @@ lemma-fih∧notOccurBind⇛fihα (|B| S G)   P (a  , e)   xs fih notOccur
           e' 
           (get notBind))
 \end{code}
-%</alphainductionprinciple>
-
 -- (aux {F} P xs p)
                          
 -- αIteration : {F : Functor}{A : Set}(xs : List V)
@@ -349,19 +355,15 @@ lemma-fih∧notOccurBind⇛fihα (|B| S G)   P (a  , e)   xs fih notOccur
 
 %<*foldCtxalpha>
 \begin{code}
-foldCtxα :  {C H : Functor}(F : Functor)
-            → (μ C → ⟦ F ⟧ (μ H)  → μ H)
-            → μ C → μ F → μ H
+foldCtxα :  {C H : Functor}(F : Functor) → (μ C → ⟦ F ⟧ (μ H)  → μ H) → μ C → μ F → μ H
 foldCtxα F f c e = foldCtx F f c (proj₁ (bindersFreeαElem (fv c) e))
 \end{code}
 %</foldCtxalpha>
 
 %<*lemmafoldCtxalpha>
 \begin{code}
-lemma-foldCtxα-foldCtx : {C H : Functor}(F : Functor)
-     {f : μ C → ⟦ F ⟧ (μ H) → μ H}{c : μ C}{e : μ F}
-  →  ({e e′  :  ⟦ F ⟧ (μ H)}{c c′ : μ C} → c ∼α c′ → ∼αF F e e′ 
-             → f c e ∼α f c′ e′)
+lemma-foldCtxα-foldCtx : {C H : Functor}(F : Functor){f : μ C → ⟦ F ⟧ (μ H) → μ H}{c : μ C}{e : μ F}
+  →  ({e e′  :  ⟦ F ⟧ (μ H)}{c c′ : μ C} → c ∼α c′ → ∼αF F e e′ → f c e ∼α f c′ e′)
   →  ({c     : μ C}{S : Sort}  {x y : V}{e : ⟦ F ⟧ (μ H)}
              → f (swap S x y c) (swapF F S x y e) ≡ swap S x y (f c e))
   →  ListNotOccurBind (fv c) e
@@ -392,10 +394,8 @@ lemma-foldCtxα-StrongαCompatible {f = f} {c} {e} e' e∼αe'
 
 %<*alphaproof>
 \begin{code}
-αProof : {F : Functor}(P : μ F → Set)(xs : List V)
-  → αCompatiblePred P 
-  → ((e : μ F)  → ListNotOccurBind xs      e 
-                → ListNotOccurBind (fv e)  e → P e )  
+αProof : {F : Functor}(P : μ F → Set)(xs : List V) → αCompatiblePred P 
+  → ((e : μ F)  → ListNotOccurBind xs e → ListNotOccurBind (fv e)  e → P e)  
   → ∀ e → P e
 \end{code}
 %</alphaproof>

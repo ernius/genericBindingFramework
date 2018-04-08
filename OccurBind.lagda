@@ -13,9 +13,12 @@ open import Data.Product hiding (swap)
 open import Relation.Binary.PropositionalEquality hiding ([_])
 open import Data.List hiding (unfold)
 open import Data.List.All
+open import Data.List.All.Properties
 open import Data.List.Any as Any hiding (tail;map)
+import Function.Equality as FE
+open import Function.Inverse hiding (sym;_∘_;map;id)
+open Inverse
 open Any.Membership-≡
-
 \end{code}
 
 
@@ -245,14 +248,28 @@ lemma-bindsB x∉xs notOccur = tabulate (λ y∈xs → notOccurBB≢ (x∉xs∧y
 lemma-bindsv : {F : Functor}{x : V}{xs : List V}{S : Sort} → ListNotOccurBindF {F} (|v| S) xs x 
 lemma-bindsv = tabulate (λ _ → notOccurBv)
 
+lemma-binds:head : {x : V}{xs : List V}{F : Functor}{e : μ F} → ListNotOccurBind (x ∷ xs) e → x notOccurBind e
+lemma-binds:head = head
+
+lemma-binds:tail : {x : V}{xs : List V}{F : Functor}{e : μ F} → ListNotOccurBind (x ∷ xs) e → ListNotOccurBind xs e
+lemma-binds:tail = tail
+
+lemma-binds:cons : {x : V}{xs : List V}{F : Functor}{e : μ F} → x notOccurBind e → ListNotOccurBind xs e → ListNotOccurBind (x ∷ xs) e
+lemma-binds:cons = (_∷_)
+
+lemma-binds++ : {xs ys : List V}{F : Functor}{e : μ F} → ListNotOccurBind xs e → ListNotOccurBind ys e → ListNotOccurBind (xs ++ ys) e
+lemma-binds++ {xs} {ys} {F} {e} nxs nys = FE.Π._⟨$⟩_ (to (++↔ {A = V} {P = (λ x → notOccurBindF x |R| e)} {xs = xs} {ys = ys})) (nxs , nys)
+
+lemma-binds++l : {xs ys : List V}{F : Functor}{e : μ F} → ListNotOccurBind (xs ++ ys) e → ListNotOccurBind xs e
+lemma-binds++l {xs} {ys} {F} {e} nxs++ys = proj₁ (FE.Π._⟨$⟩_ (from (++↔ {A = V} {P = (λ x → notOccurBindF x |R| e)} {xs = xs} {ys = ys})) nxs++ys)
+
+lemma-binds++r : {xs ys : List V}{F : Functor}{e : μ F} → ListNotOccurBind (xs ++ ys) e → ListNotOccurBind ys e
+lemma-binds++r {xs} {ys} {F} {e} nxs++ys = proj₂ (FE.Π._⟨$⟩_ (from (++↔ {A = V} {P = (λ x → notOccurBindF x |R| e)} {xs = xs} {ys = ys})) nxs++ys)
+
+lemma-binds⊆ : {xs ys : List V}{F : Functor}{e : μ F} → ys ⊆ xs → ListNotOccurBind xs e → ListNotOccurBind ys e
+lemma-binds⊆ = anti-mono
+
 postulate
-  lemma-binds:head  : {x : V}{xs : List V}{F : Functor}{e : μ F} → ListNotOccurBind (x ∷ xs) e → x notOccurBind e
-  lemma-binds:tail : {x : V}{xs : List V}{F : Functor}{e : μ F} → ListNotOccurBind (x ∷ xs) e → ListNotOccurBind xs e
-  lemma-binds:cons : {x : V}{xs : List V}{F : Functor}{e : μ F} → x notOccurBind e → ListNotOccurBind xs e → ListNotOccurBind (x ∷ xs) e
-  lemma-binds++ : {xs ys : List V}{F : Functor}{e : μ F} → ListNotOccurBind xs e → ListNotOccurBind ys e → ListNotOccurBind (xs ++ ys) e 
-  lemma-binds++l : {xs ys : List V}{F : Functor}{e : μ F} → ListNotOccurBind (xs ++ ys) e → ListNotOccurBind xs e
-  lemma-binds++r : {xs ys : List V}{F : Functor}{e : μ F} → ListNotOccurBind (xs ++ ys) e → ListNotOccurBind ys e
-  lemma-binds⊆   : {xs ys : List V}{F : Functor}{e : μ F} → ys ⊆ xs → ListNotOccurBind xs e → ListNotOccurBind ys e
   lemma-foldCtxBinds : {C H : Functor}{F : Functor}{f : μ C → ⟦ F ⟧ (μ H) → μ H}{c : μ C}{e : μ F}
                      {xs : List V} → ListNotOccurBind xs e → ListNotOccurBind xs c →  ListNotOccurBind xs (foldCtx F f c e)
 \end{code}

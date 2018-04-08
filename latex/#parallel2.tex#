@@ -257,7 +257,7 @@ From this result it is directly derived that \pn\ has diamond property. Also we 
 
 \begin{theorem}{\pn\ has diamond property}
 
-  \begin{minipage}{0.6\linewidth}
+  \begin{minipage}{0.7\linewidth}
   \[ M \pn N, M \pn P \Rightarrow \exists R, N \pn R, P \pn R \]
 \end{minipage}
   \begin{minipage}{0.3\linewidth}

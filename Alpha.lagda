@@ -69,13 +69,11 @@ data ∼αF {F : Functor} : (G : Functor)
            →  ∼αF F₂ e e'         →  ∼αF (F₁ |+|  F₂)   (inj₂ e)   (inj₂ e')
     ∼αx    :  {F₁ F₂ : Functor}{e₁ e₁'  : ⟦ F₁ ⟧ (μ F)}
               {e₂ e₂'  : ⟦ F₂ ⟧ (μ F)}
-           →  ∼αF F₁ e₁ e₁' → ∼αF F₂ e₂ e₂'
+           →  ∼αF F₁ e₁ e₁'       → ∼αF F₂ e₂ e₂'
                                   →  ∼αF (F₁ |x|  F₂)  (e₁ , e₂)  (e₁' , e₂')
-    ∼αB    :  (xs : List V){S : Sort}{x y : V}
-              {G : Functor}{e e' : ⟦ G ⟧ (μ F)}
-           →  ((z : V) → z ∉ xs   → ∼αF G  (swapF G S x z e) 
-                                           (swapF G S y z e')) 
-                                  →  ∼αF (|B| S G)     (x , e)    (y   , e')  
+    ∼αB    :  (xs : List V){S : Sort}{x y : V}{G : Functor}{e e' : ⟦ G ⟧ (μ F)}
+           →  ((z : V) → z ∉ xs   → ∼αF G  (swapF G S x z e) (swapF G S y z e')) 
+                                  → ∼αF (|B| S G)  (x , e)    (y   , e')  
 
 _∼α_ : {F : Functor} → μ F → μ F → Set
 _∼α_ = ∼αF |R|
@@ -477,13 +475,19 @@ lemma∼B {F} {G} {S} {x} {y} {z} {e} {e'} (∼αB xs f) z#xe
   z#ye' : freshF S z (|B| S G) (y , e')
   z#ye' = lemma∼#F (∼αB xs f) z#xe
 
-
-postulate
-  lemma∼Bswap : {F G : Functor}{S : Sort}{x y : V}{e e′ : ⟦ G ⟧ (μ F)}
+lemma∼Bswap : {F G : Functor}{S : Sort}{x y : V}{e e′ : ⟦ G ⟧ (μ F)}
         → ∼αF (|B| S G) (x , e) (y , e′)
         → ∼αF G (swapF G S x y e) e′
-
-
+lemma∼Bswap {F} {G} {S} {x} {y} {e} {e′} xe∼ye′
+  =  begin
+       swapF G S x y e
+     ∼⟨ lemma∼B {x = x} {y} {y} xe∼ye′ (lemma∼#F (σF xe∼ye′) freshb≡) ⟩
+       swapF G S y y e′
+     ≈⟨ sym (lemmaSwapId {F} {G} {S} {y} {e′}) ⟩
+       e′
+     ∎
+  where 
+  open ∼F-Reasoning(F)(G)
 \end{code}
 
 %<*lemafoldmapfalpha>
@@ -516,11 +520,12 @@ lemma-foldmapfα (|B| S   G)   p  (x , e)
 lemma-foldfα  : {F H : Functor}{f f' : ⟦ F ⟧ (μ H) → μ H}
               → ({e e' :  ⟦ F ⟧ (μ H)} → ∼αF F e e' → f e ∼α f' e') 
               → (e : μ F) → fold F f e ∼α fold F f' e
-lemma-foldfα {F} p e = lemma-foldmapfα |R| p e
 \end{code}
 %</lemma-foldfalpha>
 
-
+\begin{code}
+lemma-foldfα {F} p e = lemma-foldmapfα |R| p e
+\end{code}
 -- lemma-foldmapSCtx  : {F H C : Functor}(G : Functor){f : μ C → ⟦ F ⟧ (μ H) → μ H}{c c′ : μ C}
 --               → ({e e′ :  ⟦ F ⟧ (μ H)}{c c′ : μ C} → c ∼α c′ → ∼αF F e e′ → f c e ∼α f c′ e′)               
 --               → c ∼α c′
@@ -538,14 +543,10 @@ lemma-foldfα {F} p e = lemma-foldmapfα |R| p e
 
 %<*lemmafoldCtxalphactx>
 \begin{code}
-lemma-foldCtxαCtx  : {F H C : Functor}
-     {f : μ C → ⟦ F ⟧ (μ H) → μ H}{c c′ : μ C}
-  →  ({e e′ :  ⟦ F ⟧ (μ H)}{c c′ : μ C} 
-          → c ∼α c′ → ∼αF F e e′ → f c e ∼α f c′ e′)               
-  →  c ∼α c′
-  →  (e : μ F) → foldCtx F f c e ∼α foldCtx F f c′ e
-lemma-foldCtxαCtx {F} {f = f} {c} {c′} p c∼c′ e 
-  = lemma-foldfα (p c∼c′) e  
+lemma-foldCtxαCtx  : {F H C : Functor}{f : μ C → ⟦ F ⟧ (μ H) → μ H}{c c′ : μ C}
+  →  ({e e′ :  ⟦ F ⟧ (μ H)}{c c′ : μ C} → c ∼α c′ → ∼αF F e e′ → f c e ∼α f c′ e′)          
+  →  c ∼α c′ →  (e : μ F) → foldCtx F f c e ∼α foldCtx F f c′ e
+lemma-foldCtxαCtx {F} {f = f} {c} {c′} p c∼c′ e = lemma-foldfα (p c∼c′) e  
 \end{code}
 %</lemmafoldCtxalphactx>
 
@@ -671,24 +672,21 @@ lemma-foldmapα {F} {H} {C} (|B| S G) {f} {c} {c'}  {y , e} {z , e'}
 
 %<*lemmafoldCtxalpha>
 \begin{code}
-lemma-foldCtxα  : {F H C : Functor}{f : μ C → ⟦ F ⟧ (μ H) → μ H}
-     {c c' : μ C}{e e' : μ F}
-  →  ({e e′ :  ⟦ F ⟧ (μ H)}{c c′ : μ C} 
-       → c ∼α c′ → ∼αF F e e′ → f c e ∼α f c′ e′)
-  → ({c : μ C}{S : Sort}{x y : V}{e : ⟦ F ⟧ (μ H)} 
-       → f (swap S x y c) (swapF F S x y e) ≡ swap S x y (f c e))
-  → ListNotOccurBind (fv c)   e
-  → ListNotOccurBind (fv c')  e'
-  → c ∼α c' → e ∼α e'  
-  → foldCtx F f c e ∼α foldCtx F f c' e'
+lemma-foldCtxα  : {F H C : Functor}{f : μ C → ⟦ F ⟧ (μ H) → μ H}{c c' : μ C}{e e' : μ F}
+  →  ({e e′ :  ⟦ F ⟧ (μ H)}{c c′ : μ C} → c ∼α c′ → ∼αF F e e′ → f c e ∼α f c′ e′)
+  → ({c : μ C}{S : Sort}{x y : V}{e : ⟦ F ⟧ (μ H)}
+              → f (swap S x y c) (swapF F S x y e) ≡ swap S x y (f c e))
+  → ListNotOccurBind (fv c)   e → ListNotOccurBind (fv c')  e'
+  → c ∼α c' → e ∼α e' → foldCtx F f c e ∼α foldCtx F f c' e'
 \end{code}
 %</lemmafoldCtxalpha>
 
 \begin{code}
 lemma-foldCtxα prf prf2 nb nb' c∼c' e∼e' = lemma-foldmapα |R| prf prf2 nb nb' c∼c' e∼e' 
 
+-- Next postulate is only needed for parallel reduction in a future Church-Rosser development 
 postulate
-  lemma∼fvF :  {F G : Functor}{e e′ : ⟦ G ⟧ (μ F)}
+  lemma∼fvF :  {F G : Functor}{e e′ : ⟦ G ⟧ (μ F)} 
             → ∼αF G e e′
             → fvF {F} {G} e ≡ fvF {F} {G} e′
 

@@ -40,24 +40,36 @@ SortλTermVars = 1
 λF =      |v| SortλTermVars              --           x
      |+|  |R| |x| |R|                    --      |    M N
      |+|  |B| SortλTermVars |R|          --      |    λ x M
-
-λTerm : Set
-λTerm = μ λF
 \end{code}
 %</lambdacalculus>
 
-%<*lambdaconst>
+%<*lambdacalculusmu>
+\begin{code}
+λTerm : Set
+λTerm = μ λF
+\end{code}
+%</lambdacalculusmu>
+
+%<*lambdaconstvar>
 \begin{code}
 v : V → λTerm
-v = ⟨_⟩ ∘ inj₁ 
+v = ⟨_⟩ ∘ inj₁
+\end{code}
+%</lambdaconstvar>
 
+%<*lambdaconstapp>
+\begin{code}
 _·_ : λTerm → λTerm → λTerm
-M · N = ⟨ inj₂ (inj₁ (M , N)) ⟩ 
+M · N = ⟨ inj₂ (inj₁ (M , N)) ⟩
+\end{code}
+%</lambdaconstapp>
 
+%<*lambdaconstlam>
+\begin{code}
 ƛ : V → λTerm → λTerm
 ƛ n M = ⟨ inj₂ (inj₂ (n , M)) ⟩
 \end{code}
-%</lambdaconst>
+%</lambdaconstlam>
 
 \begin{code}
 testswap1 : swap SortλTermVars 1 2 (ƛ 1 (v 1 · v 2)) ≡ (ƛ 2 (v 2 · v 1))
@@ -78,29 +90,37 @@ vars' ⟨ inj₂ (inj₂ (_ , m)) ⟩  =  vars' m
 
 Now using fold.
 
-%<*varsfold>
+%<*varsfold1>
 \begin{code}
 varsaux : ⟦ λF ⟧ ℕ → ℕ
 varsaux (inj₁ _)               = 1
 varsaux (inj₂ (inj₁ (m , n)))  = m + n
 varsaux (inj₂ (inj₂ (_ , m)))  = m
+\end{code}
+%</varsfold1>
 
+%<*varsfold2>
+\begin{code}
 vars : μ λF → ℕ
 vars = fold λF varsaux
 \end{code}
-%</varsfold>
+%</varsfold2>
 
 Prove trivial property of vars function by primitive induction.
 
-%<*varsproof>
+%<*varsproof1>
 \begin{code}
 PVars : μ λF → Set
 PVars M = vars M > 0
+\end{code}
+%</varsproof1>
 
+%<*varsproof2>
+\begin{code}
 plus>0 : {m n : ℕ} → m > 0 → n > 0 → m + n > 0
 plus>0 {m} {n} m>0 n>0 = ≤-steps m n>0
 \end{code}
-%</varsproof>
+%</varsproof2>
 
 %<*proof'>
 \begin{code}
@@ -117,9 +137,9 @@ provePVars : (M : μ λF) → PVars M
 provePVars = foldInd λF PVars proof
    where
    proof : (e : ⟦ λF ⟧ (μ λF)) → fih λF PVars e → PVars ⟨ e ⟩
-   proof (inj₁ x)                tt         = s≤s z≤n
-   proof (inj₂ (inj₁ (M  , N)))  (PM , PN)  = plus>0 PM PN
-   proof (inj₂ (inj₂ (_  , M)))  PM         = PM
+   proof (inj₁ x)                tt           = s≤s z≤n
+   proof (inj₂ (inj₁ (M  , N)))  (ihM , ihN)  = plus>0 ihM ihN
+   proof (inj₂ (inj₂ (_  , M)))  ihM          = ihM
 \end{code}
 %</proof>
 
@@ -181,11 +201,9 @@ exampleSubst2 = refl
 
 %<*substlemma1>
 \begin{code}
-lemma-substα  :  {M M′ N : λTerm}{x : V} 
-              →  M ∼α M′ → M [ x ≔ N ] ≡ M′ [ x ≔ N ]
+lemma-substα  :  {M M′ N : λTerm}{x : V} →  M ∼α M′ → M [ x ≔ N ] ≡ M′ [ x ≔ N ]
 lemma-substα {M} {M′} M∼M′
-  = lemma-foldCtxα-StrongαCompatible {cF} {λF} {λF} 
-          {substaux} M′ M∼M′
+  = lemma-foldCtxα-StrongαCompatible {cF} {λF} {λF} {substaux} M′ M∼M′
 \end{code}
 %</substlemma1>
 
@@ -287,14 +305,10 @@ lemma-substauxSwap {⟨ x , ⟨ N ⟩ ⟩} {S} {e = inj₂ (inj₂ (y , M))}    
 %<*swapsubst>
 \begin{code}
 lemma-[]Swap : {x y z : V}{M N : λTerm}
-  →  (（ y ∙ z ） M) [ （ y ∙ z ）ₐ x ≔ （ y ∙ z ） N ]ₙ
-       ≡
-     （ y ∙ z ） (M [ x ≔ N ]ₙ)
+  →  (（ y ∙ z ） M) [ （ y ∙ z ）ₐ x ≔ （ y ∙ z ） N ]ₙ ≡ （ y ∙ z ） (M [ x ≔ N ]ₙ)
 lemma-[]Swap {x} {y} {z} {M} {⟨ N ⟩}
-  = lemmaSwapFoldCtxEquiv  {cF} {λF} {λF} {SortλTermVars} 
-      {y} {z} {M} {substaux} {⟨ x , ⟨ N ⟩ ⟩} 
-      (λ {c} {S} {x} {y} {e} → 
-               lemma-substauxSwap {c} {S} {x} {y} {e})
+  = lemmaSwapFoldCtxEquiv  {cF} {λF} {λF} {SortλTermVars} {y} {z} {M} {substaux} {⟨ x , ⟨ N ⟩ ⟩} 
+       (λ {c} {S} {x} {y} {e} → lemma-substauxSwap {c} {S} {x} {y} {e})
 \end{code}
 %</swapsubst>
 
@@ -317,11 +331,9 @@ lemma-substnα′ {x} {M} (∼αR N∼N′) = lemma-foldCtxαCtx lemma-substaux 
 
 %<*substlemma2>
 \begin{code}
-lemma-substα′  :  {x : V}{M N N′ : λTerm} 
-               →  N ∼α N′ → M [ x ≔ N ] ∼α M [ x ≔ N′ ]
+lemma-substα′  :  {x : V}{M N N′ : λTerm} →  N ∼α N′ → M [ x ≔ N ] ∼α M [ x ≔ N′ ]
 lemma-substα′ {x} {M} (∼αR N∼N′) 
-  = lemma-foldCtxα-cxtα 
-          lemma-substaux (∼αR (∼αx ∼αV (∼αEf N∼N′))) M
+  = lemma-foldCtxα-cxtα lemma-substaux (∼αR (∼αx ∼αV (∼αEf N∼N′))) M
 \end{code}
 %</substlemma2>
 
@@ -332,15 +344,12 @@ fv2ctx {x} {M} {⟨ N ⟩} nb = nb
 
 %<*lemmanaivesubst>
 \begin{code}
-lemmaSubsts :  {z : V}{M N : λTerm}
-               → ListNotOccurBind (z ∷ fv N) M
-               → M [ z ≔ N ] ∼α M [ z ≔ N ]ₙ
+lemmaSubsts :  {z : V}{M N : λTerm} → ListNotOccurBind (z ∷ fv N) M → M [ z ≔ N ] ∼α M [ z ≔ N ]ₙ
 lemmaSubsts {z} {M} {N} nb
- = lemma-foldCtxα-foldCtx
-     {cF} {λF} λF {substaux} {⟨ z , N ⟩} {M}
-     lemma-substaux
-     (λ {c} {S} {x} {y} {e} → lemma-substauxSwap {c} {S} {x} {y} {e})
-     (fv2ctx {z} {M} {N} nb)
+ = lemma-foldCtxα-foldCtx {cF} {λF} λF {substaux} {⟨ z , N ⟩} {M}
+      lemma-substaux
+      (λ {c} {S} {x} {y} {e} → lemma-substauxSwap {c} {S} {x} {y} {e})
+      (fv2ctx {z} {M} {N} nb)
 \end{code}
 %</lemmanaivesubst>
 
@@ -443,6 +452,17 @@ lemma⇉nEquiv  {x} {y}
 FourλTermF =  |Ef| λF |x| |Ef| λF |x| |Ef| λF |x| |Ef| λF 
 FourλTerm = μ FourλTermF
 
+BVC : λTerm → Set
+BVC M =  ListNotOccurBind (fv M) M
+     
+BVCC : λTerm → Set
+BVCC M = ({y : V}(y∈bM : y ∈b M) → notOccurBindExcept y M y∈bM)
+
+BVCN : λTerm → Set
+BVCN M = BVC M × BVCC M
+
+-- Future Church-Rosser development
+
 postulate
   lemma⇉nBinders : {M N : λTerm}{x : V} → x ∈b N → M ⇉n N → x ∈b M
 -- lemma⇉nBinders = {!!}
@@ -453,16 +473,6 @@ postulate
   lemma⇉nListNotBinders : {M N : λTerm}{xs : List V} → ListNotOccurBind xs M → M ⇉n N → ListNotOccurBind xs N
 -- lemma⇉nListNotBinders = {!!}
 
-BVC : λTerm → Set
-BVC M =  ListNotOccurBind (fv M) M
-     
-BVCC : λTerm → Set
-BVCC M = ({y : V}(y∈bM : y ∈b M) → notOccurBindExcept y M y∈bM)
-
-BVCN : λTerm → Set
-BVCN M = BVC M × BVCC M
-
-postulate
   lemmaSubstsBVCN : {z : V}{M N : λTerm}
                   → BVCN ((ƛ z M) · N)
                   → M [ z ≔ N ] ∼α M [ z ≔ N ]ₙ                  
@@ -471,7 +481,6 @@ postulate
   lemma⇉nNotBindersExcept : {M N : λTerm} → M ⇉n N → BVCC M → BVCC N
 -- lemma⇉nNotBindersExcept M⇉nN f y∈bN = {!!}
 
-postulate
   lemma⇉nBVCN : {M N : λTerm} → BVCN M → M ⇉n N → BVCN N
 -- lemma⇉nBVCN BVCNM M⇉nN = {! !}
 
@@ -528,7 +537,6 @@ postulate
   lemma-⇉nFree* : {M : λTerm} → fv (M *) ⊆l fv M
 -- lemma-⇉nFree* = {!!}
 
-postulate
   lemma* : {M N : λTerm}
        → BVCN M
        → M ⇉n N → N ⇉n M *

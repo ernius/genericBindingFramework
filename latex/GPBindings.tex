@@ -258,12 +258,8 @@
 \>\AgdaFunction{foldmap} \AgdaSymbol{:} \<[11]%
 \>[11]\AgdaSymbol{\{}\AgdaBound{A} \AgdaSymbol{:} \AgdaPrimitiveType{Set}\AgdaSymbol{\}(}\AgdaBound{F} \AgdaBound{G} \<[26]%
 \>[26]\AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{)} \AgdaSymbol{→} \<[40]%
-\>[40]\AgdaSymbol{(}\AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaBound{A} \AgdaSymbol{→} \AgdaBound{A}\AgdaSymbol{)} \<[54]%
-\>[54]\<%
-\\
-\>[4]\AgdaIndent{8}{}\<[8]%
-\>[8]\AgdaSymbol{→} \<[11]%
-\>[11]\AgdaFunction{⟦} \AgdaBound{G} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaFunction{⟦} \AgdaBound{G} \AgdaFunction{⟧} \AgdaBound{A}\<%
+\>[40]\AgdaSymbol{(}\AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaBound{A} \AgdaSymbol{→} \AgdaBound{A}\AgdaSymbol{)} \AgdaSymbol{→} \<[57]%
+\>[57]\AgdaFunction{⟦} \AgdaBound{G} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaFunction{⟦} \AgdaBound{G} \AgdaFunction{⟧} \AgdaBound{A}\<%
 \\
 \>\AgdaFunction{foldmap} \AgdaBound{F} \AgdaSymbol{(}\AgdaInductiveConstructor{|v|} \<[17]%
 \>[17]\AgdaBound{S}\AgdaSymbol{)} \<[24]%
@@ -318,24 +314,16 @@
 \>[24]\AgdaBound{f} \AgdaSymbol{(}\AgdaBound{e₁} \AgdaInductiveConstructor{,} \AgdaBound{e₂}\AgdaSymbol{)} \<[37]%
 \>[37]\AgdaSymbol{=} \<[40]%
 \>[40]\AgdaFunction{foldmap} \AgdaBound{F} \AgdaBound{G₁} \AgdaBound{f} \AgdaBound{e₁} \<[60]%
-\>[60]\AgdaInductiveConstructor{,} \<[62]%
-\>[62]\<%
-\\
-\>[8]\AgdaIndent{40}{}\<[40]%
-\>[40]\AgdaFunction{foldmap} \AgdaBound{F} \AgdaBound{G₂} \<[54]%
-\>[54]\AgdaBound{f} \AgdaBound{e₂}\<%
+\>[60]\AgdaInductiveConstructor{,} \AgdaFunction{foldmap} \AgdaBound{F} \AgdaBound{G₂} \<[76]%
+\>[76]\AgdaBound{f} \AgdaBound{e₂}\<%
 \\
 \>\AgdaFunction{foldmap} \AgdaBound{F} \AgdaSymbol{(}\AgdaInductiveConstructor{|B|} \AgdaBound{S} \<[19]%
 \>[19]\AgdaBound{G}\AgdaSymbol{)} \<[24]%
 \>[24]\AgdaBound{f} \AgdaSymbol{(}\AgdaBound{x} \AgdaInductiveConstructor{,} \AgdaBound{e}\AgdaSymbol{)} \<[37]%
 \>[37]\AgdaSymbol{=} \<[40]%
 \>[40]\AgdaBound{x} \<[60]%
-\>[60]\AgdaInductiveConstructor{,} \<[62]%
-\>[62]\<%
-\\
-\>[8]\AgdaIndent{40}{}\<[40]%
-\>[40]\AgdaFunction{foldmap} \AgdaBound{F} \AgdaBound{G} \<[54]%
-\>[54]\AgdaBound{f} \AgdaBound{e}\<%
+\>[60]\AgdaInductiveConstructor{,} \AgdaFunction{foldmap} \AgdaBound{F} \AgdaBound{G} \<[76]%
+\>[76]\AgdaBound{f} \AgdaBound{e}\<%
 \end{code}
 %</foldmap>
 
@@ -354,12 +342,12 @@ Recursion
 \>[10]\AgdaSymbol{\{}\AgdaBound{A} \AgdaSymbol{:} \AgdaPrimitiveType{Set}\AgdaSymbol{\}(}\AgdaBound{F} \AgdaBound{G} \<[25]%
 \>[25]\AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{)}\<%
 \\
-\>[0]\AgdaIndent{7}{}\<[7]%
+\>[4]\AgdaIndent{7}{}\<[7]%
 \>[7]\AgdaSymbol{→} \<[10]%
 \>[10]\AgdaSymbol{(}\AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaBound{A} \AgdaFunction{×} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaBound{A}\AgdaSymbol{)} \<[32]%
 \>[32]\<%
 \\
-\>[0]\AgdaIndent{7}{}\<[7]%
+\>[4]\AgdaIndent{7}{}\<[7]%
 \>[7]\AgdaSymbol{→} \<[10]%
 \>[10]\AgdaFunction{⟦} \AgdaBound{G} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaFunction{⟦} \AgdaBound{G} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaBound{A} \AgdaFunction{×} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)} \<[40]%
 \>[40]\<%
@@ -441,15 +429,10 @@ Now the function $f$\ has an explicit context $\mu C$, and the returned type is 
 %<*foldCtx>
 \begin{code}%
 \>\AgdaFunction{foldCtx} \AgdaSymbol{:} \<[11]%
-\>[11]\AgdaSymbol{\{}\AgdaBound{C} \AgdaBound{H} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}(}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{)}\<%
+\>[11]\AgdaSymbol{\{}\AgdaBound{C} \AgdaBound{H} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}(}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{C} \AgdaSymbol{→} \AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{)}\<%
 \\
-\>[7]\AgdaIndent{8}{}\<[8]%
-\>[8]\AgdaSymbol{→} \<[11]%
-\>[11]\AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{C} \AgdaSymbol{→} \AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{)}\<%
-\\
-\>[7]\AgdaIndent{8}{}\<[8]%
-\>[8]\AgdaSymbol{→} \<[11]%
-\>[11]\AgdaDatatype{μ} \AgdaBound{C} \AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{F} \AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{H}\<%
+\>[7]\AgdaIndent{11}{}\<[11]%
+\>[11]\AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{C} \AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{F} \AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{H}\<%
 \\
 \>\AgdaFunction{foldCtx} \AgdaBound{F} \AgdaBound{f} \AgdaBound{c} \AgdaSymbol{=} \AgdaFunction{fold} \AgdaBound{F} \AgdaSymbol{(}\AgdaBound{f} \AgdaBound{c}\AgdaSymbol{)}\<%
 \end{code}
@@ -482,10 +465,10 @@ Recursion with contexts.
 \>\AgdaFunction{recCtx} \AgdaSymbol{:} \<[10]%
 \>[10]\AgdaSymbol{\{}\AgdaBound{C} \AgdaBound{H} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}(}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{)}\<%
 \\
-\>[8]\AgdaIndent{11}{}\<[11]%
+\>[7]\AgdaIndent{11}{}\<[11]%
 \>[11]\AgdaSymbol{→} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{C} \AgdaSymbol{→} \AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{H} \AgdaFunction{×} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{)} \AgdaComment{-- (μ H × μ F)}\<%
 \\
-\>[8]\AgdaIndent{11}{}\<[11]%
+\>[7]\AgdaIndent{11}{}\<[11]%
 \>[11]\AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{C} \AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{F} \AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{H}\<%
 \\
 \>\AgdaFunction{recCtx} \AgdaSymbol{\{}\AgdaBound{C}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{H}\AgdaSymbol{\}} \AgdaBound{F} \AgdaBound{f} \AgdaBound{c} \AgdaSymbol{=} \AgdaFunction{rec} \AgdaSymbol{\{}\AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaSymbol{(}\AgdaBound{f} \AgdaBound{c}\AgdaSymbol{)}\<%
@@ -519,11 +502,7 @@ Primitive Induction
 \begin{code}%
 \>\AgdaFunction{fih} \<[5]%
 \>[5]\AgdaSymbol{:} \<[8]%
-\>[8]\AgdaSymbol{\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}(}\AgdaBound{G} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{)(}\AgdaBound{P} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F} \AgdaSymbol{→} \AgdaPrimitiveType{Set}\AgdaSymbol{)}\<%
-\\
-\>[0]\AgdaIndent{5}{}\<[5]%
-\>[5]\AgdaSymbol{→} \<[8]%
-\>[8]\AgdaFunction{⟦} \AgdaBound{G} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaPrimitiveType{Set}\<%
+\>[8]\AgdaSymbol{\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}(}\AgdaBound{G} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{)(}\AgdaBound{P} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F} \AgdaSymbol{→} \AgdaPrimitiveType{Set}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaFunction{⟦} \AgdaBound{G} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaPrimitiveType{Set}\<%
 \\
 \>\AgdaFunction{fih} \AgdaSymbol{(}\AgdaInductiveConstructor{|v|} \<[11]%
 \>[11]\AgdaBound{S}\AgdaSymbol{)} \<[18]%
@@ -584,12 +563,9 @@ Primitive Induction
 \>\AgdaFunction{foldmapFh} \AgdaSymbol{:} \<[13]%
 \>[13]\AgdaSymbol{\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}(}\AgdaBound{G} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{)(}\AgdaBound{P} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F} \AgdaSymbol{→} \AgdaPrimitiveType{Set}\AgdaSymbol{)}\<%
 \\
-\>[5]\AgdaIndent{13}{}\<[13]%
+\>[11]\AgdaIndent{13}{}\<[13]%
 \>[13]\AgdaSymbol{→} \AgdaSymbol{((}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{))} \AgdaSymbol{→} \AgdaFunction{fih} \AgdaBound{F} \AgdaBound{P} \AgdaBound{e} \AgdaSymbol{→} \<[49]%
-\>[49]\AgdaBound{P} \AgdaInductiveConstructor{⟨} \AgdaBound{e} \AgdaInductiveConstructor{⟩}\AgdaSymbol{)}\<%
-\\
-\>[5]\AgdaIndent{13}{}\<[13]%
-\>[13]\AgdaSymbol{→} \AgdaSymbol{(}\AgdaBound{x} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{))} \AgdaSymbol{→} \AgdaFunction{fih} \AgdaBound{G} \AgdaBound{P} \AgdaBound{x}\<%
+\>[49]\AgdaBound{P} \AgdaInductiveConstructor{⟨} \AgdaBound{e} \AgdaInductiveConstructor{⟩}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaSymbol{(}\AgdaBound{x} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{G} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{))} \AgdaSymbol{→} \AgdaFunction{fih} \AgdaBound{G} \AgdaBound{P} \AgdaBound{x}\<%
 \\
 \>\AgdaFunction{foldmapFh} \AgdaSymbol{(}\AgdaInductiveConstructor{|v|} \<[17]%
 \>[17]\AgdaBound{S}\AgdaSymbol{)} \<[24]%
@@ -642,12 +618,8 @@ Primitive Induction
 \>[34]\AgdaInductiveConstructor{,} \AgdaBound{e₂}\AgdaSymbol{)} \<[41]%
 \>[41]\AgdaSymbol{=} \<[44]%
 \>[44]\AgdaFunction{foldmapFh} \AgdaBound{G₁} \<[58]%
-\>[58]\AgdaBound{P} \AgdaBound{hi} \AgdaBound{e₁} \AgdaInductiveConstructor{,} \<[68]%
-\>[68]\<%
-\\
-\>[13]\AgdaIndent{44}{}\<[44]%
-\>[44]\AgdaFunction{foldmapFh} \AgdaBound{G₂} \<[58]%
-\>[58]\AgdaBound{P} \AgdaBound{hi} \AgdaBound{e₂}\<%
+\>[58]\AgdaBound{P} \AgdaBound{hi} \AgdaBound{e₁} \AgdaInductiveConstructor{,} \AgdaFunction{foldmapFh} \AgdaBound{G₂} \<[82]%
+\>[82]\AgdaBound{P} \AgdaBound{hi} \AgdaBound{e₂}\<%
 \\
 \>\AgdaFunction{foldmapFh} \AgdaSymbol{(}\AgdaInductiveConstructor{|B|} \AgdaBound{S} \<[19]%
 \>[19]\AgdaBound{G}\AgdaSymbol{)} \<[24]%
@@ -663,15 +635,12 @@ Primitive Induction
 %<*primInd2>
 \begin{code}%
 \>\AgdaFunction{foldInd} \AgdaSymbol{:} \<[11]%
-\>[11]\AgdaSymbol{(}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{)(}\AgdaBound{P} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F} \AgdaSymbol{→} \AgdaPrimitiveType{Set}\AgdaSymbol{)} \<[43]%
-\>[43]\<%
+\>[11]\AgdaSymbol{(}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{)(}\AgdaBound{P} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F} \AgdaSymbol{→} \AgdaPrimitiveType{Set}\AgdaSymbol{)} \<[40]%
+\>[40]\<%
 \\
 \>[0]\AgdaIndent{11}{}\<[11]%
 \>[11]\AgdaSymbol{→} \AgdaSymbol{((}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{))} \AgdaSymbol{→} \AgdaFunction{fih} \AgdaBound{F} \AgdaBound{P} \AgdaBound{e} \AgdaSymbol{→} \<[47]%
-\>[47]\AgdaBound{P} \AgdaInductiveConstructor{⟨} \AgdaBound{e} \AgdaInductiveConstructor{⟩}\AgdaSymbol{)}\<%
-\\
-\>[0]\AgdaIndent{11}{}\<[11]%
-\>[11]\AgdaSymbol{→} \AgdaSymbol{(}\AgdaBound{e} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaBound{P} \AgdaBound{e}\<%
+\>[47]\AgdaBound{P} \AgdaInductiveConstructor{⟨} \AgdaBound{e} \AgdaInductiveConstructor{⟩}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaSymbol{(}\AgdaBound{e} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaBound{P} \AgdaBound{e}\<%
 \\
 \>\AgdaFunction{foldInd} \AgdaBound{F} \AgdaBound{P} \AgdaBound{hi} \AgdaBound{e} \AgdaSymbol{=} \AgdaFunction{foldmapFh} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaInductiveConstructor{|R|} \AgdaBound{P} \AgdaBound{hi} \AgdaBound{e}\<%
 \end{code}

@@ -82,8 +82,6 @@ lemma∙ₐ（ab）c≢a∧（ab）c≢b→（ab）c≡a {a} {b} {c}  （ab）c�
 lemma∙ₐ（ab）c≢a∧（ab）c≢b→（ab）c≡a {a} {b} {.a}  b≢a b≢b  | .b | inj₁ (refl , refl)              = ⊥-elim (b≢b refl)
 lemma∙ₐ（ab）c≢a∧（ab）c≢b→（ab）c≡a {a} {b} {.b}  a≢a a≢b  | .a | inj₂ (inj₁ (refl  , _ , refl))  = ⊥-elim (a≢a refl)
 lemma∙ₐ（ab）c≢a∧（ab）c≢b→（ab）c≡a {a} {b} {c}   c≢a c≢b  | .c | inj₂ (inj₂ (_     , _ , refl))  = refl
-
-
 \end{code}
 
 %<*idempotent>

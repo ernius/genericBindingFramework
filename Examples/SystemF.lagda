@@ -41,21 +41,30 @@ tyF : Functor                                      -- t,r :-
 tyF =      |v| SortFTypeVars                       --   α
       |+|  |R| |x| |R|                             -- | t → r
       |+|  |B| SortFTypeVars |R|                   -- | ∀ α . t
-                                                   --
+
 tF : Functor                                       -- M,N :-
 tF =      |v| SortFTermVars                        --   x
      |+|  |R| |x| |R|                              -- | M N
      |+|  |Ef| tyF |x| |B| SortFTermVars |R|       -- | λ x : t . M
      |+|  |R| |x| |Ef| tyF                         -- | M t
      |+|  |B| SortFTypeVars |R|                    -- | Λ α . M
+\end{code}
+%</systemF>
 
+%<*systemFmuty>
+\begin{code}
 FType : Set
 FType = μ tyF
+\end{code}
+%</systemFmuty>
 
+%<*systemFmutrm>
+\begin{code}
 FTerm : Set
 FTerm = μ tF
 \end{code}
-%</systemF>
+%</systemFmutrm>
+
 
 \begin{code}
 vₜ : V → FType
@@ -166,7 +175,7 @@ infix 11 _[_≔_]ₙ
 infix 11 _[_≔_]
 \end{code}
 
-%<*naivesubst>
+%<*substaux>
 \begin{code}
 cF =  |v| SortFTermVars |x| |Ef| tF
 
@@ -178,7 +187,11 @@ substaux _           (inj₂ (inj₂ (inj₂ (inj₂ (α , t)))))   = Λ α t
 substaux ⟨ x ,  N ⟩  (inj₁ y) with x ≟v y
 ... | yes _                                                = N
 ... | no _                                                 = v y 
+\end{code}
+%</substaux>
 
+%<*naivesubst>
+\begin{code}
 _[_≔_]ₙ : FTerm → V → FTerm → FTerm
 M [ x ≔ N ]ₙ  = foldCtx tF substaux (⟨ x , N ⟩) M
 \end{code}
@@ -456,9 +469,7 @@ lemma-substnfv  {⟨ inj₂ (inj₂ (inj₂ (inj₂ (α , M)))) ⟩} {N} {x} x�
 %<*substnaivecompositionpredicate>
 \begin{code}
 PSCn : {x y : V}{L : FTerm} → FTerm → FTerm → Set
-PSCn {x} {y} {L} N M
-  =  x ∉ y ∷ fv L
-  →  x notOccurBind L
+PSCn {x} {y} {L} N M =  x ∉ y ∷ fv L →  x notOccurBind L
   →  (M [ x ≔ N ]ₙ) [ y ≔ L ]ₙ ∼α (M [ y ≔ L ]ₙ)[ x ≔ N [ y ≔ L ]ₙ ]ₙ
 \end{code}
 %</substnaivecompositionpredicate>
@@ -490,8 +501,7 @@ open ∼-Reasoning(tF)
 
 %<*substcompositionNdef>
 \begin{code}
-lemma-substCompositionN :  {x y : V}{M N L : FTerm}
-                           → PSCn {x} {y} {L} N M
+lemma-substCompositionN :  {x y : V}{M N L : FTerm} → PSCn {x} {y} {L} N M
 lemma-substCompositionN {x} {y} {M} {N} {L}
   = foldInd tF (PSCn {x} {y} {L} N) lemma-substCompositionNAux M
 \end{code}
@@ -517,17 +527,16 @@ lemma-substCompositionN {x} {y} {M} {N} {L}
 
 %<*substncompositionabstractioncase>
 \begin{code}
-  lemma-substCompositionNAux  (inj₂ (inj₂ (inj₁ (t , z , M)))) (_ , hiM) 
-                              x∉yfvL   xnbL  =  
+  lemma-substCompositionNAux  (inj₂ (inj₂ (inj₁ (t , z , M))))
+                              (_ , hiM) x∉yfvL x∉bL =  
     begin
       (ƛ z t M) [ x ≔ N ]ₙ [ y ≔ L ]ₙ
-    ≈⟨ refl                                                         ⟩
+    ≈⟨ refl                                         ⟩
       ƛ z t (M [ x ≔ N ]ₙ [ y ≔ L ]ₙ)
-    ∼⟨ ∼αR (∼α+₂ (∼α+₂ (∼α+₁ 
-                            (∼αx  ρF 
-                                  (lemma∼+B (hiM x∉yfvL xnbL))))))  ⟩ 
+    ∼⟨ ∼αR (∼α+₂  (∼α+₂ (∼α+₁
+         (∼αx  ρF (lemma∼+B (hiM x∉yfvL x∉bL))))))  ⟩ 
       ƛ z t (M [ y ≔ L ]ₙ [ x ≔ N [ y ≔ L ]ₙ ]ₙ)
-    ≈⟨ refl                                                         ⟩
+    ≈⟨ refl                                         ⟩
       (ƛ z t M) [ y ≔ L ]ₙ [ x ≔ N [ y ≔ L ]ₙ ]ₙ
     ∎
 \end{code}
@@ -574,48 +583,42 @@ TreeFTerm = μ TreeFTermF
 
 PSComp : {x y : V} → TreeFTerm → Set
 PSComp {x} {y} ⟨ M , N , L ⟩ = x ∉ y ∷ fv L
-  → (M [ x ≔ N ]) [ y ≔ L ] ∼α (M [ y ≔ L ])[ x ≔ N [ y ≔ L ] ]
+    → (M [ x ≔ N ]) [ y ≔ L ] ∼α (M [ y ≔ L ])[ x ≔ N [ y ≔ L ] ]
 \end{code}
 %</substcompositionpredicate>
 
 
 %<*substcompositionpredicatealpha>
 \begin{code}
-αCompatiblePSComp : ∀ {x y : V} 
-  → αCompatiblePred {TreeFTermF} (PSComp {x} {y})
+αCompatiblePSComp : ∀ {x y : V} → αCompatiblePred {TreeFTermF} (PSComp {x} {y})
 αCompatiblePSComp  {x} {y} {⟨ M , N , L ⟩} {⟨ M′ , N′ , L′ ⟩} 
                    (∼αR (∼αx M∼M′ (∼αx N∼N′ L∼L′))) PMs x∉y:fvL′
   =  begin
        (M′  [ x ≔ N′  ])  [ y ≔ L′  ]
      -- Strong α compability of inner substitution operation       
-     ≈⟨ cong (λ z → z [ y ≔ L′ ]) (lemma-substα (σ M∼M'))     ⟩
+     ≈⟨ cong (λ z → z [ y ≔ L′ ]) (lemma-substα (σ M∼M'))                                 ⟩
        (M   [ x ≔ N′  ])  [ y ≔ L′  ]
      -- Strong α compability of outter substitution operation       
-     ≈⟨ lemma-substα  {M [ x ≔ N′ ]} {M [ x ≔ N ]}
-                      (lemma-substα′ {x} {M} (σ N∼N'))        ⟩
+     ≈⟨ lemma-substα  {M [ x ≔ N′ ]} {M [ x ≔ N ]} (lemma-substα′ {x} {M} (σ N∼N'))       ⟩
        (M   [ x ≔ N   ])  [ y ≔ L′  ]
      -- Outter substitution is alpha-compatible in its substituted argument
-     ∼⟨ lemma-substα′ {y} {M [ x ≔ N   ]} (σ L∼L')            ⟩
+     ∼⟨ lemma-substα′ {y} {M [ x ≔ N   ]} (σ L∼L')                                        ⟩
        (M   [ x ≔ N   ])  [ y ≔ L   ]
      -- Application of the inductive hypothesis
-     ∼⟨ PMs x∉y∶fvL                                           ⟩ 
+     ∼⟨ PMs x∉y∶fvL                                                                       ⟩ 
        (M   [ y ≔ L   ])  [ x ≔ N   [ y ≔ L   ] ]
      -- Strong α compability of inner substitution operation       
-     ≈⟨ cong  (λ P → P [ x ≔ N [ y ≔ L ] ]) 
-              (lemma-substα M∼M')                             ⟩ 
+     ≈⟨ cong  (λ P → P [ x ≔ N [ y ≔ L ] ]) (lemma-substα M∼M')                           ⟩ 
        (M′  [ y ≔ L   ])  [ x ≔ N   [ y ≔ L   ] ]
      -- Inner substitution is alpha-compatible in its substituted argument
-     ≈⟨ lemma-substα  {M′ [ y ≔ L ]} {M′ [ y ≔ L′ ]} 
-                      {N [ y ≔ L ]} {x}
-                      (lemma-substα′ {y} {M′} L∼L')           ⟩        
+     ≈⟨ lemma-substα   {M′ [ y ≔ L ]} {M′ [ y ≔ L′ ]} {N [ y ≔ L ]} {x}
+                       (lemma-substα′ {y} {M′} L∼L')                                      ⟩        
        (M′  [ y ≔ L′  ])  [ x ≔ N   [ y ≔ L   ] ]
      -- Strong α compability of substitution operation in subsituted term       
-     ≈⟨ cong  (λ P → (M′ [ y ≔ L′ ])  [ x ≔ P ]) 
-              (lemma-substα N∼N')                             ⟩
+     ≈⟨ cong  (λ P → (M′ [ y ≔ L′ ])  [ x ≔ P ]) (lemma-substα N∼N')                      ⟩
        (M′  [ y ≔ L′  ])  [ x ≔ N′  [ y ≔ L   ] ]
      -- Outter substitution is alpha-compatible in its substituted argument
-     ∼⟨ lemma-substα′  {x} {M′  [ y ≔ L′ ]} {N′ [ y ≔ L ]}
-                       (lemma-substα′ {y} {N′} L∼L')          ⟩ 
+     ∼⟨ lemma-substα′  {x} {M′  [ y ≔ L′ ]} {N′ [ y ≔ L ]} (lemma-substα′ {y} {N′} L∼L')  ⟩ 
        (M′  [ y ≔ L′  ])  [ x ≔ N′  [ y ≔ L′  ] ]
      ∎     
 \end{code}
@@ -633,27 +636,21 @@ PSComp {x} {y} ⟨ M , N , L ⟩ = x ∉ y ∷ fv L
 %<*substitutioncompositionproof>
 \begin{code}
 αproof :  {x y : V}(Ms : μ TreeFTermF)
-           → ListNotOccurBind (x ∷ y ∷ []) Ms 
-           → ListNotOccurBind (fv Ms) Ms
-           → PSComp {x} {y} Ms
+  → ListNotOccurBind (x ∷ y ∷ []) Ms → ListNotOccurBind (fv Ms) Ms → PSComp {x} {y} Ms
 αproof {x} {y} ⟨ M , N , L ⟩ nOcc nOcc2 x∉y∶fvL
    =  begin
          (M  [ x ≔ N  ])  [ y ≔ L ]
-      ≈⟨ lemma-substα  {M [ x ≔ N ]} 
-                       (lemmaSubsts {x} {M} {N} x:fvN∉bM)     ⟩
+      ≈⟨ lemma-substα  {M [ x ≔ N ]} (lemmaSubsts {x} {M} {N} x:fvN∉bM)         ⟩
          M   [ x ≔ N ]ₙ   [ y ≔ L ]
-      ∼⟨ lemmaSubsts {y} {M [ x ≔ N ]ₙ} {L} y:fvL∉bM[x≔N]ₙ    ⟩
+      ∼⟨ lemmaSubsts {y} {M [ x ≔ N ]ₙ} {L} y:fvL∉bM[x≔N]ₙ                      ⟩
          M   [ x ≔ N ]ₙ   [ y ≔ L ]ₙ
-      ∼⟨ lemma-substCompositionN  {x} {y} {M} {N} {L} 
-                                  x∉y∶fvL x∉bL                ⟩
+      ∼⟨ lemma-substCompositionN  {x} {y} {M} {N} {L} x∉y∶fvL x∉bL              ⟩
          M   [ y ≔ L ]ₙ   [ x ≔ N [ y ≔ L ]ₙ  ]ₙ
-      ∼⟨ lemma-substnα′  {x} {M [ y ≔ L ]ₙ} 
-                         (σ (lemmaSubsts {y} {N} y:fvL∉bN))   ⟩
+      ∼⟨ lemma-substnα′  {x} {M [ y ≔ L ]ₙ} (σ (lemmaSubsts {y} {N} y:fvL∉bN))  ⟩
          M   [ y ≔ L ]ₙ   [ x ≔ N [ y ≔ L ]   ]ₙ
-      ∼⟨ σ (lemmaSubsts  {x} {M [ y ≔ L ]ₙ} {N [ y ≔ L ]} 
-                         x:fvN[y≔L]∉bM[y≔L]ₙ)                 ⟩
+      ∼⟨ σ (lemmaSubsts  {x} {M [ y ≔ L ]ₙ} {N [ y ≔ L ]} x:fvN[y≔L]∉bM[y≔L]ₙ)  ⟩
          M   [ y ≔ L ]ₙ   [ x ≔ N [ y ≔ L ]   ]
-      ≈⟨ lemma-substα (σ (lemmaSubsts {y} {M} {L} y:fvL∉bM))  ⟩
+      ≈⟨ lemma-substα (σ (lemmaSubsts {y} {M} {L} y:fvL∉bM))                    ⟩
          (M  [ y ≔ L  ])  [ x ≔ N [ y ≔ L ]   ]
        ∎
 \end{code}
@@ -716,11 +713,9 @@ PSComp {x} {y} ⟨ M , N , L ⟩ = x ∉ y ∷ fv L
 
 %<*substcompalphaproof>
 \begin{code}
-lemma-substComposition2  :  {x y : V}{Ms : TreeFTerm} 
-                         →  PSComp {x} {y} Ms
+lemma-substComposition2  :  {x y : V}{Ms : TreeFTerm} → PSComp {x} {y} Ms
 lemma-substComposition2 {x} {y} {⟨ M , N , L ⟩}
- = αProof  (PSComp {x} {y})
-           (x ∷ y ∷ []) 
+ = αProof  (PSComp {x} {y}) (x ∷ y ∷ []) 
            (αCompatiblePSComp {x} {y})
            αproof
            ⟨ M , N , L ⟩
