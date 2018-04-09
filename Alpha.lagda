@@ -551,10 +551,74 @@ lemma-foldCtxαCtx {F} {f = f} {c} {c′} p c∼c′ e = lemma-foldfα (p c∼c�
 %</lemmafoldCtxalphactx>
 
 \begin{code}
-postulate
-  lemma-swap# : {F : Functor}{S : Sort}{x y : V}{e : μ F} → fresh S x e → fresh S y e → swap S x y e ∼α e
---lemma-swap# = {!!}
+lemma-B# : {F G : Functor}{S : Sort}{x y : V}{e : ⟦ G ⟧ (μ F) } → freshF S y G e → ∼αF (|B| S G) (y , swapF G S x y e)  (x , e)
+lemma-B# {F} {G} {S} {x} {y} {e} y#e
+  = ∼αB (fvSF {F} {G} S e) (λ z z∉fve →
+       begin
+         swapF G S y z (swapF G S x y e)
+       ∼⟨ lemma∼swapCancelF {F} {G} {S} {e} y#e (lemmafvSF# {F} {G} {z} {S} {e} z∉fve) ⟩
+         swapF G S x z e
+       ∎)
+  where 
+  open ∼F-Reasoning(F)(G)
 
+lemma-B#' : {F G : Functor}{S : Sort}{x y : V}{e : ⟦ G ⟧ (μ F) } → freshF S y G e → ∼αF (|B| S G) (y , swapF G S y x e) (x , e)
+lemma-B#' {F} {G} {S} {x} {y} {e} y#e
+  =  begin
+       y , swapF G S y x e
+     ≈⟨ cong₂ (_,_) refl (lemmaSwapComm {F} {G} {S} {y} {x} {e}) ⟩
+       y , swapF G S x y e
+     ∼⟨ lemma-B# y#e ⟩
+       x , e
+     ∎
+  where 
+  open ∼F-Reasoning(F)(|B| S G)
+  
+lemma-swap#F : {F G : Functor}{S : Sort}{x y : V}{e : ⟦ G ⟧ (μ F) } → freshF S x G e → freshF S y G e → ∼αF G (swapF G S x y e)  e
+lemma-swap#F {F} {|1|}      {S} {x} {y} {e}        x#e                 y#e                 = ∼α1
+lemma-swap#F {F} {|R|}      {S} {x} {y} {⟨ e ⟩}    (freshR x#e)        (freshR y#e)        = ∼αR (lemma-swap#F x#e y#e)
+lemma-swap#F {F} {|E| A}    {S} {x} {y} {e}        x#e                 y#e                 = ∼αE
+lemma-swap#F {F} {|Ef| G}   {S} {x} {y} {⟨ e ⟩}    (freshEf x#e)       (freshEf y#e)       = ∼αEf (lemma-swap#F x#e y#e)
+lemma-swap#F {F} {G |+| G₁} {S} {x} {y} {inj₁ e}   (freshinj₁ x#e)     (freshinj₁ y#e)     = ∼α+₁ (lemma-swap#F x#e y#e)
+lemma-swap#F {F} {G |+| G₁} {S} {x} {y} {inj₂ e}   (freshinj₂ x#e)     (freshinj₂ y#e)     = ∼α+₂ (lemma-swap#F x#e y#e)
+lemma-swap#F {F} {G |x| G₁} {S} {x} {y} {e₁ , e₂}  (freshx x#e₁ x#e₂)  (freshx y#e₁ y#e₂)  = ∼αx (lemma-swap#F x#e₁ y#e₁) (lemma-swap#F x#e₂ y#e₂)
+lemma-swap#F {F} {|v| S′}   {S} {x} {y} {z}        x#e                 y#e
+  with swapF {F} (|v| S′) S x y z | lemmaSwap#Var {F} x#e y#e
+... | .z | refl                                                                            = ∼αV 
+lemma-swap#F {F} {|B| S′ G} {S} {x} {y} {z , e}    x#e                 y#e
+  with S′ ≟S S
+lemma-swap#F {F} {|B| S G}  {.S} {.z} {y} {z , e}  freshb≡ y#e                      | no S≢S   = ⊥-elim (S≢S refl)
+lemma-swap#F {F} {|B| S G}  {.S} {x} {.z} {z , e}  (freshb x#e)        freshb≡      | no S≢S   = ⊥-elim (S≢S refl)
+lemma-swap#F {F} {|B| S′ G} {S}  {x} {y} {z , e}   (freshb x#e)        (freshb y#e) | no _     = lemma∼+B (lemma-swap#F x#e y#e)
+lemma-swap#F {F} {|B| S G} {.S} {.z} {.z} {z , e}  freshb≡             freshb≡      | yes refl
+  =  begin
+       （ z ∙ z ）ₐ z , swapF G S z z e
+     ≈⟨ cong₂ (_,_) lemma（aa）b≡b refl ⟩
+        z , swapF G S z z e
+     ≈⟨ cong₂ (_,_) refl (sym (lemmaSwapId {F} {G} {S} {z} {e})) ⟩ 
+        z , e
+     ∎
+  where 
+  open ∼F-Reasoning(F)(|B| S G)
+lemma-swap#F {F} {|B| S G} {.S} {.z} {y} {z , e}   freshb≡             (freshb y#e) | yes refl
+  with （ z ∙ y ）ₐ z | lemma（ab）a≡b {z} {y}
+... |   .y  | refl = lemma-B#  y#e
+lemma-swap#F {F} {|B| S G} {.S} {x} {.z} {z , e}   (freshb x#e)        freshb≡      | yes refl
+  with （ x ∙ z ）ₐ z | lemma（ab）b≡a {x} {z}
+... |   .x  | refl = lemma-B#'  x#e
+lemma-swap#F {F} {|B| S G} {.S} {x} {y} {z , e}    (freshb x#e)        (freshb y#e) | yes refl
+  with （ x ∙ y ）ₐ z | lemma∙ₐ x y z
+lemma-swap#F {F} {|B| S G} {.S} {x} {y} {.x , e}    (freshb x#e)        (freshb y#e) | yes refl  
+  | .y | inj₁ (refl , refl)               = lemma-B# y#e
+lemma-swap#F {F} {|B| S G} {.S} {x} {y} {.y , e}    (freshb x#e)        (freshb y#e) | yes refl 
+  | .x | inj₂ (inj₁ (refl , z≢x , refl))  = lemma-B#' x#e
+lemma-swap#F {F} {|B| S G} {.S} {x} {y} {z , e}    (freshb x#e)        (freshb y#e) | yes refl  
+  | .z | inj₂ (inj₂ (z≢x  , z≢y , refl))  = lemma∼+B (lemma-swap#F x#e y#e)
+    
+lemma-swap# : {F : Functor}{S : Sort}{x y : V}{e : μ F} → fresh S x e → fresh S y e → swap S x y e ∼α e
+lemma-swap# {F} = lemma-swap#F {F} {|R|}
+
+postulate
   lemma-swapListNotOccurBind : {F G : Functor}{S : Sort}{x y : V}{e : ⟦ G ⟧ (μ F)}{xs : List V}
                           → x ∉ xs → y ∉ xs
                           → ListNotOccurBindF G xs e
@@ -683,8 +747,11 @@ lemma-foldCtxα  : {F H C : Functor}{f : μ C → ⟦ F ⟧ (μ H) → μ H}{c c
 
 \begin{code}
 lemma-foldCtxα prf prf2 nb nb' c∼c' e∼e' = lemma-foldmapα |R| prf prf2 nb nb' c∼c' e∼e' 
+\end{code}
 
--- Next postulate is only needed for parallel reduction in a future Church-Rosser development 
+Next postulate is only needed for parallel reduction in a future Church-Rosser development
+
+\begin{code}
 postulate
   lemma∼fvF :  {F G : Functor}{e e′ : ⟦ G ⟧ (μ F)} 
             → ∼αF G e e′

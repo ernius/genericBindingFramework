@@ -53,6 +53,13 @@ fresh S x = freshF S x |R|
 %</fresh>
 
 \begin{code}
+lemmaSwap#Var : {F : Functor}{S S′ : Sort}{x y z : V} → freshF S x {F} (|v| S′) z → freshF S y {F} (|v| S′) z → (swapF {F} (|v| S′) S x y z) ≡ z
+lemmaSwap#Var {F} {S} {S′} x#z y#z with S′ ≟S S
+... | no  _     = refl
+lemmaSwap#Var {F} {S} {.S} (freshV≢ x≢z)   (freshV≢ y≢)    | yes refl = lemma∙ₐc≢a∧c≢b (sym≢ x≢z) (sym≢ y≢)
+lemmaSwap#Var {F} {S} {.S} (freshV≢ _)     (freshV≢S S≢S)  | yes refl = ⊥-elim (S≢S refl)
+lemmaSwap#Var {F} {S} {.S} (freshV≢S S≢S)  _               | yes refl = ⊥-elim (S≢S refl) 
+
 lemmaSwapF# : {F G : Functor}{S : Sort}{x y : V}{e  : ⟦ G ⟧ (μ F)}
         → freshF S y G e
         → freshF S x G (swapF G S x y e)

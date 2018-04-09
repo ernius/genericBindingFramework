@@ -225,14 +225,6 @@ lemma-bindersFreeα-FV∉b : {F : Functor}(xs : List V)(e : μ F)
 lemma-bindersFreeα-FV∉b xs e = lemma-binds++l (lemma-bindersFreeα-∉b xs e)
 \end{code}
 
-Next could be done as started in AlphaInduction2 file, all binders distinct, and is used only for Church-Rosser future development.
-
-\begin{code}
-postulate
-  lemma-bindersFreeα-BindersAll≢ : {F : Functor}(xs : List V)(e : μ F) 
-    → ({x : V}(x∈be' : x ∈b (bindersFreeα xs e)) → notOccurBindExcept x (bindersFreeα xs e) (x∈be')) 
-\end{code}
-
 \begin{code}
 αCompatiblePred : {F : Functor} → (μ F → Set) → Set
 αCompatiblePred {F = F} P = {e e' : μ F} → e ∼α e' → P e → P e'
@@ -433,7 +425,13 @@ lemma-foldCtxα-cxtα {c = c} {c′} prf c∼c′ e
 ... | fv | .fv | refl = lemma-foldCtxαCtx prf c∼c′ (proj₁ (bindersFreeαElem fv e))
 \end{code}
 
+Next postulate could be done as started in AlphaInduction2 file, all binders distinct, and is used only for Church-Rosser future development.
 
+\begin{code}
+postulate
+  lemma-bindersFreeα-BindersAll≢ : {F : Functor}(xs : List V)(e : μ F) 
+    → ({x : V}(x∈be' : x ∈b (bindersFreeα xs e)) → notOccurBindExcept x (bindersFreeα xs e) (x∈be')) 
+\end{code}
 
 --   lemma-binderFreeElemFold :
 --     {F H C : Functor}{f : μ C → ⟦ F ⟧ (μ H) → μ H}{c c' : μ C}{e : μ F}{S : Sort}

@@ -71,10 +71,21 @@ lemma∙ₐa≢b∧a≢c∧a≢（bc）d→a≢d {a} {b} {c} .{b} a≢b a≢c a�
 lemma∙ₐa≢b∧a≢c∧a≢（bc）d→a≢d {a} {b} {c} .{c} a≢b a≢c a≢（bc）d | .b | inj₂ (inj₁ (refl  , _ , refl))  = a≢c
 lemma∙ₐa≢b∧a≢c∧a≢（bc）d→a≢d {a} {b} {c} {d} a≢b a≢c a≢（bc）d  | .d | inj₂ (inj₂ (_     , _ , refl))  = a≢（bc）d
 --
+lemma（ab）b≡a : ∀ {a} {b} → （ a ∙ b ）ₐ b ≡ a
+lemma（ab）b≡a {a} {b} with （ a ∙ b ）ₐ b | lemma∙ₐ a b b
+lemma（ab）b≡a {a} {.a}  | .a | inj₁ (refl , refl)                = refl
+lemma（ab）b≡a {a} {b}   | .a | inj₂ (inj₁ (refl  , _ , refl))    = refl
+lemma（ab）b≡a {a}  {b}  | .b | inj₂ (inj₂ (_     , b≢b , refl))  = ⊥-elim (b≢b refl)
+--
+lemma（ab）a≡b : ∀ {a} {b} → （ a ∙ b ）ₐ a ≡ b
+lemma（ab）a≡b {a} {b} with a ≟ a
+... | no a≢a = ⊥-elim (a≢a refl)
+... | yes _  = refl
+--
 lemma（aa）b≡b : ∀ {a} {b} → （ a ∙ a ）ₐ b ≡ b
 lemma（aa）b≡b {a}   {b} with （ a ∙ a ）ₐ b | lemma∙ₐ a a b
-lemma（aa）b≡b {.b}  {b} | .b | inj₁ (refl , refl)          = refl
-lemma（aa）b≡b {.b}  {b} | .b | inj₂ (inj₁ (refl  , _ , refl))   = refl
+lemma（aa）b≡b {.b}  {b} | .b | inj₁ (refl , refl)              = refl
+lemma（aa）b≡b {.b}  {b} | .b | inj₂ (inj₁ (refl  , _ , refl))  = refl
 lemma（aa）b≡b {a}   {b} | .b | inj₂ (inj₂ (_     , _ , refl))  = refl
 --
 lemma∙ₐ（ab）c≢a∧（ab）c≢b→（ab）c≡a :  ∀ {a b c} → （ a ∙ b ）ₐ c ≢ a → （ a ∙ b ）ₐ c ≢ b → （ a ∙ b ）ₐ c ≡ c
