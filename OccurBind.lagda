@@ -273,7 +273,26 @@ lemma-binds++r {xs} {ys} {F} {e} nxs++ys = proj₂ (FE.Π._⟨$⟩_ (from (++↔
 lemma-binds⊆ : {xs ys : List V}{F : Functor}{e : μ F} → ys ⊆ xs → ListNotOccurBind xs e → ListNotOccurBind ys e
 lemma-binds⊆ = anti-mono
 
-postulate
-  lemma-foldCtxBinds : {C H : Functor}{F : Functor}{f : μ C → ⟦ F ⟧ (μ H) → μ H}{c : μ C}{e : μ F}
-                     {xs : List V} → ListNotOccurBind xs e → ListNotOccurBind xs c →  ListNotOccurBind xs (foldCtx F f c e)
+lemma-foldBindsF : {H F G : Functor}{f : ⟦ F ⟧ (μ H) → μ H}{e : ⟦ G ⟧ (μ F)}{xs : List V}
+                   →  ({e  : ⟦ F ⟧ (μ H)} → ListNotOccurBindF F xs e → ListNotOccurBind xs (f e))
+                   → ListNotOccurBindF G xs e → ListNotOccurBindF G xs (foldmap F G f e)
+lemma-foldBindsF {H} {F} {|1|}      {f} {e}      {xs} prf xs∉e = lemma-binds1
+lemma-foldBindsF {H} {F} {|R|}      {f} {⟨ e ⟩}  {xs} prf xs∉e = prf ( lemma-foldBindsF prf (lemmalistNotOccurBindFR→ListNotOccurBindF xs∉e))
+lemma-foldBindsF {H} {F} {|E| x}    {f} {e}      {xs} prf xs∉e = lemma-bindsE
+lemma-foldBindsF {H} {F} {|Ef| G}   {f} {⟨ e ⟩}  {xs} prf xs∉e = lemma-bindsEf (lemmalistNotOccurBindEf→ListNotOccurBindF xs∉e)
+lemma-foldBindsF {H} {F} {G |+| G₁} {f} {inj₁ e} {xs} prf xs∉e = lemma-binds+1 (lemma-foldBindsF prf (listNotOccurBinj₁inv xs∉e))
+lemma-foldBindsF {H} {F} {G |+| G₁} {f} {inj₂ e} {xs} prf xs∉e = lemma-binds+2 (lemma-foldBindsF prf (listNotOccurBinj₂inv xs∉e))
+lemma-foldBindsF {H} {F} {G |x| G₁} {f} {e}      {xs} prf xs∉e = lemma-binds×  (lemma-foldBindsF prf (listNotOccurBx₁inv xs∉e)) (lemma-foldBindsF prf (listNotOccurBx₂inv xs∉e))
+lemma-foldBindsF {H} {F} {|v| S}    {f} {x}      {xs} prf xs∉e = lemma-bindsv
+lemma-foldBindsF {H} {F} {|B| S G}  {f} {x , e}  {xs} prf xs∉e = lemma-bindsB (listNotOccurBBinv∉fv xs∉e) (lemma-foldBindsF prf (listNotOccurBBinv xs∉e))
+
+lemma-foldBinds : {H F : Functor}{f : ⟦ F ⟧ (μ H) → μ H}{e : μ F}{xs : List V}
+                   →  ({e  : ⟦ F ⟧ (μ H)} → ListNotOccurBindF F xs e → ListNotOccurBind xs (f e))
+                   → ListNotOccurBind xs e → ListNotOccurBind xs (fold F f e)
+lemma-foldBinds {H} {F} = lemma-foldBindsF {H} {F} {|R|}
+
+lemma-foldCtxBinds : {C H : Functor}{F : Functor}{f : μ C → ⟦ F ⟧ (μ H) → μ H}{c : μ C}{e : μ F}{xs : List V}
+                      → ({e  : ⟦ F ⟧ (μ H)} → ListNotOccurBindF F xs e → ListNotOccurBind xs (f c e))
+                      → ListNotOccurBind xs e → ListNotOccurBind xs (foldCtx F f c e)
+lemma-foldCtxBinds fprf =  lemma-foldBinds fprf
 \end{code}

@@ -219,6 +219,25 @@ infix 9 （_∙_）_
 （_∙_）_ = swap {tF} SortFTermVars
 \end{code}
 
+
+%<*substauxBinds>
+\begin{code}
+lemma-substauxBinds : {c : μ cF}{xs : List V}
+  → ListNotOccurBind xs c
+  → {e : ⟦ tF ⟧ FTerm}
+  → ListNotOccurBindF tF xs e
+  → ListNotOccurBind xs (substaux c e)
+lemma-substauxBinds {⟨ x , N ⟩} {xs} xs∉xN {inj₁ y}                              xs∉e with x ≟v y
+... | yes _ = lemmalistNotOccurBindEf→ListNotOccurBindR (listNotOccurBx₂inv  (lemmalistNotOccurBindFR→ListNotOccurBindF xs∉xN))
+... | no  _ = lemma-bindsR xs∉e
+lemma-substauxBinds {⟨ x , N ⟩} {xs} xs∉xN {inj₂ (inj₁ (M , P))}                 xs∉e = lemma-bindsR xs∉e
+lemma-substauxBinds {⟨ x , N ⟩} {xs} xs∉xN {inj₂ (inj₂ (inj₁ (ty , y , M)))}     xs∉e = lemma-bindsR xs∉e
+lemma-substauxBinds {⟨ x , N ⟩} {xs} xs∉xN {inj₂ (inj₂ (inj₂ (inj₁ (M , ty))))}  xs∉e = lemma-bindsR xs∉e
+lemma-substauxBinds {⟨ x , N ⟩} {xs} xs∉xN {inj₂ (inj₂ (inj₂ (inj₂ (α , M))))}   xs∉e = lemma-bindsR xs∉e
+\end{code}
+%</substauxBinds>
+
+
 %<*substauxSwap>
 \begin{code}
 lemma-substauxSwap : {c : μ cF}{S : Sort}{y z : V}{e : ⟦ tF ⟧ FTerm}
@@ -633,6 +652,7 @@ PSComp {x} {y} ⟨ M , N , L ⟩ = x ∉ y ∷ fv L
   L∼L' = lemma-∼αEf L∼L′
 \end{code}
 
+
 %<*substitutioncompositionproof>
 \begin{code}
 αproof :  {x y : V}(Ms : μ TreeFTermF)
@@ -685,9 +705,9 @@ PSComp {x} {y} ⟨ M , N , L ⟩ = x ∉ y ∷ fv L
   y:fvL∉bN = lemma-binds:cons (lemma-binds:head (lemma-binds:tail x:y∉bN)) (lemma-binds++r {fv N} (lemma-binds++r {fv M} fvM++fvN++fvL∉bN))
   y:fvL∉bM[x≔N]ₙ : ListNotOccurBind (y ∷ fv L) (M [ x ≔ N ]ₙ)
   y:fvL∉bM[x≔N]ₙ
-    = lemma-foldCtxBinds {cF} {tF} {tF} {substaux} y:fvL∉bM (lemma-binds:cons (notOccurBR (notOccurBx notOccurBv (notOccurBindR→notOccurBindEf (lemma-binds:head y:fvL∉bN)))) (lemma-bindsR (lemma-binds× lemma-bindsv (lemmalistNotOccurBindFR→ListNotOccurBindEf (lemma-binds:tail y:fvL∉bN)))))
+    = lemma-foldCtxBinds {cF} {tF} {tF} {substaux} (lemma-substauxBinds (lemma-binds:cons (notOccurBR (notOccurBx notOccurBv (notOccurBindR→notOccurBindEf (lemma-binds:head y:fvL∉bN)))) (lemma-bindsR (lemma-binds× lemma-bindsv (lemmalistNotOccurBindFR→ListNotOccurBindEf (lemma-binds:tail y:fvL∉bN)))))) y:fvL∉bM 
   [x]∉bM[y≔L]ₙ : ListNotOccurBind (x ∷ []) (M [ y ≔ L ]ₙ)
-  [x]∉bM[y≔L]ₙ = lemma-foldCtxBinds {cF} {tF} {tF} {substaux} (lemma-binds:cons (lemma-binds:head x:y∉bM ) []) (lemma-bindsR ( lemma-binds× (notOccurBv ∷ []) ( lemmalistNotOccurBindFR→ListNotOccurBindEf ( lemma-binds:cons  (lemma-binds:head x:y∉bL) []))))
+  [x]∉bM[y≔L]ₙ = lemma-foldCtxBinds {cF} {tF} {tF} {substaux} (lemma-substauxBinds (lemma-bindsR ( lemma-binds× (notOccurBv ∷ []) ( lemmalistNotOccurBindFR→ListNotOccurBindEf ( lemma-binds:cons  (lemma-binds:head x:y∉bL) []))))) (lemma-binds:cons (lemma-binds:head x:y∉bM ) [])
   fv⟨y,L⟩∉bM : {L : μ tF} → ListNotOccurBind (y ∷ fv L) M → ListNotOccurBind (fv {cF} ⟨ y , L ⟩) M
   fv⟨y,L⟩∉bM {⟨ L ⟩} y:fvL∉bM = lemma-binds:cons (lemma-binds:head y:fvL∉bM) (lemma-binds:tail y:fvL∉bM)
   y∉bL : y notOccurBind L
@@ -701,10 +721,10 @@ PSComp {x} {y} ⟨ M , N , L ⟩ = x ∉ y ∷ fv L
     = lemma-binds⊆  {fv {cF} ⟨ y , L ⟩ ++ fv N} {fv (N [ y ≔ L ]ₙ)}
                     (foldCtxFV {cF} {tF} {tF} {⟨ y , L ⟩} {N} {substaux}) 
                     (lemma-binds++  {fv {cF} ⟨ y , L ⟩} {fv N}
-                                    (lemma-foldCtxBinds  {cF} {tF} {tF} {substaux} {⟨ y , L ⟩} {M} {fv {cF} ⟨ y , L ⟩} (fv⟨y,L⟩∉bM {L} y:fvL∉bM) (fv⟨y,L⟩∉b⟨y,L⟩ {L} y∉bL fvL∉bL))
-                                    (lemma-foldCtxBinds  {cF} {tF} {tF} {substaux} 
-                                                         (lemma-binds++l (lemma-binds++r {fv M} fvM++fvN++fvL∉bM))
-                                                         (lemma-bindsR ( lemma-binds× lemma-bindsv (lemmalistNotOccurBindFR→ListNotOccurBindEf (lemma-binds++l (lemma-binds++r {fv M} fvM++fvN++fvL∉bL)))))))
+                                    (lemma-foldCtxBinds  {cF} {tF} {tF} {substaux} {⟨ y , L ⟩} {M} {fv {cF} ⟨ y , L ⟩} (lemma-substauxBinds (fv⟨y,L⟩∉b⟨y,L⟩ {L} y∉bL fvL∉bL)) (fv⟨y,L⟩∉bM {L} y:fvL∉bM))
+                                    (lemma-foldCtxBinds  {cF} {tF} {tF} {substaux}
+                                                         (lemma-substauxBinds (lemma-bindsR ( lemma-binds× lemma-bindsv (lemmalistNotOccurBindFR→ListNotOccurBindEf (lemma-binds++l (lemma-binds++r {fv M} fvM++fvN++fvL∉bL))))))
+                                                         (lemma-binds++l (lemma-binds++r {fv M} fvM++fvN++fvL∉bM))))
   x:fvN[y≔L]ₙ∉bM[y≔L]ₙ : ListNotOccurBind (x ∷ fv (N [ y ≔ L ]ₙ)) (M [ y ≔ L ]ₙ)
   x:fvN[y≔L]ₙ∉bM[y≔L]ₙ = lemma-binds:cons (lemma-binds:head [x]∉bM[y≔L]ₙ) fvN[y≔L]ₙ∉bM[y≔L]ₙ
   x:fvN[y≔L]∉bM[y≔L]ₙ : ListNotOccurBind (x ∷ fv (N [ y ≔ L ])) (M [ y ≔ L ]ₙ)
@@ -896,3 +916,5 @@ All lemmas about ⇉n relation must have freshness premises so naive substitutio
 -- RelF : Functor
 -- RelF = tF |x| tF
 -- \end{code}
+
+
