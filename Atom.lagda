@@ -303,3 +303,17 @@ lemma∙ₐcancel {a} {b} {c} {.a} a≢b a≢c
 ...            | yes _               = refl
 ...            | no c≢c              = ⊥-elim (c≢c refl)
 \end{code}
+
+
+\begin{code}
+open import Data.List hiding (any)
+open import Data.List.Any as Any hiding (map)
+open Any.Membership-≡ 
+
+lemma∉swap : {x y z : Atom}{xs : List Atom} → x ∉ xs → y ∉ xs → z ∉ xs → （ x ∙ y ）ₐ z ∉ xs
+lemma∉swap {x} {y} {z} x∉xs y∉xs z∉xs with （ x ∙ y ）ₐ z | lemma∙ₐ x y z
+lemma∉swap {x} {y} {.x}  x∉xs y∉xs z∉xs | .y | inj₁ (refl , refl)               = y∉xs
+lemma∉swap {x} {y} {.y}  x∉xs y∉xs z∉xs | .x | inj₂ (inj₁ (refl , z≢x , refl))  = x∉xs
+lemma∉swap {x} {y} {z}   x∉xs y∉xs z∉xs | .z | inj₂ (inj₂ (z≢x  , z≢y , refl))  = z∉xs
+
+\end{code}

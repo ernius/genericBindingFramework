@@ -618,12 +618,21 @@ lemma-swap#F {F} {|B| S G} {.S} {x} {y} {z , e}    (freshb x#e)        (freshb y
 lemma-swap# : {F : Functor}{S : Sort}{x y : V}{e : μ F} → fresh S x e → fresh S y e → swap S x y e ∼α e
 lemma-swap# {F} = lemma-swap#F {F} {|R|}
 
-postulate
-  lemma-swapListNotOccurBind : {F G : Functor}{S : Sort}{x y : V}{e : ⟦ G ⟧ (μ F)}{xs : List V}
+lemma-swapListNotOccurBind : {F G : Functor}{S : Sort}{x y : V}{e : ⟦ G ⟧ (μ F)}{xs : List V}
                           → x ∉ xs → y ∉ xs
                           → ListNotOccurBindF G xs e
                           → ListNotOccurBindF G xs (swapF G S y x e)
---lemma-swapListNotOccurBind = {!!}
+lemma-swapListNotOccurBind {F} {|1|}      {S} {x} {y} {e}       x∉xs y∉ys xs∉be = lemma-binds1
+lemma-swapListNotOccurBind {F} {|R|}      {S} {x} {y} {⟨ e ⟩}   x∉xs y∉ys xs∉be = lemma-bindsR (lemma-swapListNotOccurBind x∉xs y∉ys (lemmalistNotOccurBindFR→ListNotOccurBindF xs∉be))
+lemma-swapListNotOccurBind {F} {|E| _}    {S} {x} {y} {e}       x∉xs y∉ys xs∉be = lemma-bindsE
+lemma-swapListNotOccurBind {F} {|Ef| G}   {S} {x} {y} {⟨ e ⟩}   x∉xs y∉ys xs∉be = lemma-bindsEf (lemma-swapListNotOccurBind x∉xs y∉ys (lemmalistNotOccurBindEf→ListNotOccurBindF xs∉be))
+lemma-swapListNotOccurBind {F} {G |+| G₁} {S} {x} {y} {inj₁ e}  x∉xs y∉ys xs∉be = lemma-binds+1 (lemma-swapListNotOccurBind x∉xs y∉ys (listNotOccurBinj₁inv xs∉be))
+lemma-swapListNotOccurBind {F} {G |+| G₁} {S} {x} {y} {inj₂ e}  x∉xs y∉ys xs∉be = lemma-binds+2 (lemma-swapListNotOccurBind x∉xs y∉ys (listNotOccurBinj₂inv xs∉be))
+lemma-swapListNotOccurBind {F} {G |x| G₁} {S} {x} {y} {e₁ , e₂} x∉xs y∉ys xs∉be = lemma-binds× (lemma-swapListNotOccurBind x∉xs y∉ys (listNotOccurBx₁inv xs∉be)) ((lemma-swapListNotOccurBind x∉xs y∉ys (listNotOccurBx₂inv xs∉be)))
+lemma-swapListNotOccurBind {F} {|v| x}    {S} {x₁} {y} {e}      x∉xs y∉ys xs∉be = lemma-bindsv
+lemma-swapListNotOccurBind {F} {|B| S′ G} {S} {x} {y} {z , e}   x∉xs y∉ys xs∉be with S′ ≟S S
+... | yes _ = lemma-bindsB (lemma∉swap y∉ys x∉xs (listNotOccurBBinv∉fv xs∉be)) (lemma-swapListNotOccurBind x∉xs y∉ys (listNotOccurBBinv xs∉be))
+... | no  _ = lemma-bindsB (listNotOccurBBinv∉fv xs∉be) (lemma-swapListNotOccurBind x∉xs y∉ys (listNotOccurBBinv xs∉be))
 
 -- lemma-foldmapα  : {F H C : Functor}(G : Functor){f : μ C → ⟦ F ⟧ (μ H) → μ H}{c c' : μ C}{e e' : ⟦ G ⟧ (μ F)}
 --                → ({e e′ :  ⟦ F ⟧ (μ H)}{c c′ : μ C} → c ∼α c′ → ∼αF F e e′ → f c e ∼α f c′ e′)

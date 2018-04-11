@@ -181,6 +181,10 @@ lemmalistNotOccurBindFR→ListNotOccurBindEf : {F F' : Functor}{e : μ F}{xs : L
   → ListNotOccurBindF {F} |R| xs e → ListNotOccurBindF {F'} (|Ef| F) xs e  
 lemmalistNotOccurBindFR→ListNotOccurBindEf = Data.List.All.map notOccurBindR→notOccurBindEf
 
+lemmalistNotOccurBindEf→ListNotOccurBindF : {F G : Functor}{e : ⟦ G ⟧ (μ G)}{xs : List V}
+  → ListNotOccurBindF {F} (|Ef| G) xs ⟨ e ⟩ → ListNotOccurBindF {G} G xs e 
+lemmalistNotOccurBindEf→ListNotOccurBindF = Data.List.All.map notOccurBEfinv 
+
 lemmalistNotOccurBindFR→ListNotOccurBindF : {F : Functor}{e : ⟦ F ⟧ (μ F)}{xs : List V}
   → ListNotOccurBindF {F} |R| xs ⟨ e ⟩ → ListNotOccurBindF {F} F xs e  
 lemmalistNotOccurBindFR→ListNotOccurBindF  = Data.List.All.map notOccurBRinv 
