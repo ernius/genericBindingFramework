@@ -219,6 +219,31 @@ infix 9 （_∙_）_
 （_∙_）_ = swap {tF} SortFTermVars
 \end{code}
 
+\begin{code}
+open import Data.List.Any as any
+open any.Membership-≡
+
+lemma-substauxFvS : {y : V}{L : FTerm}{e : ⟦ tF ⟧ (μ tF)}{S : Sort} →
+  fvSF {tF} {|R|} S (substaux (⟨ y , L ⟩) e) ⊆ fv {cF} ⟨ y , L ⟩ ++ fvSF {tF} {tF} S e
+lemma-substauxFvS {y} {⟨ L ⟩}  {inj₁ x} {S} with y ≟v x
+... | yes _ = lemma-⊆∷ {y} {fvSF {tF} {tF} S L} {fvSF≢ {tF} {tF} [] L}  {fvSF {tF} {|v| SortFTermVars} S x} (lemma∈fvSfv {tF} {S} {⟨ L ⟩})
+... | no _  = c∈ys→c∈xs++ys {xs = fv {cF} ⟨ y , ⟨ L ⟩ ⟩}
+lemma-substauxFvS {y} {L}      {inj₂ (inj₁ (t₁ , t₂))}               {S} = c∈ys→c∈xs++ys {xs = fv {cF} ⟨ y , L ⟩}
+lemma-substauxFvS {y} {L}      {inj₂ (inj₂ (inj₁ (ty , x , t)))}     {S} = c∈ys→c∈xs++ys {xs = fv {cF} ⟨ y , L ⟩}
+lemma-substauxFvS {y} {L}      {inj₂ (inj₂ (inj₂ (inj₁ (t , ty))))}  {S} = c∈ys→c∈xs++ys {xs = fv {cF} ⟨ y , L ⟩}
+lemma-substauxFvS {y} {L}      {inj₂ (inj₂ (inj₂ (inj₂ (α , t))))}   {S} = c∈ys→c∈xs++ys {xs = fv {cF} ⟨ y , L ⟩}
+
+lemma-substauxFv : {y : V}{L : FTerm}{e : ⟦ tF ⟧ (μ tF)}{ys : List Sort} →
+--  fvSF≢ {tF} {|R|} ys (substaux (⟨ y , L ⟩) e) ⊆ fvSF≢ {cF} {|R|} ys ⟨ y , L ⟩ ++ fvSF≢ {tF} {tF} ys e
+  fvSF≢ {tF} {|R|} ys (substaux (⟨ y , L ⟩) e) ⊆ fv {cF} ⟨ y , L ⟩  ++ fvSF≢ {tF} {tF} ys e
+lemma-substauxFv {y} {⟨ L ⟩}  {inj₁ x} {ys} with y ≟v x
+... | yes _ = lemma-⊆∷ {y} {fvSF≢ {tF} {tF} ys L} {fvSF≢ {tF} {tF} [] L} {fvSF≢ {tF} {|v| SortFTermVars} ys x} (fvSF≢⊆ {tF} {tF} {L} {ys} {[]} (λ {_} → λ ())) 
+... | no  _ = c∈ys→c∈xs++ys {xs = fv {cF} ⟨ y , ⟨ L ⟩ ⟩}
+lemma-substauxFv {y} {L}      {inj₂ (inj₁ (t₁ , t₂))}              {ys} = c∈ys→c∈xs++ys {xs = fv {cF} ⟨ y , L ⟩}
+lemma-substauxFv {y} {L}      {inj₂ (inj₂ (inj₁ (ty , x , t)))}    {ys} = c∈ys→c∈xs++ys {xs = fv {cF} ⟨ y , L ⟩}
+lemma-substauxFv {y} {L}      {inj₂ (inj₂ (inj₂ (inj₁ (t , ty))))} {ys} = c∈ys→c∈xs++ys {xs = fv {cF} ⟨ y , L ⟩}
+lemma-substauxFv {y} {L}      {inj₂ (inj₂ (inj₂ (inj₂ (α , t))))}  {ys} = c∈ys→c∈xs++ys {xs = fv {cF} ⟨ y , L ⟩}
+\end{code}
 
 %<*substauxBinds>
 \begin{code}
@@ -719,7 +744,7 @@ PSComp {x} {y} ⟨ M , N , L ⟩ = x ∉ y ∷ fv L
   fvN[y≔L]ₙ∉bM[y≔L]ₙ : ListNotOccurBind (fv (N [ y ≔ L ]ₙ)) (M [ y ≔ L ]ₙ)
   fvN[y≔L]ₙ∉bM[y≔L]ₙ
     = lemma-binds⊆  {fv {cF} ⟨ y , L ⟩ ++ fv N} {fv (N [ y ≔ L ]ₙ)}
-                    (foldCtxFV {cF} {tF} {tF} {⟨ y , L ⟩} {N} {substaux}) 
+                    (foldCtxFV {cF} {tF} {tF} {⟨ y , L ⟩} {N} {substaux} (λ {e} {ys} → lemma-substauxFv {y} {L} {e} {ys}) (λ {e} {S} → lemma-substauxFvS {y} {L} {e} {S}))
                     (lemma-binds++  {fv {cF} ⟨ y , L ⟩} {fv N}
                                     (lemma-foldCtxBinds  {cF} {tF} {tF} {substaux} {⟨ y , L ⟩} {M} {fv {cF} ⟨ y , L ⟩} (lemma-substauxBinds (fv⟨y,L⟩∉b⟨y,L⟩ {L} y∉bL fvL∉bL)) (fv⟨y,L⟩∉bM {L} y:fvL∉bM))
                                     (lemma-foldCtxBinds  {cF} {tF} {tF} {substaux}

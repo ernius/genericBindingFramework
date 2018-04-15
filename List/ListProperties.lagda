@@ -26,7 +26,11 @@ open Inverse
 c∈xs++ys→c∈xs∨c∈ys : {x : ℕ}{xs ys : List ℕ} → x ∈' xs ++ ys → (x ∈' xs) ∨ (x ∈' ys) 
 c∈xs++ys→c∈xs∨c∈ys {x} {xs} {ys} = FE.Π._⟨$⟩_ (from (++↔ {A = ℕ} {P = _≡_ x} {xs = xs} {ys = ys})) 
 c∈xs∨c∈ys→c∈xs++ys : {x : ℕ}{xs ys : List ℕ} → x ∈' xs ∨ x ∈' ys → x ∈' xs ++ ys 
-c∈xs∨c∈ys→c∈xs++ys {x} {xs} {ys} = FE.Π._⟨$⟩_ (to (++↔ {A = ℕ} {P = _≡_ x} {xs = xs} {ys = ys})) 
+c∈xs∨c∈ys→c∈xs++ys {x} {xs} {ys} = FE.Π._⟨$⟩_ (to (++↔ {A = ℕ} {P = _≡_ x} {xs = xs} {ys = ys}))
+c∈ys→c∈xs++ys : {xs ys : List ℕ}{x : ℕ} → x ∈' ys → x ∈' xs ++ ys 
+c∈ys→c∈xs++ys {xs} {ys} {x} x∈ys = c∈xs∨c∈ys→c∈xs++ys {x} {xs} {ys} (inj₂  x∈ys)
+c∈xs→c∈xs++ys : {xs ys : List ℕ} {x : ℕ} → x ∈' xs → x ∈' xs ++ ys 
+c∈xs→c∈xs++ys {xs} {ys} {x} x∈ys = c∈xs∨c∈ys→c∈xs++ys {x} {xs} {ys} (inj₁  x∈ys)
 c∉xs++ys→c∉xs : {c : ℕ}{xs ys : List ℕ} → c ∉' xs ++ ys → c ∉' xs 
 c∉xs++ys→c∉xs {c} {xs} {ys} c∉xs++ys c∈xs = c∉xs++ys (c∈xs∨c∈ys→c∈xs++ys (inj₁ c∈xs))
 c∉xs++ys→c∉ys : {c : ℕ}{xs ys : List ℕ} → c ∉' xs ++ ys → c ∉' ys 
@@ -153,6 +157,16 @@ lemmaΓ++Δ,x⊆Γ,x++Δ {Γ} {Δ} {x} {y} y∈Γ++x∷Δ with c∈xs++ys→c∈
 ... | inj₁ y∈Γ          = c∈xs∨c∈ys→c∈xs++ys (inj₁ (there y∈Γ))
 ... | inj₂ (here y≡x)   = here y≡x
 ... | inj₂ (there y∈Δ)  = c∈xs∨c∈ys→c∈xs++ys {y} {x ∷ Γ} (inj₂ y∈Δ)
+--
+postulate
+  lemma-++-∷-1 : {x : ℕ}{xs ys : List ℕ} → x ∈' ys → xs ⊆ ys → x ∷ xs ⊆ ys
+  lemma-++-∷-2 : {x : ℕ}{xs ys : List ℕ} → xs ⊆ ys → x ∷ xs ⊆ x ∷ ys
+  lemma-++-1 : {xs xs' ys : List ℕ} → xs ⊆ xs' → xs ⊆ xs' ++ ys
+  lemma-++ : {xs xs' ys ys' : List ℕ} → xs ⊆ xs' → ys ⊆ ys' → xs ++ ys ⊆ xs' ++ ys'
+  lemma-⊆∷ : {x : ℕ}{xs ys zs : List ℕ} → xs ⊆ ys → xs ⊆ x ∷ ys ++ zs
+  lemma-⊆ : {x : ℕ}{xs ys zs : List ℕ} → xs ⊆ zs ++ ys → xs - x ⊆ zs ++ (ys - x)
+  lemma⊆ : {xs ys zs ws : List ℕ} → xs ⊆ ys ++ zs → zs ⊆ ys ++ ws → xs ⊆ ys ++ ws
+  lemma⊆m : {xs ys xs' ys' zs : List ℕ} → xs ⊆ zs ++ xs' → ys ⊆ zs ++ ys' → xs ++ ys ⊆ zs ++ xs' ++ ys'
 \end{code}
 
 First element to satisfy some property.

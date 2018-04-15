@@ -14,7 +14,6 @@ open import Data.Empty
 open import Data.Sum
 open import Data.Product hiding (swap)
 open import Data.List hiding (any)
-open import Data.List.Any
 open import Data.Bool
 open import Relation.Nullary.Decidable hiding (map)
 open import Data.List.Any as any
@@ -22,7 +21,7 @@ open any.Membership-≡
 open import Relation.Binary.PropositionalEquality hiding ([_])
 \end{code}
 
-Why not implemented with fold ?
+Why not implemented with fold ? Because as swap must transverse |Ef|
 
 %<*freevariables>
 \begin{code}
@@ -160,7 +159,6 @@ lemmaS#fvF {G = |B| .S G}   {.x , e}  {S}  {x}  (freshb fresh)        x∈
 --     | yes refl
 --   = {!!}
 \end{code}
-
 %<*freevariablesneq>
 \begin{code}
 fvSF≢ : {F G : Functor} → List Sort → ⟦ G ⟧ (μ F) → List V
@@ -234,16 +232,116 @@ lemmafvtern {e₁ = ⟨ e₁ ⟩} {⟨ e₂ ⟩} {⟨ e₃ ⟩} = refl
 
 lemma∉fvfvS : {F : Functor}{S : Sort}{e : μ F}{x : V} → x ∉ fv e → x ∉ fvS S e
 lemma∉fvfvS {F} {S} {e} {x} = lemmaS#fvF ∘ (lemmafv# {F} {x} {S} {e})
+
+lemma∈fvSfv : {F : Functor}{S : Sort}{e : μ F}{x : V} → x ∈ fvS S e → x ∈ fv e
+lemma∈fvSfv {F} {S} {e} {x} x∈fvSe with any (_≟v_ x) (fv e)
+... | yes x∈fve = x∈fve
+... | no  x∉fve = ⊥-elim ((lemma∉fvfvS {F} {S} {e} {x} x∉fve) x∈fvSe)
+
+fvSF≢⊆ :  {F G : Functor}{e : ⟦ G ⟧ (μ F)}{xs ys : List Sort}
+          → ys ⊆ xs 
+          → fvSF≢ {F} {G} xs e ⊆ fvSF≢ {F} {G} ys e
+fvSF≢⊆ {F} {|1|}       {e}        {xs} {ys} ys⊆xs = id
+fvSF≢⊆ {F} {|R|}       {⟨ e ⟩}    {xs} {ys} ys⊆xs = fvSF≢⊆ {F} {F} {e} ys⊆xs
+fvSF≢⊆ {F} {|E| x}     {e}        {xs} {ys} ys⊆xs = id
+fvSF≢⊆ {F} {|Ef| G}    {⟨ e ⟩}    {xs} {ys} ys⊆xs = fvSF≢⊆ {G} {G} {e} ys⊆xs
+fvSF≢⊆ {F} {G |+| G₁}  {inj₁ e}   {xs} {ys} ys⊆xs = fvSF≢⊆ {F} {G} {e} ys⊆xs
+fvSF≢⊆ {F} {G |+| G₁}  {inj₂ e}   {xs} {ys} ys⊆xs = fvSF≢⊆ {F} {G₁} {e} ys⊆xs
+fvSF≢⊆ {F} {G₁ |x| G₂} {e₁ , e₂}  {xs} {ys} ys⊆xs = lemma-++ (fvSF≢⊆ {F} {G₁} {e₁} ys⊆xs) (fvSF≢⊆ {F} {G₂} {e₂} ys⊆xs)
+fvSF≢⊆ {F} {|v| S} {e}            {xs} {ys} ys⊆xs with any (_≟S_ S) xs
+... | yes S∈xs = λ ()
+... | no  S∉xs with any (_≟S_ S) ys
+...            | yes S∈ys = ⊥-elim (S∉xs (ys⊆xs S∈ys))
+...            | no  S∉ys = id
+fvSF≢⊆ {F} {|B| S G}    {x , e}   {xs} {ys} ys⊆xs with any (_≟S_ S) xs
+... | yes S∈xs with any (_≟S_ S) ys
+...             | yes S∈ys = fvSF≢⊆ {F} {G} {e} {xs} {ys} ys⊆xs
+...             | no  S∉ys = lemma-++-1 {fvSF≢ {F} {G} xs e} {fvSF≢ {F} {G} (S ∷ ys) e} {fvSF {F} {G} S e - x} (fvSF≢⊆ {F} {G} {e} {xs} {S ∷ ys} (lemma-++-∷-1 S∈xs ys⊆xs))
+fvSF≢⊆ {F} {|B| S G}    {x , e}   {xs} {ys} ys⊆xs 
+    | no  S∉xs with any (_≟S_ S) ys
+...             | yes S∈ys = ⊥-elim (S∉xs (ys⊆xs S∈ys))
+...             | no  S∉ys = lemma-++  {fvSF≢ {F} {G} (S ∷ xs) e} {fvSF≢ {F} {G} (S ∷ ys) e} {fvSF {F} {G} S e - x} {fvSF {F} {G} S e - x}
+                                       (fvSF≢⊆ {F} {G} {e} {S ∷ xs} {S ∷ ys} (lemma-++-∷-2 ys⊆xs)) id
 \end{code}
 
-Next lemma for sure misses some premise about f
-
 \begin{code}
-postulate
- foldCtxFV :  {C H : Functor}{F : Functor}{c : μ C}{e : μ F}
-              {f : μ C → ⟦ F ⟧ (μ H) → μ H}
-              → fv (foldCtx F f c e) ⊆ fv c ++ fv e
---foldCtxFV = {!!}            
+foldSFF :  {C H F G : Functor}{S : Sort}{c : μ C}{e : ⟦ G ⟧ (μ F)}{f : ⟦ F ⟧ (μ H) → μ H}
+         → ({e  : ⟦ F ⟧ (μ H)}{S : Sort} → fvSF {H} {|R|} S (f e) ⊆ fv c ++ fvSF {H} {F} S e)
+         → fvSF {H} {G} S (foldmap F G f e) ⊆ fv c ++ fvSF {F} {G} S e
+foldSFF {C} {H} {F} {|1|}      {S} {c} {e}         {f} prf = λ ()
+foldSFF {C} {H} {F} {|R|}      {S} {c} {⟨ e ⟩}     {f} prf =
+ lemma⊆  {fvSF {H} {|R|} S (f (foldmap F F f e))} {fv c} {fvSF {H} {F} S (foldmap F F f e)} {fvSF {F} {F} S e}
+         (prf {S = S})
+         (foldSFF {C} {H} {F} {F} {S} {c} {e} {f} prf) 
+foldSFF {C} {H} {F} {|E| x}    {S} {c} {e}         {f} prf = λ ()
+foldSFF {C} {H} {F} {|Ef| G}   {S} {c} {⟨ e ⟩}     {f} prf = c∈ys→c∈xs++ys {xs = fv c} {fvSF {G} {G} S e}  
+foldSFF {C} {H} {F} {G₁ |+| G₂} {S} {c} {inj₁ e}   {f} prf = foldSFF {C} {H} {F} {G₁} {S} {c} {e} {f} prf
+foldSFF {C} {H} {F} {G₁ |+| G₂} {S} {c} {inj₂ e}   {f} prf = foldSFF {C} {H} {F} {G₂} {S} {c} {e} {f} prf
+foldSFF {C} {H} {F} {G₁ |x| G₂} {S} {c} {e₁ , e₂}  {f} prf 
+  = lemma⊆m  {fvSF {H} {G₁} S (foldmap F G₁ f e₁)} 
+             {fvSF {H} {G₂} S (foldmap F G₂ f e₂)} 
+             {fvSF {F} {G₁} S e₁} {fvSF {F} {G₂} S e₂}
+             {fv c}
+             (foldSFF {C} {H} {F} {G₁} {S} {c} {e₁} {f} prf)
+             (foldSFF {C} {H} {F} {G₂} {S} {c} {e₂} {f} prf)
+foldSFF {C} {H} {F} {|v| S′}    {S} {c} {x}          {f} prf with S′ ≟S  S
+... | yes _  = c∈ys→c∈xs++ys {xs = fv c} 
+... | no  _  = λ ()
+foldSFF {C} {H} {F} {|B| S′ G}  {S} {c} {x , e}      {f} prf with S′ ≟S  S
+... | yes _ = lemma-⊆ {x} {fvSF {H} {G} S (foldmap F G f e)} {fvSF {F} {G} S e} {fv c}
+                      (foldSFF {C} {H} {F} {G} {S} {c} {e} {f} prf)
+... | no  _ = foldSFF {C} {H} {F} {G} {S} {c} {e} {f} prf 
+
+foldSF :  {C H F : Functor}{S : Sort}{c : μ C}{e : μ F}{f : ⟦ F ⟧ (μ H) → μ H}
+         → ({e  : ⟦ F ⟧ (μ H)}{S : Sort} → fvSF {H} {|R|} S (f e) ⊆ fv c ++ fvSF {H} {F} S e)
+         → fvS S (fold F f e) ⊆ fv c ++ fvS S e
+foldSF {C} {H} {F} {S} {c} {e} = foldSFF {C} {H} {F} {|R|} {S} {c} {e} 
+
+foldFVF :  {C H F G : Functor}{c : μ C}{e : ⟦ G ⟧ (μ F)}{f : ⟦ F ⟧ (μ H) → μ H}{xs : List Sort}
+--         → ({e  : ⟦ F ⟧ (μ H)}{ys : List Sort} → fvSF≢ {H} {|R|} ys (f e) ⊆ fvSF≢ {C} {|R|} ys c ++ fvSF≢ {H} {F} ys e)
+         → ({e  : ⟦ F ⟧ (μ H)}{ys : List Sort} → fvSF≢ {H} {|R|} ys (f e) ⊆ fv c ++ fvSF≢ {H} {F} ys e)
+         → ({e  : ⟦ F ⟧ (μ H)}{S : Sort} → fvSF {H} {|R|} S (f e) ⊆ fv c ++ fvSF {H} {F} S e)                      
+         → fvSF≢ {H} {G} xs (foldmap F G f e) ⊆ fv c ++ fvSF≢ {F} {G} xs e
+foldFVF {C} {H} {F} {|1|}      {c} {e}         {f} {xs} prf prf2 = λ ()
+foldFVF {C} {H} {F} {|R|}      {c} {⟨ e ⟩}     {f} {xs} prf prf2
+  = lemma⊆ {fvSF≢ {H} {|R|} xs (f (foldmap F F f e))} {fv c} {fvSF≢ {H} {F} xs (foldmap F F f e)} {fvSF≢ {F} {F} xs e}
+      (prf {ys = xs})
+      (foldFVF {C} {H} {F} {F} {c} {e} {f} {xs} prf prf2)
+foldFVF {C} {H} {F} {|E| x}    {c} {e}         {f} {xs} prf prf2 = λ ()
+foldFVF {C} {H} {F} {|Ef| G}   {c} {⟨ e ⟩}     {f} {xs} prf prf2 = c∈ys→c∈xs++ys {xs = fv c} {fvSF≢ {G} {G} xs e}  
+foldFVF {C} {H} {F} {G₁ |+| G₂} {c} {inj₁ e}   {f} {xs} prf prf2 = foldFVF {C} {H} {F} {G₁} {c} {e} {f} {xs} prf prf2
+foldFVF {C} {H} {F} {G₁ |+| G₂} {c} {inj₂ e}   {f} {xs} prf prf2 = foldFVF {C} {H} {F} {G₂} {c} {e} {f} {xs} prf prf2
+foldFVF {C} {H} {F} {G₁ |x| G₂} {c} {e₁ , e₂}  {f} {xs} prf prf2 
+  = lemma⊆m  {fvSF≢ {H} {G₁} xs (foldmap F G₁ f e₁)} 
+             {fvSF≢ {H} {G₂} xs (foldmap F G₂ f e₂)} 
+             {fvSF≢ {F} {G₁} xs e₁} {fvSF≢ {F} {G₂} xs e₂}
+             {fv c}
+             (foldFVF {C} {H} {F} {G₁} {c} {e₁} {f} {xs} prf prf2)
+             (foldFVF {C} {H} {F} {G₂} {c} {e₂} {f} {xs} prf prf2)
+foldFVF {C} {H} {F} {|v| S}    {c} {e}          {f} {xs} prf prf2 with any (_≟S_ S) xs
+... | yes _ = λ ()
+... | no  _ = c∈ys→c∈xs++ys {xs = fv c} 
+foldFVF {C} {H} {F} {|B| S G}  {c} {x , e}      {f} {xs} prf prf2 with any (_≟S_ S) xs
+... | yes _ = foldFVF {C} {H} {F} {G} {c} {e} {f} {xs} prf prf2 
+... | no  _ = lemma⊆m  {fvSF≢ {H} {G} (S ∷ xs) (foldmap F G f e)} {fvSF {H} {G} S (foldmap F G f e) - x}
+                       {fvSF≢ {F} {G} (S ∷ xs) e} {fvSF {F} {G} S e - x} {fv c}
+                       (foldFVF {C} {H} {F} {G} {c} {e} {f} {S ∷ xs} prf prf2)
+                       (lemma-⊆ {x} {fvSF {H} {G} S (foldmap F G f e)} {fvSF {F} {G} S e} {fv c} (foldSFF {C} {H} {F} {G} {S} {c} {e} {f} prf2))
+
+foldFV :  {C H F : Functor}{c : μ C}{e : μ F}{f : ⟦ F ⟧ (μ H) → μ H}
+--         → ({e  : ⟦ F ⟧ (μ H)}{ys : List Sort} → fvSF≢ {H} {|R|} ys (f e) ⊆ fvSF≢ {C} {|R|} ys c ++ fvSF≢ {H} {F} ys e)
+         → ({e  : ⟦ F ⟧ (μ H)}{ys : List Sort} → fvSF≢ {H} {|R|} ys (f e) ⊆ fv c ++ fvSF≢ {H} {F} ys e)
+         → ({e  : ⟦ F ⟧ (μ H)}{S : Sort} → fvSF {H} {|R|} S (f e) ⊆ fv c ++ fvSF {H} {F} S e)                      
+         → fv (fold F f e) ⊆ fv c ++ fv e
+foldFV {C} {H} {F} {c} {e} = foldFVF {C} {H} {F} {|R|} {c} {e} {xs = []}
+
+foldCtxFV :  {C H F : Functor}{c : μ C}{e : μ F}
+             {f : μ C → ⟦ F ⟧ (μ H) → μ H}
+             → ({e  : ⟦ F ⟧ (μ H)}{ys : List Sort} → fvSF≢ {H} {|R|} ys (f c e) ⊆ fv c ++ fvSF≢ {H} {F} ys e)
+--             → ({e  : ⟦ F ⟧ (μ H)}{ys : List Sort} → fvSF≢ {H} {|R|} ys (f c e) ⊆ fvSF≢ {C} {|R|} ys c ++ fvSF≢ {H} {F} ys e)
+             → ({e  : ⟦ F ⟧ (μ H)}{S : Sort} → fvSF {H} {|R|} S (f c e) ⊆ fv c ++ fvSF {H} {F} S e)             
+             → fv (foldCtx F f c e) ⊆ fv c ++ fv e
+foldCtxFV {C} {H} {F} {c} {e} = foldFV {C} {H} {F} {c} {e}
 \end{code}
 
 
