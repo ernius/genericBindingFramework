@@ -12405,6 +12405,7 @@
 </a
       ><a name="16927" class="Comment"
       >
+
 --   lemma-binderFreeElemFold :
 --     {F H C : Functor}{f : &#956; C &#8594; &#10214; F &#10215; (&#956; H) &#8594; &#956; H}{c c' : &#956; C}{e : &#956; F}{S : Sort}
 --     &#8594; proj&#8321; (bindersFree&#945;Elem (fv S c) (foldS F f c' e))  &#8764;&#945;
@@ -12442,539 +12443,539 @@
 Recursion
 
 -- </a
-      ><a name="18606"
+      ><a name="18607"
       >\begin{code}
 </a
-      ><a name="18619" class="Comment"
+      ><a name="18620" class="Comment"
       >-- recCtx&#945; :  {C H : Functor}(F : Functor)</a
-      ><a name="18661"
+      ><a name="18662"
       >
 </a
-      ><a name="18662" class="Comment"
+      ><a name="18663" class="Comment"
       >--             &#8594; (&#956; C &#8594; &#10214; F &#10215; (&#956; (|Ef| H |x| |Ef| F))  &#8594; &#956; H)</a
-      ><a name="18723"
+      ><a name="18724"
       >
 </a
-      ><a name="18724" class="Comment"
+      ><a name="18725" class="Comment"
       >--             &#8594; &#956; C &#8594; &#956; F &#8594; &#956; H</a
-      ><a name="18756"
+      ><a name="18757"
       >
 </a
-      ><a name="18757" class="Comment"
+      ><a name="18758" class="Comment"
       >-- recCtx&#945; F f c e = recCtx F f c (proj&#8321; (bindersFree&#945;Elem (fv c) e))</a
-      ><a name="18826"
+      ><a name="18827"
       >
 </a
-      ><a name="18827" class="Comment"
+      ><a name="18828" class="Comment"
       >-- \end{code}</a
-      ><a name="18840"
+      ><a name="18841"
       >
 
 </a
-      ><a name="18842" class="Comment"
+      ><a name="18843" class="Comment"
       >-- \begin{code}</a
-      ><a name="18857"
+      ><a name="18858"
       >
 </a
-      ><a name="18858" class="Comment"
+      ><a name="18859" class="Comment"
       >-- lemma-recCtx&#945;-Strong&#945;Compatible :</a
-      ><a name="18894"
+      ><a name="18895"
       >
 </a
-      ><a name="18895" class="Comment"
+      ><a name="18896" class="Comment"
       >--   {C H F : Functor}{f : &#956; C &#8594; &#10214; F &#10215; (&#956; (|Ef| H |x| |Ef| F)) &#8594; &#956; H}{c : &#956; C}{e : &#956; F}</a
-      ><a name="18982"
+      ><a name="18983"
       >
 </a
-      ><a name="18983" class="Comment"
+      ><a name="18984" class="Comment"
       >--   &#8594; strong&#8764;&#945;Compatible (recCtx&#945; F f c) e</a
-      ><a name="19026"
+      ><a name="19027"
       >
 </a
-      ><a name="19027" class="Comment"
+      ><a name="19028" class="Comment"
       >-- \end{code}</a
-      ><a name="19040"
+      ><a name="19041"
       >
 
 </a
-      ><a name="19042" class="Comment"
+      ><a name="19043" class="Comment"
       >-- \begin{code}</a
-      ><a name="19057"
+      ><a name="19058"
       >
 </a
-      ><a name="19058" class="Comment"
+      ><a name="19059" class="Comment"
       >-- lemma-recCtx&#945;-Strong&#945;Compatible {f = f} {c} {e} e' e&#8764;&#945;e' </a
-      ><a name="19118"
+      ><a name="19119"
       >
 </a
-      ><a name="19119" class="Comment"
+      ><a name="19120" class="Comment"
       >--   with bindersFree&#945;Elem (fv c) e | bindersFree&#945;Elem (fv c) e' </a
-      ><a name="19184"
+      ><a name="19185"
       >
 </a
-      ><a name="19185" class="Comment"
+      ><a name="19186" class="Comment"
       >--   | lemma-bindersFree&#945;Elem (fv c) e e' e&#8764;&#945;e' </a
-      ><a name="19233"
+      ><a name="19234"
       >
 </a
-      ><a name="19234" class="Comment"
+      ><a name="19235" class="Comment"
       >-- ... | (x , b) | (.x , .b) | refl = refl</a
-      ><a name="19276"
+      ><a name="19277"
       >
 </a
-      ><a name="19277" class="Comment"
+      ><a name="19278" class="Comment"
       >-- \end{code}</a
-      ><a name="19290"
+      ><a name="19291"
       >
 
 </a
-      ><a name="19292" class="Comment"
+      ><a name="19293" class="Comment"
       >-- \begin{code}</a
-      ><a name="19307"
+      ><a name="19308"
       >
 </a
-      ><a name="19308" class="Comment"
+      ><a name="19309" class="Comment"
       >-- lemma-recmapSCtx  : {F H C : Functor}(G : Functor)</a
-      ><a name="19361"
+      ><a name="19362"
       >
 </a
-      ><a name="19362" class="Comment"
+      ><a name="19363" class="Comment"
       >--               {f : &#956; C &#8594; &#10214; F &#10215; (&#956; (|Ef| H |x| |Ef| F)) &#8594; &#956; H}{c c&#8242; : &#956; C}</a
-      ><a name="19438"
+      ><a name="19439"
       >
 </a
-      ><a name="19439" class="Comment"
+      ><a name="19440" class="Comment"
       >--               &#8594; ({e e&#8242; :  &#10214; F &#10215; (&#956; (|Ef| H |x| |Ef| F))}{c c&#8242; : &#956; C} &#8594; c &#8764;&#945; c&#8242; &#8594; &#8764;&#945;F F e e&#8242; &#8594; f c e &#8764;&#945; f c&#8242; e&#8242;)  </a
-      ><a name="19555"
+      ><a name="19556"
       >
 </a
-      ><a name="19556" class="Comment"
+      ><a name="19557" class="Comment"
       >--               &#8594; c &#8764;&#945; c&#8242;</a
-      ><a name="19582"
+      ><a name="19583"
       >
 </a
-      ><a name="19583" class="Comment"
+      ><a name="19584" class="Comment"
       >--               &#8594; (e : &#10214; G &#10215; (&#956; F)) &#8594; &#8764;&#945;F G (recmapCtx F G f c e) (recmapCtx F G f c&#8242; e)</a
-      ><a name="19672"
+      ><a name="19673"
       >
 </a
-      ><a name="19673" class="Comment"
+      ><a name="19674" class="Comment"
       >-- lemma-recmapSCtx (|v| S)      prf c&#8764;c&#8242;  e          = &#8764;&#945;V</a
-      ><a name="19732"
+      ><a name="19733"
       >
 </a
-      ><a name="19733" class="Comment"
+      ><a name="19734" class="Comment"
       >-- lemma-recmapSCtx |1|          prf c&#8764;c&#8242;  e          = &#8764;&#945;1</a
-      ><a name="19792"
+      ><a name="19793"
       >
 </a
-      ><a name="19793" class="Comment"
+      ><a name="19794" class="Comment"
       >-- lemma-recmapSCtx {F} |R|      prf c&#8764;c&#8242;  &#10216; e &#10217;      = &#8764;&#945;R (&#8764;&#945;x (lemma-&#8764;&#945;R (prf c&#8764;c&#8242;   (lemma-recmapSCtx F prf c&#8764;c&#8242; e))) &#961;F)    </a
-      ><a name="19922"
+      ><a name="19923"
       >
 </a
-      ><a name="19923" class="Comment"
+      ><a name="19924" class="Comment"
       >-- lemma-recmapSCtx (|E| x)      prf c&#8764;c&#8242;  e          = &#8764;&#945;E </a
-      ><a name="19983"
+      ><a name="19984"
       >
 </a
-      ><a name="19984" class="Comment"
+      ><a name="19985" class="Comment"
       >-- lemma-recmapSCtx (|Ef| G)     prf c&#8764;c&#8242;  e          = &#961;F </a
-      ><a name="20043"
+      ><a name="20044"
       >
 </a
-      ><a name="20044" class="Comment"
+      ><a name="20045" class="Comment"
       >-- lemma-recmapSCtx (G&#8321; |+| G&#8322;)  prf c&#8764;c&#8242;  (inj&#8321; e)   = &#8764;&#945;+&#8321;  (lemma-recmapSCtx G&#8321; prf c&#8764;c&#8242;  e)</a
-      ><a name="20139"
+      ><a name="20140"
       >
 </a
-      ><a name="20140" class="Comment"
+      ><a name="20141" class="Comment"
       >-- lemma-recmapSCtx (G&#8321; |+| G&#8322;)  prf c&#8764;c&#8242;  (inj&#8322; e)   = &#8764;&#945;+&#8322;  (lemma-recmapSCtx G&#8322; prf c&#8764;c&#8242;  e)</a
-      ><a name="20235"
+      ><a name="20236"
       >
 </a
-      ><a name="20236" class="Comment"
+      ><a name="20237" class="Comment"
       >-- lemma-recmapSCtx (G&#8321; |x| G&#8322;)  prf c&#8764;c&#8242;  (e&#8321; , e&#8322;)  = &#8764;&#945;x   (lemma-recmapSCtx G&#8321; prf c&#8764;c&#8242;  e&#8321;) (lemma-recmapSCtx G&#8322; prf c&#8764;c&#8242;  e&#8322;)</a
-      ><a name="20367"
+      ><a name="20368"
       >
 </a
-      ><a name="20368" class="Comment"
+      ><a name="20369" class="Comment"
       >-- lemma-recmapSCtx (|B| S G)    prf c&#8764;c&#8242;  (x , e)    = &#8764;&#945;B   [] (&#955; y y&#8713;[] &#8594; lemma&#8764;swapEquivF (lemma-recmapSCtx G prf c&#8764;c&#8242;  e) x y)</a
-      ><a name="20499"
+      ><a name="20500"
       >
 
 </a
-      ><a name="20501" class="Comment"
+      ><a name="20502" class="Comment"
       >-- lemma-recCtx2  : {F H C : Functor}{f : &#956; C &#8594; &#10214; F &#10215; (&#956; (|Ef| H |x| |Ef| F)) &#8594; &#956; H}{c c&#8242; : &#956; C}</a
-      ><a name="20597"
+      ><a name="20598"
       >
 </a
-      ><a name="20598" class="Comment"
+      ><a name="20599" class="Comment"
       >--      &#8594; ({e e&#8242; :  &#10214; F &#10215; (&#956; (|Ef| H |x| |Ef| F))}{c c&#8242; : &#956; C} &#8594; c &#8764;&#945; c&#8242; &#8594; &#8764;&#945;F F e e&#8242; &#8594; f c e &#8764;&#945; f c&#8242; e&#8242;)</a
-      ><a name="20703"
+      ><a name="20704"
       >
 </a
-      ><a name="20704" class="Comment"
+      ><a name="20705" class="Comment"
       >--      &#8594; c &#8764;&#945; c&#8242;</a
-      ><a name="20721"
+      ><a name="20722"
       >
 </a
-      ><a name="20722" class="Comment"
+      ><a name="20723" class="Comment"
       >--      &#8594; (e : &#956; F) &#8594; recCtx F f c e &#8764;&#945; recCtx F f c&#8242; e</a
-      ><a name="20777"
+      ><a name="20778"
       >
 </a
-      ><a name="20778" class="Comment"
+      ><a name="20779" class="Comment"
       >-- lemma-recCtx2 {F} {f = f} {c} {c&#8242;} prf c&#8764;c&#8242; &#10216; e &#10217; = prf c&#8764;c&#8242; (lemma-recmapSCtx F prf c&#8764;c&#8242; e) </a
-      ><a name="20874"
+      ><a name="20875"
       >
 </a
-      ><a name="20875" class="Comment"
+      ><a name="20876" class="Comment"
       >-- \end{code}</a
-      ><a name="20888"
+      ><a name="20889"
       >
 
 
 </a
-      ><a name="20891" class="Comment"
+      ><a name="20892" class="Comment"
       >-- \begin{code}</a
-      ><a name="20906"
+      ><a name="20907"
       >
 </a
-      ><a name="20907" class="Comment"
+      ><a name="20908" class="Comment"
       >-- lemma-recmap&#945;  : {F H C : Functor}(G : Functor){f : &#956; C &#8594; &#10214; F &#10215; (&#956; (|Ef| H |x| |Ef| F)) &#8594; &#956; H}{c c' : &#956; C}{e e' : &#10214; G &#10215; (&#956; F)}</a
-      ><a name="21036"
+      ><a name="21037"
       >
 </a
-      ><a name="21037" class="Comment"
+      ><a name="21038" class="Comment"
       >--                &#8594; ({e e&#8242; :  &#10214; F &#10215; (&#956; (|Ef| H |x| |Ef| F))}{c c&#8242; : &#956; C} &#8594; c &#8764;&#945; c&#8242; &#8594; &#8764;&#945;F F e e&#8242; &#8594; f c e &#8764;&#945; f c&#8242; e&#8242;)</a
-      ><a name="21152"
+      ><a name="21153"
       >
 </a
-      ><a name="21153" class="Comment"
+      ><a name="21154" class="Comment"
       >--                &#8594; ({c : &#956; C}{S : Sort}{x y : V}{e : &#10214; F &#10215; (&#956; (|Ef| H |x| |Ef| F))} </a
-      ><a name="21238"
+      ><a name="21239"
       >
 </a
-      ><a name="21239" class="Comment"
+      ><a name="21240" class="Comment"
       >--                      &#8594; f (swap S x y c) (swapF F S x y e) &#8801; swap S x y (f c e))</a
-      ><a name="21321"
+      ><a name="21322"
       >
 </a
-      ><a name="21322" class="Comment"
+      ><a name="21323" class="Comment"
       >--                &#8594; c &#8764;&#945; c'</a
-      ><a name="21349"
+      ><a name="21350"
       >
 </a
-      ><a name="21350" class="Comment"
+      ><a name="21351" class="Comment"
       >--                &#8594; &#8764;&#945;F G e e'  </a
-      ><a name="21382"
+      ><a name="21383"
       >
 </a
-      ><a name="21383" class="Comment"
+      ><a name="21384" class="Comment"
       >--                &#8594; &#8764;&#945;F G (recmapCtx F G f c e) (recmapCtx F G f c' e')</a
-      ><a name="21454"
+      ><a name="21455"
       >
 </a
-      ><a name="21455" class="Comment"
+      ><a name="21456" class="Comment"
       >-- lemma-recmap&#945; (|v| S)        prf _  _    &#8764;&#945;V         = &#8764;&#945;V  </a
-      ><a name="21518"
+      ><a name="21519"
       >
 </a
-      ><a name="21519" class="Comment"
+      ><a name="21520" class="Comment"
       >-- lemma-recmap&#945; |1|            prf _  _    &#8764;&#945;1         = &#8764;&#945;1 </a
-      ><a name="21581"
+      ><a name="21582"
       >
 </a
-      ><a name="21582" class="Comment"
+      ><a name="21583" class="Comment"
       >-- lemma-recmap&#945; {F} |R|        prf prf2 c&#8764;c' (&#8764;&#945;R e&#8764;e')</a
-      ><a name="21638"
+      ><a name="21639"
       >
 </a
-      ><a name="21639" class="Comment"
+      ><a name="21640" class="Comment"
       >--   = &#8764;&#945;R (&#8764;&#945;x (lemma-&#8764;&#945;R (prf c&#8764;c'   (lemma-recmap&#945; F prf prf2 c&#8764;c' e&#8764;e'))) (&#8764;&#945;Ef e&#8764;e'))     </a
-      ><a name="21734"
+      ><a name="21735"
       >
 </a
-      ><a name="21735" class="Comment"
+      ><a name="21736" class="Comment"
       >-- lemma-recmap&#945; (|E| x)        prf _  _    &#8764;&#945;E         = &#961;F </a
-      ><a name="21796"
+      ><a name="21797"
       >
 </a
-      ><a name="21797" class="Comment"
+      ><a name="21798" class="Comment"
       >-- lemma-recmap&#945; (|Ef| G)       prf _  _    (&#8764;&#945;Ef e&#8764;e') = &#8764;&#945;Ef e&#8764;e'</a
-      ><a name="21864"
+      ><a name="21865"
       >
 </a
-      ><a name="21865" class="Comment"
+      ><a name="21866" class="Comment"
       >-- lemma-recmap&#945; (G&#8321; |+| G&#8322;)    prf prf2  c&#8764;c' (&#8764;&#945;+&#8321; e&#8764;e')</a
-      ><a name="21923"
+      ><a name="21924"
       >
 </a
-      ><a name="21924" class="Comment"
+      ><a name="21925" class="Comment"
       >--   = &#8764;&#945;+&#8321;  (lemma-recmap&#945; G&#8321; prf prf2  c&#8764;c' e&#8764;e')  </a
-      ><a name="21977"
+      ><a name="21978"
       >
 </a
-      ><a name="21978" class="Comment"
+      ><a name="21979" class="Comment"
       >-- lemma-recmap&#945; (G&#8321; |+| G&#8322;)    prf prf2 c&#8764;c' (&#8764;&#945;+&#8322; e&#8764;e')</a
-      ><a name="22035"
+      ><a name="22036"
       >
 </a
-      ><a name="22036" class="Comment"
+      ><a name="22037" class="Comment"
       >--   = &#8764;&#945;+&#8322;  (lemma-recmap&#945; G&#8322; prf prf2 c&#8764;c' e&#8764;e') </a
-      ><a name="22087"
+      ><a name="22088"
       >
 </a
-      ><a name="22088" class="Comment"
+      ><a name="22089" class="Comment"
       >-- lemma-recmap&#945; (G&#8321; |x| G&#8322;)    prf prf2 c&#8764;c' (&#8764;&#945;x &#945;&#8321; &#945;&#8322;)</a
-      ><a name="22145"
+      ><a name="22146"
       >
 </a
-      ><a name="22146" class="Comment"
+      ><a name="22147" class="Comment"
       >--   = &#8764;&#945;x   (lemma-recmap&#945; G&#8321; prf prf2  c&#8764;c' &#945;&#8321;)</a
-      ><a name="22195"
+      ><a name="22196"
       >
 </a
-      ><a name="22196" class="Comment"
+      ><a name="22197" class="Comment"
       >--           (lemma-recmap&#945; G&#8322; prf prf2  c&#8764;c' &#945;&#8322;)  </a
-      ><a name="22247"
+      ><a name="22248"
       >
 </a
-      ><a name="22248" class="Comment"
+      ><a name="22249" class="Comment"
       >-- lemma-recmap&#945; {F} {H} {C} (|B| S G) {f} {c} {c'}  {y , e} {z , e'}</a
-      ><a name="22317"
+      ><a name="22318"
       >
 </a
-      ><a name="22318" class="Comment"
+      ><a name="22319" class="Comment"
       >--                prf prf2 c&#8764;c' (&#8764;&#945;B xs f&#945;)  </a
-      ><a name="22363"
+      ><a name="22364"
       >
 </a
-      ><a name="22364" class="Comment"
+      ><a name="22365" class="Comment"
       >--   = &#8764;&#945;B  (fv c ++ fv c' ++ xs)</a
-      ><a name="22397"
+      ><a name="22398"
       >
 </a
-      ><a name="22398" class="Comment"
+      ><a name="22399" class="Comment"
       >--          (&#955; x x&#8713; &#8594; begin</a
-      ><a name="22425"
+      ><a name="22426"
       >
 </a
-      ><a name="22426" class="Comment"
+      ><a name="22427" class="Comment"
       >--                      swapF G S y x (recmapCtx F G f c e)</a
-      ><a name="22485"
+      ><a name="22486"
       >
 </a
-      ><a name="22486" class="Comment"
+      ><a name="22487" class="Comment"
       >--                    &#8776;&#10216; {!!}  &#10217;</a
-      ><a name="22518"
+      ><a name="22519"
       >
 </a
-      ><a name="22519" class="Comment"
+      ><a name="22520" class="Comment"
       >--                      recmapCtx F G f (swap S y x c) (swapF G S y x e)</a
-      ><a name="22591"
+      ><a name="22592"
       >
 </a
-      ><a name="22592" class="Comment"
+      ><a name="22593" class="Comment"
       >--                    &#8764;&#10216; lemma-recmapSCtx G prf</a
-      ><a name="22639"
+      ><a name="22640"
       >
 </a
-      ><a name="22640" class="Comment"
+      ><a name="22641" class="Comment"
       >--                                         {!!}</a
-      ><a name="22687"
+      ><a name="22688"
       >
 </a
-      ><a name="22688" class="Comment"
+      ><a name="22689" class="Comment"
       >--                                         (swapF G S y x e) &#10217;</a
-      ><a name="22750"
+      ><a name="22751"
       >
 </a
-      ><a name="22751" class="Comment"
+      ><a name="22752" class="Comment"
       >--                      recmapCtx F G f c              (swapF G S y x e)</a
-      ><a name="22823"
+      ><a name="22824"
       >
 </a
-      ><a name="22824" class="Comment"
+      ><a name="22825" class="Comment"
       >--                    &#8764;&#10216; lemma-recmap&#945;  G prf prf2</a
-      ><a name="22874"
+      ><a name="22875"
       >
 </a
-      ><a name="22875" class="Comment"
+      ><a name="22876" class="Comment"
       >--                                       c&#8764;c'</a
-      ><a name="22920"
+      ><a name="22921"
       >
 </a
-      ><a name="22921" class="Comment"
+      ><a name="22922" class="Comment"
       >--                                       (f&#945; x (c&#8713;xs++ys&#8594;c&#8713;ys {xs = fv c'} (c&#8713;xs++ys&#8594;c&#8713;ys {xs = fv c} x&#8713;))) &#10217;</a
-      ><a name="23030"
+      ><a name="23031"
       >
 </a
-      ><a name="23031" class="Comment"
+      ><a name="23032" class="Comment"
       >--                      recmapCtx F G f c'             (swapF G S z x e')</a
-      ><a name="23104"
+      ><a name="23105"
       >
 </a
-      ><a name="23105" class="Comment"
+      ><a name="23106" class="Comment"
       >--                    &#8764;&#10216; lemma-recmapSCtx  G prf {!!}</a
-      ><a name="23158"
+      ><a name="23159"
       >
 </a
-      ><a name="23159" class="Comment"
+      ><a name="23160" class="Comment"
       >--                                          (swapF G S z x e') &#10217;</a
-      ><a name="23223"
+      ><a name="23224"
       >
 </a
-      ><a name="23224" class="Comment"
+      ><a name="23225" class="Comment"
       >--                      recmapCtx F G f (swap S z x c') (swapF G S z x e')</a
-      ><a name="23298"
+      ><a name="23299"
       >
 </a
-      ><a name="23299" class="Comment"
+      ><a name="23300" class="Comment"
       >--                    &#8776;&#10216; {!!} &#10217;</a
-      ><a name="23330"
+      ><a name="23331"
       >
 </a
-      ><a name="23331" class="Comment"
+      ><a name="23332" class="Comment"
       >--                      swapF G S z x (recmapCtx F G f c' e')</a
-      ><a name="23392"
+      ><a name="23393"
       >
 </a
-      ><a name="23393" class="Comment"
+      ><a name="23394" class="Comment"
       >--                    &#8718;)</a
-      ><a name="23417"
+      ><a name="23418"
       >
 </a
-      ><a name="23418" class="Comment"
+      ><a name="23419" class="Comment"
       >--      where</a
-      ><a name="23431"
+      ><a name="23432"
       >
 </a
-      ><a name="23432" class="Comment"
+      ><a name="23433" class="Comment"
       >--      open &#8764;F-Reasoning(|Ef| H |x| |Ef| F)(G)</a
-      ><a name="23479"
+      ><a name="23480"
       >
 </a
-      ><a name="23480" class="Comment"
+      ><a name="23481" class="Comment"
       >-- \end{code}</a
-      ><a name="23493"
+      ><a name="23494"
       >
   
 
 </a
-      ><a name="23498" class="Comment"
+      ><a name="23499" class="Comment"
       >-- \begin{code}</a
-      ><a name="23513"
+      ><a name="23514"
       >
 </a
-      ><a name="23514" class="Comment"
+      ><a name="23515" class="Comment"
       >-- lemma-recCtx  : {F H C : Functor}{f : &#956; C &#8594; &#10214; F &#10215; (&#956; (|Ef| H |x| |Ef| F)) &#8594; &#956; H}{c c' : &#956; C}{e e' : &#956; F}</a
-      ><a name="23621"
+      ><a name="23622"
       >
 </a
-      ><a name="23622" class="Comment"
+      ><a name="23623" class="Comment"
       >--                &#8594; ({e e&#8242; :  &#10214; F &#10215; (&#956; (|Ef| H |x| |Ef| F))}{c c&#8242; : &#956; C} &#8594; c &#8764;&#945; c&#8242; &#8594; &#8764;&#945;F F e e&#8242; &#8594; f c e &#8764;&#945; f c&#8242; e&#8242;)</a
-      ><a name="23737"
+      ><a name="23738"
       >
 </a
-      ><a name="23738" class="Comment"
+      ><a name="23739" class="Comment"
       >--                &#8594; ({c : &#956; C}{S : Sort}{x y : V}{e : &#10214; F &#10215; (&#956; (|Ef| H |x| |Ef| F))} </a
-      ><a name="23823"
+      ><a name="23824"
       >
 </a
-      ><a name="23824" class="Comment"
+      ><a name="23825" class="Comment"
       >--                      &#8594; f (swap S x y c) (swapF F S x y e) &#8801; swap S x y (f c e))</a
-      ><a name="23906"
+      ><a name="23907"
       >
 </a
-      ><a name="23907" class="Comment"
+      ><a name="23908" class="Comment"
       >--                &#8594; c &#8764;&#945; c'</a
-      ><a name="23934"
+      ><a name="23935"
       >
 </a
-      ><a name="23935" class="Comment"
+      ><a name="23936" class="Comment"
       >--                &#8594; e &#8764;&#945; e'  </a
-      ><a name="23964"
+      ><a name="23965"
       >
 </a
-      ><a name="23965" class="Comment"
+      ><a name="23966" class="Comment"
       >--                &#8594; recCtx F f c e &#8764;&#945; recCtx F f c' e'</a
-      ><a name="24019"
+      ><a name="24020"
       >
 </a
-      ><a name="24020" class="Comment"
+      ><a name="24021" class="Comment"
       >-- lemma-recCtx prf prf2  c&#8764;c' e&#8764;e' = {!  (lemma-recmap&#945; |R| prf prf2 c&#8764;c' e&#8764;e')!} </a
-      ><a name="24103"
+      ><a name="24104"
       >
 </a
-      ><a name="24104" class="Comment"
+      ><a name="24105" class="Comment"
       >-- \end{code}</a
-      ><a name="24117"
+      ><a name="24118"
       >
 
 
 </a
-      ><a name="24120" class="Comment"
+      ><a name="24121" class="Comment"
       >-- \begin{code}</a
-      ><a name="24135"
+      ><a name="24136"
       >
 </a
-      ><a name="24136" class="Comment"
+      ><a name="24137" class="Comment"
       >-- lemma-recCtx&#945;-recCtx  :</a
-      ><a name="24162"
+      ><a name="24163"
       >
 </a
-      ><a name="24163" class="Comment"
+      ><a name="24164" class="Comment"
       >--   {C H : Functor}(F : Functor){f : &#956; C &#8594; &#10214; F &#10215; (&#956; (|Ef| H |x| |Ef| F)) &#8594; &#956; H}{c : &#956; C}{e : &#956; F}</a
-      ><a name="24261"
+      ><a name="24262"
       >
 </a
-      ><a name="24262" class="Comment"
+      ><a name="24263" class="Comment"
       >--   &#8594; ({e e&#8242; :  &#10214; F &#10215; (&#956; (|Ef| H |x| |Ef| F))}{c c&#8242; : &#956; C} &#8594; c &#8764;&#945; c&#8242; &#8594; &#8764;&#945;F F e e&#8242; &#8594; f c e &#8764;&#945; f c&#8242; e&#8242;)</a
-      ><a name="24364"
+      ><a name="24365"
       >
 </a
-      ><a name="24365" class="Comment"
+      ><a name="24366" class="Comment"
       >--   &#8594; ({c : &#956; C}{S : Sort}{x y : V}{e : &#10214; F &#10215; (&#956; (|Ef| H |x| |Ef| F))} </a
-      ><a name="24437"
+      ><a name="24438"
       >
 </a
-      ><a name="24438" class="Comment"
+      ><a name="24439" class="Comment"
       >--                      &#8594; f (swap S x y c) (swapF F S x y e) &#8801; swap S x y (f c e))</a
-      ><a name="24520"
+      ><a name="24521"
       >
 </a
-      ><a name="24521" class="Comment"
+      ><a name="24522" class="Comment"
       >--   &#8594; recCtx&#945; F f c e &#8764;&#945; recCtx F f c e</a
-      ><a name="24561"
+      ><a name="24562"
       >
 </a
-      ><a name="24562" class="Comment"
+      ><a name="24563" class="Comment"
       >-- \end{code}</a
-      ><a name="24575"
+      ><a name="24576"
       >
 
 
 </a
-      ><a name="24578" class="Comment"
+      ><a name="24579" class="Comment"
       >-- \begin{code}</a
-      ><a name="24593"
+      ><a name="24594"
       >
 </a
-      ><a name="24594" class="Comment"
+      ><a name="24595" class="Comment"
       >-- lemma-recCtx&#945;-recCtx F {c = c} {e} prf prf2 with bindersFree&#945;Elem (fv c) e | lemma-bindersFree&#945;Alpha (fv c) e</a
-      ><a name="24706"
+      ><a name="24707"
       >
 </a
-      ><a name="24707" class="Comment"
+      ><a name="24708" class="Comment"
       >-- ... | e&#8242; , nb | e&#8242;&#8764;e = lemma-recCtx prf prf2 &#961; e&#8242;&#8764;e  </a
-      ><a name="24763"
+      ><a name="24764"
       >
 </a
-      ><a name="24764" class="Comment"
+      ><a name="24765" class="Comment"
       >-- \end{code}</a
-      ><a name="24777"
+      ><a name="24778"
       >
 
 </a

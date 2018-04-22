@@ -427,6 +427,7 @@ lemma-foldCtxα-cxtα {c = c} {c′} prf c∼c′ e
 ... | fv | .fv | refl = lemma-foldCtxαCtx prf c∼c′ (proj₁ (bindersFreeαElem fv e))
 \end{code}
 
+
 --   lemma-binderFreeElemFold :
 --     {F H C : Functor}{f : μ C → ⟦ F ⟧ (μ H) → μ H}{c c' : μ C}{e : μ F}{S : Sort}
 --     → proj₁ (bindersFreeαElem (fv S c) (foldS F f c' e))  ∼α
