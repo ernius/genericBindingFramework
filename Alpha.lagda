@@ -14,12 +14,13 @@ open import Data.Unit hiding (setoid)
 open import Data.Sum
 open import Relation.Nullary
 open import Data.Empty
-open import Data.List hiding (unfold)
+open import Data.List hiding (unfold;any)
 open import Data.List.All
 open import Data.Product hiding (swap)
-open import Data.List.Any as Any hiding (tail;map)
-open Any.Membership-≡
-open import Relation.Binary.PropositionalEquality hiding ([_])
+open import Data.List.Any as any hiding (tail;map)
+open any.Membership-≡
+open import Relation.Binary.PropositionalEquality as PropEq renaming ([_] to [_]ᵢ)
+open PropEq.≡-Reasoning renaming (begin_ to begin≡_;_∎ to _□)
 open import Relation.Binary
 
 
@@ -488,6 +489,19 @@ lemma∼Bswap {F} {G} {S} {x} {y} {e} {e′} xe∼ye′
      ∎
   where 
   open ∼F-Reasoning(F)(G)
+
+lemma∼+Brec : {F G : Functor}{e e′ : ⟦ G ⟧ (μ F)}{S : Sort}{a : V} → ∼αF {F} (|B| S G) (a , e) (a , e′) → ∼αF {F} G e e′
+lemma∼+Brec {F} {G} {e} {e′} {S} {a} ae~ae′
+  =  begin
+       e
+     ≈⟨ lemmaSwapId {F} {G} {S} {a} {e} ⟩
+       swapF G S a a e
+     ∼⟨ lemma∼Bswap ae~ae′ ⟩
+       e′
+     ∎
+  where 
+  open ∼F-Reasoning(F)(G)
+
 \end{code}
 
 %<*lemafoldmapfalpha>
@@ -729,19 +743,6 @@ lemma-foldmapα {F} {H} {C} (|B| S G) {f} {c} {c'}  {y , e} {z , e'}
      where
      open ∼F-Reasoning(H)(G)
 \end{code}
-                   -- ∼⟨ lemma-foldmapSCtx G prf
-                   --                      (lemma-swap# (lemmafvF# (listNotOccurBBinv∉fv nb)) (lemmafvF# (c∉xs++ys→c∉xs x∉)))
-                   --                      (swapF G S y x e) ⟩
-                   --   foldmapCtx F G f c              (swapF G S y x e)
-                   --   foldmapCtx F G f c'             (swapF G S z x e')
-                   -- ∼⟨ lemma-foldmapSCtx  G prf (σ (lemma-swap#  (lemmafvF# (listNotOccurBBinv∉fv nb'))
-                   --                                              (lemmafvF# (c∉xs++ys→c∉xs (c∉xs++ys→c∉ys {xs = fv c} x∉)))))
-                   --                       (swapF G S z x e') ⟩
-                   --   foldmapCtx F G f (swap S z x c') (swapF G S z x e')
-                   -- ≈⟨ lemmaSwapFoldSEquivF {C} {H} {F} {G} prf2 ⟩
-
-
-
 
 %<*lemmafoldCtxalpha>
 \begin{code}
@@ -758,18 +759,92 @@ lemma-foldCtxα  : {F H C : Functor}{f : μ C → ⟦ F ⟧ (μ H) → μ H}{c c
 lemma-foldCtxα prf prf2 nb nb' c∼c' e∼e' = lemma-foldmapα |R| prf prf2 nb nb' c∼c' e∼e' 
 \end{code}
 
-Next postulate is only needed for parallel reduction in a future Church-Rosser development
-
 \begin{code}
-postulate
-  lemma∼fvF :  {F G : Functor}{e e′ : ⟦ G ⟧ (μ F)} 
-            → ∼αF G e e′
-            → fvF {F} {G} e ≡ fvF {F} {G} e′
+mutual
+  lemmafvα : {F G : Functor}{S : Sort}{e e′ : ⟦ G ⟧ (μ F)}
+       → ∼αF {F} G e e′
+       → fvSF {F} {G} S e ≡ fvSF {F} {G} S e′
+  lemmafvα {F} {|1|}       {S} {e}        {e′}         e~e′        = refl
+  lemmafvα {F} {|R|}       {S} {⟨ e ⟩}    {⟨ e′ ⟩}     (∼αR e~e′)  = lemmafvα {F} {F} {S} {e} {e′} e~e′
+  lemmafvα {F} {|E| x}     {S} {e}        {e′}         e~e′        = refl
+  lemmafvα {F} {|Ef| G}    {S} {⟨ e ⟩}    {⟨ e′ ⟩}     (∼αEf e~e′) = lemmafvα {G} {G} {S} {e} {e′} e~e′
+  lemmafvα {F} {G₁ |+| G₂} {S} {inj₁ e}   {inj₁ e′}    (∼α+₁ e~e′) = lemmafvα {F} {G₁} {S} {e} {e′} e~e′
+  lemmafvα {F} {G₁ |+| G₂} {S} {inj₂ e}   {inj₂ e′}    (∼α+₂ e~e′) = lemmafvα {F} {G₂} {S} {e} {e′} e~e′
+  lemmafvα {F} {G₁ |x| G₂} {S} {e₁ , e₂}  {e₁′ , e₂′}  (∼αx e₁~e₁′ e₂~e₂′)
+    = cong₂ (_++_) (lemmafvα {F} {G₁} {S} {e₁} {e₁′} e₁~e₁′) (lemmafvα {F} {G₂} {S} {e₂} {e₂′} e₂~e₂′)
+  lemmafvα {F} {|v| S′}    {S} {e}      {.e}            ∼αV         =  refl
+  lemmafvα {F} {|B| S′ G}  {S} {x , e}  {y , e′}        xe∼ye′ with S′ ≟S S
+  ... | no S′≢S   = lemmafvswapBF≢ S′≢S xe∼ye′
+  lemmafvα {F} {|B| .S G}  {S} {x , e}  {y , e′}        xe∼ye′ 
+      | yes refl  = lemmafvswapBF xe∼ye′
+
+  lemmafvswapBF≢ : {F G : Functor}{x y : V}{S S′ : Sort}{e e′ : ⟦ G ⟧ (μ F)}
+             → S′ ≢ S 
+             → ∼αF {F} (|B| S′ G) (x , e) (y , e′)
+             → fvSF {F} {G} S e ≡ fvSF {F} {G} S e′
+  lemmafvswapBF≢ {F} {G} {x} {y} {S} {S′} {e} {e′} S′≢S xe~ye′ = 
+    begin≡
+      fvSF {F} {G} S e
+    ≡⟨ lemma-swapfvSF {F} {G} {e} {S′} {S} (sym≢ S′≢S) ⟩
+      fvSF {F} {G} S (swapF G S′ x y e)
+    ≡⟨ lemmafvα {F} {G} {S} (lemma∼Bswap {F} {G} {S′} {x} {y} xe~ye′) ⟩
+      fvSF {F} {G} S e′
+    □
+  
+  lemmafvswapBF : {F G : Functor}{x y : V}{S : Sort}{e e′ : ⟦ G ⟧ (μ F)} 
+             → ∼αF {F} (|B| S G) (x , e) (y , e′)
+             → fvSF {F} {G} S e - x ≡ fvSF {F} {G} S e′ - y 
+  lemmafvswapBF {F} {G} {x} {y}   {S} {e} {e′} ∼αBxeye′ with lemma∼#F {F} {(|B| S G)} {S} {y} {y , e′} {x , e} (σF ∼αBxeye′) freshb≡
+  lemmafvswapBF {F} {G} {x} {.x}  {S} {e} {e′} ∼αBxeye′ | freshb≡    = 
+    begin≡
+      fvSF {F} {G} S e  - x
+    ≡⟨ cong (λ e → e - x) (lemmafvα {F} {G} {S} {e} {e′} (lemma∼+Brec ∼αBxeye′)) ⟩
+    fvSF {F} {G} S e′ - x
+    □
+  lemmafvswapBF {F} {G} {x} {y}   {S} {e} {e′} ∼αBxeye′ | freshb y#e = 
+    begin≡
+      fvSF {F} {G} S e - x
+    ≡⟨ lemmafvswap- {F} {G} {x} {y} {S} {e} y#e ⟩
+    fvSF {F} {G} S (swapF G S x y e) - y
+    ≡⟨ cong₂ (_-_) {u = y} (lemmafvα (lemma∼Bswap {F} {G} {S} {x} {y} ∼αBxeye′)) refl  ⟩     
+    fvSF {F} {G} S e′ - y
+    □
+
+lemma∼fvF :  {F G : Functor}{e e′ : ⟦ G ⟧ (μ F)}
+             (xs : List V) 
+             → ∼αF G e e′
+             → fvSF≢ {F} {G} xs e ≡ fvSF≢ {F} {G} xs e′
+lemma∼fvF {F} {|1|}       {e}          {e′}        _  e~e′                 = refl
+lemma∼fvF {F} {|R|}       {⟨ e ⟩}      {⟨ e′ ⟩}    xs (∼αR e~e′)           = lemma∼fvF xs e~e′
+lemma∼fvF {F} {|E| x}     {e}          {e′}        _  e~e′                 = refl
+lemma∼fvF {F} {|Ef| G}    {⟨ e ⟩}      {⟨ e′ ⟩}    xs (∼αEf e~e′)          = lemma∼fvF xs e~e′
+lemma∼fvF {F} {G |+| G₁}  {.(inj₁ _)}  {.(inj₁ _)} xs (∼α+₁ e~e′)          = lemma∼fvF xs e~e′
+lemma∼fvF {F} {G |+| G₁}  {.(inj₂ _)}  {.(inj₂ _)} xs (∼α+₂ e~e′)          = lemma∼fvF xs e~e′
+lemma∼fvF {F} {G |x| G₁}  {e₁ , e₁′}   {e₂ , e₂′}  xs (∼αx e₁~e₁′ e₂~e₂′)  = cong₂ (_++_) (lemma∼fvF xs e₁~e₁′) (lemma∼fvF xs e₂~e₂′)
+lemma∼fvF {F} {|v| S}     {e}          {.e}        _  ∼αV                  = refl
+lemma∼fvF {F} {|B| S G}   {x , e}      {y , e′}    xs ∼αBxeye′ with any (_≟S_ S) xs
+... | yes S∈xs = 
+   begin≡
+     fvSF≢ {F} {G} xs e
+   ≡⟨ lemma-swapfvF {F} {G} {e} {S} {x} {y} {xs} S∈xs  ⟩
+     fvSF≢ {F} {G} xs (swapF G S x y e)
+   ≡⟨ lemma∼fvF {F} {G} {swapF G S x y e} {e′} xs (lemma∼Bswap {F} {G} {S} {x} {y} ∼αBxeye′) ⟩
+     fvSF≢ {F} {G} xs e′
+   □  
+... | no  S∉xs = cong₂ (_++_)
+   (begin≡ -- analogous to previous proof
+     fvSF≢ {F} {G} (S ∷ xs) e
+   ≡⟨ lemma-swapfvF {F} {G} {e} {S} {x} {y} {S ∷ xs} (here refl)  ⟩
+     fvSF≢ {F} {G} (S ∷ xs) (swapF G S x y e)
+   ≡⟨ lemma∼fvF {F} {G} {swapF G S x y e} {e′} (S ∷ xs) (lemma∼Bswap {F} {G} {S} {x} {y} ∼αBxeye′) ⟩
+     fvSF≢ {F} {G} (S ∷ xs) e′
+   □)
+   (lemmafvswapBF {F} {G} {x} {y} {S} {e} {e′} ∼αBxeye′)
 
 lemma∼fv :  {F : Functor}{e e' : μ F}
             → e ∼α e'
             → fv e ≡ fv e'
-lemma∼fv = lemma∼fvF
+lemma∼fv = lemma∼fvF []
 
   --lemmafv-∉ : {F : Functor}{S : Sort}{e : ⟦ F ⟧ (μ F)}{x y : V} → x ≢ y → x ∉ fvF {|B| S F} S (y , e) → x ∉ fv {F} S ⟨ e ⟩
   -- lemma-foldSfv : {C H : Functor}{F : Functor}{f : μ C → ⟦ F ⟧ (μ H) → μ H}{c : μ C}{e : μ F}{S : Sort}

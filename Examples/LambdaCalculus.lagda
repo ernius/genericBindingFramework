@@ -562,6 +562,14 @@ diamBVC⇉n :  {M N P : λTerm} → BVCN M
 diamBVC⇉n {M} bvc M⇉N M⇉P = M * , lemma* bvc M⇉N , lemma* bvc M⇉P
 \end{code}
 
+Next postulate could be done as started in AlphaInduction3 file, all binders distinct, and is used only for Church-Rosser future development.
+
+\begin{code}
+postulate
+  lemma-bindersFreeα-BindersAll≢ : {F : Functor}(xs : List V)(e : μ F) 
+    → ({x : V}(x∈be' : x ∈b (bindersFreeα xs e)) → notOccurBindExcept x (bindersFreeα xs e) (x∈be')) 
+\end{code}
+
 \begin{code}
 bvcTerm : λTerm → λTerm
 bvcTerm = bindersFreeα []

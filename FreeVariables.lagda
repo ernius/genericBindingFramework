@@ -4,6 +4,7 @@ module FreeVariables where
 open import GPBindings
 open import Fresh
 open import List.ListProperties
+open import Atom
 open import Swap
 open import SwapInduction
 open import Chi
@@ -18,7 +19,8 @@ open import Data.Bool
 open import Relation.Nullary.Decidable hiding (map)
 open import Data.List.Any as any
 open any.Membership-≡
-open import Relation.Binary.PropositionalEquality hiding ([_])
+open import Relation.Binary.PropositionalEquality as PropEq renaming ([_] to [_]ᵢ)
+open PropEq.≡-Reasoning renaming (begin_ to begin≡_;_∎ to _□)
 \end{code}
 
 Why not implemented with fold ? Because as swap must transverse |Ef|
@@ -130,35 +132,159 @@ lemmaS#fvF {G = |B| .S G}   {y , e}   {S}  {x}  (freshb fresh)        x∈
 ...            | no  x≢y                                                  = lemmaS#fvF fresh (lemma-∈ {x} {y} x∈)
 lemmaS#fvF {G = |B| .S G}   {.x , e}  {S}  {x}  (freshb fresh)        x∈  
     | yes refl | yes refl                                                 = lemma- {x} {fvSF {G = G} S e} x∈
-
--- lemmafvSwap :  {F G : Functor}{e : ⟦ G ⟧ (μ F)}{S S' : Sort}{x y : V}
---                → S' ≢ S
---                → fvF {G} {F} S (swapF F G  S' x y e) ≡ fvF {G} {F} S e
--- lemmafvSwap = {!!}
-
--- lemma~fv :  {F G : Functor}{e e′ : ⟦ G ⟧ (μ F)}(S : Sort)
---             → ~αF G e e′
---             → fvF {G} {F} S e ≡ fvF {G} {F} S e′
--- lemma~fv S ~αV               = refl
--- lemma~fv S ~α1               = refl
--- lemma~fv S ~αE               = refl
--- lemma~fv S (~αEf e~e')       = lemma~fv S e~e'
--- lemma~fv S (~αR e~e')        = lemma~fv S e~e'
--- lemma~fv S (~αinj₁ e~e')     = lemma~fv S e~e'
--- lemma~fv S (~αinj₂ e~e')     = lemma~fv S e~e'
--- lemma~fv S (~αx e~e' e~e'')  = cong₂ _++_ (lemma~fv S e~e') (lemma~fv S e~e'')
--- lemma~fv {F} {|B| S' G} {x , e} {y , e'}
---          S (~αb≡S xs f)
---   with S' ≟S  S
--- ... | no  S'≢S
---   with χ' xs | lemmaχaux∉ xs
--- ... | z      | z∉xs
---   = subst₂ _≡_ (lemmafvSwap {F} {G} S'≢S) (lemmafvSwap {F} {G} S'≢S) (lemma~fv S (f z z∉xs))
--- lemma~fv {G = |B| .S G} {x , e} {y , e'}
---          S (~αb≡S xs f)
---     | yes refl
---   = {!!}
 \end{code}
+
+\begin{code}
+lemmafvswap-- : {F G : Functor}{x y : V}{S : Sort}{e : ⟦ G ⟧ (μ F)}
+             → (fvSF {F} {G} S e - x) - y ≡ (fvSF {F} {G} S (swapF G S x y e) - x) - y 
+lemmafvswap-- {F} {|1|}       {x} {y} {S} {e}       = refl
+lemmafvswap-- {F} {|R|}       {x} {y} {S} {⟨ e ⟩}   = lemmafvswap-- {F} {F} {x} {y} {S} {e}
+lemmafvswap-- {F} {|E| A}     {x} {y} {S} {e}       = refl
+lemmafvswap-- {F} {|Ef| G}    {x} {y} {S} {⟨ e ⟩}   = lemmafvswap-- {G} {G} {x} {y} {S} {e}
+lemmafvswap-- {F} {G₁ |+| G₂} {x} {y} {S} {inj₁ e}  = lemmafvswap-- {F} {G₁} {x} {y} {S} {e}
+lemmafvswap-- {F} {G₁ |+| G₂} {x} {y} {S} {inj₂ e}  = lemmafvswap-- {F} {G₂} {x} {y} {S} {e}
+lemmafvswap-- {F} {G₁ |x| G₂} {x} {y} {S} {e₁ , e₂} = 
+  begin≡
+    ((fvSF {F} {G₁} S e₁ ++ fvSF {F} {G₂} S e₂) - x) - y
+  ≡⟨ lemma-++-- {x} {y} {fvSF {F} {G₁} S e₁} {fvSF {F} {G₂} S e₂} ⟩
+    ((fvSF {F} {G₁} S e₁ - x) - y) ++ ((fvSF {F} {G₂} S e₂ - x) - y)
+  ≡⟨ cong₂ (_++_) (lemmafvswap-- {F} {G₁} {x} {y} {S} {e₁}) (lemmafvswap-- {F} {G₂} {x} {y} {S} {e₂}) ⟩
+    ((fvSF {F} {G₁} S (swapF G₁ S x y e₁) - x) - y) ++ (((fvSF {F} {G₂} S (swapF G₂ S x y e₂)) - x) - y)
+  ≡⟨ sym (lemma-++-- {x} {y} {fvSF {F} {G₁} S (swapF G₁ S x y e₁)} {fvSF {F} {G₂} S (swapF G₂ S x y e₂)}) ⟩
+    ((fvSF {F} {G₁} S (swapF G₁ S x y e₁) ++ fvSF {F} {G₂} S (swapF G₂ S x y e₂)) - x) - y
+  □
+lemmafvswap-- {F} {|v| S′}    {x} {y} {S} {z}       with S′ ≟S S
+... | no _  = refl
+... | yes _  with （ x ∙ y ）ₐ z | lemma∙ₐ x y z
+lemmafvswap-- {F} {|v| S′}    {x} {y} {S} {.x} 
+    | yes _  | .y | inj₁ (refl , refl)                = lemma[x]-x-y≡[y]-x-y {x} {y}
+lemmafvswap-- {F} {|v| S′}    {x} {y} {S} {.y}     
+    | yes _  | .x | inj₂ (inj₁ (refl , z≢x , refl))   = sym (lemma[x]-x-y≡[y]-x-y {x} {y})
+lemmafvswap-- {F} {|v| S′}    {x} {y} {S} {z}     
+    | yes _  | .z | inj₂ (inj₂ (z≢x  , z≢y , refl))   = refl
+lemmafvswap-- {F} {|B| S′ G}  {x} {y} {S} {z , e}   with S′ ≟S S
+... | no  _ = lemmafvswap-- {F} {G} {x} {y} {S} {e}
+... | yes _ with （ x ∙ y ）ₐ z | lemma∙ₐ x y z
+lemmafvswap-- {F} {|B| S′ G}  {x} {y} {S} {.x , e}
+    | yes _ | .y | inj₁ (refl , refl)                 = 
+   begin≡
+     ((fvSF {F} {G} S e - x) - x) - y
+   ≡⟨ cong₂ (_-_) {u = y} (lemma--idem {x} {fvSF {F} {G} S e}) refl ⟩
+     (fvSF {F} {G} S e - x) - y
+   ≡⟨ lemmafvswap-- {F} {G} {x} {y} {S} {e} ⟩     
+     (fvSF {F} {G} S (swapF {F} G S x y e) - x) - y
+   ≡⟨ sym (lemma--idem {y} {fvSF {F} {G} S (swapF {F} G S x y e) - x}) ⟩
+     ((fvSF {F} {G} S (swapF {F} G S x y e) - x) - y) - y
+   ≡⟨ cong₂ (_-_) {u = y} (lemma--com {x} {y} {fvSF {F} {G} S (swapF {F} G S x y e)}) refl ⟩     
+     ((fvSF {F} {G} S (swapF {F} G S x y e) - y) - x) - y 
+   □
+lemmafvswap-- {F} {|B| S′ G}  {x} {y} {S} {.y , e}
+    | yes _ | .x |  inj₂ (inj₁ (refl , z≢x , refl))   = 
+   begin≡
+     ((fvSF {F} {G} S e - y) - x) - y
+   ≡⟨ cong₂ (_-_) {u = y} (lemma--com {y} {x} {fvSF {F} {G} S e}) refl  ⟩
+     ((fvSF {F} {G} S e - x) - y) - y   
+   ≡⟨ lemma--idem {y} {fvSF {F} {G} S e - x} ⟩
+     (fvSF {F} {G} S e - x) - y
+   ≡⟨ lemmafvswap-- {F} {G} {x} {y} {S} {e} ⟩
+     (fvSF {F} {G} S (swapF {F} G S x y e) - x) - y
+   ≡⟨ cong₂ (_-_) {u = y} (sym (lemma--idem {x} {fvSF {F} {G} S (swapF {F} G S x y e)})) refl  ⟩     
+     ((fvSF {F} {G} S (swapF {F} G S x y e) - x) - x) - y 
+   □    
+lemmafvswap-- {F} {|B| S′ G}  {x} {y} {S} {z , e}
+    | yes _ | .z | inj₂ (inj₂ (z≢x  , z≢y , refl))    = 
+   begin≡
+     ((fvSF {F} {G} S e - z) - x) - y 
+   ≡⟨ cong₂ (_-_) {u = y} {v = y} (lemma--com {z} {x} {fvSF {F} {G} S e}) refl ⟩
+     ((fvSF {F} {G} S e - x) - z) - y
+   ≡⟨ lemma--com {z} {y} {fvSF {F} {G} S e - x}  ⟩
+     ((fvSF {F} {G} S e - x) - y) - z
+   ≡⟨ cong₂ (_-_) {u = z} (lemmafvswap-- {F} {G} {x} {y} {S} {e}) refl ⟩
+     ((fvSF {F} {G} S (swapF {F} G S x y e) - x) - y) - z
+    ≡⟨ lemma--com {y} {z} {fvSF {F} {G} S (swapF {F} G S x y e) - x}  ⟩     
+     ((fvSF {F} {G} S (swapF {F} G S x y e) - x) - z) - y
+   ≡⟨ cong₂ (_-_) {u = y} {v = y} (sym (lemma--com {z} {x} {fvSF {F} {G} S (swapF {F} G S x y e)})) refl ⟩     
+     ((fvSF {F} {G} S (swapF {F} G S x y e) - z) - x) - y 
+   □
+
+lemmafvswap- : {F G : Functor}{x y : V}{S : Sort}{e : ⟦ G ⟧ (μ F)} → freshF S y G e
+             → fvSF {F} {G} S e - x ≡ fvSF {F} {G} S (swapF G S x y e) - y 
+lemmafvswap- {F} {|1|}       {x} {y} {S} {e}        y#Se                 = refl
+lemmafvswap- {F} {|R|}       {x} {y} {S} {⟨ e ⟩}    (freshR y#Se)        = lemmafvswap- {F} {F} {x} {y} {S} {e} y#Se
+lemmafvswap- {F} {|E| A}     {x} {y} {S} {e}        y#Se                 = refl
+lemmafvswap- {F} {|Ef| G}    {x} {y} {S} {⟨ e ⟩ }   (freshEf y#Se)       = lemmafvswap- {G} {G} {x} {y} {S} {e} y#Se
+lemmafvswap- {F} {G₁ |+| G₂} {x} {y} {S} {inj₁ e}   (freshinj₁ y#Se)     = lemmafvswap- {F} {G₁} {x} {y} {S} {e} y#Se
+lemmafvswap- {F} {G₁ |+| G₂} {x} {y} {S} {inj₂ e}   (freshinj₂ y#Se)     = lemmafvswap- {F} {G₂} {x} {y} {S} {e} y#Se
+lemmafvswap- {F} {G₁ |x| G₂} {x} {y} {S} {e₁ , e₂}  (freshx y#Se₁ y#Se₂) = 
+  begin≡
+    (fvSF {F} {G₁} S e₁ ++ fvSF {F} {G₂} S e₂) - x
+  ≡⟨ lemma-++- {x} {fvSF {F} {G₁} S e₁} {fvSF {F} {G₂} S e₂} ⟩
+    (fvSF {F} {G₁} S e₁ - x) ++ (fvSF {F} {G₂} S e₂ - x)
+  ≡⟨ cong₂ (_++_) (lemmafvswap- {F} {G₁} {x} {y} {S} {e₁} y#Se₁) (lemmafvswap- {F} {G₂} {x} {y} {S} {e₂} y#Se₂) ⟩
+    (fvSF {F} {G₁} S (swapF G₁ S x y e₁) - y) ++ (fvSF {F} {G₂} S (swapF G₂ S x y e₂) - y)
+  ≡⟨ sym (lemma-++- {y} {fvSF {F} {G₁} S (swapF G₁ S x y e₁)} {fvSF {F} {G₂} S (swapF G₂ S x y e₂)}) ⟩  
+    (fvSF {F} {G₁} S (swapF G₁ S x y e₁) ++ fvSF {F} {G₂} S (swapF G₂ S x y e₂)) - y
+  □
+lemmafvswap- {F} {|v| S′}    {x} {y} {S} {z}        y#Se with S′ ≟S S
+... | no _     = refl
+lemmafvswap- {F} {|v| .S}    {x} {y} {S} {z}        (freshV≢S S≢S)  | yes refl = ⊥-elim (S≢S refl)
+lemmafvswap- {F} {|v| .S}    {x} {y} {S} {z}        (freshV≢  y≢z)  | yes refl with （ x ∙ y ）ₐ z | lemma∙ₐ x y z
+lemmafvswap- {F} {|v| .S}    {x} {y} {S} {.x}       (freshV≢  y≢x)  | yes refl | .y | inj₁ (refl , refl)              = 
+  begin≡
+    [ x ] - x
+  ≡⟨ lemma[x]-x {x} ⟩
+    []
+  ≡⟨ sym (lemma[x]-x {y}) ⟩
+    [ y ] - y
+  □
+lemmafvswap- {F} {|v| .S}    {x} {y} {S} {.y}       (freshV≢  y≢y)  | yes refl | .x | inj₂ (inj₁ (refl , z≢x , refl)) = ⊥-elim (y≢y refl)
+lemmafvswap- {F} {|v| .S}    {x} {y} {S} {z}        (freshV≢  y≢z)  | yes refl | .z | inj₂ (inj₂ (z≢x  , _   , refl)) = 
+  begin≡
+    [ z ] - x
+  ≡⟨ lemma[x]-y z≢x ⟩
+    [ z ]
+  ≡⟨ sym (lemma[x]-y (sym≢ y≢z)) ⟩
+    [ z ] - y
+  □
+lemmafvswap- {F} {|B| S′ G}  {x} {y} {S} {z , e}    y#Se with S′ ≟S S
+lemmafvswap- {F} {|B| .S G}  {x} {y} {S} {.y , e}   freshb≡       | no S≢S   = ⊥-elim (S≢S refl)
+lemmafvswap- {F} {|B| S′ G}  {x} {y} {S} {z , e}    (freshb y#e)  | no S′≢S  = lemmafvswap- {F} {G} {x} {y} {S} {e} y#e
+lemmafvswap- {F} {|B| .S G}  {x} {y} {S} {z , e}    y#Se          | yes refl with y ≟v z
+lemmafvswap- {F} {|B| .S G}  {x} {y} {S} {.y , e}   y#Se          | yes refl | yes refl  = 
+  begin≡
+    (fvSF {F} {G} S e - y) - x
+  ≡⟨ lemma--com {y} {x} {fvSF {F} {G} S  e} ⟩
+    (fvSF {F} {G} S  e - x) - y
+  ≡⟨ lemmafvswap-- {F} {G} {x} {y} {S} {e} ⟩
+    (fvSF {F} {G} S (swapF {F} G S x y e) - x) - y
+  ≡⟨ cong (λ h → (fvSF {F} {G} S (swapF {F} G S x y e) - h) - y) (sym (lemma（ab）b≡a {x} {y}))  ⟩    
+    (fvSF {F} {G} S (swapF {F} G S x y e) - （ x ∙ y ）ₐ y) - y
+  □
+lemmafvswap- {F} {|B| .S G} {x} {y} {S} {.y , e}     freshb≡       | yes refl | no y≢y = ⊥-elim (y≢y refl)
+lemmafvswap- {F} {|B| .S G} {x} {y} {S} {z , e}      (freshb y#Se) | yes refl | no y≢z with （ x ∙ y ）ₐ z | lemma∙ₐ x y z
+lemmafvswap- {F} {|B| .S G} {x} {y} {S} {.x , e}     (freshb y#Se) | yes refl | no y≢x | .y | inj₁ (refl , refl)               = 
+  begin≡
+   (fvSF {F} {G} S e - x) - x
+  ≡⟨ lemma--idem {x} {fvSF {F} {G} S e} ⟩
+   fvSF {F} {G} S e - x
+  ≡⟨ lemmafvswap- {F} {G} {x} {y} {S} {e} y#Se ⟩
+   fvSF {F} {G} S (swapF {F} G S x y e) - y
+  ≡⟨ sym (lemma--idem {y} {fvSF {F} {G} S (swapF {F} G S x y e)}) ⟩
+   (fvSF {F} {G} S (swapF {F} G S x y e) - y) - y
+  □
+lemmafvswap- {F} {|B| .S G} {x} {y} {S} {.y , e}     (freshb y#Se) | yes refl | no y≢y | .x | inj₂ (inj₁ (refl , z≢x , refl))  = ⊥-elim (y≢y refl)
+lemmafvswap- {F} {|B| .S G} {x} {y} {S} {z , e}      (freshb y#Se) | yes refl | no y≢z | .z | inj₂ (inj₂ (z≢x  , z≢y , refl))  = 
+  begin≡
+    (fvSF {F} {G} S e - z) - x
+  ≡⟨ lemma--com {z} {x} {fvSF {F} {G} S e} ⟩
+    (fvSF {F} {G} S e - x) - z  
+  ≡⟨ cong (λ h → h - z) (lemmafvswap- {F} {G} {x} {y} {S} {e} y#Se) ⟩
+    (fvSF {F} {G} S (swapF {F} G S x y e) - y) - z
+  ≡⟨ lemma--com {y} {z} {fvSF {F} {G} S (swapF {F} G S x y e)} ⟩  
+    (fvSF {F} {G} S (swapF {F} G S x y e) - z) - y
+  □
+\end{code}
+
 %<*freevariablesneq>
 \begin{code}
 fvSF≢ : {F G : Functor} → List Sort → ⟦ G ⟧ (μ F) → List V
@@ -343,5 +469,73 @@ foldCtxFV :  {C H F : Functor}{c : μ C}{e : μ F}
              → fv (foldCtx F f c e) ⊆ fv c ++ fv e
 foldCtxFV {C} {H} {F} {c} {e} = foldFV {C} {H} {F} {c} {e}
 \end{code}
+
+\begin{code}
+lemma-swapfvSF : {F G : Functor}{e : ⟦ G ⟧ (μ F)}{S S′ : Sort}{x y : V}
+             → S′ ≢ S
+             → fvSF {F} {G} S′ e ≡ fvSF {F} {G} S′ (swapF G S x y e) 
+lemma-swapfvSF {F} {|1|}        {e}       {S} {S′} {x} {y} S′≢S = refl
+lemma-swapfvSF {F} {|R|}        {⟨ e ⟩}   {S} {S′} {x} {y} S′≢S = lemma-swapfvSF {F} {F} {e} {S} {S′} {x} {y} S′≢S
+lemma-swapfvSF {F} {|E| A}      {e}       {S} {S′} {x} {y} S′≢S = refl
+lemma-swapfvSF {F} {|Ef| G}     {⟨ e ⟩}   {S} {S′} {x} {y} S′≢S = lemma-swapfvSF {G} {G} {e} {S} {S′} {x} {y} S′≢S
+lemma-swapfvSF {F} {G₁ |+| G₂}  {inj₁ e}  {S} {S′} {x} {y} S′≢S = lemma-swapfvSF {F} {G₁} {e} {S} {S′} {x} {y} S′≢S
+lemma-swapfvSF {F} {G₁ |+| G₂}  {inj₂ e}  {S} {S′} {x} {y} S′≢S = lemma-swapfvSF {F} {G₂} {e} {S} {S′} {x} {y} S′≢S
+lemma-swapfvSF {F} {G₁ |x| G₂}  {e₁ , e₂} {S} {S′} {x} {y} S′≢S = cong₂ (_++_)  (lemma-swapfvSF {F} {G₁} {e₁} {S} {S′} {x} {y} S′≢S)
+                                                                                (lemma-swapfvSF {F} {G₂} {e₂} {S} {S′} {x} {y} S′≢S)
+lemma-swapfvSF {F} {|v| S″}     {z}       {S} {S′} {x} {y} S′≢S with S″ ≟S S′
+... | no  S″≢S″             = refl
+lemma-swapfvSF {F} {|v| .S′}     {z}      {S} {S′} {x} {y} S′≢S 
+    | yes refl  with S′ ≟S S
+...             | yes S′≡S  = ⊥-elim (S′≢S S′≡S)
+...             | no  _     = refl
+lemma-swapfvSF {F} {|B| S″ G}   {z , e}   {S} {S′} {x} {y} S′≢S with S″ ≟S S′
+... | no  S″≢S′ with S″ ≟S S
+...             | no S″≢S  = lemma-swapfvSF {F} {G} {e} {S} {S′} {x} {y} S′≢S
+lemma-swapfvSF {F} {|B| .S G}   {z , e}   {S} {S′} {x} {y} S′≢S | no S≢S′
+                | yes refl = lemma-swapfvSF {F} {G} {e} {S} {S′} {x} {y} S′≢S
+lemma-swapfvSF {F} {|B| .S′ G}   {z , e}   {S} {S′} {x} {y} S′≢S 
+    | yes refl  with S′ ≟S S
+...             | yes S′≡S  = ⊥-elim (S′≢S S′≡S)
+...             | no  _     = cong₂  (_-_)
+                                     {fvSF {F} {G} S′ e} {fvSF {F} {G} S′ (swapF G S x y e) } {z} {z}
+                                     (lemma-swapfvSF {F} {G} {e} {S} {S′} {x} {y} S′≢S) refl
+
+lemma-swapfvF : {F G : Functor}{e : ⟦ G ⟧ (μ F)}{S : Sort}{x y : V}{xs : List V}
+             → S ∈ xs 
+             → fvSF≢ {F} {G} xs e ≡ fvSF≢ {F} {G} xs (swapF G S x y e) 
+lemma-swapfvF {F} {|1|}      {e}        {S} {x} {y} {xs} S∈xs = refl
+lemma-swapfvF {F} {|R|}      {⟨ e ⟩}    {S} {x} {y} {xs} S∈xs = lemma-swapfvF {F} {F} {e} {S} {x} {y} {xs} S∈xs
+lemma-swapfvF {F} {|E| A}    {e}        {S} {x} {y} {xs} S∈xs = refl
+lemma-swapfvF {F} {|Ef| G}   {⟨ e ⟩}    {S} {x} {y} {xs} S∈xs = lemma-swapfvF {G} {G} {e} {S} {x} {y} {xs} S∈xs
+lemma-swapfvF {F} {G₁ |+| G₂} {inj₁ e}  {S} {x} {y} {xs} S∈xs = lemma-swapfvF {F} {G₁} {e} {S} {x} {y} {xs} S∈xs
+lemma-swapfvF {F} {G₁ |+| G₂} {inj₂ e}  {S} {x} {y} {xs} S∈xs = lemma-swapfvF {F} {G₂} {e} {S} {x} {y} {xs} S∈xs
+lemma-swapfvF {F} {G₁ |x| G₂} {e₁ , e₂} {S} {x} {y} {xs} S∈xs = cong₂ (_++_)  (lemma-swapfvF {F} {G₁} {e₁} {S} {x} {y} {xs} S∈xs)
+                                                                              (lemma-swapfvF {F} {G₂} {e₂} {S} {x} {y} {xs} S∈xs)
+lemma-swapfvF {F} {|v| S′}    {z}       {S} {x} {y} {xs} S∈xs with any (_≟S_ S′) xs
+... | yes S′∈xs = refl
+... | no  S′∉xs with S′ ≟S S
+...             | no  _    = refl
+lemma-swapfvF {F} {|v| .S}    {z}       {S} {x} {y} {xs} S∈xs | no S∉xs
+                | yes refl = ⊥-elim (S∉xs S∈xs)
+lemma-swapfvF {F} {|B| S′ G}  {z , e}   {S} {x} {y} {xs} S∈xs with any (_≟S_ S′) xs
+... | yes S′∈xs with S′ ≟S S
+...             | no _      = lemma-swapfvF {F} {G} {e} {S} {x} {y} {xs} S∈xs
+lemma-swapfvF {F} {|B| .S G}  {z , e}   {S} {x} {y} {xs} S∈xs | yes _
+                | yes refl  = lemma-swapfvF {F} {G} {e} {S} {x} {y} {xs} S∈xs
+lemma-swapfvF {F} {|B| S′ G}  {z , e}   {S} {x} {y} {xs} S∈xs 
+    | no  S′∉xs with S′ ≟S S
+... | no  S′≢S = cong₂ (_++_) {fvSF≢ {F} {G} (S′ ∷ xs) e} {fvSF≢ {F} {G} (S′ ∷ xs) (swapF G S x y e)} {fvSF {F} {G} S′ e - z} {fvSF {F} {G} S′ (swapF G S x y e) - z}
+  (begin≡
+    fvSF≢ {F} {G} (S′ ∷ xs) e
+  ≡⟨ lemma-swapfvF {F} {G} {e} {S} {x} {y} {S′ ∷ xs} (there S∈xs) ⟩
+    fvSF≢ {F} {G} (S′ ∷ xs) (swapF G S x y e)
+  □)
+  (cong₂ (_-_) {fvSF {F} {G} S′ e} {fvSF {F} {G} S′ (swapF G S x y e)} {z} {z}
+     (lemma-swapfvSF {F} {G} {e} {S} {S′} {x} {y} S′≢S)
+     refl)
+lemma-swapfvF {F} {|B| S′ G}  {z , e}   {S} {x} {y} {xs} S∈xs  | no S∉xs
+    | yes refl = ⊥-elim (S∉xs S∈xs)
+\end{code}
+
 
 

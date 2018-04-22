@@ -82,6 +82,7 @@ lemmaxs++[]≡xs (x ∷ xs)  =  cong (_∷_ x) (lemmaxs++[]≡xs xs)
 Prop- : ℕ → ℕ → Bool
 Prop- x = (λ y → not (⌊ x ≟ y ⌋))
 --
+infixl 5 _-_
 _-_ : List ℕ → ℕ → List ℕ
 xs - x = filter (Prop- x) xs
 --
@@ -159,6 +160,13 @@ lemmaΓ++Δ,x⊆Γ,x++Δ {Γ} {Δ} {x} {y} y∈Γ++x∷Δ with c∈xs++ys→c∈
 ... | inj₂ (there y∈Δ)  = c∈xs∨c∈ys→c∈xs++ys {y} {x ∷ Γ} (inj₂ y∈Δ)
 --
 postulate
+  lemma--idem : {x : ℕ}{xs : List ℕ} → (xs - x) - x ≡ xs - x
+  lemma--com : {x y : ℕ}{xs : List ℕ} → (xs - x) - y ≡ (xs - y) - x
+  lemma[x]-y : {x y : ℕ} → x ≢ y → [ x ] - y ≡ [ x ]
+  lemma[x]-x : {x : ℕ} → [ x ] - x ≡ []
+  lemma[x]-x-y≡[y]-x-y : {x y : ℕ} → ([ x ] - x) - y ≡ ([ y ] - x) - y
+  lemma-++- : {x : ℕ}{xs ys : List ℕ} → (xs ++ ys) - x ≡ (xs - x) ++ (ys - x)
+  lemma-++-- : {x y : ℕ}{xs ys : List ℕ} → ((xs ++ ys) - x) - y ≡ ((xs - x) - y) ++ ((ys - x) - y)
   lemma-++-∷-1 : {x : ℕ}{xs ys : List ℕ} → x ∈' ys → xs ⊆ ys → x ∷ xs ⊆ ys
   lemma-++-∷-2 : {x : ℕ}{xs ys : List ℕ} → xs ⊆ ys → x ∷ xs ⊆ x ∷ ys
   lemma-++-1 : {xs xs' ys : List ℕ} → xs ⊆ xs' → xs ⊆ xs' ++ ys

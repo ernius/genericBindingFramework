@@ -1055,6 +1055,30 @@ All lemmas about ⇉n relation must have freshness premises so naive substitutio
 \\
 %
 \\
+\>\AgdaFunction{BVC} \AgdaSymbol{:} \AgdaFunction{λTerm} \AgdaSymbol{→} \AgdaPrimitiveType{Set}\<%
+\\
+\>\AgdaFunction{BVC} \AgdaBound{M} \AgdaSymbol{=} \<[9]%
+\>[9]\AgdaFunction{ListNotOccurBind} \AgdaSymbol{(}\AgdaFunction{fv} \AgdaBound{M}\AgdaSymbol{)} \AgdaBound{M}\<%
+\\
+\>[0]\AgdaIndent{5}{}\<[5]%
+\>[5]\<%
+\\
+\>\AgdaFunction{BVCC} \AgdaSymbol{:} \AgdaFunction{λTerm} \AgdaSymbol{→} \AgdaPrimitiveType{Set}\<%
+\\
+\>\AgdaFunction{BVCC} \AgdaBound{M} \AgdaSymbol{=} \AgdaSymbol{(\{}\AgdaBound{y} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{\}(}\AgdaBound{y∈bM} \AgdaSymbol{:} \AgdaBound{y} \AgdaFunction{∈b} \AgdaBound{M}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaFunction{notOccurBindExcept} \AgdaBound{y} \AgdaBound{M} \AgdaBound{y∈bM}\AgdaSymbol{)}\<%
+\\
+%
+\\
+\>\AgdaFunction{BVCN} \AgdaSymbol{:} \AgdaFunction{λTerm} \AgdaSymbol{→} \AgdaPrimitiveType{Set}\<%
+\\
+\>\AgdaFunction{BVCN} \AgdaBound{M} \AgdaSymbol{=} \AgdaFunction{BVC} \AgdaBound{M} \AgdaFunction{×} \AgdaFunction{BVCC} \AgdaBound{M}\<%
+\\
+%
+\\
+\>\AgdaComment{-- Future Church-Rosser development}\<%
+\\
+%
+\\
 \>\AgdaKeyword{postulate}\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
@@ -1078,28 +1102,6 @@ All lemmas about ⇉n relation must have freshness premises so naive substitutio
 \\
 %
 \\
-\>\AgdaFunction{BVC} \AgdaSymbol{:} \AgdaFunction{λTerm} \AgdaSymbol{→} \AgdaPrimitiveType{Set}\<%
-\\
-\>\AgdaFunction{BVC} \AgdaBound{M} \AgdaSymbol{=} \<[9]%
-\>[9]\AgdaFunction{ListNotOccurBind} \AgdaSymbol{(}\AgdaFunction{fv} \AgdaBound{M}\AgdaSymbol{)} \AgdaBound{M}\<%
-\\
-\>[2]\AgdaIndent{5}{}\<[5]%
-\>[5]\<%
-\\
-\>\AgdaFunction{BVCC} \AgdaSymbol{:} \AgdaFunction{λTerm} \AgdaSymbol{→} \AgdaPrimitiveType{Set}\<%
-\\
-\>\AgdaFunction{BVCC} \AgdaBound{M} \AgdaSymbol{=} \AgdaSymbol{(\{}\AgdaBound{y} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{\}(}\AgdaBound{y∈bM} \AgdaSymbol{:} \AgdaBound{y} \AgdaFunction{∈b} \AgdaBound{M}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaFunction{notOccurBindExcept} \AgdaBound{y} \AgdaBound{M} \AgdaBound{y∈bM}\AgdaSymbol{)}\<%
-\\
-%
-\\
-\>\AgdaFunction{BVCN} \AgdaSymbol{:} \AgdaFunction{λTerm} \AgdaSymbol{→} \AgdaPrimitiveType{Set}\<%
-\\
-\>\AgdaFunction{BVCN} \AgdaBound{M} \AgdaSymbol{=} \AgdaFunction{BVC} \AgdaBound{M} \AgdaFunction{×} \AgdaFunction{BVCC} \AgdaBound{M}\<%
-\\
-%
-\\
-\>\AgdaKeyword{postulate}\<%
-\\
 \>[0]\AgdaIndent{2}{}\<[2]%
 \>[2]\AgdaPostulate{lemmaSubstsBVCN} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{z} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{M} \AgdaBound{N} \AgdaSymbol{:} \AgdaFunction{λTerm}\AgdaSymbol{\}}\<%
 \\
@@ -1120,8 +1122,6 @@ All lemmas about ⇉n relation must have freshness premises so naive substitutio
 \>\AgdaComment{-- lemma⇉nNotBindersExcept M⇉nN f y∈bN = \{!!\}}\<%
 \\
 %
-\\
-\>\AgdaKeyword{postulate}\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
 \>[2]\AgdaPostulate{lemma⇉nBVCN} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{M} \AgdaBound{N} \AgdaSymbol{:} \AgdaFunction{λTerm}\AgdaSymbol{\}} \AgdaSymbol{→} \AgdaFunction{BVCN} \AgdaBound{M} \AgdaSymbol{→} \AgdaBound{M} \AgdaDatatype{⇉n} \AgdaBound{N} \AgdaSymbol{→} \AgdaFunction{BVCN} \AgdaBound{N}\<%
@@ -1297,8 +1297,6 @@ All lemmas about ⇉n relation must have freshness premises so naive substitutio
 \>\AgdaComment{-- lemma-⇉nFree* = \{!!\}}\<%
 \\
 %
-\\
-\>\AgdaKeyword{postulate}\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
 \>[2]\AgdaPostulate{lemma*} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{M} \AgdaBound{N} \AgdaSymbol{:} \AgdaFunction{λTerm}\AgdaSymbol{\}}\<%

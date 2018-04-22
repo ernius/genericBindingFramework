@@ -3,7 +3,7 @@ module AlphaInduction2 where
 
 open import GPBindings
 open import Alpha
-open import OcurrBind
+open import OccurBind
 open import FreeVariables
 open import Swap
 open import Fresh
@@ -26,9 +26,9 @@ open import Relation.Binary.PropositionalEquality renaming ([_] to [_]ᵢ)
 bindersFreeαElemF : 
     {F : Functor}(G : Functor)(xs : List V)(e : ⟦ G ⟧ (μ F))
     → AccF F G e
-    → ∃ (λ e' →  ListNotOcurrBindF {F} G xs e'                                      ×
-                 ((x : V)(x∈be' : ∈bF x G e') → notOcurrBindExceptF x G e' (x∈be')) ×
-                 ∃ (λ bs → ListOcurrBindF G bs e × ((x : V)(x∈be : ∈bF x G e) → x ∈ bs))) 
+    → ∃ (λ e' →  ListNotOccurBindF {F} G xs e'                                      ×
+                 ((x : V)(x∈be' : ∈bF x G e') → notOccurBindExceptF x G e' (x∈be')) ×
+                 ∃ (λ bs → ListOccurBindF G bs e × ((x : V)(x∈be : ∈bF x G e) → x ∈ bs))) 
 bindersFreeαElemF (|v| x)        xs e     _
   = e , lemma-bindsv , (λ _ → λ ()) , [] , [] , (λ _ → λ ())
 bindersFreeαElemF |1|            xs e     _
@@ -37,17 +37,17 @@ bindersFreeαElemF (|E| x)        xs e     _
   = e , lemma-bindsE , (λ _ → λ ()) , [] , [] , (λ _ → λ ())
 bindersFreeαElemF {F} (|Ef| G)       xs ⟨ e ⟩ (accEf acce)
   = Data.Product.map  (⟨_⟩) 
-                      (Data.Product.map  lemma-bindsEf (Data.Product.map aux ( Data.Product.map id (Data.Product.map lemma-ListOcurrBindF-Ef aux2))))
+                      (Data.Product.map  lemma-bindsEf (Data.Product.map aux ( Data.Product.map id (Data.Product.map lemma-ListOccurBindF-Ef aux2))))
                       (bindersFreeαElemF G xs e acce)
   where
   aux2 : {xs : List V} → ((x₁ : V) → ∈bF x₁ G e → x₁ ∈ xs) →
       (x₁ : V) → ∈bF x₁ {F} (|Ef| G) ⟨ e ⟩ → x₁ ∈ xs
   aux2 f x (∈bFEf x∈) = f x x∈
   aux : {F : Functor}{e : ⟦ G ⟧ (μ G)}
-        → ((x₁ : V) (x∈be : ∈bF x₁ G e) →  notOcurrBindExceptF x₁ G e x∈be)
+        → ((x₁ : V) (x∈be : ∈bF x₁ G e) →  notOccurBindExceptF x₁ G e x∈be)
         → (x₁ : V) (x∈be : ∈bF x₁ {F} (|Ef| G) ⟨ e ⟩)
-        → notOcurrBindExceptF x₁ {F} (|Ef| G) (⟨ e ⟩) x∈be
-  aux f x (∈bFEf x∈be) = notOcurrBExceptEf (f x x∈be)
+        → notOccurBindExceptF x₁ {F} (|Ef| G) (⟨ e ⟩) x∈be
+  aux f x (∈bFEf x∈be) = notOccurBExceptEf (f x x∈be)
 bindersFreeαElemF {F} |R|        xs ⟨ e ⟩ (accR acce)      
   = Data.Product.map  (⟨_⟩) 
                       (Data.Product.map lemma-bindsR {!!})
@@ -62,10 +62,10 @@ bindersFreeαElemF (G₁ |+| G₂)    xs (inj₂ e) (acc+₂ acce)
                       (bindersFreeαElemF G₂ xs e acce)
 bindersFreeαElemF {F} (G₁ |x| G₂)    xs (e₁ , e₂) (accx acce₁ acce₂)
   with  bindersFreeαElemF G₁ xs e₁ acce₁
-... | (e₁′ , notOcurr₁ , _ , b1 , b1lemma1  , b1lemma2) 
+... | (e₁′ , notOccur₁ , _ , b1 , b1lemma1  , b1lemma2) 
   with  bindersFreeαElemF G₂ (xs ++ b1) e₂ acce₂
-... | (e₂′ , notOcurr₂ , _ , b2 , b2lemma1 ,  b2lemma2)
-  = (e₁′ , e₂′) , lemma-binds× notOcurr₁ {!!} , {!!} , b1 ++ b2 ,  {!!} , {!!}
+... | (e₂′ , notOccur₂ , _ , b2 , b2lemma1 ,  b2lemma2)
+  = (e₁′ , e₂′) , lemma-binds× notOccur₁ {!!} , {!!} , b1 ++ b2 ,  {!!} , {!!}
 bindersFreeαElemF {F} (|B| S G)  xs (x , e) (accB facc)
   with fvF {F} {|B| S G} (x , e) 
 ... | zs 
@@ -76,10 +76,10 @@ bindersFreeαElemF {F} (|B| S G)  xs (x , e) (accB facc)
                       (bindersFreeαElemF G (z ∷ xs) (swapF G S x z e) (facc z))
   where
   aux :  {e : ⟦ G ⟧ (μ F)}
-         → ((x₂ : V) (x∈be' : ∈bF x₂ G e) → notOcurrBindExceptF x₂ G e x∈be')
+         → ((x₂ : V) (x∈be' : ∈bF x₂ G e) → notOccurBindExceptF x₂ G e x∈be')
          → (x₂ : V) (x∈be' : ∈bF x₂ (|B| S G) (z , e))
-         → notOcurrBindExceptF x₂ (|B| S G) (z , e) x∈be'
-  aux {e} f .z ∈bFB≡     = notOcurrBExceptB≡ {!!}
-  aux {e} f x (∈bFB x∈)  = notOcurrBExceptB (f x x∈) {!!}
+         → notOccurBindExceptF x₂ (|B| S G) (z , e) x∈be'
+  aux {e} f .z ∈bFB≡     = notOccurBExceptB≡ {!!}
+  aux {e} f x (∈bFB x∈)  = notOccurBExceptB (f x x∈) {!!}
 \end{code}
 
