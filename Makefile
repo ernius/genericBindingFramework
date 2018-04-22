@@ -27,7 +27,6 @@ Example : Examples/SystemF.agda
 	$(AGDA) $(AGDALIBRARYFLAGS) Examples/SystemF.agda
 
 html : *.lagda
-	$(AGDA) $(AGDAHTMLFLAGS)  Examples/SystemF.agda; 
-
+	$(AGDA) $(AGDAHTMLFLAGS)  Examples/SystemF.lagda; $(AGDA) $(AGDAHTMLFLAGS)  Examples/LambdaCalculus.lagda
 clean :
 	rm *.agdai
