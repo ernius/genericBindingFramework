@@ -26,7 +26,7 @@ generic : latex/generic.tex latex/*.tex latex/Examples/*.tex
 Example : Examples/SystemF.agda
 	$(AGDA) $(AGDALIBRARYFLAGS) Examples/SystemF.agda
 
-html : *.lagda
+html : *.lagda List/*.lagda
 	$(AGDA) $(AGDAHTMLFLAGS)  Examples/SystemF.lagda; $(AGDA) $(AGDAHTMLFLAGS)  Examples/LambdaCalculus.lagda
 clean :
 	rm *.agdai

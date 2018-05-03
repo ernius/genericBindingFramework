@@ -6,7 +6,6 @@ open import Fresh
 open import List.ListProperties
 open import Atom
 open import Swap
-open import SwapInduction
 open import Chi
 
 open import Function

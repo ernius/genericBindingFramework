@@ -158,23 +158,60 @@ lemmaΓ++Δ,x⊆Γ,x++Δ {Γ} {Δ} {x} {y} y∈Γ++x∷Δ with c∈xs++ys→c∈
 ... | inj₁ y∈Γ          = c∈xs∨c∈ys→c∈xs++ys (inj₁ (there y∈Γ))
 ... | inj₂ (here y≡x)   = here y≡x
 ... | inj₂ (there y∈Δ)  = c∈xs∨c∈ys→c∈xs++ys {y} {x ∷ Γ} (inj₂ y∈Δ)
+
+lemma[x]-y : {x y : ℕ} → x ≢ y → [ x ] - y ≡ [ x ]
+lemma[x]-y {x} {y} x≢y with y ≟ x
+... | yes y≡x = ⊥-elim (x≢y (sym y≡x))
+... | no  _   = refl
+
+lemma[x]-x : {x : ℕ} → [ x ] - x ≡ []
+lemma[x]-x {x} with x ≟ x
+... | yes _  = refl
+... | no x≢x = ⊥-elim (x≢x refl)
 --
+lemma-++-∷-1 : {x : ℕ}{xs ys : List ℕ} → x ∈' ys → xs ⊆ ys → x ∷ xs ⊆ ys
+lemma-++-∷-1 {x} {xs} {ys} x∈ys xs⊆ys (here refl)  = x∈ys
+lemma-++-∷-1 {x} {xs} {ys} x∈ys xs⊆ys (there y∈xs) =  xs⊆ys y∈xs
+
+lemma-++-∷-2 : {x : ℕ}{xs ys : List ℕ} → xs ⊆ ys → x ∷ xs ⊆ x ∷ ys
+lemma-++-∷-2 {x} {xs} {ys} xs⊆ys (here refl)  = here  refl
+lemma-++-∷-2 {x} {xs} {ys} xs⊆ys (there y∈xs) = there (xs⊆ys y∈xs)
+
+lemma-++-1 : {xs xs' ys : List ℕ} → xs ⊆ xs' → xs ⊆ xs' ++ ys
+lemma-++-1 {xs} {xs'} {ys} xs⊆xs' {y} y∈xs = c∈xs∨c∈ys→c∈xs++ys {y} {xs'} {ys} (inj₁  (xs⊆xs' y∈xs))
+
+lemma-++ : {xs xs' ys ys' : List ℕ} → xs ⊆ xs' → ys ⊆ ys' → xs ++ ys ⊆ xs' ++ ys'
+lemma-++ {xs} {xs'} {ys} {ys'} xs⊆xs' ys⊆ys' {x} x∈xs++ys with c∈xs++ys→c∈xs∨c∈ys {x} {xs} {ys} x∈xs++ys
+... | inj₁ x∈xs = c∈xs→c∈xs++ys {xs'} {ys'} {x} (xs⊆xs' x∈xs)
+... | inj₂ x∈ys = c∈ys→c∈xs++ys {xs'} {ys'} {x} (ys⊆ys' x∈ys)
+
+lemma-⊆∷ : {x : ℕ}{xs ys zs : List ℕ} → xs ⊆ ys → xs ⊆ x ∷ ys ++ zs
+lemma-⊆∷ {x} {xs} {ys} {zs} xs⊆ys {y} y∈xs = there (c∈xs→c∈xs++ys {ys} {zs} {y} (xs⊆ys y∈xs))
+
+lemma⊆ : {xs ys zs ws : List ℕ} → xs ⊆ ys ++ zs → zs ⊆ ys ++ ws → xs ⊆ ys ++ ws
+lemma⊆ {xs} {ys} {zs} {ws} xs⊆ys++zs zs⊆ys++ws {x} x∈xs with c∈xs++ys→c∈xs∨c∈ys {x} {ys} {zs} (xs⊆ys++zs x∈xs)
+... | inj₁ x∈ys = c∈xs→c∈xs++ys {ys} {ws} {x} x∈ys
+... | inj₂ x∈zs with c∈xs++ys→c∈xs∨c∈ys {x} {ys} {ws} (zs⊆ys++ws x∈zs)
+...             | inj₁ x∈ys = c∈xs→c∈xs++ys {ys} {ws} {x} x∈ys
+...             | inj₂ x∈ws = c∈ys→c∈xs++ys {ys} {ws} {x} x∈ws
+
+lemma⊆m : {xs ys xs' ys' zs : List ℕ} → xs ⊆ zs ++ xs' → ys ⊆ zs ++ ys' → xs ++ ys ⊆ zs ++ xs' ++ ys'
+lemma⊆m {xs} {ys} {xs'} {ys'} {zs} xs⊆zs++xs' ys⊆zs++ys' {x} x∈xs++ys with c∈xs++ys→c∈xs∨c∈ys {x} {xs} {ys} x∈xs++ys
+... | inj₂ x∈ys with c∈xs++ys→c∈xs∨c∈ys {x} {zs} {ys'} (ys⊆zs++ys' x∈ys)
+...             | inj₁ x∈zs  = c∈xs→c∈xs++ys {zs} {xs' ++ ys'} {x} x∈zs
+...             | inj₂ x∈ys' = c∈ys→c∈xs++ys {zs} {xs' ++ ys'} {x} (c∈ys→c∈xs++ys {xs'} {ys'} {x} x∈ys')
+lemma⊆m {xs} {ys} {xs'} {ys'} {zs} xs⊆zs++xs' ys⊆zs++ys' {x} x∈xs++ys 
+    | inj₁ x∈xs with c∈xs++ys→c∈xs∨c∈ys {x} {zs} {xs'} (xs⊆zs++xs' x∈xs)
+...             | inj₁ x∈zs  = c∈xs→c∈xs++ys {zs} {xs' ++ ys'} {x} x∈zs
+...             | inj₂ x∈xs' = c∈ys→c∈xs++ys {zs} {xs' ++ ys'} {x} (c∈xs→c∈xs++ys {xs'} {ys'} {x} x∈xs')
+
 postulate
   lemma--idem : {x : ℕ}{xs : List ℕ} → (xs - x) - x ≡ xs - x
   lemma--com : {x y : ℕ}{xs : List ℕ} → (xs - x) - y ≡ (xs - y) - x
-  lemma[x]-y : {x y : ℕ} → x ≢ y → [ x ] - y ≡ [ x ]
-  lemma[x]-x : {x : ℕ} → [ x ] - x ≡ []
   lemma[x]-x-y≡[y]-x-y : {x y : ℕ} → ([ x ] - x) - y ≡ ([ y ] - x) - y
   lemma-++- : {x : ℕ}{xs ys : List ℕ} → (xs ++ ys) - x ≡ (xs - x) ++ (ys - x)
   lemma-++-- : {x y : ℕ}{xs ys : List ℕ} → ((xs ++ ys) - x) - y ≡ ((xs - x) - y) ++ ((ys - x) - y)
-  lemma-++-∷-1 : {x : ℕ}{xs ys : List ℕ} → x ∈' ys → xs ⊆ ys → x ∷ xs ⊆ ys
-  lemma-++-∷-2 : {x : ℕ}{xs ys : List ℕ} → xs ⊆ ys → x ∷ xs ⊆ x ∷ ys
-  lemma-++-1 : {xs xs' ys : List ℕ} → xs ⊆ xs' → xs ⊆ xs' ++ ys
-  lemma-++ : {xs xs' ys ys' : List ℕ} → xs ⊆ xs' → ys ⊆ ys' → xs ++ ys ⊆ xs' ++ ys'
-  lemma-⊆∷ : {x : ℕ}{xs ys zs : List ℕ} → xs ⊆ ys → xs ⊆ x ∷ ys ++ zs
   lemma-⊆ : {x : ℕ}{xs ys zs : List ℕ} → xs ⊆ zs ++ ys → xs - x ⊆ zs ++ (ys - x)
-  lemma⊆ : {xs ys zs ws : List ℕ} → xs ⊆ ys ++ zs → zs ⊆ ys ++ ws → xs ⊆ ys ++ ws
-  lemma⊆m : {xs ys xs' ys' zs : List ℕ} → xs ⊆ zs ++ xs' → ys ⊆ zs ++ ys' → xs ++ ys ⊆ zs ++ xs' ++ ys'
 \end{code}
 
 First element to satisfy some property.
