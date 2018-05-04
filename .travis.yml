@@ -1,4 +1,9 @@
 sudo: required
 
+language: generic
+
 services:
   - docker
+
+script:
+  - docker run -v Dockerfile
