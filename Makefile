@@ -24,7 +24,7 @@ generic : latex/generic.tex latex/*.tex latex/Examples/*.tex
 	cd latex; $(LATEX) generic.tex; cd ..;	
 
 Example : Examples/SystemF.agda
-	$(AGDA) $(AGDALIBRARYFLAGS) Examples/SystemF.agda
+	$(AGDA) $(AGDALIBRARYFLAGS) Examples/SystemF.lagda
 
 html : *.lagda List/*.lagda
 	$(AGDA) $(AGDAHTMLFLAGS)  Examples/SystemF.lagda; $(AGDA) $(AGDAHTMLFLAGS)  Examples/LambdaCalculus.lagda
