@@ -7,5 +7,7 @@ services:
 
 before_install:
   - docker build .
-  - docker run ecopello/agda 
+
+script
+  - agda -i . -i /tmp/agda-stdlib-0.13/src/ Examples/SystemF.lagda
 
