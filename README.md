@@ -13,7 +13,7 @@ We define a universe of regular datatypes with variable binding information, and
 
 The principal usage examples are in:
 * [System F](https://ernius.github.io/genericBindingFramework/html/Examples.SystemF.html)
-* [Lambda CalculusSystemF](https://ernius.github.io/genericBindingFramework/html/Examples.LambdaCalculus.html)
+* [Lambda Calculus](https://ernius.github.io/genericBindingFramework/html/Examples.LambdaCalculus.html)
 
 The entire code can be browsed in html format here: [https://ernius.github.io/genericBindingFramework/html/index.html](https://ernius.github.io/genericBindingFramework/html/index.html).
 
