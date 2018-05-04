@@ -9,5 +9,7 @@ before_install:
   - docker build .
 
 script
-  - agda -i . -i /tmp/agda-stdlib-0.13/src/ Examples/SystemF.lagda
+  - pwd
+  - ls 
+  - agda -i . -i /tmp/agda-stdlib-0.13/src/ ./Examples/SystemF.lagda
 
