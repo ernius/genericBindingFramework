@@ -16,8 +16,9 @@ open import Relation.Nullary
 open import Relation.Nullary.Decidable
 open import Relation.Binary
 open import Relation.Binary.PropositionalEquality as PropEq renaming ([_] to [_]ᵢ) 
-
 open Any.Membership-≡ renaming (_∈_ to _∈'_;_∉_ to _∉'_) 
+open import Relation.Binary.PropositionalEquality as PropEq renaming ([_] to [_]ᵢ)
+open PropEq.≡-Reasoning renaming (begin_ to begin≡_;_∎ to _□)
 import Function.Equality as FE
 open import Function.Inverse hiding (sym;_∘_;map;id)
 open Inverse
@@ -169,6 +170,30 @@ lemma[x]-x {x} with x ≟ x
 ... | yes _  = refl
 ... | no x≢x = ⊥-elim (x≢x refl)
 --
+lemma--idem : {x : ℕ}{xs : List ℕ} → (xs - x) - x ≡ xs - x
+lemma--idem {x} {[]}     rewrite lemma[x]-x {x} = refl
+lemma--idem {x} {y ∷ xs} with x ≟ y
+... | yes _ = lemma--idem {x} {xs}
+... | no  x≢y with x ≟ y
+...         | no  _   = cong (_∷_ y) (lemma--idem {x} {xs})
+...         | yes x≡y = ⊥-elim (x≢y x≡y) 
+
+lemma[x]-x-y≡[y]-x-y : {x y : ℕ} → ([ x ] - x) - y ≡ ([ y ] - x) - y
+lemma[x]-x-y≡[y]-x-y {x} {y} with y ≟ x
+lemma[x]-x-y≡[y]-x-y {x} {.x} | yes refl = refl
+lemma[x]-x-y≡[y]-x-y {x} {y} | no y≢x   = 
+  begin≡
+    [ x ] - x - y 
+  ≡⟨ cong (λ xs → xs - y) (lemma[x]-x {x}) ⟩
+    [] - y
+  ≡⟨ refl ⟩
+    []
+  ≡⟨ sym (lemma[x]-x {y}) ⟩
+    [ y ] - y
+  ≡⟨ sym (cong (λ xs → xs - y) (lemma[x]-y y≢x)) ⟩  
+    [ y ] - x - y
+  □
+
 lemma-++-∷-1 : {x : ℕ}{xs ys : List ℕ} → x ∈' ys → xs ⊆ ys → x ∷ xs ⊆ ys
 lemma-++-∷-1 {x} {xs} {ys} x∈ys xs⊆ys (here refl)  = x∈ys
 lemma-++-∷-1 {x} {xs} {ys} x∈ys xs⊆ys (there y∈xs) =  xs⊆ys y∈xs
@@ -205,13 +230,16 @@ lemma⊆m {xs} {ys} {xs'} {ys'} {zs} xs⊆zs++xs' ys⊆zs++ys' {x} x∈xs++ys
 ...             | inj₁ x∈zs  = c∈xs→c∈xs++ys {zs} {xs' ++ ys'} {x} x∈zs
 ...             | inj₂ x∈xs' = c∈ys→c∈xs++ys {zs} {xs' ++ ys'} {x} (c∈xs→c∈xs++ys {xs'} {ys'} {x} x∈xs')
 
+lemma-⊆ : {x : ℕ}{xs ys zs : List ℕ} → xs ⊆ zs ++ ys → xs - x ⊆ zs ++ (ys - x)
+lemma-⊆ {x} {xs} {ys} {zs} xs⊆zs++ys {y} y∈xs-x with lemmafilter→ {y} {xs} {Prop- x} y∈xs-x
+... | px≡true , y∈xs with c∈xs++ys→c∈xs∨c∈ys {y} {zs} {ys} (xs⊆zs++ys y∈xs)
+...                  | inj₁ y∈zs = c∈xs→c∈xs++ys {zs} {ys - x} {y} y∈zs
+...                  | inj₂ y∈ys = c∈ys→c∈xs++ys {zs} {ys - x} {y} (lemmafilter← y ys (Prop- x) px≡true y∈ys)
+
 postulate
-  lemma--idem : {x : ℕ}{xs : List ℕ} → (xs - x) - x ≡ xs - x
   lemma--com : {x y : ℕ}{xs : List ℕ} → (xs - x) - y ≡ (xs - y) - x
-  lemma[x]-x-y≡[y]-x-y : {x y : ℕ} → ([ x ] - x) - y ≡ ([ y ] - x) - y
   lemma-++- : {x : ℕ}{xs ys : List ℕ} → (xs ++ ys) - x ≡ (xs - x) ++ (ys - x)
   lemma-++-- : {x y : ℕ}{xs ys : List ℕ} → ((xs ++ ys) - x) - y ≡ ((xs - x) - y) ++ ((ys - x) - y)
-  lemma-⊆ : {x : ℕ}{xs ys zs : List ℕ} → xs ⊆ zs ++ ys → xs - x ⊆ zs ++ (ys - x)
 \end{code}
 
 First element to satisfy some property.
