@@ -1,6 +1,6 @@
 FROM haskell:8.0.1
 
-RUN stack setup
+RUN stack --resolver nightly-2016-12-29 setup
 RUN stack install Agda
 
 RUN wget https://github.com/agda/agda-stdlib/archive/v0.13.tar.gz -O /tmp/v0.13.tar.gz
