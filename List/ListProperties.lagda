@@ -236,10 +236,42 @@ lemma-⊆ {x} {xs} {ys} {zs} xs⊆zs++ys {y} y∈xs-x with lemmafilter→ {y} {x
 ...                  | inj₁ y∈zs = c∈xs→c∈xs++ys {zs} {ys - x} {y} y∈zs
 ...                  | inj₂ y∈ys = c∈ys→c∈xs++ys {zs} {ys - x} {y} (lemmafilter← y ys (Prop- x) px≡true y∈ys)
 
-postulate
-  lemma--com : {x y : ℕ}{xs : List ℕ} → (xs - x) - y ≡ (xs - y) - x
-  lemma-++- : {x : ℕ}{xs ys : List ℕ} → (xs ++ ys) - x ≡ (xs - x) ++ (ys - x)
-  lemma-++-- : {x y : ℕ}{xs ys : List ℕ} → ((xs ++ ys) - x) - y ≡ ((xs - x) - y) ++ ((ys - x) - y)
+lemma--com : {x y : ℕ}{xs : List ℕ} → (xs - x) - y ≡ (xs - y) - x
+lemma--com {x} {y} {[]}     = refl
+lemma--com {x} {y} {z ∷ xs} with x ≟ z
+... | no  x≢z  with y ≟ z
+...            | no y≢z  with x ≟ z
+...                      | yes x≡z = ⊥-elim (x≢z x≡z)
+...                      | no  _   = cong (λ xs → z ∷ xs) (lemma--com {x} {y} {xs})
+lemma--com {x} {y} {.y ∷ xs} 
+    | no  x≢z  | yes refl with x ≟ y
+...                      | yes x≡y = ⊥-elim (x≢z x≡y)
+...                      | no  _   = lemma--com {x} {y} {xs}
+lemma--com {x} {y} {.x ∷ xs} 
+    | yes refl with y ≟ x
+...            | no y≢z  with x ≟ x
+...                      | yes _   = lemma--com {x} {y} {xs}
+...                      | no x≢x  = ⊥-elim (x≢x refl)
+lemma--com {x} {.x} {.x ∷ xs} 
+    | yes refl | yes refl = refl
+\end{code}
+
+\begin{code}
+lemma-++- : {x : ℕ}{xs ys : List ℕ} → (xs ++ ys) - x ≡ (xs - x) ++ (ys - x)
+lemma-++- {x} {[]}     {ys} = refl
+lemma-++- {x} {y ∷ xs} {ys} with x ≟ y
+... | yes _ = lemma-++- {x} {xs} {ys}
+... | no _  = cong (λ xs → y ∷ xs) (lemma-++- {x} {xs} {ys})
+
+lemma-++-- : {x y : ℕ}{xs ys : List ℕ} → ((xs ++ ys) - x) - y ≡ ((xs - x) - y) ++ ((ys - x) - y)
+lemma-++-- {x} {y} {xs} {ys} =
+  begin≡
+    ((xs ++ ys) - x) - y
+  ≡⟨ cong (λ xs → xs - y) (lemma-++- {x} {xs} {ys}) ⟩
+    ((xs - x) ++ (ys - x)) - y  
+  ≡⟨ lemma-++- {y} {xs - x} {ys - x}  ⟩
+    ((xs - x) - y) ++ ((ys - x) - y)
+  □
 \end{code}
 
 First element to satisfy some property.
