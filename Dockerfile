@@ -1,4 +1,7 @@
+FROM ubuntu:16.04
+
 RUN  apt-get install -y wget
+RUN  apt-get install -y tar
 
 FROM haskell:8.0.1
 
