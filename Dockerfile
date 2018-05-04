@@ -11,4 +11,4 @@ FROM haskell:8.0.1
 
 RUN stack --resolver nightly-2016-12-29 setup
 RUN stack install Agda
-RUN agda -i . -i /tmp/agda-stdlib-0.13/src/ Examples/SystemF.lagda Examples/LambdaCalculus.lagda
+RUN agda -i . -i /tmp/agda-stdlib-0.13/src/ Examples/SystemF.lagda
