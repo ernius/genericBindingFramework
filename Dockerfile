@@ -5,7 +5,7 @@ RUN  apt-get install -y wget
 RUN  apt-get install -y tar
 
 RUN whoami
-USER ernius
+USER travis
 RUN whoami
 
 RUN wget https://github.com/agda/agda-stdlib/archive/v0.13.tar.gz -O /tmp/v0.13.tar.gz
