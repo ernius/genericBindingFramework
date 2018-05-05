@@ -8,8 +8,8 @@ services:
 before_install:
   - docker build .
 
-script
+script:
   - pwd
-  - ls 
+  - ls -a
   - travis_wait agda -i . -i /tmp/agda-stdlib-0.13/src/ ./Examples/SystemF.lagda
 
