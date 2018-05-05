@@ -11,5 +11,5 @@ before_install:
 script
   - pwd
   - ls 
-  - agda -i . -i /tmp/agda-stdlib-0.13/src/ ./Examples/SystemF.lagda
+  - travis_wait agda -i . -i /tmp/agda-stdlib-0.13/src/ ./Examples/SystemF.lagda
 
