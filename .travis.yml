@@ -12,4 +12,5 @@ script:
   - whoami
   - pwd
   - ls -a
-  - agda -i . -i /tmp/agda-stdlib-0.13/src/ ./Examples/SystemF.lagda
+  - echo $PATH
+  - /tmp/agda -i . -i /tmp/agda-stdlib-0.13/src/ ./Examples/SystemF.lagda
