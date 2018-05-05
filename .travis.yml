@@ -6,10 +6,10 @@ services:
   - docker
 
 before_install:
-  - travis_wait 30 docker build .
+  - travis_wait 30 docker build -t agda-docker .
 
 #  /home/travis/build/ernius/genericBindingFramework
 script:
   - wget https://github.com/agda/agda-stdlib/archive/v0.13.tar.gz -O /tmp/v0.13.tar.gz
   - tar -xzvf /tmp/v0.13.tar.gz -C /tmp/
-  - travis_wait docker run agda -i . -i /tmp/agda-stdlib-0.13/src/ ./Examples/SystemF.lagda
+  - travis_wait docker run agda-docker -i . -i /tmp/agda-stdlib-0.13/src/ ./Examples/SystemF.lagda
