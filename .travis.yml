@@ -11,5 +11,6 @@ before_install:
 script:
 #  - whoami travis
 #  - pwd /home/travis/build/ernius/genericBindingFramework
+  - ls -a /tmp
   - echo $PATH
   - /tmp/agda -i . -i /tmp/agda-stdlib-0.13/src/ ./Examples/SystemF.lagda
