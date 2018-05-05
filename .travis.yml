@@ -9,5 +9,4 @@ before_install:
   - docker build .
 
 script:
-  - /root/.local/bin/agda -i . -i /tmp/agda-stdlib-0.13/src/ ./Examples/SystemF.lagda
-
+  - agda -i . -i /tmp/agda-stdlib-0.13/src/ ./Examples/SystemF.lagda
