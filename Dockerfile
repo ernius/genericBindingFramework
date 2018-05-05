@@ -15,6 +15,6 @@ FROM haskell:8.0.1
 
 RUN stack --resolver nightly-2016-12-29 setup
 RUN stack install Agda
-CMD ["cp","/root/.local/bin/agda", "/tmp"]
+RUN ["cp","/root/.local/bin/agda", "/tmp"]
 
 
