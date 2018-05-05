@@ -12,5 +12,4 @@ before_install:
 script:
   - wget https://github.com/agda/agda-stdlib/archive/v0.13.tar.gz -O /tmp/v0.13.tar.gz
   - tar -xzvf /tmp/v0.13.tar.gz -C /tmp/
-  - travis_wait stack install Agda
-  - travis_wait agda -i . -i /tmp/agda-stdlib-0.13/src/ ./Examples/SystemF.lagda
+  - travis_wait docker run -i . -i /tmp/agda-stdlib-0.13/src/ ./Examples/SystemF.lagda
