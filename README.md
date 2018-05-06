@@ -27,6 +27,6 @@ The entire code can be browsed in html format here: [https://ernius.github.io/ge
 
 Agda version 2.5.2 and standard library version 0.13.
 
-Code compilation available through [docker image](https://hub.docker.com/r/ecopello/agda/) typying `make docker`.
+Local code compilation available through [docker image](https://hub.docker.com/r/ecopello/agda/) typying `make docker`.
 
 
