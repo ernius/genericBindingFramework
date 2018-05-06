@@ -6,7 +6,7 @@ services:
   - docker
 
 before_install:
-  - travis_wait 20 docker build -t agda-docker .
+  - travis_wait 30 docker build -t agda-docker .
 
 #  /home/travis/build/ernius/genericBindingFramework
 script:
