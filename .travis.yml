@@ -6,7 +6,8 @@ services:
   - docker
 
 before_install:
-  - travis_wait 30 docker build -t agda-docker .
+  - docker pull ecopello/agda:version2.5.2  
+#  - travis_wait 30 docker build -t agda-docker .
 
 #  /home/travis/build/ernius/genericBindingFramework
 script:
@@ -16,4 +17,4 @@ script:
 #  - docker run agda-docker /bin/sh -c 'pwd;ls -lh;ls -lh /home/travis/build/ernius/'
 #  - travis_wait docker run agda-docker agda --version
 #  - travis_wait docker run -v $TRAVIS_BUILD_DIR:/tmp/project-build -v /tmp:/tmp/agdalibrary agda-docker /bin/sh -c 'cd /tmp/project-build; agda -i . -i /tmp/agdalibrary/agda-stdlib-0.13/src/ Examples/SystemF.lagda'
-  - docker run -v $TRAVIS_BUILD_DIR:/tmp/project-build -v /tmp:/tmp/agdalibrary agda-docker /bin/sh -c 'cd /tmp/project-build; agda -i . -i /tmp/agdalibrary/agda-stdlib-0.13/src/ Examples/SystemF.lagda'
+  - docker run -v $TRAVIS_BUILD_DIR:/tmp/project-build -v /tmp:/tmp/agdalibrary ecopello/agda:version2.5.2 /bin/sh -c 'cd /tmp/project-build; agda --no-libraries -i . -i /tmp/agdalibrary/agda-stdlib-0.13/src  Examples/SystemF.lagda'

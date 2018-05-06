@@ -2,6 +2,8 @@
 AGDA = agda
 LATEX = pdflatex
 
+STANDARD_LIBRARY_PATH = /home/ernius/.agda-backup/agda-stdlib-0.13/src/
+
 # agda html
 AGDAHTMLFLAGS = --html
 
@@ -9,10 +11,10 @@ AGDAHTMLFLAGS = --html
 AGDALATEXFLAGS = --latex
 
 latex/Examples/%.tex : Examples/%.lagda
-	$(AGDA) $(AGDALATEXFLAGS) $<
+	$(AGDA) --no-libraries -i . -i $(STANDARD_LIBRARY_PATH) $(AGDALATEXFLAGS) $<
 
 latex/%.tex : %.lagda 
-	$(AGDA) $(AGDALATEXFLAGS) $<
+	$(AGDA) --no-libraries -i . -i $(STANDARD_LIBRARY_PATH) $(AGDALATEXFLAGS) $<
 
 bib : latex/resumen.bib
 	cd latex; pdflatex resumen.tex; bibtex resumen;pdflatex resumen.tex;pdflatex resumen.tex; cd ..;
@@ -23,10 +25,11 @@ resumen : latex/resumen.tex latex/*.tex latex/Examples/*.tex
 generic : latex/generic.tex latex/*.tex latex/Examples/*.tex
 	cd latex; $(LATEX) generic.tex; cd ..;	
 
-Example : Examples/SystemF.agda
-	$(AGDA) $(AGDALIBRARYFLAGS) Examples/SystemF.lagda
+example : *.lagda Examples/*.lagda List/*.lagda
+	$(AGDA) --no-libraries -i . -i $(STANDARD_LIBRARY_PATH) Examples/SystemF.lagda
 
-html : *.lagda List/*.lagda
-	$(AGDA) $(AGDAHTMLFLAGS)  Examples/SystemF.lagda; $(AGDA) $(AGDAHTMLFLAGS)  Examples/LambdaCalculus.lagda
+html : *.lagda Examples/*.lagda List/*.lagda
+	$(AGDA) --no-libraries -i . -i $(STANDARD_LIBRARY_PATH) $(AGDAHTMLFLAGS)  Examples/SystemF.lagda; $(AGDA) $(AGDAHTMLFLAGS)  Examples/LambdaCalculus.lagda
+
 clean :
 	rm *.agdai

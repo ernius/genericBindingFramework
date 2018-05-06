@@ -11,7 +11,7 @@ We define a universe of regular datatypes with variable binding information, and
 
 # Examples
 
-The principal usage examples are in:
+The principal usage examples are (html):
 * [System F](https://ernius.github.io/genericBindingFramework/html/Examples.SystemF.html)
 * [Lambda Calculus](https://ernius.github.io/genericBindingFramework/html/Examples.LambdaCalculus.html)
 
@@ -20,8 +20,12 @@ The entire code can be browsed in html format here: [https://ernius.github.io/ge
 # Authors
 
 * Ernesto Copello 
-* Nora Szasz      
+* Nora Szasz
 * Álvaro Tasistro 
+
+# Build Status in Travis CI : [![Build Status](https://travis-ci.org/ernius/genericBindingFramework.svg?branch=master)](https://travis-ci.org/ernius/genericBindingFramework)
+
+Agda version 2.5.2 and standard library version 0.13.
 
 
 
