@@ -11,7 +11,7 @@ We define a universe of regular datatypes with variable binding information, and
 
 # Examples
 
-The principal usage examples are (html):
+The principal usage examples are:
 * [Examples/System F](https://github.com/ernius/genericBindingFramework/blob/master/Examples/SystemF.lagda)[(html format)](https://ernius.github.io/genericBindingFramework/html/Examples.SystemF.html)
 * [Examples/Lambda Calculus](https://github.com/ernius/genericBindingFramework/blob/master/Examples/SystemF.lagda)[(html format)](https://ernius.github.io/genericBindingFramework/html/Examples.LambdaCalculus.html)
 
