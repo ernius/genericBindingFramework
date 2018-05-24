@@ -151,8 +151,7 @@ Now the function $f$\ has an explicit context $\mu C$, and the returned type is 
 
 %<*foldCtx>
 \begin{code}
-foldCtx :  {C H : Functor}(F : Functor) → (μ C → ⟦ F ⟧ (μ H) → μ H)
-           → μ C → μ F → μ H
+foldCtx : {C H : Functor}(F : Functor) → (μ C → ⟦ F ⟧ (μ H) → μ H) → μ C → μ F → μ H
 foldCtx F f c = fold F (f c)
 \end{code}
 %</foldCtx>
@@ -245,8 +244,7 @@ foldmapFh (|B| S   G)   P hi (x   , e)   =  foldmapFh G   P hi e
 
 %<*primInd2>
 \begin{code}
-foldInd :  (F : Functor)(P : μ F → Set) 
-           → ((e : ⟦ F ⟧ (μ F)) → fih F P e →  P ⟨ e ⟩) → (e : μ F) → P e
+foldInd : (F : Functor)(P : μ F → Set) → ((e : ⟦ F ⟧ (μ F)) → fih F P e →  P ⟨ e ⟩) → (e : μ F) → P e
 foldInd F P hi e = foldmapFh {F} |R| P hi e
 \end{code}
 %</primInd2>
