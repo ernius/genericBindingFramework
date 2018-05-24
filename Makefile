@@ -2,7 +2,7 @@ AGDA = agda
 LATEX = pdflatex
 
 # not using libraries (--no-libraries)
-STANDARD_LIBRARY_PATH = /home/ernius/.agda-backup/agda-stdlib-0.13/src/
+STANDARD_LIBRARY_PATH = /home/ernius/.agda/agda-stdlib-0.13/src/
 
 # agda html
 AGDAHTMLFLAGS = --html

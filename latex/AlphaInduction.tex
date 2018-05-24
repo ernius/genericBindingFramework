@@ -304,7 +304,7 @@
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
 \>[2]\AgdaSymbol{|} \<[8]%
-\>[8]\AgdaPostulate{lemma∼fvF} \AgdaInductiveConstructor{[]} \AgdaBound{xe∼ye′}\<%
+\>[8]\AgdaFunction{lemma∼fvF} \AgdaInductiveConstructor{[]} \AgdaBound{xe∼ye′}\<%
 \\
 \>\AgdaSymbol{...} \AgdaSymbol{|} \AgdaBound{zs} \AgdaSymbol{|} \AgdaInductiveConstructor{[} \AgdaBound{fv≡zs} \AgdaInductiveConstructor{]ᵢ} \AgdaSymbol{|} \AgdaSymbol{.}\AgdaBound{zs} \AgdaSymbol{|} \AgdaInductiveConstructor{refl} \<[35]%
 \>[35]\<%
@@ -1118,18 +1118,6 @@
 \>\AgdaSymbol{...} \AgdaSymbol{|} \AgdaBound{fv} \AgdaSymbol{|} \AgdaSymbol{.}\AgdaBound{fv} \AgdaSymbol{|} \AgdaInductiveConstructor{refl} \AgdaSymbol{=} \AgdaFunction{lemma-foldCtxαCtx} \AgdaBound{prf} \AgdaBound{c∼c′} \AgdaSymbol{(}\AgdaField{proj₁} \AgdaSymbol{(}\AgdaFunction{bindersFreeαElem} \AgdaBound{fv} \AgdaBound{e}\AgdaSymbol{))}\<%
 \end{code}
 
-Next postulate could be done as started in AlphaInduction2 file, all binders distinct, and is used only for Church-Rosser future development.
-
-\begin{code}%
-\>\AgdaKeyword{postulate}\<%
-\\
-\>[0]\AgdaIndent{2}{}\<[2]%
-\>[2]\AgdaPostulate{lemma-bindersFreeα-BindersAll≢} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}(}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{)(}\AgdaBound{e} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)} \<[71]%
-\>[71]\<%
-\\
-\>[2]\AgdaIndent{4}{}\<[4]%
-\>[4]\AgdaSymbol{→} \AgdaSymbol{(\{}\AgdaBound{x} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{\}(}\AgdaBound{x∈be'} \AgdaSymbol{:} \AgdaBound{x} \AgdaFunction{∈b} \AgdaSymbol{(}\AgdaFunction{bindersFreeα} \AgdaBound{xs} \AgdaBound{e}\AgdaSymbol{))} \AgdaSymbol{→} \AgdaFunction{notOccurBindExcept} \AgdaBound{x} \AgdaSymbol{(}\AgdaFunction{bindersFreeα} \AgdaBound{xs} \AgdaBound{e}\AgdaSymbol{)} \AgdaSymbol{(}\AgdaBound{x∈be'}\AgdaSymbol{))} \<%
-\end{code}
 
 --   lemma-binderFreeElemFold :
 --     {F H C : Functor}{f : μ C → ⟦ F ⟧ (μ H) → μ H}{c c' : μ C}{e : μ F}{S : Sort}

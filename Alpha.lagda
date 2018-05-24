@@ -57,13 +57,12 @@ Sort independent
 \begin{code}
 data ∼αF {F : Functor} : (G : Functor) 
   → ⟦ G ⟧ (μ F) →  ⟦ G ⟧ (μ F) → Set where
-    ∼αV    :  {x : V}{S : Sort}   →  ∼αF (|v| S)       x          x
     ∼α1    :                         ∼αF |1|           tt         tt
+    ∼αR    :  {e e' : ⟦ F ⟧ (μ F)}     
+           →  ∼αF F e e'          →  ∼αF |R|           ⟨ e ⟩      ⟨ e' ⟩
     ∼αE    :  {B : Set}{b : B}    →  ∼αF (|E| B)       b          b
     ∼αEf   :  {G : Functor}{e e' : ⟦ G ⟧ (μ G)}
            →  ∼αF G e e'          →  ∼αF (|Ef| G)      ⟨ e ⟩      ⟨ e' ⟩
-    ∼αR    :  {e e' : ⟦ F ⟧ (μ F)}     
-           →  ∼αF F e e'          →  ∼αF |R|           ⟨ e ⟩      ⟨ e' ⟩
     ∼α+₁   :  {F₁ F₂ : Functor}{e e' : ⟦ F₁ ⟧ (μ F)}
            →  ∼αF F₁ e e'         →  ∼αF (F₁ |+|  F₂)  (inj₁ e)   (inj₁ e')
     ∼α+₂   :  {F₁ F₂ : Functor}{e e' : ⟦ F₂ ⟧ (μ F)}
@@ -72,6 +71,7 @@ data ∼αF {F : Functor} : (G : Functor)
               {e₂ e₂'  : ⟦ F₂ ⟧ (μ F)}
            →  ∼αF F₁ e₁ e₁'       → ∼αF F₂ e₂ e₂'
                                   →  ∼αF (F₁ |x|  F₂)  (e₁ , e₂)  (e₁' , e₂')
+    ∼αV    :  {x : V}{S : Sort}   →  ∼αF (|v| S)       x          x                                  
     ∼αB    :  (xs : List V){S : Sort}{x y : V}{G : Functor}{e e' : ⟦ G ⟧ (μ F)}
            →  ((z : V) → z ∉ xs   → ∼αF G  (swapF G S x z e) (swapF G S y z e')) 
                                   → ∼αF (|B| S G)  (x , e)    (y   , e')  

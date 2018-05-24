@@ -21,16 +21,16 @@ open PropEq.≡-Reasoning renaming (begin_ to begin≡_;_∎ to _■)
 %<*swapF>
 \begin{code}
 swapF  :  {F : Functor}(G : Functor) → Sort → V → V → ⟦ G ⟧ (μ F) → ⟦ G ⟧ (μ F)
-swapF (|v|    S')   S a b c with S' ≟S S
-... | yes  _                         =  （ a ∙ b ）ₐ c
-... | no   _                         =  c
 swapF |1|           S a b tt         =  tt
+swapF {F} |R|       S a b ⟨ e ⟩      =  ⟨ swapF F S a b e ⟩
 swapF (|E|    _)    S a b e          =  e
 swapF (|Ef|   G)    S a b ⟨ e ⟩      =  ⟨ swapF G S a b e ⟩
-swapF {F} |R|       S a b ⟨ e ⟩      =  ⟨ swapF F S a b e ⟩
 swapF (G₁ |+|  G₂)  S a b (inj₁ e)   =  inj₁ (swapF G₁ S a b e)
 swapF (G₁ |+|  G₂)  S a b (inj₂ e)   =  inj₂ (swapF G₂ S a b e)
 swapF (G₁ |x|  G₂)  S a b (e₁ , e₂)  =  swapF G₁ S a b e₁  , swapF G₂ S a b e₂
+swapF (|v|    S')   S a b c with S' ≟S S
+... | yes  _                         =  （ a ∙ b ）ₐ c
+... | no   _                         =  c
 swapF (|B| S'  G)   S a b (c , e) with S' ≟S S
 ... | yes  _                        =   （ a ∙ b ）ₐ   c     , swapF G S a b e
 ... | no   _                        =   c                  , swapF G S a b e
