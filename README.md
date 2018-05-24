@@ -4,7 +4,7 @@ We introduce a universe of regular datatypes with variable binding information, 
 We then define a generic alpha-equivalence relation over the types of the universe based on name-swapping, and derive iteration and induction principles which work modulo alpha-conversion capturing  Barendregt's Variable Convention. We instantiate the resulting framework so as to obtain the Lambda Calculus and System F, for which we derive substitution operations and substitution lemmas for alpha-conversion and substitution composition. 
 The whole work is carried out in Constructive Type Theory and machine-checked by the system Agda.
 
-We generalise and improve techniques developed in the previous works:
+We generalise and improve techniques developed in the following previous works:
 
 1. [Substitution Lemmas](https://github.com/ernius/formalmetatheory-nominal)
 2. [Church-Rosser and Subject Reduction](https://github.com/ernius/formalmetatheory-nominal-Church-Rosser)
