@@ -874,13 +874,13 @@ System F, Nominal syntax
 
 %<*substlemma1>
 \begin{code}%
-\>\AgdaFunction{lemma-substα} \AgdaSymbol{:} \<[16]%
-\>[16]\AgdaSymbol{\{}\AgdaBound{M} \AgdaBound{M′} \AgdaBound{N} \AgdaSymbol{:} \AgdaFunction{FTerm}\AgdaSymbol{\}\{}\AgdaBound{x} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{\}}\<%
+\>\AgdaFunction{lemma-subst-alpha} \AgdaSymbol{:} \<[21]%
+\>[21]\AgdaSymbol{\{}\AgdaBound{M} \AgdaBound{M′} \AgdaBound{N} \AgdaSymbol{:} \AgdaFunction{FTerm}\AgdaSymbol{\}\{}\AgdaBound{x} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{\}}\<%
 \\
 \>[2]\AgdaIndent{16}{}\<[16]%
 \>[16]\AgdaSymbol{→} \AgdaBound{M} \AgdaFunction{∼α} \AgdaBound{M′} \AgdaSymbol{→} \AgdaBound{M} \AgdaFunction{[} \AgdaBound{x} \AgdaFunction{≔} \AgdaBound{N} \AgdaFunction{]} \AgdaDatatype{≡} \AgdaBound{M′} \AgdaFunction{[} \AgdaBound{x} \AgdaFunction{≔} \AgdaBound{N} \AgdaFunction{]}\<%
 \\
-\>\AgdaFunction{lemma-substα} \AgdaSymbol{\{}\AgdaBound{M}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{M′}\AgdaSymbol{\}} \AgdaBound{M∼M′}\<%
+\>\AgdaFunction{lemma-subst-alpha} \AgdaSymbol{\{}\AgdaBound{M}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{M′}\AgdaSymbol{\}} \AgdaBound{M∼M′}\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
 \>[2]\AgdaSymbol{=} \AgdaFunction{lemma-foldCtxα-StrongαCompatible} \AgdaSymbol{\{}\AgdaFunction{cF}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaFunction{tF}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaFunction{tF}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaFunction{substaux}\AgdaSymbol{\}} \AgdaBound{M′} \AgdaBound{M∼M′}\<%
@@ -946,13 +946,13 @@ System F, Nominal syntax
 \\
 %
 \\
-\>\AgdaFunction{lemma-substnα′} \AgdaSymbol{:} \<[18]%
-\>[18]\AgdaSymbol{\{}\AgdaBound{x} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{M} \AgdaBound{N} \AgdaBound{N′} \AgdaSymbol{:} \AgdaFunction{FTerm}\AgdaSymbol{\}}\<%
+\>\AgdaFunction{lemma-substn-alpha} \AgdaSymbol{:} \<[22]%
+\>[22]\AgdaSymbol{\{}\AgdaBound{x} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{M} \AgdaBound{N} \AgdaBound{N′} \AgdaSymbol{:} \AgdaFunction{FTerm}\AgdaSymbol{\}}\<%
 \\
 \>[2]\AgdaIndent{18}{}\<[18]%
 \>[18]\AgdaSymbol{→} \AgdaBound{N} \AgdaFunction{∼α} \AgdaBound{N′} \AgdaSymbol{→} \AgdaBound{M} \AgdaFunction{[} \AgdaBound{x} \AgdaFunction{≔} \AgdaBound{N} \AgdaFunction{]ₙ} \AgdaFunction{∼α} \AgdaBound{M} \AgdaFunction{[} \AgdaBound{x} \AgdaFunction{≔} \AgdaBound{N′} \AgdaFunction{]ₙ}\<%
 \\
-\>\AgdaFunction{lemma-substnα′} \AgdaSymbol{\{}\AgdaBound{x}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{M}\AgdaSymbol{\}} \AgdaSymbol{(}\AgdaInductiveConstructor{∼αR} \AgdaBound{N∼N′}\AgdaSymbol{)}\<%
+\>\AgdaFunction{lemma-substn-alpha} \AgdaSymbol{\{}\AgdaBound{x}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{M}\AgdaSymbol{\}} \AgdaSymbol{(}\AgdaInductiveConstructor{∼αR} \AgdaBound{N∼N′}\AgdaSymbol{)}\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
 \>[2]\AgdaSymbol{=} \AgdaFunction{lemma-foldCtx-alpha-Ctx} \AgdaFunction{lemma-substaux} \AgdaSymbol{(}\AgdaInductiveConstructor{∼αR} \AgdaSymbol{(}\AgdaInductiveConstructor{∼αx} \AgdaInductiveConstructor{∼αV} \AgdaSymbol{(}\AgdaInductiveConstructor{∼αEf} \AgdaBound{N∼N′}\AgdaSymbol{)))} \AgdaBound{M}\<%
@@ -1407,13 +1407,11 @@ System F, Nominal syntax
 \begin{code}%
 \>[0]\AgdaIndent{2}{}\<[2]%
 \>[2]\AgdaFunction{lemma-substCompositionNAux} \<[30]%
-\>[30]\AgdaSymbol{(}\AgdaInductiveConstructor{inj₂} \AgdaSymbol{(}\AgdaInductiveConstructor{inj₂} \AgdaSymbol{(}\AgdaInductiveConstructor{inj₁} \AgdaSymbol{(}\AgdaBound{t} \AgdaInductiveConstructor{,} \AgdaBound{z} \AgdaInductiveConstructor{,} \AgdaBound{M}\AgdaSymbol{))))}\<%
+\>[30]\AgdaSymbol{(}\AgdaInductiveConstructor{inj₂} \AgdaSymbol{(}\AgdaInductiveConstructor{inj₂} \AgdaSymbol{(}\AgdaInductiveConstructor{inj₁} \AgdaSymbol{(}\AgdaBound{t} \AgdaInductiveConstructor{,} \AgdaBound{z} \AgdaInductiveConstructor{,} \AgdaBound{M}\AgdaSymbol{))))} \<[64]%
+\>[64]\AgdaSymbol{(\_} \AgdaInductiveConstructor{,} \AgdaBound{hiM}\AgdaSymbol{)} \AgdaBound{xnotInyfvL} \AgdaBound{xnotBL} \AgdaSymbol{=} \<[95]%
+\>[95]\<%
 \\
-\>[2]\AgdaIndent{30}{}\<[30]%
-\>[30]\AgdaSymbol{(\_} \AgdaInductiveConstructor{,} \AgdaBound{hiM}\AgdaSymbol{)} \AgdaBound{x∉yfvL} \AgdaBound{x∉bL} \AgdaSymbol{=} \<[55]%
-\>[55]\<%
-\\
-\>[0]\AgdaIndent{4}{}\<[4]%
+\>[2]\AgdaIndent{4}{}\<[4]%
 \>[4]\AgdaFunction{begin}\<%
 \\
 \>[4]\AgdaIndent{6}{}\<[6]%
@@ -1432,9 +1430,9 @@ System F, Nominal syntax
 \\
 \>[4]\AgdaIndent{9}{}\<[9]%
 \>[9]\AgdaSymbol{(}\AgdaInductiveConstructor{∼αx} \<[15]%
-\>[15]\AgdaFunction{ρF} \AgdaSymbol{(}\AgdaFunction{lemma∼+B} \AgdaSymbol{(}\AgdaBound{hiM} \AgdaBound{x∉yfvL} \AgdaBound{x∉bL}\AgdaSymbol{))))))} \<[52]%
-\>[52]\AgdaFunction{⟩} \<[54]%
-\>[54]\<%
+\>[15]\AgdaFunction{ρF} \AgdaSymbol{(}\AgdaFunction{lemma∼+B} \AgdaSymbol{(}\AgdaBound{hiM} \AgdaBound{xnotInyfvL} \AgdaBound{xnotBL}\AgdaSymbol{))))))} \<[58]%
+\>[58]\AgdaFunction{⟩} \<[60]%
+\>[60]\<%
 \\
 \>[0]\AgdaIndent{6}{}\<[6]%
 \>[6]\AgdaFunction{ƛ} \AgdaBound{z} \AgdaBound{t} \AgdaSymbol{(}\AgdaBound{M} \AgdaFunction{[} \AgdaBound{y} \AgdaFunction{≔} \AgdaBound{L} \AgdaFunction{]ₙ} \AgdaFunction{[} \AgdaBound{x} \AgdaFunction{≔} \AgdaBound{N} \AgdaFunction{[} \AgdaBound{y} \AgdaFunction{≔} \AgdaBound{L} \AgdaFunction{]ₙ} \AgdaFunction{]ₙ}\AgdaSymbol{)}\<%
@@ -1574,7 +1572,7 @@ Composition Lemma (exemplifies alpha induction principle usage)
 \>[5]\AgdaComment{-- Strong α compability of inner substitution operation       }\<%
 \\
 \>[0]\AgdaIndent{5}{}\<[5]%
-\>[5]\AgdaFunction{≈⟨} \AgdaFunction{cong} \AgdaSymbol{(λ} \AgdaBound{z} \AgdaSymbol{→} \AgdaBound{z} \AgdaFunction{[} \AgdaBound{y} \AgdaFunction{≔} \AgdaBound{L′} \AgdaFunction{]}\AgdaSymbol{)} \AgdaSymbol{(}\AgdaFunction{lemma-substα} \AgdaSymbol{(}\AgdaFunction{σ} \AgdaFunction{M∼M'}\AgdaSymbol{))} \<[90]%
+\>[5]\AgdaFunction{≈⟨} \AgdaFunction{cong} \AgdaSymbol{(λ} \AgdaBound{z} \AgdaSymbol{→} \AgdaBound{z} \AgdaFunction{[} \AgdaBound{y} \AgdaFunction{≔} \AgdaBound{L′} \AgdaFunction{]}\AgdaSymbol{)} \AgdaSymbol{(}\AgdaFunction{lemma-subst-alpha} \AgdaSymbol{(}\AgdaFunction{σ} \AgdaFunction{M∼M'}\AgdaSymbol{))} \<[90]%
 \>[90]\AgdaFunction{⟩}\<%
 \\
 \>[5]\AgdaIndent{7}{}\<[7]%
@@ -1588,8 +1586,8 @@ Composition Lemma (exemplifies alpha induction principle usage)
 \>[5]\AgdaComment{-- Strong α compability of outter substitution operation       }\<%
 \\
 \>[0]\AgdaIndent{5}{}\<[5]%
-\>[5]\AgdaFunction{≈⟨} \AgdaFunction{lemma-substα} \<[22]%
-\>[22]\AgdaSymbol{\{}\AgdaBound{M} \AgdaFunction{[} \AgdaBound{x} \AgdaFunction{≔} \AgdaBound{N′} \AgdaFunction{]}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{M} \AgdaFunction{[} \AgdaBound{x} \AgdaFunction{≔} \AgdaBound{N} \AgdaFunction{]}\AgdaSymbol{\}} \AgdaSymbol{(}\AgdaFunction{lemma-substα′} \AgdaSymbol{\{}\AgdaBound{x}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{M}\AgdaSymbol{\}} \AgdaSymbol{(}\AgdaFunction{σ} \AgdaFunction{N∼N'}\AgdaSymbol{))} \<[90]%
+\>[5]\AgdaFunction{≈⟨} \AgdaFunction{lemma-subst-alpha} \<[27]%
+\>[27]\AgdaSymbol{\{}\AgdaBound{M} \AgdaFunction{[} \AgdaBound{x} \AgdaFunction{≔} \AgdaBound{N′} \AgdaFunction{]}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{M} \AgdaFunction{[} \AgdaBound{x} \AgdaFunction{≔} \AgdaBound{N} \AgdaFunction{]}\AgdaSymbol{\}} \AgdaSymbol{(}\AgdaFunction{lemma-substα′} \AgdaSymbol{\{}\AgdaBound{x}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{M}\AgdaSymbol{\}} \AgdaSymbol{(}\AgdaFunction{σ} \AgdaFunction{N∼N'}\AgdaSymbol{))} \<[90]%
 \>[90]\AgdaFunction{⟩}\<%
 \\
 \>[5]\AgdaIndent{7}{}\<[7]%
@@ -1635,7 +1633,7 @@ Composition Lemma (exemplifies alpha induction principle usage)
 \\
 \>[0]\AgdaIndent{5}{}\<[5]%
 \>[5]\AgdaFunction{≈⟨} \AgdaFunction{cong} \<[14]%
-\>[14]\AgdaSymbol{(λ} \AgdaBound{P} \AgdaSymbol{→} \AgdaBound{P} \AgdaFunction{[} \AgdaBound{x} \AgdaFunction{≔} \AgdaBound{N} \AgdaFunction{[} \AgdaBound{y} \AgdaFunction{≔} \AgdaBound{L} \AgdaFunction{]} \AgdaFunction{]}\AgdaSymbol{)} \AgdaSymbol{(}\AgdaFunction{lemma-substα} \AgdaFunction{M∼M'}\AgdaSymbol{)} \<[90]%
+\>[14]\AgdaSymbol{(λ} \AgdaBound{P} \AgdaSymbol{→} \AgdaBound{P} \AgdaFunction{[} \AgdaBound{x} \AgdaFunction{≔} \AgdaBound{N} \AgdaFunction{[} \AgdaBound{y} \AgdaFunction{≔} \AgdaBound{L} \AgdaFunction{]} \AgdaFunction{]}\AgdaSymbol{)} \AgdaSymbol{(}\AgdaFunction{lemma-subst-alpha} \AgdaFunction{M∼M'}\AgdaSymbol{)} \<[90]%
 \>[90]\AgdaFunction{⟩} \<[92]%
 \>[92]\<%
 \\
@@ -1651,8 +1649,8 @@ Composition Lemma (exemplifies alpha induction principle usage)
 \>[5]\AgdaComment{-- Inner substitution is alpha-compatible in its substituted argument}\<%
 \\
 \>[0]\AgdaIndent{5}{}\<[5]%
-\>[5]\AgdaFunction{≈⟨} \AgdaFunction{lemma-substα} \<[23]%
-\>[23]\AgdaSymbol{\{}\AgdaBound{M′} \AgdaFunction{[} \AgdaBound{y} \AgdaFunction{≔} \AgdaBound{L} \AgdaFunction{]}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{M′} \AgdaFunction{[} \AgdaBound{y} \AgdaFunction{≔} \AgdaBound{L′} \AgdaFunction{]}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{N} \AgdaFunction{[} \AgdaBound{y} \AgdaFunction{≔} \AgdaBound{L} \AgdaFunction{]}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{x}\AgdaSymbol{\}}\<%
+\>[5]\AgdaFunction{≈⟨} \AgdaFunction{lemma-subst-alpha} \<[28]%
+\>[28]\AgdaSymbol{\{}\AgdaBound{M′} \AgdaFunction{[} \AgdaBound{y} \AgdaFunction{≔} \AgdaBound{L} \AgdaFunction{]}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{M′} \AgdaFunction{[} \AgdaBound{y} \AgdaFunction{≔} \AgdaBound{L′} \AgdaFunction{]}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{N} \AgdaFunction{[} \AgdaBound{y} \AgdaFunction{≔} \AgdaBound{L} \AgdaFunction{]}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{x}\AgdaSymbol{\}}\<%
 \\
 \>[5]\AgdaIndent{23}{}\<[23]%
 \>[23]\AgdaSymbol{(}\AgdaFunction{lemma-substα′} \AgdaSymbol{\{}\AgdaBound{y}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{M′}\AgdaSymbol{\}} \AgdaFunction{L∼L'}\AgdaSymbol{)} \<[90]%
@@ -1673,7 +1671,7 @@ Composition Lemma (exemplifies alpha induction principle usage)
 \>[0]\AgdaIndent{5}{}\<[5]%
 \>[5]\AgdaFunction{≈⟨} \AgdaFunction{cong} \<[14]%
 \>[14]\AgdaSymbol{(λ} \AgdaBound{P} \AgdaSymbol{→} \AgdaSymbol{(}\AgdaBound{M′} \AgdaFunction{[} \AgdaBound{y} \AgdaFunction{≔} \AgdaBound{L′} \AgdaFunction{]}\AgdaSymbol{)} \<[38]%
-\>[38]\AgdaFunction{[} \AgdaBound{x} \AgdaFunction{≔} \AgdaBound{P} \AgdaFunction{]}\AgdaSymbol{)} \AgdaSymbol{(}\AgdaFunction{lemma-substα} \AgdaFunction{N∼N'}\AgdaSymbol{)} \<[90]%
+\>[38]\AgdaFunction{[} \AgdaBound{x} \AgdaFunction{≔} \AgdaBound{P} \AgdaFunction{]}\AgdaSymbol{)} \AgdaSymbol{(}\AgdaFunction{lemma-subst-alpha} \AgdaFunction{N∼N'}\AgdaSymbol{)} \<[90]%
 \>[90]\AgdaFunction{⟩}\<%
 \\
 \>[5]\AgdaIndent{7}{}\<[7]%
@@ -1737,7 +1735,7 @@ Composition Lemma (exemplifies alpha induction principle usage)
 \>[0]\AgdaIndent{2}{}\<[2]%
 \>[2]\AgdaSymbol{→} \AgdaFunction{ListNotOccurBind} \AgdaSymbol{(}\AgdaBound{x} \AgdaInductiveConstructor{∷} \AgdaBound{y} \AgdaInductiveConstructor{∷} \AgdaInductiveConstructor{[]}\AgdaSymbol{)} \AgdaBound{Ms} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBind} \AgdaSymbol{(}\AgdaFunction{fv} \AgdaBound{Ms}\AgdaSymbol{)} \AgdaBound{Ms} \AgdaSymbol{→} \AgdaFunction{PSComp} \AgdaSymbol{\{}\AgdaBound{x}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{y}\AgdaSymbol{\}} \AgdaBound{Ms}\<%
 \\
-\>\AgdaFunction{alpha-proof} \AgdaSymbol{\{}\AgdaBound{x}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{y}\AgdaSymbol{\}} \AgdaInductiveConstructor{⟨} \AgdaBound{M} \AgdaInductiveConstructor{,} \AgdaBound{N} \AgdaInductiveConstructor{,} \AgdaBound{L} \AgdaInductiveConstructor{⟩} \AgdaBound{nOcc} \AgdaBound{nOcc2} \AgdaBound{x∉y∶fvL}\<%
+\>\AgdaFunction{alpha-proof} \AgdaSymbol{\{}\AgdaBound{x}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{y}\AgdaSymbol{\}} \AgdaInductiveConstructor{⟨} \AgdaBound{M} \AgdaInductiveConstructor{,} \AgdaBound{N} \AgdaInductiveConstructor{,} \AgdaBound{L} \AgdaInductiveConstructor{⟩} \AgdaBound{nOcc} \AgdaBound{nOcc2} \AgdaBound{xnIny∶fvL}\<%
 \\
 \>[2]\AgdaIndent{3}{}\<[3]%
 \>[3]\AgdaSymbol{=} \<[6]%
@@ -1750,9 +1748,9 @@ Composition Lemma (exemplifies alpha induction principle usage)
 \>[26]\AgdaFunction{[} \AgdaBound{y} \AgdaFunction{≔} \AgdaBound{L} \AgdaFunction{]}\<%
 \\
 \>[0]\AgdaIndent{6}{}\<[6]%
-\>[6]\AgdaFunction{≈⟨} \AgdaFunction{lemma-substα} \<[23]%
-\>[23]\AgdaSymbol{\{}\AgdaBound{M} \AgdaFunction{[} \AgdaBound{x} \AgdaFunction{≔} \AgdaBound{N} \AgdaFunction{]}\AgdaSymbol{\}} \AgdaSymbol{(}\AgdaFunction{lemmaSubsts} \AgdaSymbol{\{}\AgdaBound{x}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{M}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{N}\AgdaSymbol{\}} \AgdaFunction{x:fvN∉bM}\AgdaSymbol{)} \<[80]%
-\>[80]\AgdaFunction{⟩}\<%
+\>[6]\AgdaFunction{≈⟨} \AgdaFunction{lemma-subst-alpha} \<[28]%
+\>[28]\AgdaSymbol{\{}\AgdaBound{M} \AgdaFunction{[} \AgdaBound{x} \AgdaFunction{≔} \AgdaBound{N} \AgdaFunction{]}\AgdaSymbol{\}} \AgdaSymbol{(}\AgdaFunction{lemmaSubsts} \AgdaSymbol{\{}\AgdaBound{x}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{M}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{N}\AgdaSymbol{\}} \AgdaFunction{x:fvN-NB-M}\AgdaSymbol{)} \<[86]%
+\>[86]\AgdaFunction{⟩}\<%
 \\
 \>[6]\AgdaIndent{9}{}\<[9]%
 \>[9]\AgdaBound{M} \<[13]%
@@ -1760,8 +1758,8 @@ Composition Lemma (exemplifies alpha induction principle usage)
 \>[26]\AgdaFunction{[} \AgdaBound{y} \AgdaFunction{≔} \AgdaBound{L} \AgdaFunction{]}\<%
 \\
 \>[0]\AgdaIndent{6}{}\<[6]%
-\>[6]\AgdaFunction{∼⟨} \AgdaFunction{lemmaSubsts} \AgdaSymbol{\{}\AgdaBound{y}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{M} \AgdaFunction{[} \AgdaBound{x} \AgdaFunction{≔} \AgdaBound{N} \AgdaFunction{]ₙ}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{L}\AgdaSymbol{\}} \AgdaFunction{y:fvL∉bM[x≔N]ₙ} \<[80]%
-\>[80]\AgdaFunction{⟩}\<%
+\>[6]\AgdaFunction{∼⟨} \AgdaFunction{lemmaSubsts} \AgdaSymbol{\{}\AgdaBound{y}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{M} \AgdaFunction{[} \AgdaBound{x} \AgdaFunction{≔} \AgdaBound{N} \AgdaFunction{]ₙ}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{L}\AgdaSymbol{\}} \AgdaFunction{y:fvL-NB-M[x≔N]ₙ} \<[86]%
+\>[86]\AgdaFunction{⟩}\<%
 \\
 \>[6]\AgdaIndent{9}{}\<[9]%
 \>[9]\AgdaBound{M} \<[13]%
@@ -1770,8 +1768,8 @@ Composition Lemma (exemplifies alpha induction principle usage)
 \\
 \>[0]\AgdaIndent{6}{}\<[6]%
 \>[6]\AgdaFunction{∼⟨} \AgdaFunction{lemma-substCompositionN} \<[34]%
-\>[34]\AgdaSymbol{\{}\AgdaBound{x}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{y}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{M}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{N}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{L}\AgdaSymbol{\}} \AgdaBound{x∉y∶fvL} \AgdaFunction{x∉bL} \<[80]%
-\>[80]\AgdaFunction{⟩}\<%
+\>[34]\AgdaSymbol{\{}\AgdaBound{x}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{y}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{M}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{N}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{L}\AgdaSymbol{\}} \AgdaBound{xnIny∶fvL} \AgdaFunction{x-NB-L} \<[86]%
+\>[86]\AgdaFunction{⟩}\<%
 \\
 \>[6]\AgdaIndent{9}{}\<[9]%
 \>[9]\AgdaBound{M} \<[13]%
@@ -1780,9 +1778,9 @@ Composition Lemma (exemplifies alpha induction principle usage)
 \>[46]\AgdaFunction{]ₙ}\<%
 \\
 \>[0]\AgdaIndent{6}{}\<[6]%
-\>[6]\AgdaFunction{∼⟨} \AgdaFunction{lemma-substnα′} \<[25]%
-\>[25]\AgdaSymbol{\{}\AgdaBound{x}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{M} \AgdaFunction{[} \AgdaBound{y} \AgdaFunction{≔} \AgdaBound{L} \AgdaFunction{]ₙ}\AgdaSymbol{\}} \AgdaSymbol{(}\AgdaFunction{σ} \AgdaSymbol{(}\AgdaFunction{lemmaSubsts} \AgdaSymbol{\{}\AgdaBound{y}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{N}\AgdaSymbol{\}} \AgdaFunction{y:fvL∉bN}\AgdaSymbol{))} \<[80]%
-\>[80]\AgdaFunction{⟩}\<%
+\>[6]\AgdaFunction{∼⟨} \AgdaFunction{lemma-substn-alpha} \<[29]%
+\>[29]\AgdaSymbol{\{}\AgdaBound{x}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{M} \AgdaFunction{[} \AgdaBound{y} \AgdaFunction{≔} \AgdaBound{L} \AgdaFunction{]ₙ}\AgdaSymbol{\}} \AgdaSymbol{(}\AgdaFunction{σ} \AgdaSymbol{(}\AgdaFunction{lemmaSubsts} \AgdaSymbol{\{}\AgdaBound{y}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{N}\AgdaSymbol{\}} \AgdaFunction{y:fvL-NB-N}\AgdaSymbol{))} \<[86]%
+\>[86]\AgdaFunction{⟩}\<%
 \\
 \>[6]\AgdaIndent{9}{}\<[9]%
 \>[9]\AgdaBound{M} \<[13]%
@@ -1792,8 +1790,8 @@ Composition Lemma (exemplifies alpha induction principle usage)
 \\
 \>[0]\AgdaIndent{6}{}\<[6]%
 \>[6]\AgdaFunction{∼⟨} \AgdaFunction{σ} \AgdaSymbol{(}\AgdaFunction{lemmaSubsts} \<[25]%
-\>[25]\AgdaSymbol{\{}\AgdaBound{x}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{M} \AgdaFunction{[} \AgdaBound{y} \AgdaFunction{≔} \AgdaBound{L} \AgdaFunction{]ₙ}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{N} \AgdaFunction{[} \AgdaBound{y} \AgdaFunction{≔} \AgdaBound{L} \AgdaFunction{]}\AgdaSymbol{\}} \AgdaFunction{x:fvN[y≔L]∉bM[y≔L]ₙ}\AgdaSymbol{)} \<[80]%
-\>[80]\AgdaFunction{⟩}\<%
+\>[25]\AgdaSymbol{\{}\AgdaBound{x}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{M} \AgdaFunction{[} \AgdaBound{y} \AgdaFunction{≔} \AgdaBound{L} \AgdaFunction{]ₙ}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{N} \AgdaFunction{[} \AgdaBound{y} \AgdaFunction{≔} \AgdaBound{L} \AgdaFunction{]}\AgdaSymbol{\}} \AgdaFunction{x:fvN[y≔L]-NB-M[y≔L]ₙ}\AgdaSymbol{)} \<[86]%
+\>[86]\AgdaFunction{⟩}\<%
 \\
 \>[6]\AgdaIndent{9}{}\<[9]%
 \>[9]\AgdaBound{M} \<[13]%
@@ -1802,8 +1800,8 @@ Composition Lemma (exemplifies alpha induction principle usage)
 \>[46]\AgdaFunction{]}\<%
 \\
 \>[0]\AgdaIndent{6}{}\<[6]%
-\>[6]\AgdaFunction{≈⟨} \AgdaFunction{lemma-substα} \AgdaSymbol{(}\AgdaFunction{σ} \AgdaSymbol{(}\AgdaFunction{lemmaSubsts} \AgdaSymbol{\{}\AgdaBound{y}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{M}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{L}\AgdaSymbol{\}} \AgdaFunction{y:fvL∉bM}\AgdaSymbol{))} \<[80]%
-\>[80]\AgdaFunction{⟩}\<%
+\>[6]\AgdaFunction{≈⟨} \AgdaFunction{lemma-subst-alpha} \AgdaSymbol{(}\AgdaFunction{σ} \AgdaSymbol{(}\AgdaFunction{lemmaSubsts} \AgdaSymbol{\{}\AgdaBound{y}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{M}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{L}\AgdaSymbol{\}} \AgdaFunction{y:fvL-NB-M}\AgdaSymbol{))} \<[86]%
+\>[86]\AgdaFunction{⟩}\<%
 \\
 \>[6]\AgdaIndent{9}{}\<[9]%
 \>[9]\AgdaSymbol{(}\AgdaBound{M} \<[13]%
@@ -1873,39 +1871,39 @@ Composition Lemma (exemplifies alpha induction principle usage)
 \>[2]\AgdaFunction{x:y∉bL} \AgdaSymbol{=} \AgdaFunction{lemmalistNotOccurBindEf→ListNotOccurBindR} \AgdaSymbol{(}\AgdaFunction{listNotOccurBx₂inv} \AgdaSymbol{(}\AgdaFunction{listNotOccurBx₂inv} \AgdaSymbol{(}\AgdaFunction{lemmalistNotOccurBindFR→ListNotOccurBindF} \AgdaBound{nOcc}\AgdaSymbol{)))}\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
-\>[2]\AgdaFunction{x:fvN∉bM} \AgdaSymbol{:} \AgdaFunction{ListNotOccurBind} \AgdaSymbol{(}\AgdaBound{x} \AgdaInductiveConstructor{∷} \AgdaFunction{fv} \<[39]%
-\>[39]\AgdaBound{N}\AgdaSymbol{)} \AgdaBound{M}\<%
+\>[2]\AgdaFunction{x:fvN-NB-M} \AgdaSymbol{:} \AgdaFunction{ListNotOccurBind} \AgdaSymbol{(}\AgdaBound{x} \AgdaInductiveConstructor{∷} \AgdaFunction{fv} \<[41]%
+\>[41]\AgdaBound{N}\AgdaSymbol{)} \AgdaBound{M}\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
-\>[2]\AgdaFunction{x:fvN∉bM} \AgdaSymbol{=} \AgdaFunction{lemma-binds:cons} \AgdaSymbol{(}\AgdaFunction{lemma-binds:head} \AgdaFunction{x:y∉bM}\AgdaSymbol{)} \AgdaSymbol{(}\AgdaFunction{lemma-binds++l} \AgdaSymbol{(}\AgdaFunction{lemma-binds++r} \AgdaSymbol{\{}\AgdaFunction{fv} \AgdaBound{M}\AgdaSymbol{\}} \AgdaFunction{fvM++fvN++fvL∉bM}\AgdaSymbol{))}\<%
+\>[2]\AgdaFunction{x:fvN-NB-M} \AgdaSymbol{=} \AgdaFunction{lemma-binds:cons} \AgdaSymbol{(}\AgdaFunction{lemma-binds:head} \AgdaFunction{x:y∉bM}\AgdaSymbol{)} \AgdaSymbol{(}\AgdaFunction{lemma-binds++l} \AgdaSymbol{(}\AgdaFunction{lemma-binds++r} \AgdaSymbol{\{}\AgdaFunction{fv} \AgdaBound{M}\AgdaSymbol{\}} \AgdaFunction{fvM++fvN++fvL∉bM}\AgdaSymbol{))}\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
-\>[2]\AgdaFunction{x∉bL} \AgdaSymbol{:} \AgdaBound{x} \AgdaFunction{notOccurBind} \AgdaBound{L}\<%
+\>[2]\AgdaFunction{x-NB-L} \AgdaSymbol{:} \AgdaBound{x} \AgdaFunction{notOccurBind} \AgdaBound{L}\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
-\>[2]\AgdaFunction{x∉bL} \AgdaSymbol{=} \AgdaFunction{lemma-binds:head} \AgdaFunction{x:y∉bL}\<%
+\>[2]\AgdaFunction{x-NB-L} \AgdaSymbol{=} \AgdaFunction{lemma-binds:head} \AgdaFunction{x:y∉bL}\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
-\>[2]\AgdaFunction{y:fvL∉bM} \AgdaSymbol{:} \AgdaFunction{ListNotOccurBind} \AgdaSymbol{(}\AgdaBound{y} \AgdaInductiveConstructor{∷} \AgdaFunction{fv} \AgdaBound{L}\AgdaSymbol{)} \AgdaBound{M}\<%
+\>[2]\AgdaFunction{y:fvL-NB-M} \AgdaSymbol{:} \AgdaFunction{ListNotOccurBind} \AgdaSymbol{(}\AgdaBound{y} \AgdaInductiveConstructor{∷} \AgdaFunction{fv} \AgdaBound{L}\AgdaSymbol{)} \AgdaBound{M}\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
-\>[2]\AgdaFunction{y:fvL∉bM} \AgdaSymbol{=} \AgdaFunction{lemma-binds:cons} \AgdaSymbol{(}\AgdaFunction{lemma-binds:head} \AgdaSymbol{(}\AgdaFunction{lemma-binds:tail} \AgdaFunction{x:y∉bM}\AgdaSymbol{))} \AgdaSymbol{(}\AgdaFunction{lemma-binds++r} \AgdaSymbol{\{}\AgdaFunction{fv} \AgdaBound{N}\AgdaSymbol{\}} \AgdaSymbol{(}\AgdaFunction{lemma-binds++r} \AgdaSymbol{\{}\AgdaFunction{fv} \AgdaBound{M}\AgdaSymbol{\}} \AgdaFunction{fvM++fvN++fvL∉bM}\AgdaSymbol{))}\<%
+\>[2]\AgdaFunction{y:fvL-NB-M} \AgdaSymbol{=} \AgdaFunction{lemma-binds:cons} \AgdaSymbol{(}\AgdaFunction{lemma-binds:head} \AgdaSymbol{(}\AgdaFunction{lemma-binds:tail} \AgdaFunction{x:y∉bM}\AgdaSymbol{))} \AgdaSymbol{(}\AgdaFunction{lemma-binds++r} \AgdaSymbol{\{}\AgdaFunction{fv} \AgdaBound{N}\AgdaSymbol{\}} \AgdaSymbol{(}\AgdaFunction{lemma-binds++r} \AgdaSymbol{\{}\AgdaFunction{fv} \AgdaBound{M}\AgdaSymbol{\}} \AgdaFunction{fvM++fvN++fvL∉bM}\AgdaSymbol{))}\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
-\>[2]\AgdaFunction{y:fvL∉bN} \AgdaSymbol{:} \AgdaFunction{ListNotOccurBind} \AgdaSymbol{(}\AgdaBound{y} \AgdaInductiveConstructor{∷} \AgdaFunction{fv} \AgdaBound{L}\AgdaSymbol{)} \AgdaBound{N}\<%
+\>[2]\AgdaFunction{y:fvL-NB-N} \AgdaSymbol{:} \AgdaFunction{ListNotOccurBind} \AgdaSymbol{(}\AgdaBound{y} \AgdaInductiveConstructor{∷} \AgdaFunction{fv} \AgdaBound{L}\AgdaSymbol{)} \AgdaBound{N}\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
-\>[2]\AgdaFunction{y:fvL∉bN} \AgdaSymbol{=} \AgdaFunction{lemma-binds:cons} \AgdaSymbol{(}\AgdaFunction{lemma-binds:head} \AgdaSymbol{(}\AgdaFunction{lemma-binds:tail} \AgdaFunction{x:y∉bN}\AgdaSymbol{))} \AgdaSymbol{(}\AgdaFunction{lemma-binds++r} \AgdaSymbol{\{}\AgdaFunction{fv} \AgdaBound{N}\AgdaSymbol{\}} \AgdaSymbol{(}\AgdaFunction{lemma-binds++r} \AgdaSymbol{\{}\AgdaFunction{fv} \AgdaBound{M}\AgdaSymbol{\}} \AgdaFunction{fvM++fvN++fvL∉bN}\AgdaSymbol{))}\<%
+\>[2]\AgdaFunction{y:fvL-NB-N} \AgdaSymbol{=} \AgdaFunction{lemma-binds:cons} \AgdaSymbol{(}\AgdaFunction{lemma-binds:head} \AgdaSymbol{(}\AgdaFunction{lemma-binds:tail} \AgdaFunction{x:y∉bN}\AgdaSymbol{))} \AgdaSymbol{(}\AgdaFunction{lemma-binds++r} \AgdaSymbol{\{}\AgdaFunction{fv} \AgdaBound{N}\AgdaSymbol{\}} \AgdaSymbol{(}\AgdaFunction{lemma-binds++r} \AgdaSymbol{\{}\AgdaFunction{fv} \AgdaBound{M}\AgdaSymbol{\}} \AgdaFunction{fvM++fvN++fvL∉bN}\AgdaSymbol{))}\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
-\>[2]\AgdaFunction{y:fvL∉bM[x≔N]ₙ} \AgdaSymbol{:} \AgdaFunction{ListNotOccurBind} \AgdaSymbol{(}\AgdaBound{y} \AgdaInductiveConstructor{∷} \AgdaFunction{fv} \AgdaBound{L}\AgdaSymbol{)} \AgdaSymbol{(}\AgdaBound{M} \AgdaFunction{[} \AgdaBound{x} \AgdaFunction{≔} \AgdaBound{N} \AgdaFunction{]ₙ}\AgdaSymbol{)}\<%
+\>[2]\AgdaFunction{y:fvL-NB-M[x≔N]ₙ} \AgdaSymbol{:} \AgdaFunction{ListNotOccurBind} \AgdaSymbol{(}\AgdaBound{y} \AgdaInductiveConstructor{∷} \AgdaFunction{fv} \AgdaBound{L}\AgdaSymbol{)} \AgdaSymbol{(}\AgdaBound{M} \AgdaFunction{[} \AgdaBound{x} \AgdaFunction{≔} \AgdaBound{N} \AgdaFunction{]ₙ}\AgdaSymbol{)}\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
-\>[2]\AgdaFunction{y:fvL∉bM[x≔N]ₙ}\<%
+\>[2]\AgdaFunction{y:fvL-NB-M[x≔N]ₙ}\<%
 \\
 \>[2]\AgdaIndent{4}{}\<[4]%
-\>[4]\AgdaSymbol{=} \AgdaFunction{lemma-foldCtxBinds} \AgdaSymbol{\{}\AgdaFunction{cF}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaFunction{tF}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaFunction{tF}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaFunction{substaux}\AgdaSymbol{\}} \AgdaSymbol{(}\AgdaFunction{lemma-substauxBinds} \AgdaSymbol{(}\AgdaFunction{lemma-binds:cons} \AgdaSymbol{(}\AgdaInductiveConstructor{notOccurBR} \AgdaSymbol{(}\AgdaInductiveConstructor{notOccurBx} \AgdaInductiveConstructor{notOccurBv} \AgdaSymbol{(}\AgdaFunction{notOccurBindR→notOccurBindEf} \AgdaSymbol{(}\AgdaFunction{lemma-binds:head} \AgdaFunction{y:fvL∉bN}\AgdaSymbol{))))} \AgdaSymbol{(}\AgdaFunction{lemma-bindsR} \AgdaSymbol{(}\AgdaFunction{lemma-binds×} \AgdaFunction{lemma-bindsv} \AgdaSymbol{(}\AgdaFunction{lemmalistNotOccurBindFR→ListNotOccurBindEf} \AgdaSymbol{(}\AgdaFunction{lemma-binds:tail} \AgdaFunction{y:fvL∉bN}\AgdaSymbol{))))))} \AgdaFunction{y:fvL∉bM} \<[313]%
-\>[313]\<%
+\>[4]\AgdaSymbol{=} \AgdaFunction{lemma-foldCtxBinds} \AgdaSymbol{\{}\AgdaFunction{cF}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaFunction{tF}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaFunction{tF}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaFunction{substaux}\AgdaSymbol{\}} \AgdaSymbol{(}\AgdaFunction{lemma-substauxBinds} \AgdaSymbol{(}\AgdaFunction{lemma-binds:cons} \AgdaSymbol{(}\AgdaInductiveConstructor{notOccurBR} \AgdaSymbol{(}\AgdaInductiveConstructor{notOccurBx} \AgdaInductiveConstructor{notOccurBv} \AgdaSymbol{(}\AgdaFunction{notOccurBindR→notOccurBindEf} \AgdaSymbol{(}\AgdaFunction{lemma-binds:head} \AgdaFunction{y:fvL-NB-N}\AgdaSymbol{))))} \AgdaSymbol{(}\AgdaFunction{lemma-bindsR} \AgdaSymbol{(}\AgdaFunction{lemma-binds×} \AgdaFunction{lemma-bindsv} \AgdaSymbol{(}\AgdaFunction{lemmalistNotOccurBindFR→ListNotOccurBindEf} \AgdaSymbol{(}\AgdaFunction{lemma-binds:tail} \AgdaFunction{y:fvL-NB-N}\AgdaSymbol{))))))} \AgdaFunction{y:fvL-NB-M} \<[319]%
+\>[319]\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
 \>[2]\AgdaFunction{[x]∉bM[y≔L]ₙ} \AgdaSymbol{:} \AgdaFunction{ListNotOccurBind} \AgdaSymbol{(}\AgdaBound{x} \AgdaInductiveConstructor{∷} \AgdaInductiveConstructor{[]}\AgdaSymbol{)} \AgdaSymbol{(}\AgdaBound{M} \AgdaFunction{[} \AgdaBound{y} \AgdaFunction{≔} \AgdaBound{L} \AgdaFunction{]ₙ}\AgdaSymbol{)}\<%
@@ -1957,7 +1955,7 @@ Composition Lemma (exemplifies alpha induction principle usage)
 \\
 \>[20]\AgdaIndent{36}{}\<[36]%
 \>[36]\AgdaSymbol{(}\AgdaFunction{lemma-foldCtxBinds} \<[57]%
-\>[57]\AgdaSymbol{\{}\AgdaFunction{cF}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaFunction{tF}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaFunction{tF}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaFunction{substaux}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaInductiveConstructor{⟨} \AgdaBound{y} \AgdaInductiveConstructor{,} \AgdaBound{L} \AgdaInductiveConstructor{⟩}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{M}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaFunction{fv} \AgdaSymbol{\{}\AgdaFunction{cF}\AgdaSymbol{\}} \AgdaInductiveConstructor{⟨} \AgdaBound{y} \AgdaInductiveConstructor{,} \AgdaBound{L} \AgdaInductiveConstructor{⟩}\AgdaSymbol{\}} \AgdaSymbol{(}\AgdaFunction{lemma-substauxBinds} \AgdaSymbol{(}\AgdaFunction{fv⟨y,L⟩∉b⟨y,L⟩} \AgdaSymbol{\{}\AgdaBound{L}\AgdaSymbol{\}} \AgdaFunction{y∉bL} \AgdaFunction{fvL∉bL}\AgdaSymbol{))} \AgdaSymbol{(}\AgdaFunction{fv⟨y,L⟩∉bM} \AgdaSymbol{\{}\AgdaBound{L}\AgdaSymbol{\}} \AgdaFunction{y:fvL∉bM}\AgdaSymbol{))}\<%
+\>[57]\AgdaSymbol{\{}\AgdaFunction{cF}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaFunction{tF}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaFunction{tF}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaFunction{substaux}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaInductiveConstructor{⟨} \AgdaBound{y} \AgdaInductiveConstructor{,} \AgdaBound{L} \AgdaInductiveConstructor{⟩}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{M}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaFunction{fv} \AgdaSymbol{\{}\AgdaFunction{cF}\AgdaSymbol{\}} \AgdaInductiveConstructor{⟨} \AgdaBound{y} \AgdaInductiveConstructor{,} \AgdaBound{L} \AgdaInductiveConstructor{⟩}\AgdaSymbol{\}} \AgdaSymbol{(}\AgdaFunction{lemma-substauxBinds} \AgdaSymbol{(}\AgdaFunction{fv⟨y,L⟩∉b⟨y,L⟩} \AgdaSymbol{\{}\AgdaBound{L}\AgdaSymbol{\}} \AgdaFunction{y∉bL} \AgdaFunction{fvL∉bL}\AgdaSymbol{))} \AgdaSymbol{(}\AgdaFunction{fv⟨y,L⟩∉bM} \AgdaSymbol{\{}\AgdaBound{L}\AgdaSymbol{\}} \AgdaFunction{y:fvL-NB-M}\AgdaSymbol{))}\<%
 \\
 \>[20]\AgdaIndent{36}{}\<[36]%
 \>[36]\AgdaSymbol{(}\AgdaFunction{lemma-foldCtxBinds} \<[57]%
@@ -1976,10 +1974,10 @@ Composition Lemma (exemplifies alpha induction principle usage)
 \>[2]\AgdaFunction{x:fvN[y≔L]ₙ∉bM[y≔L]ₙ} \AgdaSymbol{=} \AgdaFunction{lemma-binds:cons} \AgdaSymbol{(}\AgdaFunction{lemma-binds:head} \AgdaFunction{[x]∉bM[y≔L]ₙ}\AgdaSymbol{)} \AgdaFunction{fvN[y≔L]ₙ∉bM[y≔L]ₙ}\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
-\>[2]\AgdaFunction{x:fvN[y≔L]∉bM[y≔L]ₙ} \AgdaSymbol{:} \AgdaFunction{ListNotOccurBind} \AgdaSymbol{(}\AgdaBound{x} \AgdaInductiveConstructor{∷} \AgdaFunction{fv} \AgdaSymbol{(}\AgdaBound{N} \AgdaFunction{[} \AgdaBound{y} \AgdaFunction{≔} \AgdaBound{L} \AgdaFunction{]}\AgdaSymbol{))} \AgdaSymbol{(}\AgdaBound{M} \AgdaFunction{[} \AgdaBound{y} \AgdaFunction{≔} \AgdaBound{L} \AgdaFunction{]ₙ}\AgdaSymbol{)}\<%
+\>[2]\AgdaFunction{x:fvN[y≔L]-NB-M[y≔L]ₙ} \AgdaSymbol{:} \AgdaFunction{ListNotOccurBind} \AgdaSymbol{(}\AgdaBound{x} \AgdaInductiveConstructor{∷} \AgdaFunction{fv} \AgdaSymbol{(}\AgdaBound{N} \AgdaFunction{[} \AgdaBound{y} \AgdaFunction{≔} \AgdaBound{L} \AgdaFunction{]}\AgdaSymbol{))} \AgdaSymbol{(}\AgdaBound{M} \AgdaFunction{[} \AgdaBound{y} \AgdaFunction{≔} \AgdaBound{L} \AgdaFunction{]ₙ}\AgdaSymbol{)}\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
-\>[2]\AgdaFunction{x:fvN[y≔L]∉bM[y≔L]ₙ} \AgdaSymbol{=} \AgdaFunction{subst} \AgdaSymbol{(λ} \AgdaBound{xs} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBind} \AgdaSymbol{(}\AgdaBound{x} \AgdaInductiveConstructor{∷} \AgdaBound{xs}\AgdaSymbol{)} \AgdaSymbol{(}\AgdaBound{M} \AgdaFunction{[} \AgdaBound{y} \AgdaFunction{≔} \AgdaBound{L} \AgdaFunction{]ₙ}\AgdaSymbol{))} \AgdaSymbol{(}\AgdaFunction{lemma∼fv} \AgdaSymbol{(}\AgdaFunction{σ} \AgdaSymbol{(}\AgdaFunction{lemmaSubsts} \AgdaFunction{y:fvL∉bN}\AgdaSymbol{)))} \AgdaFunction{x:fvN[y≔L]ₙ∉bM[y≔L]ₙ}\<%
+\>[2]\AgdaFunction{x:fvN[y≔L]-NB-M[y≔L]ₙ} \AgdaSymbol{=} \AgdaFunction{subst} \AgdaSymbol{(λ} \AgdaBound{xs} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBind} \AgdaSymbol{(}\AgdaBound{x} \AgdaInductiveConstructor{∷} \AgdaBound{xs}\AgdaSymbol{)} \AgdaSymbol{(}\AgdaBound{M} \AgdaFunction{[} \AgdaBound{y} \AgdaFunction{≔} \AgdaBound{L} \AgdaFunction{]ₙ}\AgdaSymbol{))} \AgdaSymbol{(}\AgdaFunction{lemma∼fv} \AgdaSymbol{(}\AgdaFunction{σ} \AgdaSymbol{(}\AgdaFunction{lemmaSubsts} \AgdaFunction{y:fvL-NB-N}\AgdaSymbol{)))} \AgdaFunction{x:fvN[y≔L]ₙ∉bM[y≔L]ₙ}\<%
 \end{code}
 
 %<*substcompalphaproof>

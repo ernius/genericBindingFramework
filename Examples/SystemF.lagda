@@ -365,9 +365,9 @@ lemma-[]Swap {x} {y} {z} {M} {⟨ N ⟩}
 
 %<*substlemma1>
 \begin{code}
-lemma-substα :  {M M′ N : FTerm}{x : V}
+lemma-subst-alpha :  {M M′ N : FTerm}{x : V}
                 → M ∼α M′ → M [ x ≔ N ] ≡ M′ [ x ≔ N ]
-lemma-substα {M} {M′} M∼M′
+lemma-subst-alpha {M} {M′} M∼M′
   = lemma-foldCtxα-StrongαCompatible {cF} {tF} {tF} {substaux} M′ M∼M′
 \end{code}
 %</substlemma1>
@@ -394,9 +394,9 @@ lemma-substaux _ (∼α+₂ (∼α+₂ (∼α+₁ (∼αx e∼e′ e∼e′₁))
 lemma-substaux _ (∼α+₂ (∼α+₂ (∼α+₂ (∼α+₁ (∼αx e∼e′ e∼e′₁)))))  =  ∼αR (∼α+₂ (∼α+₂ (∼α+₂ (∼α+₁ (∼αx e∼e′ e∼e′₁)))))
 lemma-substaux _ (∼α+₂ (∼α+₂ (∼α+₂ (∼α+₂  (∼αB xs x₁)))))      =  ∼αR (∼α+₂ (∼α+₂ (∼α+₂ (∼α+₂  (∼αB xs x₁)))))
 
-lemma-substnα′ :  {x : V}{M N N′ : FTerm}
+lemma-substn-alpha :  {x : V}{M N N′ : FTerm}
                   → N ∼α N′ → M [ x ≔ N ]ₙ ∼α M [ x ≔ N′ ]ₙ
-lemma-substnα′ {x} {M} (∼αR N∼N′)
+lemma-substn-alpha {x} {M} (∼αR N∼N′)
   = lemma-foldCtx-alpha-Ctx lemma-substaux (∼αR (∼αx ∼αV (∼αEf N∼N′))) M
 \end{code}
 
@@ -571,14 +571,13 @@ lemma-substCompositionN {x} {y} {M} {N} {L}
 
 %<*substncompositionabstractioncase>
 \begin{code}
-  lemma-substCompositionNAux  (inj₂ (inj₂ (inj₁ (t , z , M))))
-                              (_ , hiM) x∉yfvL x∉bL =  
+  lemma-substCompositionNAux  (inj₂ (inj₂ (inj₁ (t , z , M))))  (_ , hiM) xnotInyfvL xnotBL =  
     begin
       (ƛ z t M) [ x ≔ N ]ₙ [ y ≔ L ]ₙ
     ≈⟨ refl                                         ⟩
       ƛ z t (M [ x ≔ N ]ₙ [ y ≔ L ]ₙ)
     ∼⟨ ∼αR (∼α+₂  (∼α+₂ (∼α+₁
-         (∼αx  ρF (lemma∼+B (hiM x∉yfvL x∉bL))))))  ⟩ 
+         (∼αx  ρF (lemma∼+B (hiM xnotInyfvL xnotBL))))))  ⟩ 
       ƛ z t (M [ y ≔ L ]ₙ [ x ≔ N [ y ≔ L ]ₙ ]ₙ)
     ≈⟨ refl                                         ⟩
       (ƛ z t M) [ y ≔ L ]ₙ [ x ≔ N [ y ≔ L ]ₙ ]ₙ
@@ -640,10 +639,10 @@ PSComp {x} {y} ⟨ M , N , L ⟩ = x ∉ y ∷ fv L
   =  begin
        (M′  [ x ≔ N′  ])  [ y ≔ L′  ]
      -- Strong α compability of inner substitution operation       
-     ≈⟨ cong (λ z → z [ y ≔ L′ ]) (lemma-substα (σ M∼M'))                                 ⟩
+     ≈⟨ cong (λ z → z [ y ≔ L′ ]) (lemma-subst-alpha (σ M∼M'))                            ⟩
        (M   [ x ≔ N′  ])  [ y ≔ L′  ]
      -- Strong α compability of outter substitution operation       
-     ≈⟨ lemma-substα  {M [ x ≔ N′ ]} {M [ x ≔ N ]} (lemma-substα′ {x} {M} (σ N∼N'))       ⟩
+     ≈⟨ lemma-subst-alpha  {M [ x ≔ N′ ]} {M [ x ≔ N ]} (lemma-substα′ {x} {M} (σ N∼N'))  ⟩
        (M   [ x ≔ N   ])  [ y ≔ L′  ]
      -- Outter substitution is alpha-compatible in its substituted argument
      ∼⟨ lemma-substα′ {y} {M [ x ≔ N   ]} (σ L∼L')                                        ⟩
@@ -652,14 +651,14 @@ PSComp {x} {y} ⟨ M , N , L ⟩ = x ∉ y ∷ fv L
      ∼⟨ PMs x∉y∶fvL                                                                       ⟩ 
        (M   [ y ≔ L   ])  [ x ≔ N   [ y ≔ L   ] ]
      -- Strong α compability of inner substitution operation       
-     ≈⟨ cong  (λ P → P [ x ≔ N [ y ≔ L ] ]) (lemma-substα M∼M')                           ⟩ 
+     ≈⟨ cong  (λ P → P [ x ≔ N [ y ≔ L ] ]) (lemma-subst-alpha M∼M')                      ⟩ 
        (M′  [ y ≔ L   ])  [ x ≔ N   [ y ≔ L   ] ]
      -- Inner substitution is alpha-compatible in its substituted argument
-     ≈⟨ lemma-substα   {M′ [ y ≔ L ]} {M′ [ y ≔ L′ ]} {N [ y ≔ L ]} {x}
+     ≈⟨ lemma-subst-alpha   {M′ [ y ≔ L ]} {M′ [ y ≔ L′ ]} {N [ y ≔ L ]} {x}
                        (lemma-substα′ {y} {M′} L∼L')                                      ⟩        
        (M′  [ y ≔ L′  ])  [ x ≔ N   [ y ≔ L   ] ]
      -- Strong α compability of substitution operation in subsituted term       
-     ≈⟨ cong  (λ P → (M′ [ y ≔ L′ ])  [ x ≔ P ]) (lemma-substα N∼N')                      ⟩
+     ≈⟨ cong  (λ P → (M′ [ y ≔ L′ ])  [ x ≔ P ]) (lemma-subst-alpha N∼N')                 ⟩
        (M′  [ y ≔ L′  ])  [ x ≔ N′  [ y ≔ L   ] ]
      -- Outter substitution is alpha-compatible in its substituted argument
      ∼⟨ lemma-substα′  {x} {M′  [ y ≔ L′ ]} {N′ [ y ≔ L ]} (lemma-substα′ {y} {N′} L∼L')  ⟩ 
@@ -682,20 +681,20 @@ PSComp {x} {y} ⟨ M , N , L ⟩ = x ∉ y ∷ fv L
 \begin{code}
 alpha-proof :  {x y : V}(Ms : μ TreeFTermF)
   → ListNotOccurBind (x ∷ y ∷ []) Ms → ListNotOccurBind (fv Ms) Ms → PSComp {x} {y} Ms
-alpha-proof {x} {y} ⟨ M , N , L ⟩ nOcc nOcc2 x∉y∶fvL
+alpha-proof {x} {y} ⟨ M , N , L ⟩ nOcc nOcc2 xnIny∶fvL
    =  begin
          (M  [ x ≔ N  ])  [ y ≔ L ]
-      ≈⟨ lemma-substα  {M [ x ≔ N ]} (lemmaSubsts {x} {M} {N} x:fvN∉bM)         ⟩
+      ≈⟨ lemma-subst-alpha  {M [ x ≔ N ]} (lemmaSubsts {x} {M} {N} x:fvN-NB-M)        ⟩
          M   [ x ≔ N ]ₙ   [ y ≔ L ]
-      ∼⟨ lemmaSubsts {y} {M [ x ≔ N ]ₙ} {L} y:fvL∉bM[x≔N]ₙ                      ⟩
+      ∼⟨ lemmaSubsts {y} {M [ x ≔ N ]ₙ} {L} y:fvL-NB-M[x≔N]ₙ                          ⟩
          M   [ x ≔ N ]ₙ   [ y ≔ L ]ₙ
-      ∼⟨ lemma-substCompositionN  {x} {y} {M} {N} {L} x∉y∶fvL x∉bL              ⟩
+      ∼⟨ lemma-substCompositionN  {x} {y} {M} {N} {L} xnIny∶fvL x-NB-L                ⟩
          M   [ y ≔ L ]ₙ   [ x ≔ N [ y ≔ L ]ₙ  ]ₙ
-      ∼⟨ lemma-substnα′  {x} {M [ y ≔ L ]ₙ} (σ (lemmaSubsts {y} {N} y:fvL∉bN))  ⟩
+      ∼⟨ lemma-substn-alpha  {x} {M [ y ≔ L ]ₙ} (σ (lemmaSubsts {y} {N} y:fvL-NB-N))  ⟩
          M   [ y ≔ L ]ₙ   [ x ≔ N [ y ≔ L ]   ]ₙ
-      ∼⟨ σ (lemmaSubsts  {x} {M [ y ≔ L ]ₙ} {N [ y ≔ L ]} x:fvN[y≔L]∉bM[y≔L]ₙ)  ⟩
+      ∼⟨ σ (lemmaSubsts  {x} {M [ y ≔ L ]ₙ} {N [ y ≔ L ]} x:fvN[y≔L]-NB-M[y≔L]ₙ)      ⟩
          M   [ y ≔ L ]ₙ   [ x ≔ N [ y ≔ L ]   ]
-      ≈⟨ lemma-substα (σ (lemmaSubsts {y} {M} {L} y:fvL∉bM))                    ⟩
+      ≈⟨ lemma-subst-alpha (σ (lemmaSubsts {y} {M} {L} y:fvL-NB-M))                   ⟩
          (M  [ y ≔ L  ])  [ x ≔ N [ y ≔ L ]   ]
        ∎
 \end{code}
@@ -720,17 +719,17 @@ alpha-proof {x} {y} ⟨ M , N , L ⟩ nOcc nOcc2 x∉y∶fvL
   x:y∉bN = lemmalistNotOccurBindEf→ListNotOccurBindR (listNotOccurBx₁inv (listNotOccurBx₂inv (lemmalistNotOccurBindFR→ListNotOccurBindF nOcc)))
   x:y∉bL : ListNotOccurBind (x ∷ y ∷ []) L
   x:y∉bL = lemmalistNotOccurBindEf→ListNotOccurBindR (listNotOccurBx₂inv (listNotOccurBx₂inv (lemmalistNotOccurBindFR→ListNotOccurBindF nOcc)))
-  x:fvN∉bM : ListNotOccurBind (x ∷ fv  N) M
-  x:fvN∉bM = lemma-binds:cons (lemma-binds:head x:y∉bM) (lemma-binds++l (lemma-binds++r {fv M} fvM++fvN++fvL∉bM))
-  x∉bL : x notOccurBind L
-  x∉bL = lemma-binds:head x:y∉bL
-  y:fvL∉bM : ListNotOccurBind (y ∷ fv L) M
-  y:fvL∉bM = lemma-binds:cons (lemma-binds:head (lemma-binds:tail x:y∉bM)) (lemma-binds++r {fv N} (lemma-binds++r {fv M} fvM++fvN++fvL∉bM))
-  y:fvL∉bN : ListNotOccurBind (y ∷ fv L) N
-  y:fvL∉bN = lemma-binds:cons (lemma-binds:head (lemma-binds:tail x:y∉bN)) (lemma-binds++r {fv N} (lemma-binds++r {fv M} fvM++fvN++fvL∉bN))
-  y:fvL∉bM[x≔N]ₙ : ListNotOccurBind (y ∷ fv L) (M [ x ≔ N ]ₙ)
-  y:fvL∉bM[x≔N]ₙ
-    = lemma-foldCtxBinds {cF} {tF} {tF} {substaux} (lemma-substauxBinds (lemma-binds:cons (notOccurBR (notOccurBx notOccurBv (notOccurBindR→notOccurBindEf (lemma-binds:head y:fvL∉bN)))) (lemma-bindsR (lemma-binds× lemma-bindsv (lemmalistNotOccurBindFR→ListNotOccurBindEf (lemma-binds:tail y:fvL∉bN)))))) y:fvL∉bM 
+  x:fvN-NB-M : ListNotOccurBind (x ∷ fv  N) M
+  x:fvN-NB-M = lemma-binds:cons (lemma-binds:head x:y∉bM) (lemma-binds++l (lemma-binds++r {fv M} fvM++fvN++fvL∉bM))
+  x-NB-L : x notOccurBind L
+  x-NB-L = lemma-binds:head x:y∉bL
+  y:fvL-NB-M : ListNotOccurBind (y ∷ fv L) M
+  y:fvL-NB-M = lemma-binds:cons (lemma-binds:head (lemma-binds:tail x:y∉bM)) (lemma-binds++r {fv N} (lemma-binds++r {fv M} fvM++fvN++fvL∉bM))
+  y:fvL-NB-N : ListNotOccurBind (y ∷ fv L) N
+  y:fvL-NB-N = lemma-binds:cons (lemma-binds:head (lemma-binds:tail x:y∉bN)) (lemma-binds++r {fv N} (lemma-binds++r {fv M} fvM++fvN++fvL∉bN))
+  y:fvL-NB-M[x≔N]ₙ : ListNotOccurBind (y ∷ fv L) (M [ x ≔ N ]ₙ)
+  y:fvL-NB-M[x≔N]ₙ
+    = lemma-foldCtxBinds {cF} {tF} {tF} {substaux} (lemma-substauxBinds (lemma-binds:cons (notOccurBR (notOccurBx notOccurBv (notOccurBindR→notOccurBindEf (lemma-binds:head y:fvL-NB-N)))) (lemma-bindsR (lemma-binds× lemma-bindsv (lemmalistNotOccurBindFR→ListNotOccurBindEf (lemma-binds:tail y:fvL-NB-N)))))) y:fvL-NB-M 
   [x]∉bM[y≔L]ₙ : ListNotOccurBind (x ∷ []) (M [ y ≔ L ]ₙ)
   [x]∉bM[y≔L]ₙ = lemma-foldCtxBinds {cF} {tF} {tF} {substaux} (lemma-substauxBinds (lemma-bindsR ( lemma-binds× (notOccurBv ∷ []) ( lemmalistNotOccurBindFR→ListNotOccurBindEf ( lemma-binds:cons  (lemma-binds:head x:y∉bL) []))))) (lemma-binds:cons (lemma-binds:head x:y∉bM ) [])
   fv⟨y,L⟩∉bM : {L : μ tF} → ListNotOccurBind (y ∷ fv L) M → ListNotOccurBind (fv {cF} ⟨ y , L ⟩) M
@@ -746,14 +745,14 @@ alpha-proof {x} {y} ⟨ M , N , L ⟩ nOcc nOcc2 x∉y∶fvL
     = lemma-binds⊆  {fv {cF} ⟨ y , L ⟩ ++ fv N} {fv (N [ y ≔ L ]ₙ)}
                     (foldCtxFV {cF} {tF} {tF} {⟨ y , L ⟩} {N} {substaux} (λ {e} {ys} → lemma-substauxFv {y} {L} {e} {ys}) (λ {e} {S} → lemma-substauxFvS {y} {L} {e} {S}))
                     (lemma-binds++  {fv {cF} ⟨ y , L ⟩} {fv N}
-                                    (lemma-foldCtxBinds  {cF} {tF} {tF} {substaux} {⟨ y , L ⟩} {M} {fv {cF} ⟨ y , L ⟩} (lemma-substauxBinds (fv⟨y,L⟩∉b⟨y,L⟩ {L} y∉bL fvL∉bL)) (fv⟨y,L⟩∉bM {L} y:fvL∉bM))
+                                    (lemma-foldCtxBinds  {cF} {tF} {tF} {substaux} {⟨ y , L ⟩} {M} {fv {cF} ⟨ y , L ⟩} (lemma-substauxBinds (fv⟨y,L⟩∉b⟨y,L⟩ {L} y∉bL fvL∉bL)) (fv⟨y,L⟩∉bM {L} y:fvL-NB-M))
                                     (lemma-foldCtxBinds  {cF} {tF} {tF} {substaux}
                                                          (lemma-substauxBinds (lemma-bindsR ( lemma-binds× lemma-bindsv (lemmalistNotOccurBindFR→ListNotOccurBindEf (lemma-binds++l (lemma-binds++r {fv M} fvM++fvN++fvL∉bL))))))
                                                          (lemma-binds++l (lemma-binds++r {fv M} fvM++fvN++fvL∉bM))))
   x:fvN[y≔L]ₙ∉bM[y≔L]ₙ : ListNotOccurBind (x ∷ fv (N [ y ≔ L ]ₙ)) (M [ y ≔ L ]ₙ)
   x:fvN[y≔L]ₙ∉bM[y≔L]ₙ = lemma-binds:cons (lemma-binds:head [x]∉bM[y≔L]ₙ) fvN[y≔L]ₙ∉bM[y≔L]ₙ
-  x:fvN[y≔L]∉bM[y≔L]ₙ : ListNotOccurBind (x ∷ fv (N [ y ≔ L ])) (M [ y ≔ L ]ₙ)
-  x:fvN[y≔L]∉bM[y≔L]ₙ = subst (λ xs → ListNotOccurBind (x ∷ xs) (M [ y ≔ L ]ₙ)) (lemma∼fv (σ (lemmaSubsts y:fvL∉bN))) x:fvN[y≔L]ₙ∉bM[y≔L]ₙ
+  x:fvN[y≔L]-NB-M[y≔L]ₙ : ListNotOccurBind (x ∷ fv (N [ y ≔ L ])) (M [ y ≔ L ]ₙ)
+  x:fvN[y≔L]-NB-M[y≔L]ₙ = subst (λ xs → ListNotOccurBind (x ∷ xs) (M [ y ≔ L ]ₙ)) (lemma∼fv (σ (lemmaSubsts y:fvL-NB-N))) x:fvN[y≔L]ₙ∉bM[y≔L]ₙ
 \end{code}
 
 %<*substcompalphaproof>
