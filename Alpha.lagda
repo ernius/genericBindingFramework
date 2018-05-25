@@ -531,14 +531,14 @@ lemma-foldmapfα (|B| S   G)   p  (x , e)
 
 %<*lemma-foldfalpha>
 \begin{code}
-lemma-foldfα  : {F H : Functor}{f f' : ⟦ F ⟧ (μ H) → μ H}
+lemma-fold-alpha  : {F H : Functor}{f f' : ⟦ F ⟧ (μ H) → μ H}
               → ({e e' :  ⟦ F ⟧ (μ H)} → ∼αF F e e' → f e ∼α f' e') 
               → (e : μ F) → fold F f e ∼α fold F f' e
 \end{code}
 %</lemma-foldfalpha>
 
 \begin{code}
-lemma-foldfα {F} p e = lemma-foldmapfα |R| p e
+lemma-fold-alpha {F} p e = lemma-foldmapfα |R| p e
 \end{code}
 -- lemma-foldmapSCtx  : {F H C : Functor}(G : Functor){f : μ C → ⟦ F ⟧ (μ H) → μ H}{c c′ : μ C}
 --               → ({e e′ :  ⟦ F ⟧ (μ H)}{c c′ : μ C} → c ∼α c′ → ∼αF F e e′ → f c e ∼α f c′ e′)               
@@ -557,10 +557,10 @@ lemma-foldfα {F} p e = lemma-foldmapfα |R| p e
 
 %<*lemmafoldCtxalphactx>
 \begin{code}
-lemma-foldCtxαCtx  : {F H C : Functor}{f : μ C → ⟦ F ⟧ (μ H) → μ H}{c c′ : μ C}
+lemma-foldCtx-alpha-Ctx  : {F H C : Functor}{f : μ C → ⟦ F ⟧ (μ H) → μ H}{c c′ : μ C}
   →  ({e e′ :  ⟦ F ⟧ (μ H)}{c c′ : μ C} → c ∼α c′ → ∼αF F e e′ → f c e ∼α f c′ e′)          
   →  c ∼α c′ →  (e : μ F) → foldCtx F f c e ∼α foldCtx F f c′ e
-lemma-foldCtxαCtx {F} {f = f} {c} {c′} p c∼c′ e = lemma-foldfα (p c∼c′) e  
+lemma-foldCtx-alpha-Ctx {F} {f = f} {c} {c′} p c∼c′ e = lemma-fold-alpha (p c∼c′) e  
 \end{code}
 %</lemmafoldCtxalphactx>
 
@@ -746,7 +746,7 @@ lemma-foldmapα {F} {H} {C} (|B| S G) {f} {c} {c'}  {y , e} {z , e'}
 
 %<*lemmafoldCtxalpha>
 \begin{code}
-lemma-foldCtxα  : {F H C : Functor}{f : μ C → ⟦ F ⟧ (μ H) → μ H}{c c' : μ C}{e e' : μ F}
+lemma-foldCtx-alpha  : {F H C : Functor}{f : μ C → ⟦ F ⟧ (μ H) → μ H}{c c' : μ C}{e e' : μ F}
   →  ({e e′ :  ⟦ F ⟧ (μ H)}{c c′ : μ C} → c ∼α c′ → ∼αF F e e′ → f c e ∼α f c′ e′)
   → ({c : μ C}{S : Sort}{x y : V}{e : ⟦ F ⟧ (μ H)}
               → f (swap S x y c) (swapF F S x y e) ≡ swap S x y (f c e))
@@ -756,7 +756,7 @@ lemma-foldCtxα  : {F H C : Functor}{f : μ C → ⟦ F ⟧ (μ H) → μ H}{c c
 %</lemmafoldCtxalpha>
 
 \begin{code}
-lemma-foldCtxα prf prf2 nb nb' c∼c' e∼e' = lemma-foldmapα |R| prf prf2 nb nb' c∼c' e∼e' 
+lemma-foldCtx-alpha prf prf2 nb nb' c∼c' e∼e' = lemma-foldmapα |R| prf prf2 nb nb' c∼c' e∼e' 
 \end{code}
 
 \begin{code}

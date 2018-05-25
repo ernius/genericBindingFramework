@@ -180,12 +180,12 @@
 
 %<*bindersfreealphaelem>
 \begin{code}%
-\>\AgdaFunction{bindersFreeαElem} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}(}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{)(}\AgdaBound{e} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaFunction{∃} \AgdaSymbol{(λ} \AgdaBound{e'} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBind} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaBound{xs} \AgdaBound{e'}\AgdaSymbol{)}\<%
+\>\AgdaFunction{bindersFreeElem} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}(}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{)(}\AgdaBound{e} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaFunction{∃} \AgdaSymbol{(λ} \AgdaBound{e'} \AgdaSymbol{→} \AgdaFunction{ListNotOccurBind} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaBound{xs} \AgdaBound{e'}\AgdaSymbol{)}\<%
 \end{code}
 %</bindersfreealphaelem>
 
 \begin{code}%
-\>\AgdaFunction{bindersFreeαElem} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaBound{xs} \AgdaBound{e} \AgdaSymbol{=} \AgdaFunction{bindersFreeαElemF} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaInductiveConstructor{|R|} \AgdaBound{xs} \AgdaBound{e} \AgdaSymbol{(}\AgdaFunction{accF} \AgdaBound{e}\AgdaSymbol{)}\<%
+\>\AgdaFunction{bindersFreeElem} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaBound{xs} \AgdaBound{e} \AgdaSymbol{=} \AgdaFunction{bindersFreeαElemF} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaInductiveConstructor{|R|} \AgdaBound{xs} \AgdaBound{e} \AgdaSymbol{(}\AgdaFunction{accF} \AgdaBound{e}\AgdaSymbol{)}\<%
 \\
 %
 \\
@@ -348,8 +348,8 @@
 
 %<*bindersalpha>
 \begin{code}%
-\>\AgdaFunction{lemma-bindersFreeαElem} \AgdaSymbol{:} \<[25]%
-\>[25]\<%
+\>\AgdaFunction{lemma-bindersFreeElem} \AgdaSymbol{:} \<[24]%
+\>[24]\<%
 \\
 \>[2]\AgdaIndent{4}{}\<[4]%
 \>[4]\AgdaSymbol{\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}(}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{)(}\AgdaBound{e} \AgdaBound{e'} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)} \<[43]%
@@ -360,12 +360,12 @@
 \>[14]\<%
 \\
 \>[2]\AgdaIndent{4}{}\<[4]%
-\>[4]\AgdaSymbol{→} \AgdaFunction{bindersFreeαElem} \AgdaBound{xs} \AgdaBound{e} \AgdaDatatype{≡} \AgdaFunction{bindersFreeαElem} \AgdaBound{xs} \AgdaBound{e'}\<%
+\>[4]\AgdaSymbol{→} \AgdaFunction{bindersFreeElem} \AgdaBound{xs} \AgdaBound{e} \AgdaDatatype{≡} \AgdaFunction{bindersFreeElem} \AgdaBound{xs} \AgdaBound{e'}\<%
 \end{code}
 %</bindersalpha>
 
 \begin{code}%
-\>\AgdaFunction{lemma-bindersFreeαElem} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaBound{xs} \AgdaBound{e} \AgdaBound{e'} \AgdaBound{e∼e'}\<%
+\>\AgdaFunction{lemma-bindersFreeElem} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaBound{xs} \AgdaBound{e} \AgdaBound{e'} \AgdaBound{e∼e'}\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
 \>[2]\AgdaSymbol{=} \AgdaFunction{lemma-bindersFreeαElemF} \AgdaInductiveConstructor{|R|} \AgdaBound{xs} \AgdaBound{e} \AgdaBound{e'} \AgdaBound{e∼e'} \AgdaSymbol{(}\AgdaFunction{accF} \AgdaBound{e}\AgdaSymbol{)} \AgdaSymbol{(}\AgdaFunction{accF} \AgdaBound{e'}\AgdaSymbol{)}\<%
@@ -547,7 +547,7 @@
 \>[14]\<%
 \\
 \>[0]\AgdaIndent{4}{}\<[4]%
-\>[4]\AgdaSymbol{→} \AgdaField{proj₁} \AgdaSymbol{(}\AgdaFunction{bindersFreeαElem} \AgdaSymbol{(}\AgdaFunction{fv} \AgdaBound{e}\AgdaSymbol{)} \AgdaBound{e}\AgdaSymbol{)} \AgdaDatatype{≡} \AgdaField{proj₁} \AgdaSymbol{(}\AgdaFunction{bindersFreeαElem} \AgdaSymbol{(}\AgdaFunction{fv} \AgdaBound{e'}\AgdaSymbol{)} \AgdaBound{e'}\AgdaSymbol{)}\<%
+\>[4]\AgdaSymbol{→} \AgdaField{proj₁} \AgdaSymbol{(}\AgdaFunction{bindersFreeElem} \AgdaSymbol{(}\AgdaFunction{fv} \AgdaBound{e}\AgdaSymbol{)} \AgdaBound{e}\AgdaSymbol{)} \AgdaDatatype{≡} \AgdaField{proj₁} \AgdaSymbol{(}\AgdaFunction{bindersFreeElem} \AgdaSymbol{(}\AgdaFunction{fv} \AgdaBound{e'}\AgdaSymbol{)} \AgdaBound{e'}\AgdaSymbol{)}\<%
 \\
 \>\AgdaFunction{lemma-bindersFreeαFVα} \AgdaSymbol{\{}\AgdaArgument{e} \AgdaSymbol{=} \AgdaBound{e}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{e'}\AgdaSymbol{\}} \AgdaBound{e∼e'} \AgdaKeyword{with} \AgdaFunction{fv} \AgdaBound{e} \AgdaSymbol{|} \AgdaFunction{fv} \AgdaBound{e'} \AgdaSymbol{|} \AgdaFunction{lemma∼fv} \AgdaBound{e∼e'} \<[74]%
 \>[74]\<%
@@ -555,7 +555,7 @@
 \>\AgdaSymbol{...} \AgdaSymbol{|} \AgdaBound{fve} \AgdaSymbol{|} \AgdaSymbol{.}\AgdaBound{fve} \AgdaSymbol{|} \AgdaInductiveConstructor{refl}\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
-\>[2]\AgdaKeyword{with} \AgdaFunction{bindersFreeαElem} \AgdaBound{fve} \AgdaBound{e} \AgdaSymbol{|} \AgdaFunction{bindersFreeαElem} \AgdaBound{fve} \AgdaBound{e'} \AgdaSymbol{|} \AgdaFunction{lemma-bindersFreeαElem} \AgdaBound{fve} \AgdaBound{e} \AgdaBound{e'} \AgdaBound{e∼e'}\<%
+\>[2]\AgdaKeyword{with} \AgdaFunction{bindersFreeElem} \AgdaBound{fve} \AgdaBound{e} \AgdaSymbol{|} \AgdaFunction{bindersFreeElem} \AgdaBound{fve} \AgdaBound{e'} \AgdaSymbol{|} \AgdaFunction{lemma-bindersFreeElem} \AgdaBound{fve} \AgdaBound{e} \AgdaBound{e'} \AgdaBound{e∼e'}\<%
 \\
 \>\AgdaSymbol{...} \AgdaSymbol{|} \AgdaSymbol{(}\AgdaBound{r} \AgdaInductiveConstructor{,} \AgdaBound{pr}\AgdaSymbol{)} \<[17]%
 \>[17]\AgdaSymbol{|} \AgdaSymbol{(}\AgdaSymbol{.}\AgdaBound{r} \AgdaInductiveConstructor{,} \AgdaSymbol{.}\AgdaBound{pr}\AgdaSymbol{)} \<[31]%
@@ -574,7 +574,7 @@
 \>[41]\<%
 \\
 \>[2]\AgdaIndent{4}{}\<[4]%
-\>[4]\AgdaSymbol{→} \AgdaField{proj₁} \AgdaSymbol{(}\AgdaFunction{bindersFreeαElem} \AgdaBound{xs} \AgdaBound{e}\AgdaSymbol{)} \AgdaFunction{∼α} \AgdaBound{e}\<%
+\>[4]\AgdaSymbol{→} \AgdaField{proj₁} \AgdaSymbol{(}\AgdaFunction{bindersFreeElem} \AgdaBound{xs} \AgdaBound{e}\AgdaSymbol{)} \AgdaFunction{∼α} \AgdaBound{e}\<%
 \end{code}
 %</lemmabindersfreealpha>
 
@@ -585,7 +585,7 @@
 \begin{code}%
 \>\AgdaFunction{bindersFreeα} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}(}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{)(}\AgdaBound{e} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{F}\<%
 \\
-\>\AgdaFunction{bindersFreeα} \AgdaBound{xs} \AgdaBound{e} \AgdaSymbol{=} \AgdaField{proj₁} \AgdaSymbol{(}\AgdaFunction{bindersFreeαElem} \AgdaSymbol{(}\AgdaFunction{fv} \AgdaBound{e} \AgdaFunction{++} \AgdaBound{xs}\AgdaSymbol{)} \AgdaBound{e}\AgdaSymbol{)}\<%
+\>\AgdaFunction{bindersFreeα} \AgdaBound{xs} \AgdaBound{e} \AgdaSymbol{=} \AgdaField{proj₁} \AgdaSymbol{(}\AgdaFunction{bindersFreeElem} \AgdaSymbol{(}\AgdaFunction{fv} \AgdaBound{e} \AgdaFunction{++} \AgdaBound{xs}\AgdaSymbol{)} \AgdaBound{e}\AgdaSymbol{)}\<%
 \\
 %
 \\
@@ -613,7 +613,7 @@
 \>\AgdaSymbol{...} \AgdaSymbol{|} \AgdaBound{fve} \AgdaSymbol{|} \AgdaSymbol{.}\AgdaBound{fve} \AgdaSymbol{|} \AgdaInductiveConstructor{refl}\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
-\>[2]\AgdaKeyword{with} \AgdaFunction{bindersFreeαElem} \AgdaSymbol{(}\AgdaBound{fve} \AgdaFunction{++} \AgdaBound{xs}\AgdaSymbol{)} \AgdaBound{e} \AgdaSymbol{|} \AgdaFunction{bindersFreeαElem} \AgdaSymbol{(}\AgdaBound{fve} \AgdaFunction{++} \AgdaBound{xs}\AgdaSymbol{)} \AgdaBound{e'} \AgdaSymbol{|} \AgdaFunction{lemma-bindersFreeαElem} \AgdaSymbol{(}\AgdaBound{fve} \AgdaFunction{++} \AgdaBound{xs}\AgdaSymbol{)} \AgdaBound{e} \AgdaBound{e'} \AgdaBound{e∼e'}\<%
+\>[2]\AgdaKeyword{with} \AgdaFunction{bindersFreeElem} \AgdaSymbol{(}\AgdaBound{fve} \AgdaFunction{++} \AgdaBound{xs}\AgdaSymbol{)} \AgdaBound{e} \AgdaSymbol{|} \AgdaFunction{bindersFreeElem} \AgdaSymbol{(}\AgdaBound{fve} \AgdaFunction{++} \AgdaBound{xs}\AgdaSymbol{)} \AgdaBound{e'} \AgdaSymbol{|} \AgdaFunction{lemma-bindersFreeElem} \AgdaSymbol{(}\AgdaBound{fve} \AgdaFunction{++} \AgdaBound{xs}\AgdaSymbol{)} \AgdaBound{e} \AgdaBound{e'} \AgdaBound{e∼e'}\<%
 \\
 \>\AgdaSymbol{...} \AgdaSymbol{|} \AgdaSymbol{(}\AgdaBound{r} \AgdaInductiveConstructor{,} \AgdaBound{pr}\AgdaSymbol{)} \<[17]%
 \>[17]\AgdaSymbol{|} \AgdaSymbol{(}\AgdaSymbol{.}\AgdaBound{r} \AgdaInductiveConstructor{,} \AgdaSymbol{.}\AgdaBound{pr}\AgdaSymbol{)} \<[31]%
@@ -636,7 +636,7 @@
 \>[11]\AgdaSymbol{(}\AgdaFunction{sym} \AgdaSymbol{(}\AgdaFunction{lemma∼fv} \AgdaSymbol{(}\AgdaFunction{lemma-bindersFreeαAlpha} \AgdaSymbol{(}\AgdaFunction{fv} \AgdaBound{e} \AgdaFunction{++} \AgdaBound{xs}\AgdaSymbol{)} \AgdaBound{e}\AgdaSymbol{)))}\<%
 \\
 \>[2]\AgdaIndent{11}{}\<[11]%
-\>[11]\AgdaSymbol{(}\AgdaField{proj₂} \AgdaSymbol{(}\AgdaFunction{bindersFreeαElem} \AgdaSymbol{(}\AgdaFunction{fv} \AgdaBound{e} \AgdaFunction{++} \AgdaBound{xs}\AgdaSymbol{)} \AgdaBound{e}\AgdaSymbol{))}\<%
+\>[11]\AgdaSymbol{(}\AgdaField{proj₂} \AgdaSymbol{(}\AgdaFunction{bindersFreeElem} \AgdaSymbol{(}\AgdaFunction{fv} \AgdaBound{e} \AgdaFunction{++} \AgdaBound{xs}\AgdaSymbol{)} \AgdaBound{e}\AgdaSymbol{))}\<%
 \\
 %
 \\
@@ -669,77 +669,77 @@
 
 %<*alphainductionhypotheses>
 \begin{code}%
-\>\AgdaFunction{fihα} \AgdaSymbol{:} \<[8]%
-\>[8]\AgdaSymbol{\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}(}\AgdaBound{G} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{)(}\AgdaBound{P} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F} \AgdaSymbol{→} \AgdaPrimitiveType{Set}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaDatatype{List} \AgdaFunction{V} \AgdaSymbol{→} \<[62]%
-\>[62]\AgdaFunction{⟦} \AgdaBound{G} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaPrimitiveType{Set}\<%
+\>\AgdaFunction{fihalpha} \AgdaSymbol{:} \<[12]%
+\>[12]\AgdaSymbol{\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}(}\AgdaBound{G} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{)(}\AgdaBound{P} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F} \AgdaSymbol{→} \AgdaPrimitiveType{Set}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaDatatype{List} \AgdaFunction{V} \AgdaSymbol{→} \<[66]%
+\>[66]\AgdaFunction{⟦} \AgdaBound{G} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaPrimitiveType{Set}\<%
 \end{code}
 %</alphainductionhypotheses>
 
 %<*alphainductionhypothesescases>
 \begin{code}%
-\>\AgdaFunction{fihα} \AgdaInductiveConstructor{|R|} \<[19]%
-\>[19]\AgdaBound{P} \AgdaBound{xs} \AgdaBound{e} \<[35]%
-\>[35]\AgdaSymbol{=} \<[38]%
-\>[38]\AgdaBound{P} \AgdaBound{e} \<[47]%
-\>[47]\AgdaFunction{×} \AgdaSymbol{(∀} \AgdaBound{a} \AgdaSymbol{→} \AgdaBound{a} \AgdaFunction{∈} \AgdaBound{xs} \AgdaSymbol{→} \AgdaBound{a} \AgdaFunction{notOccurBind} \AgdaBound{e}\AgdaSymbol{)}\<%
+\>\AgdaFunction{fihalpha} \AgdaInductiveConstructor{|R|} \<[23]%
+\>[23]\AgdaBound{P} \AgdaBound{xs} \AgdaBound{e} \<[39]%
+\>[39]\AgdaSymbol{=} \<[42]%
+\>[42]\AgdaBound{P} \AgdaBound{e} \<[51]%
+\>[51]\AgdaFunction{×} \AgdaSymbol{(∀} \AgdaBound{a} \AgdaSymbol{→} \AgdaBound{a} \AgdaFunction{∈} \AgdaBound{xs} \AgdaSymbol{→} \AgdaBound{a} \AgdaFunction{notOccurBind} \AgdaBound{e}\AgdaSymbol{)}\<%
 \\
-\>\AgdaFunction{fihα} \AgdaSymbol{(}\AgdaInductiveConstructor{|B|} \AgdaBound{S} \<[14]%
-\>[14]\AgdaBound{G}\AgdaSymbol{)} \<[19]%
-\>[19]\AgdaBound{P} \AgdaBound{xs} \AgdaSymbol{(}\AgdaBound{x} \AgdaInductiveConstructor{,} \AgdaBound{e}\AgdaSymbol{)} \<[35]%
-\>[35]\AgdaSymbol{=} \<[38]%
-\>[38]\AgdaBound{x} \AgdaFunction{∉} \AgdaBound{xs} \<[47]%
-\>[47]\AgdaFunction{×} \AgdaFunction{fihα} \AgdaBound{G} \<[57]%
-\>[57]\AgdaBound{P} \AgdaBound{xs} \AgdaBound{e}\<%
+\>\AgdaFunction{fihalpha} \AgdaSymbol{(}\AgdaInductiveConstructor{|B|} \AgdaBound{S} \<[18]%
+\>[18]\AgdaBound{G}\AgdaSymbol{)} \<[23]%
+\>[23]\AgdaBound{P} \AgdaBound{xs} \AgdaSymbol{(}\AgdaBound{x} \AgdaInductiveConstructor{,} \AgdaBound{e}\AgdaSymbol{)} \<[39]%
+\>[39]\AgdaSymbol{=} \<[42]%
+\>[42]\AgdaBound{x} \AgdaFunction{∉} \AgdaBound{xs} \<[51]%
+\>[51]\AgdaFunction{×} \AgdaFunction{fihalpha} \AgdaBound{G} \<[65]%
+\>[65]\AgdaBound{P} \AgdaBound{xs} \AgdaBound{e}\<%
 \end{code}
 %</alphainductionhypothesescases>
 
 \begin{code}%
-\>\AgdaFunction{fihα} \AgdaSymbol{(}\AgdaInductiveConstructor{|v|} \<[12]%
-\>[12]\AgdaBound{S}\AgdaSymbol{)} \<[19]%
-\>[19]\AgdaBound{P} \AgdaBound{xs} \AgdaBound{n} \<[35]%
-\>[35]\AgdaSymbol{=} \<[38]%
-\>[38]\AgdaRecord{⊤}\<%
+\>\AgdaFunction{fihalpha} \AgdaSymbol{(}\AgdaInductiveConstructor{|v|} \<[16]%
+\>[16]\AgdaBound{S}\AgdaSymbol{)} \<[23]%
+\>[23]\AgdaBound{P} \AgdaBound{xs} \AgdaBound{n} \<[39]%
+\>[39]\AgdaSymbol{=} \<[42]%
+\>[42]\AgdaRecord{⊤}\<%
 \\
-\>\AgdaFunction{fihα} \AgdaInductiveConstructor{|1|} \<[19]%
-\>[19]\AgdaBound{P} \AgdaBound{xs} \AgdaInductiveConstructor{tt} \<[35]%
-\>[35]\AgdaSymbol{=} \<[38]%
-\>[38]\AgdaRecord{⊤}\<%
+\>\AgdaFunction{fihalpha} \AgdaInductiveConstructor{|1|} \<[23]%
+\>[23]\AgdaBound{P} \AgdaBound{xs} \AgdaInductiveConstructor{tt} \<[39]%
+\>[39]\AgdaSymbol{=} \<[42]%
+\>[42]\AgdaRecord{⊤}\<%
 \\
-\>\AgdaFunction{fihα} \AgdaSymbol{(}\AgdaInductiveConstructor{|E|} \<[12]%
-\>[12]\AgdaBound{B}\AgdaSymbol{)} \<[19]%
-\>[19]\AgdaBound{P} \AgdaBound{xs} \AgdaBound{b} \<[35]%
-\>[35]\AgdaSymbol{=} \<[38]%
-\>[38]\AgdaRecord{⊤}\<%
+\>\AgdaFunction{fihalpha} \AgdaSymbol{(}\AgdaInductiveConstructor{|E|} \<[16]%
+\>[16]\AgdaBound{B}\AgdaSymbol{)} \<[23]%
+\>[23]\AgdaBound{P} \AgdaBound{xs} \AgdaBound{b} \<[39]%
+\>[39]\AgdaSymbol{=} \<[42]%
+\>[42]\AgdaRecord{⊤}\<%
 \\
-\>\AgdaFunction{fihα} \AgdaSymbol{(}\AgdaInductiveConstructor{|Ef|} \<[12]%
-\>[12]\AgdaBound{G}\AgdaSymbol{)} \<[19]%
-\>[19]\AgdaBound{P} \AgdaBound{xs} \AgdaBound{e} \<[35]%
-\>[35]\AgdaSymbol{=} \<[38]%
-\>[38]\AgdaRecord{⊤}\<%
+\>\AgdaFunction{fihalpha} \AgdaSymbol{(}\AgdaInductiveConstructor{|Ef|} \<[16]%
+\>[16]\AgdaBound{G}\AgdaSymbol{)} \<[23]%
+\>[23]\AgdaBound{P} \AgdaBound{xs} \AgdaBound{e} \<[39]%
+\>[39]\AgdaSymbol{=} \<[42]%
+\>[42]\AgdaRecord{⊤}\<%
 \\
-\>\AgdaFunction{fihα} \AgdaSymbol{(}\AgdaBound{G₁} \AgdaInductiveConstructor{|+|} \<[14]%
-\>[14]\AgdaBound{G₂}\AgdaSymbol{)} \<[19]%
-\>[19]\AgdaBound{P} \AgdaBound{xs} \AgdaSymbol{(}\AgdaInductiveConstructor{inj₁} \AgdaBound{e}\AgdaSymbol{)} \<[35]%
-\>[35]\AgdaSymbol{=} \<[38]%
-\>[38]\AgdaFunction{fihα} \AgdaBound{G₁} \<[47]%
-\>[47]\AgdaBound{P} \AgdaBound{xs} \AgdaBound{e} \<[54]%
-\>[54]\<%
+\>\AgdaFunction{fihalpha} \AgdaSymbol{(}\AgdaBound{G₁} \AgdaInductiveConstructor{|+|} \<[18]%
+\>[18]\AgdaBound{G₂}\AgdaSymbol{)} \<[23]%
+\>[23]\AgdaBound{P} \AgdaBound{xs} \AgdaSymbol{(}\AgdaInductiveConstructor{inj₁} \AgdaBound{e}\AgdaSymbol{)} \<[39]%
+\>[39]\AgdaSymbol{=} \<[42]%
+\>[42]\AgdaFunction{fihalpha} \AgdaBound{G₁} \<[55]%
+\>[55]\AgdaBound{P} \AgdaBound{xs} \AgdaBound{e} \<[62]%
+\>[62]\<%
 \\
-\>\AgdaFunction{fihα} \AgdaSymbol{(}\AgdaBound{G₁} \AgdaInductiveConstructor{|+|} \<[14]%
-\>[14]\AgdaBound{G₂}\AgdaSymbol{)} \<[19]%
-\>[19]\AgdaBound{P} \AgdaBound{xs} \AgdaSymbol{(}\AgdaInductiveConstructor{inj₂} \AgdaBound{e}\AgdaSymbol{)} \<[35]%
-\>[35]\AgdaSymbol{=} \<[38]%
-\>[38]\AgdaFunction{fihα} \AgdaBound{G₂} \<[47]%
-\>[47]\AgdaBound{P} \AgdaBound{xs} \AgdaBound{e} \<[54]%
-\>[54]\<%
+\>\AgdaFunction{fihalpha} \AgdaSymbol{(}\AgdaBound{G₁} \AgdaInductiveConstructor{|+|} \<[18]%
+\>[18]\AgdaBound{G₂}\AgdaSymbol{)} \<[23]%
+\>[23]\AgdaBound{P} \AgdaBound{xs} \AgdaSymbol{(}\AgdaInductiveConstructor{inj₂} \AgdaBound{e}\AgdaSymbol{)} \<[39]%
+\>[39]\AgdaSymbol{=} \<[42]%
+\>[42]\AgdaFunction{fihalpha} \AgdaBound{G₂} \<[55]%
+\>[55]\AgdaBound{P} \AgdaBound{xs} \AgdaBound{e} \<[62]%
+\>[62]\<%
 \\
-\>\AgdaFunction{fihα} \AgdaSymbol{(}\AgdaBound{G₁} \AgdaInductiveConstructor{|x|} \<[14]%
-\>[14]\AgdaBound{G₂}\AgdaSymbol{)} \<[19]%
-\>[19]\AgdaBound{P} \AgdaBound{xs} \AgdaSymbol{(}\AgdaBound{e₁} \AgdaInductiveConstructor{,} \AgdaBound{e₂}\AgdaSymbol{)} \<[35]%
-\>[35]\AgdaSymbol{=} \<[38]%
-\>[38]\AgdaFunction{fihα} \AgdaBound{G₁} \<[47]%
-\>[47]\AgdaBound{P} \AgdaBound{xs} \AgdaBound{e₁} \<[56]%
-\>[56]\AgdaFunction{×} \AgdaFunction{fihα} \AgdaBound{G₂} \AgdaBound{P} \AgdaBound{xs} \AgdaBound{e₂}\<%
+\>\AgdaFunction{fihalpha} \AgdaSymbol{(}\AgdaBound{G₁} \AgdaInductiveConstructor{|x|} \<[18]%
+\>[18]\AgdaBound{G₂}\AgdaSymbol{)} \<[23]%
+\>[23]\AgdaBound{P} \AgdaBound{xs} \AgdaSymbol{(}\AgdaBound{e₁} \AgdaInductiveConstructor{,} \AgdaBound{e₂}\AgdaSymbol{)} \<[39]%
+\>[39]\AgdaSymbol{=} \<[42]%
+\>[42]\AgdaFunction{fihalpha} \AgdaBound{G₁} \<[55]%
+\>[55]\AgdaBound{P} \AgdaBound{xs} \AgdaBound{e₁} \<[64]%
+\>[64]\AgdaFunction{×} \AgdaFunction{fihalpha} \AgdaBound{G₂} \AgdaBound{P} \AgdaBound{xs} \AgdaBound{e₂}\<%
 \end{code}
 
 
@@ -759,8 +759,8 @@
 \>[5]\AgdaSymbol{→} \AgdaSymbol{(∀} \AgdaBound{c} \AgdaSymbol{→} \AgdaBound{c} \AgdaFunction{∈} \AgdaBound{xs} \AgdaSymbol{→} \AgdaDatatype{notOccurBindF} \AgdaBound{c} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaBound{G} \AgdaBound{e}\AgdaSymbol{)}\<%
 \\
 \>[0]\AgdaIndent{5}{}\<[5]%
-\>[5]\AgdaSymbol{→} \AgdaFunction{fihα} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaBound{G} \<[40]%
-\>[40]\AgdaBound{P} \AgdaBound{xs} \AgdaBound{e}\<%
+\>[5]\AgdaSymbol{→} \AgdaFunction{fihalpha} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaBound{G} \<[44]%
+\>[44]\AgdaBound{P} \AgdaBound{xs} \AgdaBound{e}\<%
 \\
 \>\AgdaFunction{lemma-fih∧notOccurBind⇛fihα} \AgdaSymbol{(}\AgdaInductiveConstructor{|v|} \AgdaBound{x}\AgdaSymbol{)} \<[40]%
 \>[40]\AgdaBound{P} \AgdaBound{e} \<[53]%
@@ -858,19 +858,19 @@
 
 %<*alphainductionprinciple>
 \begin{code}%
-\>\AgdaFunction{αPrimInd} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}(}\AgdaBound{P} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F} \AgdaSymbol{→} \AgdaPrimitiveType{Set}\AgdaSymbol{)(}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaFunction{αCompatiblePred} \AgdaBound{P} \<[73]%
-\>[73]\<%
+\>\AgdaFunction{alphaPrimInd} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}(}\AgdaBound{P} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F} \AgdaSymbol{→} \AgdaPrimitiveType{Set}\AgdaSymbol{)(}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaFunction{αCompatiblePred} \AgdaBound{P} \<[77]%
+\>[77]\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
-\>[2]\AgdaSymbol{→} \AgdaSymbol{((}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{))} \AgdaSymbol{→} \AgdaFunction{fihα} \AgdaBound{F} \AgdaBound{P} \AgdaBound{xs} \AgdaBound{e} \AgdaSymbol{→} \AgdaBound{P} \AgdaInductiveConstructor{⟨} \AgdaBound{e} \AgdaInductiveConstructor{⟩}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaSymbol{∀} \AgdaBound{e} \AgdaSymbol{→} \AgdaBound{P} \AgdaBound{e}\<%
+\>[2]\AgdaSymbol{→} \AgdaSymbol{((}\AgdaBound{e} \AgdaSymbol{:} \AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{))} \AgdaSymbol{→} \AgdaFunction{fihalpha} \AgdaBound{F} \AgdaBound{P} \AgdaBound{xs} \AgdaBound{e} \AgdaSymbol{→} \AgdaBound{P} \AgdaInductiveConstructor{⟨} \AgdaBound{e} \AgdaInductiveConstructor{⟩}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaSymbol{∀} \AgdaBound{e} \AgdaSymbol{→} \AgdaBound{P} \AgdaBound{e}\<%
 \end{code}
 %</alphainductionprinciple>
 
 \begin{code}%
-\>\AgdaFunction{αPrimInd} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaBound{P} \AgdaBound{xs} \AgdaBound{αP} \AgdaBound{p} \AgdaBound{e}\<%
+\>\AgdaFunction{alphaPrimInd} \AgdaSymbol{\{}\AgdaBound{F}\AgdaSymbol{\}} \AgdaBound{P} \AgdaBound{xs} \AgdaBound{αP} \AgdaBound{p} \AgdaBound{e}\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
-\>[2]\AgdaKeyword{with} \AgdaFunction{bindersFreeαElem} \AgdaBound{xs} \AgdaBound{e}\<%
+\>[2]\AgdaKeyword{with} \AgdaFunction{bindersFreeElem} \AgdaBound{xs} \AgdaBound{e}\<%
 \\
 \>[2]\AgdaIndent{5}{}\<[5]%
 \>[5]\AgdaSymbol{|} \AgdaFunction{lemma-bindersFreeαAlpha} \AgdaBound{xs} \AgdaBound{e}\<%
@@ -923,13 +923,13 @@
 --   → {e : μ F} 
 --   → strong∼αCompatible (αIteration xs f) e
 -- lemma-αIteration-StrongαCompatible {xs = xs} {f} {e} e' e∼αe' 
---   with bindersFreeαElem xs e | bindersFreeαElem xs e' 
---   | lemma-bindersFreeαElem xs e e' e∼αe' 
+--   with bindersFreeElem xs e | bindersFreeElem xs e' 
+--   | lemma-bindersFreeElem xs e e' e∼αe' 
 -- ... | (x , b) | (.x , .b) | refl = refl
 
 {- Another way to obtain α Iteration -}
 -- foldα : {A : Set}(F : Functor) → List V → (⟦ F ⟧ A → A) → μ F → A
--- foldα F xs f e with bindersFreeαElem xs e
+-- foldα F xs f e with bindersFreeElem xs e
 -- ... | e′ , _ = fold  F f e′
 \end{code}
 
@@ -939,17 +939,20 @@
 
 %<*foldCtxalpha>
 \begin{code}%
-\>\AgdaFunction{foldCtxα} \AgdaSymbol{:} \<[12]%
-\>[12]\AgdaSymbol{\{}\AgdaBound{C} \AgdaBound{H} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}(}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{C} \AgdaSymbol{→} \AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{)} \<[63]%
-\>[63]\AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{C} \AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{F} \AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{H}\<%
+\>\AgdaFunction{foldCtx-alpha} \AgdaSymbol{:} \<[17]%
+\>[17]\AgdaSymbol{\{}\AgdaBound{C} \AgdaBound{H} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}(}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{C} \AgdaSymbol{→} \AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{)} \<[68]%
+\>[68]\AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{C} \AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{F} \AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{H}\<%
 \\
-\>\AgdaFunction{foldCtxα} \AgdaBound{F} \AgdaBound{f} \AgdaBound{c} \AgdaBound{e} \AgdaSymbol{=} \AgdaFunction{foldCtx} \AgdaBound{F} \AgdaBound{f} \AgdaBound{c} \AgdaSymbol{(}\AgdaField{proj₁} \AgdaSymbol{(}\AgdaFunction{bindersFreeαElem} \AgdaSymbol{(}\AgdaFunction{fv} \AgdaBound{c}\AgdaSymbol{)} \AgdaBound{e}\AgdaSymbol{))}\<%
+\>\AgdaFunction{foldCtx-alpha} \AgdaBound{F} \AgdaBound{f} \AgdaBound{c} \AgdaBound{e} \AgdaSymbol{=} \AgdaFunction{foldCtx} \AgdaBound{F} \AgdaBound{f} \AgdaBound{c} \AgdaSymbol{(}\AgdaField{proj₁} \AgdaSymbol{(}\AgdaFunction{bindersFreeElem} \AgdaSymbol{(}\AgdaFunction{fv} \AgdaBound{c}\AgdaSymbol{)} \AgdaBound{e}\AgdaSymbol{))}\<%
 \end{code}
 %</foldCtxalpha>
 
 %<*lemmafoldCtxalpha>
 \begin{code}%
-\>\AgdaFunction{lemma-foldCtxα-foldCtx} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{C} \AgdaBound{H} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}(}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{)\{}\AgdaBound{f} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{C} \AgdaSymbol{→} \AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{\}\{}\AgdaBound{c} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{C}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{\}}\<%
+\>\AgdaFunction{lemma-foldCtxAlpha-foldCtx} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{C} \AgdaBound{H} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}(}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{)}\<%
+\\
+\>[0]\AgdaIndent{5}{}\<[5]%
+\>[5]\AgdaSymbol{\{}\AgdaBound{f} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{C} \AgdaSymbol{→} \AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{\}\{}\AgdaBound{c} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{C}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{\}}\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
 \>[2]\AgdaSymbol{→} \<[5]%
@@ -968,19 +971,15 @@
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
 \>[2]\AgdaSymbol{→} \<[5]%
-\>[5]\AgdaFunction{ListNotOccurBind} \AgdaSymbol{(}\AgdaFunction{fv} \AgdaBound{c}\AgdaSymbol{)} \AgdaBound{e}\<%
-\\
-\>[0]\AgdaIndent{2}{}\<[2]%
-\>[2]\AgdaSymbol{→} \<[5]%
-\>[5]\AgdaFunction{foldCtxα} \AgdaBound{F} \AgdaBound{f} \AgdaBound{c} \AgdaBound{e} \AgdaFunction{∼α} \AgdaFunction{foldCtx} \AgdaBound{F} \AgdaBound{f} \AgdaBound{c} \AgdaBound{e}\<%
+\>[5]\AgdaFunction{ListNotOccurBind} \AgdaSymbol{(}\AgdaFunction{fv} \AgdaBound{c}\AgdaSymbol{)} \AgdaBound{e} \AgdaSymbol{→} \AgdaFunction{foldCtx-alpha} \AgdaBound{F} \AgdaBound{f} \AgdaBound{c} \AgdaBound{e} \AgdaFunction{∼α} \AgdaFunction{foldCtx} \AgdaBound{F} \AgdaBound{f} \AgdaBound{c} \AgdaBound{e}\<%
 \end{code}
 %</lemmafoldCtxalpha>
 
 \begin{code}%
-\>\AgdaFunction{lemma-foldCtxα-foldCtx} \AgdaBound{F} \AgdaSymbol{\{}\AgdaArgument{c} \AgdaSymbol{=} \AgdaBound{c}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{e}\AgdaSymbol{\}} \AgdaBound{prf} \AgdaBound{prf2} \AgdaBound{cNotBinde} \AgdaKeyword{with} \AgdaFunction{bindersFreeαElem} \AgdaSymbol{(}\AgdaFunction{fv} \AgdaBound{c}\AgdaSymbol{)} \AgdaBound{e} \AgdaSymbol{|} \AgdaFunction{lemma-bindersFreeαAlpha} \AgdaSymbol{(}\AgdaFunction{fv} \AgdaBound{c}\AgdaSymbol{)} \AgdaBound{e}\<%
+\>\AgdaFunction{lemma-foldCtxAlpha-foldCtx} \AgdaBound{F} \AgdaSymbol{\{}\AgdaArgument{c} \AgdaSymbol{=} \AgdaBound{c}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{e}\AgdaSymbol{\}} \AgdaBound{prf} \AgdaBound{prf2} \AgdaBound{cNotBinde} \AgdaKeyword{with} \AgdaFunction{bindersFreeElem} \AgdaSymbol{(}\AgdaFunction{fv} \AgdaBound{c}\AgdaSymbol{)} \AgdaBound{e} \AgdaSymbol{|} \AgdaFunction{lemma-bindersFreeαAlpha} \AgdaSymbol{(}\AgdaFunction{fv} \AgdaBound{c}\AgdaSymbol{)} \AgdaBound{e}\<%
 \\
-\>\AgdaSymbol{...} \AgdaSymbol{|} \AgdaBound{e′} \AgdaInductiveConstructor{,} \AgdaBound{nb} \AgdaSymbol{|} \AgdaBound{e′∼e} \AgdaSymbol{=} \AgdaFunction{lemma-foldCtxα} \AgdaBound{prf} \AgdaBound{prf2} \AgdaBound{nb} \AgdaBound{cNotBinde} \AgdaFunction{ρ} \AgdaBound{e′∼e} \<[68]%
-\>[68]\<%
+\>\AgdaSymbol{...} \AgdaSymbol{|} \AgdaBound{e′} \AgdaInductiveConstructor{,} \AgdaBound{nb} \AgdaSymbol{|} \AgdaBound{e′∼e} \AgdaSymbol{=} \AgdaFunction{lemma-foldCtx-alpha} \AgdaBound{prf} \AgdaBound{prf2} \AgdaBound{nb} \AgdaBound{cNotBinde} \AgdaFunction{ρ} \AgdaBound{e′∼e} \<[73]%
+\>[73]\<%
 \end{code}
 
 
@@ -993,7 +992,7 @@
 \>[43]\AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{\}\{}\AgdaBound{c} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{C}\AgdaSymbol{\}\{}\AgdaBound{e} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{\}}\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
-\>[2]\AgdaSymbol{→} \AgdaFunction{strong∼αCompatible} \AgdaSymbol{(}\AgdaFunction{foldCtxα} \AgdaBound{F} \AgdaBound{f} \AgdaBound{c}\AgdaSymbol{)} \AgdaBound{e}\<%
+\>[2]\AgdaSymbol{→} \AgdaFunction{strong∼αCompatible} \AgdaSymbol{(}\AgdaFunction{foldCtx-alpha} \AgdaBound{F} \AgdaBound{f} \AgdaBound{c}\AgdaSymbol{)} \AgdaBound{e}\<%
 \end{code}
 %</foldCtxalphastrongalphacompatible>
 
@@ -1002,19 +1001,19 @@
 \>[58]\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
-\>[2]\AgdaKeyword{with} \AgdaFunction{bindersFreeαElem} \AgdaSymbol{(}\AgdaFunction{fv} \AgdaBound{c}\AgdaSymbol{)} \AgdaBound{e} \AgdaSymbol{|} \AgdaFunction{bindersFreeαElem} \AgdaSymbol{(}\AgdaFunction{fv} \AgdaBound{c}\AgdaSymbol{)} \AgdaBound{e'} \<[62]%
-\>[62]\<%
+\>[2]\AgdaKeyword{with} \AgdaFunction{bindersFreeElem} \AgdaSymbol{(}\AgdaFunction{fv} \AgdaBound{c}\AgdaSymbol{)} \AgdaBound{e} \AgdaSymbol{|} \AgdaFunction{bindersFreeElem} \AgdaSymbol{(}\AgdaFunction{fv} \AgdaBound{c}\AgdaSymbol{)} \AgdaBound{e'} \<[60]%
+\>[60]\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
-\>[2]\AgdaSymbol{|} \AgdaFunction{lemma-bindersFreeαElem} \AgdaSymbol{(}\AgdaFunction{fv} \AgdaBound{c}\AgdaSymbol{)} \AgdaBound{e} \AgdaBound{e'} \AgdaBound{e∼αe'} \<[45]%
-\>[45]\<%
+\>[2]\AgdaSymbol{|} \AgdaFunction{lemma-bindersFreeElem} \AgdaSymbol{(}\AgdaFunction{fv} \AgdaBound{c}\AgdaSymbol{)} \AgdaBound{e} \AgdaBound{e'} \AgdaBound{e∼αe'} \<[44]%
+\>[44]\<%
 \\
 \>\AgdaSymbol{...} \AgdaSymbol{|} \AgdaSymbol{(}\AgdaBound{x} \AgdaInductiveConstructor{,} \AgdaBound{b}\AgdaSymbol{)} \AgdaSymbol{|} \AgdaSymbol{(}\AgdaSymbol{.}\AgdaBound{x} \AgdaInductiveConstructor{,} \AgdaSymbol{.}\AgdaBound{b}\AgdaSymbol{)} \AgdaSymbol{|} \AgdaInductiveConstructor{refl} \AgdaSymbol{=} \AgdaInductiveConstructor{refl}\<%
 \end{code}
 
 %<*alphaproof>
 \begin{code}%
-\>\AgdaFunction{αProof} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}(}\AgdaBound{P} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F} \AgdaSymbol{→} \AgdaPrimitiveType{Set}\AgdaSymbol{)(}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{)}\<%
+\>\AgdaFunction{alphaProof} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}(}\AgdaBound{P} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F} \AgdaSymbol{→} \AgdaPrimitiveType{Set}\AgdaSymbol{)(}\AgdaBound{xs} \AgdaSymbol{:} \AgdaDatatype{List} \AgdaFunction{V}\AgdaSymbol{)}\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
 \>[2]\AgdaSymbol{→} \AgdaFunction{αCompatiblePred} \AgdaBound{P} \<[22]%
@@ -1035,12 +1034,12 @@
 %</alphaproof>
 
 \begin{code}%
-\>\AgdaFunction{αProof} \AgdaBound{P} \AgdaBound{xs} \AgdaBound{αC} \AgdaBound{proof} \AgdaBound{e}\<%
+\>\AgdaFunction{alphaProof} \AgdaBound{P} \AgdaBound{xs} \AgdaBound{αC} \AgdaBound{proof} \AgdaBound{e}\<%
 \\
 \>[2]\AgdaIndent{5}{}\<[5]%
 \>[5]\AgdaKeyword{with} \<[11]%
-\>[11]\AgdaFunction{bindersFreeαElem} \<[36]%
-\>[36]\AgdaSymbol{(}\AgdaBound{xs} \AgdaFunction{++} \AgdaSymbol{(}\AgdaFunction{fv} \AgdaBound{e}\AgdaSymbol{))} \AgdaBound{e}\<%
+\>[11]\AgdaFunction{bindersFreeElem} \<[35]%
+\>[35]\AgdaSymbol{(}\AgdaBound{xs} \AgdaFunction{++} \AgdaSymbol{(}\AgdaFunction{fv} \AgdaBound{e}\AgdaSymbol{))} \AgdaBound{e}\<%
 \\
 \>[2]\AgdaIndent{5}{}\<[5]%
 \>[5]\AgdaSymbol{|} \<[11]%
@@ -1078,8 +1077,8 @@
 
 %<*foldctxalpha-cxtalpha>
 \begin{code}%
-\>\AgdaFunction{lemma-foldCtxα-cxtα} \<[21]%
-\>[21]\AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaBound{H} \AgdaBound{C} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}}\<%
+\>\AgdaFunction{lemma-foldCtxalpha-cxtalpha} \<[29]%
+\>[29]\AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{F} \AgdaBound{H} \AgdaBound{C} \AgdaSymbol{:} \AgdaDatatype{Functor}\AgdaSymbol{\}}\<%
 \\
 \>[0]\AgdaIndent{5}{}\<[5]%
 \>[5]\AgdaSymbol{\{}\AgdaBound{f} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{C} \AgdaSymbol{→} \AgdaFunction{⟦} \AgdaBound{F} \AgdaFunction{⟧} \AgdaSymbol{(}\AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaDatatype{μ} \AgdaBound{H}\AgdaSymbol{\}\{}\AgdaBound{c} \AgdaBound{c′} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{C}\AgdaSymbol{\}}\<%
@@ -1104,25 +1103,25 @@
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
 \>[2]\AgdaSymbol{→} \<[5]%
-\>[5]\AgdaSymbol{(}\AgdaBound{e} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaFunction{foldCtxα} \AgdaBound{F} \AgdaBound{f} \AgdaBound{c} \AgdaBound{e} \AgdaFunction{∼α} \AgdaFunction{foldCtxα} \AgdaBound{F} \AgdaBound{f} \AgdaBound{c′} \AgdaBound{e}\<%
+\>[5]\AgdaSymbol{(}\AgdaBound{e} \AgdaSymbol{:} \AgdaDatatype{μ} \AgdaBound{F}\AgdaSymbol{)} \AgdaSymbol{→} \AgdaFunction{foldCtx-alpha} \AgdaBound{F} \AgdaBound{f} \AgdaBound{c} \AgdaBound{e} \AgdaFunction{∼α} \AgdaFunction{foldCtx-alpha} \AgdaBound{F} \AgdaBound{f} \AgdaBound{c′} \AgdaBound{e}\<%
 \end{code}
 %</foldctxalpha-cxtalpha>
 
 \begin{code}%
-\>\AgdaFunction{lemma-foldCtxα-cxtα} \AgdaSymbol{\{}\AgdaArgument{c} \AgdaSymbol{=} \AgdaBound{c}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{c′}\AgdaSymbol{\}} \AgdaBound{prf} \AgdaBound{c∼c′} \AgdaBound{e} \<[44]%
-\>[44]\<%
+\>\AgdaFunction{lemma-foldCtxalpha-cxtalpha} \AgdaSymbol{\{}\AgdaArgument{c} \AgdaSymbol{=} \AgdaBound{c}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{c′}\AgdaSymbol{\}} \AgdaBound{prf} \AgdaBound{c∼c′} \AgdaBound{e} \<[52]%
+\>[52]\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
 \>[2]\AgdaKeyword{with} \AgdaFunction{fv} \AgdaBound{c} \AgdaSymbol{|} \AgdaFunction{fv} \AgdaBound{c′} \AgdaSymbol{|} \AgdaFunction{lemma∼fv} \AgdaBound{c∼c′}\<%
 \\
-\>\AgdaSymbol{...} \AgdaSymbol{|} \AgdaBound{fv} \AgdaSymbol{|} \AgdaSymbol{.}\AgdaBound{fv} \AgdaSymbol{|} \AgdaInductiveConstructor{refl} \AgdaSymbol{=} \AgdaFunction{lemma-foldCtxαCtx} \AgdaBound{prf} \AgdaBound{c∼c′} \AgdaSymbol{(}\AgdaField{proj₁} \AgdaSymbol{(}\AgdaFunction{bindersFreeαElem} \AgdaBound{fv} \AgdaBound{e}\AgdaSymbol{))}\<%
+\>\AgdaSymbol{...} \AgdaSymbol{|} \AgdaBound{fv} \AgdaSymbol{|} \AgdaSymbol{.}\AgdaBound{fv} \AgdaSymbol{|} \AgdaInductiveConstructor{refl} \AgdaSymbol{=} \AgdaFunction{lemma-foldCtx-alpha-Ctx} \AgdaBound{prf} \AgdaBound{c∼c′} \AgdaSymbol{(}\AgdaField{proj₁} \AgdaSymbol{(}\AgdaFunction{bindersFreeElem} \AgdaBound{fv} \AgdaBound{e}\AgdaSymbol{))}\<%
 \end{code}
 
 
 --   lemma-binderFreeElemFold :
 --     {F H C : Functor}{f : μ C → ⟦ F ⟧ (μ H) → μ H}{c c' : μ C}{e : μ F}{S : Sort}
---     → proj₁ (bindersFreeαElem (fv S c) (foldS F f c' e))  ∼α
---       foldS F f (proj₁ (bindersFreeαElem (fv S c) c')) (proj₁ (bindersFreeαElem (fv S c) e))
+--     → proj₁ (bindersFreeElem (fv S c) (foldS F f c' e))  ∼α
+--       foldS F f (proj₁ (bindersFreeElem (fv S c) c')) (proj₁ (bindersFreeElem (fv S c) e))
 -- binder (y,P) (M[x:=N]n) ∼ (binder (y,P) M) [ x := binder (y,P) N ] ????
 
 {- Substitution Example - Can be done generically ? -}
@@ -1162,7 +1161,7 @@ Recursion
 \\
 \>\AgdaComment{--             → μ C → μ F → μ H}\<%
 \\
-\>\AgdaComment{-- recCtxα F f c e = recCtx F f c (proj₁ (bindersFreeαElem (fv c) e))}\<%
+\>\AgdaComment{-- recCtxα F f c e = recCtx F f c (proj₁ (bindersFreeElem (fv c) e))}\<%
 \\
 \>\AgdaComment{-- }\<%
 \end{code}
@@ -1184,9 +1183,9 @@ Recursion
 \\
 \>\AgdaComment{-- lemma-recCtxα-StrongαCompatible \{f = f\} \{c\} \{e\} e' e∼αe' }\<%
 \\
-\>\AgdaComment{--   with bindersFreeαElem (fv c) e | bindersFreeαElem (fv c) e' }\<%
+\>\AgdaComment{--   with bindersFreeElem (fv c) e | bindersFreeElem (fv c) e' }\<%
 \\
-\>\AgdaComment{--   | lemma-bindersFreeαElem (fv c) e e' e∼αe' }\<%
+\>\AgdaComment{--   | lemma-bindersFreeElem (fv c) e e' e∼αe' }\<%
 \\
 \>\AgdaComment{-- ... | (x , b) | (.x , .b) | refl = refl}\<%
 \\
@@ -1378,7 +1377,7 @@ Recursion
 -- \begin{code}%
 \>\<%
 \\
-\>\AgdaComment{-- lemma-recCtxα-recCtx F \{c = c\} \{e\} prf prf2 with bindersFreeαElem (fv c) e | lemma-bindersFreeαAlpha (fv c) e}\<%
+\>\AgdaComment{-- lemma-recCtxα-recCtx F \{c = c\} \{e\} prf prf2 with bindersFreeElem (fv c) e | lemma-bindersFreeαAlpha (fv c) e}\<%
 \\
 \>\AgdaComment{-- ... | e′ , nb | e′∼e = lemma-recCtx prf prf2 ρ e′∼e  }\<%
 \\

@@ -200,7 +200,7 @@ M [ x ≔ N ]ₙ  = foldCtx tF substaux (⟨ x , N ⟩) M
 %<*subst>
 \begin{code}
 _[_≔_] : FTerm → V → FTerm → FTerm
-M [ x ≔ N ]   = foldCtxα  tF substaux (⟨ x , N ⟩) M 
+M [ x ≔ N ]   = foldCtx-alpha  tF substaux (⟨ x , N ⟩) M 
 \end{code}
 %</subst>
 
@@ -397,7 +397,7 @@ lemma-substaux _ (∼α+₂ (∼α+₂ (∼α+₂ (∼α+₂  (∼αB xs x₁)))
 lemma-substnα′ :  {x : V}{M N N′ : FTerm}
                   → N ∼α N′ → M [ x ≔ N ]ₙ ∼α M [ x ≔ N′ ]ₙ
 lemma-substnα′ {x} {M} (∼αR N∼N′)
-  = lemma-foldCtxαCtx lemma-substaux (∼αR (∼αx ∼αV (∼αEf N∼N′))) M
+  = lemma-foldCtx-alpha-Ctx lemma-substaux (∼αR (∼αx ∼αV (∼αEf N∼N′))) M
 \end{code}
 
 %<*substlemma2>
@@ -405,7 +405,7 @@ lemma-substnα′ {x} {M} (∼αR N∼N′)
 lemma-substα′ :  {x : V}{M N N′ : FTerm}
                  → N ∼α N′ → M [ x ≔ N ] ∼α M [ x ≔ N′ ]
 lemma-substα′ {x} {M} (∼αR N∼N′)
-  = lemma-foldCtxα-cxtα lemma-substaux (∼αR (∼αx ∼αV (∼αEf N∼N′))) M
+  = lemma-foldCtxalpha-cxtalpha lemma-substaux (∼αR (∼αx ∼αV (∼αEf N∼N′))) M
 \end{code}
 %</substlemma2>
 
@@ -420,7 +420,7 @@ lemmaSubsts :  {z : V}{M N : FTerm}
                → ListNotOccurBind (z ∷ fv N) M
                → M [ z ≔ N ] ∼α M [ z ≔ N ]ₙ
 lemmaSubsts {z} {M} {N} nb
- = lemma-foldCtxα-foldCtx
+ = lemma-foldCtxAlpha-foldCtx
       {cF} {tF} tF {substaux} {⟨ z , N ⟩} {M}
       lemma-substaux
       (λ {c} {S} {x} {y} {e} → lemma-substauxSwap {c} {S} {x} {y} {e})
@@ -680,9 +680,9 @@ PSComp {x} {y} ⟨ M , N , L ⟩ = x ∉ y ∷ fv L
 
 %<*substitutioncompositionproof>
 \begin{code}
-αproof :  {x y : V}(Ms : μ TreeFTermF)
+alpha-proof :  {x y : V}(Ms : μ TreeFTermF)
   → ListNotOccurBind (x ∷ y ∷ []) Ms → ListNotOccurBind (fv Ms) Ms → PSComp {x} {y} Ms
-αproof {x} {y} ⟨ M , N , L ⟩ nOcc nOcc2 x∉y∶fvL
+alpha-proof {x} {y} ⟨ M , N , L ⟩ nOcc nOcc2 x∉y∶fvL
    =  begin
          (M  [ x ≔ N  ])  [ y ≔ L ]
       ≈⟨ lemma-substα  {M [ x ≔ N ]} (lemmaSubsts {x} {M} {N} x:fvN∉bM)         ⟩
@@ -760,9 +760,9 @@ PSComp {x} {y} ⟨ M , N , L ⟩ = x ∉ y ∷ fv L
 \begin{code}
 lemma-substComposition2  :  {x y : V}{Ms : TreeFTerm} → PSComp {x} {y} Ms
 lemma-substComposition2 {x} {y} {⟨ M , N , L ⟩}
- = αProof  (PSComp {x} {y}) (x ∷ y ∷ []) 
+ = alphaProof  (PSComp {x} {y}) (x ∷ y ∷ []) 
            (αCompatiblePSComp {x} {y})
-           αproof
+           alpha-proof
            ⟨ M , N , L ⟩
 \end{code}
 %</substcompalphaproof>

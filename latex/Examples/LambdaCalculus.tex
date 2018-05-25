@@ -295,7 +295,7 @@ In abstraction case we do not check if x ≡ y, we cannot alse because is a iter
 \>\AgdaFunction{\_[\_≔\_]} \AgdaSymbol{:} \AgdaFunction{λTerm} \AgdaSymbol{→} \AgdaFunction{V} \AgdaSymbol{→} \AgdaFunction{λTerm} \AgdaSymbol{→} \AgdaFunction{λTerm}\<%
 \\
 \>\AgdaBound{M} \AgdaFunction{[} \AgdaBound{x} \AgdaFunction{≔} \AgdaBound{N} \AgdaFunction{]} \<[14]%
-\>[14]\AgdaSymbol{=} \AgdaFunction{foldCtxα} \AgdaFunction{λF} \AgdaFunction{substaux} \AgdaSymbol{(}\AgdaInductiveConstructor{⟨} \AgdaBound{x} \AgdaInductiveConstructor{,} \AgdaBound{N} \AgdaInductiveConstructor{⟩}\AgdaSymbol{)} \AgdaBound{M} \<%
+\>[14]\AgdaSymbol{=} \AgdaFunction{foldCtx-alpha} \AgdaFunction{λF} \AgdaFunction{substaux} \AgdaSymbol{(}\AgdaInductiveConstructor{⟨} \AgdaBound{x} \AgdaInductiveConstructor{,} \AgdaBound{N} \AgdaInductiveConstructor{⟩}\AgdaSymbol{)} \AgdaBound{M} \<%
 \end{code}
 %</subst>
 
@@ -712,7 +712,7 @@ Examples
 \\
 \>\AgdaFunction{lemma-substnα′} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{x} \AgdaSymbol{:} \AgdaFunction{V}\AgdaSymbol{\}\{}\AgdaBound{M} \AgdaBound{N} \AgdaBound{N′} \AgdaSymbol{:} \AgdaFunction{λTerm}\AgdaSymbol{\}} \AgdaSymbol{→} \AgdaBound{N} \AgdaFunction{∼α} \AgdaBound{N′} \AgdaSymbol{→} \AgdaBound{M} \AgdaFunction{[} \AgdaBound{x} \AgdaFunction{≔} \AgdaBound{N} \AgdaFunction{]ₙ} \AgdaFunction{∼α} \AgdaBound{M} \AgdaFunction{[} \AgdaBound{x} \AgdaFunction{≔} \AgdaBound{N′} \AgdaFunction{]ₙ}\<%
 \\
-\>\AgdaFunction{lemma-substnα′} \AgdaSymbol{\{}\AgdaBound{x}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{M}\AgdaSymbol{\}} \AgdaSymbol{(}\AgdaInductiveConstructor{∼αR} \AgdaBound{N∼N′}\AgdaSymbol{)} \AgdaSymbol{=} \AgdaFunction{lemma-foldCtxαCtx} \AgdaFunction{lemma-substaux} \AgdaSymbol{(}\AgdaInductiveConstructor{∼αR} \AgdaSymbol{(}\AgdaInductiveConstructor{∼αx} \AgdaInductiveConstructor{∼αV} \AgdaSymbol{(}\AgdaInductiveConstructor{∼αEf} \AgdaBound{N∼N′}\AgdaSymbol{)))} \AgdaBound{M}\<%
+\>\AgdaFunction{lemma-substnα′} \AgdaSymbol{\{}\AgdaBound{x}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{M}\AgdaSymbol{\}} \AgdaSymbol{(}\AgdaInductiveConstructor{∼αR} \AgdaBound{N∼N′}\AgdaSymbol{)} \AgdaSymbol{=} \AgdaFunction{lemma-foldCtx-alpha-Ctx} \AgdaFunction{lemma-substaux} \AgdaSymbol{(}\AgdaInductiveConstructor{∼αR} \AgdaSymbol{(}\AgdaInductiveConstructor{∼αx} \AgdaInductiveConstructor{∼αV} \AgdaSymbol{(}\AgdaInductiveConstructor{∼αEf} \AgdaBound{N∼N′}\AgdaSymbol{)))} \AgdaBound{M}\<%
 \end{code}
 
 %<*substlemma2>
@@ -726,7 +726,7 @@ Examples
 \>[33]\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
-\>[2]\AgdaSymbol{=} \AgdaFunction{lemma-foldCtxα-cxtα} \AgdaFunction{lemma-substaux} \AgdaSymbol{(}\AgdaInductiveConstructor{∼αR} \AgdaSymbol{(}\AgdaInductiveConstructor{∼αx} \AgdaInductiveConstructor{∼αV} \AgdaSymbol{(}\AgdaInductiveConstructor{∼αEf} \AgdaBound{N∼N′}\AgdaSymbol{)))} \AgdaBound{M}\<%
+\>[2]\AgdaSymbol{=} \AgdaFunction{lemma-foldCtxalpha-cxtalpha} \AgdaFunction{lemma-substaux} \AgdaSymbol{(}\AgdaInductiveConstructor{∼αR} \AgdaSymbol{(}\AgdaInductiveConstructor{∼αx} \AgdaInductiveConstructor{∼αV} \AgdaSymbol{(}\AgdaInductiveConstructor{∼αEf} \AgdaBound{N∼N′}\AgdaSymbol{)))} \AgdaBound{M}\<%
 \end{code}
 %</substlemma2>
 
@@ -744,7 +744,7 @@ Examples
 \\
 \>\AgdaFunction{lemmaSubsts} \AgdaSymbol{\{}\AgdaBound{z}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{M}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{N}\AgdaSymbol{\}} \AgdaBound{nb}\<%
 \\
-\> \AgdaSymbol{=} \AgdaFunction{lemma-foldCtxα-foldCtx} \AgdaSymbol{\{}\AgdaFunction{cF}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaFunction{λF}\AgdaSymbol{\}} \AgdaFunction{λF} \AgdaSymbol{\{}\AgdaFunction{substaux}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaInductiveConstructor{⟨} \AgdaBound{z} \AgdaInductiveConstructor{,} \AgdaBound{N} \AgdaInductiveConstructor{⟩}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{M}\AgdaSymbol{\}}\<%
+\> \AgdaSymbol{=} \AgdaFunction{lemma-foldCtxAlpha-foldCtx} \AgdaSymbol{\{}\AgdaFunction{cF}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaFunction{λF}\AgdaSymbol{\}} \AgdaFunction{λF} \AgdaSymbol{\{}\AgdaFunction{substaux}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaInductiveConstructor{⟨} \AgdaBound{z} \AgdaInductiveConstructor{,} \AgdaBound{N} \AgdaInductiveConstructor{⟩}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{M}\AgdaSymbol{\}}\<%
 \\
 \>[2]\AgdaIndent{6}{}\<[6]%
 \>[6]\AgdaFunction{lemma-substaux}\<%

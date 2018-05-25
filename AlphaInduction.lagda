@@ -65,12 +65,12 @@ bindersFreeαElemF {F} (|B| S G)  xs (x , e) (accB facc)
 
 %<*bindersfreealphaelem>
 \begin{code}
-bindersFreeαElem : {F : Functor}(xs : List V)(e : μ F) → ∃ (λ e' → ListNotOccurBind {F} xs e')
+bindersFreeElem : {F : Functor}(xs : List V)(e : μ F) → ∃ (λ e' → ListNotOccurBind {F} xs e')
 \end{code}
 %</bindersfreealphaelem>
 
 \begin{code}
-bindersFreeαElem {F} xs e = bindersFreeαElemF {F} |R| xs e (accF e)
+bindersFreeElem {F} xs e = bindersFreeαElemF {F} |R| xs e (accF e)
 
 lemma-bindersFreeαElemF : {F : Functor}(G : Functor)(xs : List V)(e e' : ⟦ G ⟧ (μ F))
     → ∼αF G e e' 
@@ -117,15 +117,15 @@ lemma-bindersFreeαElemF {F} (|B| S G) xs (x , e) (y , e′) xe∼ye′ (accB fa
 
 %<*bindersalpha>
 \begin{code}
-lemma-bindersFreeαElem : 
+lemma-bindersFreeElem : 
     {F : Functor}(xs : List V)(e e' : μ F) 
     → e ∼α e' 
-    → bindersFreeαElem xs e ≡ bindersFreeαElem xs e'
+    → bindersFreeElem xs e ≡ bindersFreeElem xs e'
 \end{code}
 %</bindersalpha>
 
 \begin{code}
-lemma-bindersFreeαElem {F} xs e e' e∼e'
+lemma-bindersFreeElem {F} xs e e' e∼e'
   = lemma-bindersFreeαElemF |R| xs e e' e∼e' (accF e) (accF e')
 
 lemma-bindersFreeαAlphaF : 
@@ -177,10 +177,10 @@ lemma-bindersFreeαAlphaF {F} (|B| S G)   xs (x , e) (accB facc)
 lemma-bindersFreeαFVα : 
     {F : Functor}{e e' : μ F}
     → e ∼α e' 
-    → proj₁ (bindersFreeαElem (fv e) e) ≡ proj₁ (bindersFreeαElem (fv e') e')
+    → proj₁ (bindersFreeElem (fv e) e) ≡ proj₁ (bindersFreeElem (fv e') e')
 lemma-bindersFreeαFVα {e = e} {e'} e∼e' with fv e | fv e' | lemma∼fv e∼e' 
 ... | fve | .fve | refl
-  with bindersFreeαElem fve e | bindersFreeαElem fve e' | lemma-bindersFreeαElem fve e e' e∼e'
+  with bindersFreeElem fve e | bindersFreeElem fve e' | lemma-bindersFreeElem fve e e' e∼e'
 ... | (r , pr)   | (.r , .pr)  | refl = refl
 \end{code}
 
@@ -189,7 +189,7 @@ lemma-bindersFreeαFVα {e = e} {e'} e∼e' with fv e | fv e' | lemma∼fv e∼e
 \begin{code}
 lemma-bindersFreeαAlpha : 
     {F : Functor}(xs : List V)(e  : μ F) 
-    → proj₁ (bindersFreeαElem xs e) ∼α e
+    → proj₁ (bindersFreeElem xs e) ∼α e
 \end{code}
 %</lemmabindersfreealpha>
 
@@ -199,7 +199,7 @@ lemma-bindersFreeαAlpha {F} xs e = (lemma-bindersFreeαAlphaF |R| xs e (accF e)
 
 \begin{code}
 bindersFreeα : {F : Functor}(xs : List V)(e : μ F) → μ F
-bindersFreeα xs e = proj₁ (bindersFreeαElem (fv e ++ xs) e)
+bindersFreeα xs e = proj₁ (bindersFreeElem (fv e ++ xs) e)
 
 lemma-bindersFreeα-α : {F : Functor}(xs : List V)(e : μ F)
   → bindersFreeα xs e ∼α e
@@ -210,7 +210,7 @@ lemma-bindersFreeα-αCompatible :
     → e ∼α e' → bindersFreeα xs e ≡ bindersFreeα xs e'
 lemma-bindersFreeα-αCompatible {F} {xs} {e} {e'} e∼e' with fv e | fv e' | lemma∼fv e∼e' 
 ... | fve | .fve | refl
-  with bindersFreeαElem (fve ++ xs) e | bindersFreeαElem (fve ++ xs) e' | lemma-bindersFreeαElem (fve ++ xs) e e' e∼e'
+  with bindersFreeElem (fve ++ xs) e | bindersFreeElem (fve ++ xs) e' | lemma-bindersFreeElem (fve ++ xs) e e' e∼e'
 ... | (r , pr)   | (.r , .pr)  | refl = refl
 
 lemma-bindersFreeα-∉b : {F : Functor}(xs : List V)(e : μ F)
@@ -218,7 +218,7 @@ lemma-bindersFreeα-∉b : {F : Functor}(xs : List V)(e : μ F)
 lemma-bindersFreeα-∉b xs e
   = subst  (λ ys → ListNotOccurBind (ys ++ xs) (bindersFreeα xs e))
            (sym (lemma∼fv (lemma-bindersFreeαAlpha (fv e ++ xs) e)))
-           (proj₂ (bindersFreeαElem (fv e ++ xs) e))
+           (proj₂ (bindersFreeElem (fv e ++ xs) e))
 
 lemma-bindersFreeα-FV∉b : {F : Functor}(xs : List V)(e : μ F)
   → ListNotOccurBind {F} (fv (bindersFreeα xs e)) (bindersFreeα xs e)
@@ -240,25 +240,25 @@ strong∼αCompatible f M = ∀ N → M ∼α N → f M ≡ f N
 
 %<*alphainductionhypotheses>
 \begin{code}
-fihα :  {F : Functor}(G : Functor)(P : μ F → Set) → List V →  ⟦ G ⟧ (μ F) → Set
+fihalpha :  {F : Functor}(G : Functor)(P : μ F → Set) → List V →  ⟦ G ⟧ (μ F) → Set
 \end{code}
 %</alphainductionhypotheses>
 
 %<*alphainductionhypothesescases>
 \begin{code}
-fihα |R|           P xs e          =  P e      × (∀ a → a ∈ xs → a notOccurBind e)
-fihα (|B| S   G)   P xs (x , e)    =  x ∉ xs   × fihα G  P xs e
+fihalpha |R|           P xs e          =  P e      × (∀ a → a ∈ xs → a notOccurBind e)
+fihalpha (|B| S   G)   P xs (x , e)    =  x ∉ xs   × fihalpha G  P xs e
 \end{code}
 %</alphainductionhypothesescases>
 
 \begin{code}
-fihα (|v|   S)     P xs n          =  ⊤
-fihα |1|           P xs tt         =  ⊤
-fihα (|E|   B)     P xs b          =  ⊤
-fihα (|Ef|  G)     P xs e          =  ⊤
-fihα (G₁ |+|  G₂)  P xs (inj₁ e)   =  fihα G₁  P xs e 
-fihα (G₁ |+|  G₂)  P xs (inj₂ e)   =  fihα G₂  P xs e 
-fihα (G₁ |x|  G₂)  P xs (e₁ , e₂)  =  fihα G₁  P xs e₁  × fihα G₂ P xs e₂
+fihalpha (|v|   S)     P xs n          =  ⊤
+fihalpha |1|           P xs tt         =  ⊤
+fihalpha (|E|   B)     P xs b          =  ⊤
+fihalpha (|Ef|  G)     P xs e          =  ⊤
+fihalpha (G₁ |+|  G₂)  P xs (inj₁ e)   =  fihalpha G₁  P xs e 
+fihalpha (G₁ |+|  G₂)  P xs (inj₂ e)   =  fihalpha G₂  P xs e 
+fihalpha (G₁ |x|  G₂)  P xs (e₁ , e₂)  =  fihalpha G₁  P xs e₁  × fihalpha G₂ P xs e₂
 \end{code}
 
 
@@ -267,7 +267,7 @@ lemma-fih∧notOccurBind⇛fihα :
      {F : Functor}(G : Functor)(P : μ F → Set)(e : ⟦ G ⟧ (μ F))(xs : List V) 
      → fih {F} G (λ e' → (∀ c → c ∈ xs → c notOccurBind e') → P e') e 
      → (∀ c → c ∈ xs → notOccurBindF c {F} G e)
-     → fihα {F} G                       P xs e
+     → fihalpha {F} G                       P xs e
 lemma-fih∧notOccurBind⇛fihα (|v| x)     P e          xs fih notOccur   = tt
 lemma-fih∧notOccurBind⇛fihα |1|         P e          xs fih notOccur   = tt
 lemma-fih∧notOccurBind⇛fihα (|E| x)     P e          xs fih notOccur   = tt
@@ -299,14 +299,14 @@ lemma-fih∧notOccurBind⇛fihα (|B| S G)   P (a  , e)   xs fih notOccur
 
 %<*alphainductionprinciple>
 \begin{code}
-αPrimInd : {F : Functor}(P : μ F → Set)(xs : List V) → αCompatiblePred P 
-  → ((e : ⟦ F ⟧ (μ F)) → fihα F P xs e → P ⟨ e ⟩) → ∀ e → P e
+alphaPrimInd : {F : Functor}(P : μ F → Set)(xs : List V) → αCompatiblePred P 
+  → ((e : ⟦ F ⟧ (μ F)) → fihalpha F P xs e → P ⟨ e ⟩) → ∀ e → P e
 \end{code}
 %</alphainductionprinciple>
 
 \begin{code}
-αPrimInd {F} P xs αP p e
-  with bindersFreeαElem xs e
+alphaPrimInd {F} P xs αP p e
+  with bindersFreeElem xs e
      | lemma-bindersFreeαAlpha xs e
 ...  | e' , notBind | e'∼e
   = αP  e'∼e
@@ -331,13 +331,13 @@ lemma-fih∧notOccurBind⇛fihα (|B| S G)   P (a  , e)   xs fih notOccur
 --   → {e : μ F} 
 --   → strong∼αCompatible (αIteration xs f) e
 -- lemma-αIteration-StrongαCompatible {xs = xs} {f} {e} e' e∼αe' 
---   with bindersFreeαElem xs e | bindersFreeαElem xs e' 
---   | lemma-bindersFreeαElem xs e e' e∼αe' 
+--   with bindersFreeElem xs e | bindersFreeElem xs e' 
+--   | lemma-bindersFreeElem xs e e' e∼αe' 
 -- ... | (x , b) | (.x , .b) | refl = refl
 
 {- Another way to obtain α Iteration -}
 -- foldα : {A : Set}(F : Functor) → List V → (⟦ F ⟧ A → A) → μ F → A
--- foldα F xs f e with bindersFreeαElem xs e
+-- foldα F xs f e with bindersFreeElem xs e
 -- ... | e′ , _ = fold  F f e′
 \end{code}
 
@@ -347,25 +347,25 @@ lemma-fih∧notOccurBind⇛fihα (|B| S G)   P (a  , e)   xs fih notOccur
 
 %<*foldCtxalpha>
 \begin{code}
-foldCtxα :  {C H : Functor}(F : Functor) → (μ C → ⟦ F ⟧ (μ H)  → μ H) → μ C → μ F → μ H
-foldCtxα F f c e = foldCtx F f c (proj₁ (bindersFreeαElem (fv c) e))
+foldCtx-alpha :  {C H : Functor}(F : Functor) → (μ C → ⟦ F ⟧ (μ H)  → μ H) → μ C → μ F → μ H
+foldCtx-alpha F f c e = foldCtx F f c (proj₁ (bindersFreeElem (fv c) e))
 \end{code}
 %</foldCtxalpha>
 
 %<*lemmafoldCtxalpha>
 \begin{code}
-lemma-foldCtxα-foldCtx : {C H : Functor}(F : Functor){f : μ C → ⟦ F ⟧ (μ H) → μ H}{c : μ C}{e : μ F}
+lemma-foldCtxAlpha-foldCtx : {C H : Functor}(F : Functor)
+     {f : μ C → ⟦ F ⟧ (μ H) → μ H}{c : μ C}{e : μ F}
   →  ({e e′  :  ⟦ F ⟧ (μ H)}{c c′ : μ C} → c ∼α c′ → ∼αF F e e′ → f c e ∼α f c′ e′)
   →  ({c     : μ C}{S : Sort}  {x y : V}{e : ⟦ F ⟧ (μ H)}
              → f (swap S x y c) (swapF F S x y e) ≡ swap S x y (f c e))
-  →  ListNotOccurBind (fv c) e
-  →  foldCtxα F f c e ∼α foldCtx F f c e
+  →  ListNotOccurBind (fv c) e → foldCtx-alpha F f c e ∼α foldCtx F f c e
 \end{code}
 %</lemmafoldCtxalpha>
 
 \begin{code}
-lemma-foldCtxα-foldCtx F {c = c} {e} prf prf2 cNotBinde with bindersFreeαElem (fv c) e | lemma-bindersFreeαAlpha (fv c) e
-... | e′ , nb | e′∼e = lemma-foldCtxα prf prf2 nb cNotBinde ρ e′∼e  
+lemma-foldCtxAlpha-foldCtx F {c = c} {e} prf prf2 cNotBinde with bindersFreeElem (fv c) e | lemma-bindersFreeαAlpha (fv c) e
+... | e′ , nb | e′∼e = lemma-foldCtx-alpha prf prf2 nb cNotBinde ρ e′∼e  
 \end{code}
 
 
@@ -373,20 +373,20 @@ lemma-foldCtxα-foldCtx F {c = c} {e} prf prf2 cNotBinde with bindersFreeαElem 
 \begin{code}
 lemma-foldCtxα-StrongαCompatible :
   {C H F : Functor}{f : μ C → ⟦ F ⟧ (μ H)  → μ H}{c : μ C}{e : μ F}
-  → strong∼αCompatible (foldCtxα F f c) e
+  → strong∼αCompatible (foldCtx-alpha F f c) e
 \end{code}
 %</foldCtxalphastrongalphacompatible>
 
 \begin{code}
 lemma-foldCtxα-StrongαCompatible {f = f} {c} {e} e' e∼αe' 
-  with bindersFreeαElem (fv c) e | bindersFreeαElem (fv c) e' 
-  | lemma-bindersFreeαElem (fv c) e e' e∼αe' 
+  with bindersFreeElem (fv c) e | bindersFreeElem (fv c) e' 
+  | lemma-bindersFreeElem (fv c) e e' e∼αe' 
 ... | (x , b) | (.x , .b) | refl = refl
 \end{code}
 
 %<*alphaproof>
 \begin{code}
-αProof : {F : Functor}(P : μ F → Set)(xs : List V)
+alphaProof : {F : Functor}(P : μ F → Set)(xs : List V)
   → αCompatiblePred P 
   → ((e : μ F)  → ListNotOccurBind xs e → ListNotOccurBind (fv e)  e
                 → P e )  
@@ -395,8 +395,8 @@ lemma-foldCtxα-StrongαCompatible {f = f} {c} {e} e' e∼αe'
 %</alphaproof>
 
 \begin{code}
-αProof P xs αC proof e
-     with  bindersFreeαElem         (xs ++ (fv e)) e
+alphaProof P xs αC proof e
+     with  bindersFreeElem         (xs ++ (fv e)) e
      |     lemma-bindersFreeαAlpha  (xs ++ (fv e)) e
 ...  | e' , notBind | e'∼e
   = αC e'∼e (proof e' nb1 nb2)
@@ -411,27 +411,27 @@ lemma-foldCtxα-StrongαCompatible {f = f} {c} {e} e' e∼αe'
 
 %<*foldctxalpha-cxtalpha>
 \begin{code}
-lemma-foldCtxα-cxtα  : {F H C : Functor}
+lemma-foldCtxalpha-cxtalpha  : {F H C : Functor}
      {f : μ C → ⟦ F ⟧ (μ H) → μ H}{c c′ : μ C}
   →  ({e e′ :  ⟦ F ⟧ (μ H)}{c c′ : μ C} 
                → c ∼α c′ → ∼αF F e e′ 
                → f c e ∼α f c′ e′)               
   →  c ∼α c′
-  →  (e : μ F) → foldCtxα F f c e ∼α foldCtxα F f c′ e
+  →  (e : μ F) → foldCtx-alpha F f c e ∼α foldCtx-alpha F f c′ e
 \end{code}
 %</foldctxalpha-cxtalpha>
 
 \begin{code}
-lemma-foldCtxα-cxtα {c = c} {c′} prf c∼c′ e 
+lemma-foldCtxalpha-cxtalpha {c = c} {c′} prf c∼c′ e 
   with fv c | fv c′ | lemma∼fv c∼c′
-... | fv | .fv | refl = lemma-foldCtxαCtx prf c∼c′ (proj₁ (bindersFreeαElem fv e))
+... | fv | .fv | refl = lemma-foldCtx-alpha-Ctx prf c∼c′ (proj₁ (bindersFreeElem fv e))
 \end{code}
 
 
 --   lemma-binderFreeElemFold :
 --     {F H C : Functor}{f : μ C → ⟦ F ⟧ (μ H) → μ H}{c c' : μ C}{e : μ F}{S : Sort}
---     → proj₁ (bindersFreeαElem (fv S c) (foldS F f c' e))  ∼α
---       foldS F f (proj₁ (bindersFreeαElem (fv S c) c')) (proj₁ (bindersFreeαElem (fv S c) e))
+--     → proj₁ (bindersFreeElem (fv S c) (foldS F f c' e))  ∼α
+--       foldS F f (proj₁ (bindersFreeElem (fv S c) c')) (proj₁ (bindersFreeElem (fv S c) e))
 -- binder (y,P) (M[x:=N]n) ∼ (binder (y,P) M) [ x := binder (y,P) N ] ????
 
 {- Substitution Example - Can be done generically ? -}
@@ -468,7 +468,7 @@ Recursion
 -- recCtxα :  {C H : Functor}(F : Functor)
 --             → (μ C → ⟦ F ⟧ (μ (|Ef| H |x| |Ef| F))  → μ H)
 --             → μ C → μ F → μ H
--- recCtxα F f c e = recCtx F f c (proj₁ (bindersFreeαElem (fv c) e))
+-- recCtxα F f c e = recCtx F f c (proj₁ (bindersFreeElem (fv c) e))
 -- \end{code}
 
 -- \begin{code}
@@ -479,8 +479,8 @@ Recursion
 
 -- \begin{code}
 -- lemma-recCtxα-StrongαCompatible {f = f} {c} {e} e' e∼αe' 
---   with bindersFreeαElem (fv c) e | bindersFreeαElem (fv c) e' 
---   | lemma-bindersFreeαElem (fv c) e e' e∼αe' 
+--   with bindersFreeElem (fv c) e | bindersFreeElem (fv c) e' 
+--   | lemma-bindersFreeElem (fv c) e e' e∼αe' 
 -- ... | (x , b) | (.x , .b) | refl = refl
 -- \end{code}
 
@@ -578,7 +578,7 @@ Recursion
 
 
 -- \begin{code}
--- lemma-recCtxα-recCtx F {c = c} {e} prf prf2 with bindersFreeαElem (fv c) e | lemma-bindersFreeαAlpha (fv c) e
+-- lemma-recCtxα-recCtx F {c = c} {e} prf prf2 with bindersFreeElem (fv c) e | lemma-bindersFreeαAlpha (fv c) e
 -- ... | e′ , nb | e′∼e = lemma-recCtx prf prf2 ρ e′∼e  
 -- \end{code}
 

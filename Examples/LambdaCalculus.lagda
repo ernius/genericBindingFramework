@@ -182,7 +182,7 @@ M [ x ≔ N ]ₙ  = foldCtx λF substaux (⟨ x , N ⟩) M
 %<*subst>
 \begin{code}
 _[_≔_] : λTerm → V → λTerm → λTerm
-M [ x ≔ N ]   = foldCtxα λF substaux (⟨ x , N ⟩) M 
+M [ x ≔ N ]   = foldCtx-alpha λF substaux (⟨ x , N ⟩) M 
 \end{code}
 %</subst>
 
@@ -326,14 +326,14 @@ lemma-substaux _ (∼α+₂ (∼α+₂  (∼αB xs e)))          =  ∼αR (∼�
 
 
 lemma-substnα′ : {x : V}{M N N′ : λTerm} → N ∼α N′ → M [ x ≔ N ]ₙ ∼α M [ x ≔ N′ ]ₙ
-lemma-substnα′ {x} {M} (∼αR N∼N′) = lemma-foldCtxαCtx lemma-substaux (∼αR (∼αx ∼αV (∼αEf N∼N′))) M
+lemma-substnα′ {x} {M} (∼αR N∼N′) = lemma-foldCtx-alpha-Ctx lemma-substaux (∼αR (∼αx ∼αV (∼αEf N∼N′))) M
 \end{code}
 
 %<*substlemma2>
 \begin{code}
 lemma-substα′  :  {x : V}{M N N′ : λTerm} →  N ∼α N′ → M [ x ≔ N ] ∼α M [ x ≔ N′ ]
 lemma-substα′ {x} {M} (∼αR N∼N′) 
-  = lemma-foldCtxα-cxtα lemma-substaux (∼αR (∼αx ∼αV (∼αEf N∼N′))) M
+  = lemma-foldCtxalpha-cxtalpha lemma-substaux (∼αR (∼αx ∼αV (∼αEf N∼N′))) M
 \end{code}
 %</substlemma2>
 
@@ -346,7 +346,7 @@ fv2ctx {x} {M} {⟨ N ⟩} nb = nb
 \begin{code}
 lemmaSubsts :  {z : V}{M N : λTerm} → ListNotOccurBind (z ∷ fv N) M → M [ z ≔ N ] ∼α M [ z ≔ N ]ₙ
 lemmaSubsts {z} {M} {N} nb
- = lemma-foldCtxα-foldCtx {cF} {λF} λF {substaux} {⟨ z , N ⟩} {M}
+ = lemma-foldCtxAlpha-foldCtx {cF} {λF} λF {substaux} {⟨ z , N ⟩} {M}
       lemma-substaux
       (λ {c} {S} {x} {y} {e} → lemma-substauxSwap {c} {S} {x} {y} {e})
       (fv2ctx {z} {M} {N} nb)
