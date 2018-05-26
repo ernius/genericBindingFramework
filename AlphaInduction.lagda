@@ -357,8 +357,8 @@ foldCtx-alpha F f c e = foldCtx F f c (proj₁ (bindersFreeElem (fv c) e))
 lemma-foldCtxAlpha-foldCtx : {C H : Functor}(F : Functor)
      {f : μ C → ⟦ F ⟧ (μ H) → μ H}{c : μ C}{e : μ F}
   →  ({e e′  :  ⟦ F ⟧ (μ H)}{c c′ : μ C} → c ∼α c′ → ∼αF F e e′ → f c e ∼α f c′ e′)
-  →  ({c     : μ C}{S : Sort}  {x y : V}{e : ⟦ F ⟧ (μ H)}
-             → f (swap S x y c) (swapF F S x y e) ≡ swap S x y (f c e))
+  →  ({c : μ C}{S  : Sort}{x y : V}{e : ⟦ F ⟧ (μ H)}
+                   → f (swap S x y c) (swapF F S x y e) ≡ swap S x y (f c e))
   →  ListNotOccurBind (fv c) e → foldCtx-alpha F f c e ∼α foldCtx F f c e
 \end{code}
 %</lemmafoldCtxalpha>
@@ -386,10 +386,8 @@ lemma-foldCtxα-StrongαCompatible {f = f} {c} {e} e' e∼αe'
 
 %<*alphaproof>
 \begin{code}
-alphaProof : {F : Functor}(P : μ F → Set)(xs : List V)
-  → αCompatiblePred P 
-  → ((e : μ F)  → ListNotOccurBind xs e → ListNotOccurBind (fv e)  e
-                → P e )  
+alphaProof : {F : Functor}(P : μ F → Set)(xs : List V) → αCompatiblePred P 
+  → ((e : μ F)  → ListNotOccurBind xs e → ListNotOccurBind (fv e) e → P e )  
   → ∀ e → P e
 \end{code}
 %</alphaproof>

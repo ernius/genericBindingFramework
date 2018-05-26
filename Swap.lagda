@@ -255,8 +255,8 @@ lemmaSwapFoldEquivF {F} {|B| S G} {H} {S'}
 \begin{code}
 lemmaSwapFoldEquiv  :  {F H : Functor}{S : Sort}
       {x y : V}{e : μ F}{f  : ⟦ F ⟧ (μ H) → μ H}
-   →  ({x y : V}  {e  : ⟦ F ⟧ (μ H)} 
-              →   f (swapF F S x y e) ≡ swap {H} S x y (f e))
+   →  ({x y : V}   {e  : ⟦ F ⟧ (μ H)} 
+                   → f (swapF F S x y e) ≡ swap {H} S x y (f e))
    →  fold F f (swap S x y e) ≡ swap S x y (fold F f e)
 \end{code}
 %</swapfoldequiv>
@@ -310,9 +310,9 @@ lemmaSwapFoldEquivCtxF {F} {|B| S G} {S = S'} {e = z , e} prf with S ≟S S'
 %<*swapfoldCtx>
 \begin{code}
 lemmaSwapFoldCtxEquiv : {C H F  : Functor}{S : Sort}{x y : V}
-      {e : μ F}{f  : μ C → ⟦ F ⟧ (μ H) → μ H}{c : μ C}
-   →  ({c : μ C}{S : Sort}{x y : V}{e : ⟦ F ⟧ (μ H)}
-             → f (swap S x y c) (swapF F S x y e) ≡ swap S x y (f c e))
+      {e : μ F}{f : μ C → ⟦ F ⟧ (μ H) → μ H}{c : μ C}
+   →  ({c : μ C}{S  : Sort}{x y : V}{e : ⟦ F ⟧ (μ H)}
+                    → f (swap S x y c) (swapF F S x y e) ≡ swap S x y (f c e))
    →  foldCtx F f (swap {C} S x y c) (swap {F} S x y e) ≡ swap {H} S x y (foldCtx F f c e)
 \end{code}
 %</swapfoldCtx>

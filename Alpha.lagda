@@ -55,8 +55,7 @@ Sort independent
 
 %<*alpha>
 \begin{code}
-data ∼αF {F : Functor} : (G : Functor) 
-  → ⟦ G ⟧ (μ F) →  ⟦ G ⟧ (μ F) → Set where
+data ∼αF {F : Functor} : (G : Functor) → ⟦ G ⟧ (μ F) →  ⟦ G ⟧ (μ F) → Set where
     ∼α1    :                         ∼αF |1|           tt         tt
     ∼αR    :  {e e' : ⟦ F ⟧ (μ F)}     
            →  ∼αF F e e'          →  ∼αF |R|           ⟨ e ⟩      ⟨ e' ⟩
@@ -66,15 +65,15 @@ data ∼αF {F : Functor} : (G : Functor)
     ∼α+₁   :  {F₁ F₂ : Functor}{e e' : ⟦ F₁ ⟧ (μ F)}
            →  ∼αF F₁ e e'         →  ∼αF (F₁ |+|  F₂)  (inj₁ e)   (inj₁ e')
     ∼α+₂   :  {F₁ F₂ : Functor}{e e' : ⟦ F₂ ⟧ (μ F)}
-           →  ∼αF F₂ e e'         →  ∼αF (F₁ |+|  F₂)   (inj₂ e)   (inj₂ e')
+           →  ∼αF F₂ e e'         →  ∼αF (F₁ |+|  F₂)  (inj₂ e)   (inj₂ e')
     ∼αx    :  {F₁ F₂ : Functor}{e₁ e₁'  : ⟦ F₁ ⟧ (μ F)}
               {e₂ e₂'  : ⟦ F₂ ⟧ (μ F)}
-           →  ∼αF F₁ e₁ e₁'       → ∼αF F₂ e₂ e₂'
+           →  ∼αF F₁ e₁ e₁'       →  ∼αF F₂ e₂ e₂'
                                   →  ∼αF (F₁ |x|  F₂)  (e₁ , e₂)  (e₁' , e₂')
     ∼αV    :  {x : V}{S : Sort}   →  ∼αF (|v| S)       x          x                                  
     ∼αB    :  (xs : List V){S : Sort}{x y : V}{G : Functor}{e e' : ⟦ G ⟧ (μ F)}
-           →  ((z : V) → z ∉ xs   → ∼αF G  (swapF G S x z e) (swapF G S y z e')) 
-                                  → ∼αF (|B| S G)  (x , e)    (y   , e')  
+           →  ((z : V) → z ∉ xs   →  ∼αF G  (swapF G S x z e) (swapF G S y z e')) 
+                                  →  ∼αF (|B| S G)     (x , e)    (y   , e')  
 
 _∼α_ : {F : Functor} → μ F → μ F → Set
 _∼α_ = ∼αF |R|
@@ -747,9 +746,9 @@ lemma-foldmapα {F} {H} {C} (|B| S G) {f} {c} {c'}  {y , e} {z , e'}
 %<*lemmafoldCtxalpha>
 \begin{code}
 lemma-foldCtx-alpha  : {F H C : Functor}{f : μ C → ⟦ F ⟧ (μ H) → μ H}{c c' : μ C}{e e' : μ F}
-  →  ({e e′ :  ⟦ F ⟧ (μ H)}{c c′ : μ C} → c ∼α c′ → ∼αF F e e′ → f c e ∼α f c′ e′)
-  → ({c : μ C}{S : Sort}{x y : V}{e : ⟦ F ⟧ (μ H)}
-              → f (swap S x y c) (swapF F S x y e) ≡ swap S x y (f c e))
+  → ({e e′ :  ⟦ F ⟧ (μ H)}{c c′ : μ C} → c ∼α c′ → ∼αF F e e′ → f c e ∼α f c′ e′)
+  → ({c : μ C}{S  : Sort}{x y : V}{e : ⟦ F ⟧ (μ H)}
+                  → f (swap S x y c) (swapF F S x y e) ≡ swap S x y (f c e))
   → ListNotOccurBind (fv c)   e → ListNotOccurBind (fv c')  e'
   → c ∼α c' → e ∼α e' → foldCtx F f c e ∼α foldCtx F f c' e'
 \end{code}
